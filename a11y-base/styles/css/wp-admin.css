@@ -1,0 +1,7 @@
+/* This stylesheet is called in functions/editor.php */
+
+
+/* hide the  Open link in a new window/tab checkbox */
+.link-target {
+	display: none !important;
+}

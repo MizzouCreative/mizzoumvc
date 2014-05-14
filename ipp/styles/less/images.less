@@ -1,0 +1,148 @@
+/* Begin Images */
+
+img, 
+embed, 
+object, 
+video { 
+padding:0;
+margin: 0;
+height: auto;
+border: none;
+}
+
+
+#content img, 
+#content embed, 
+#content object, 
+#content video { 
+	max-width: 100% !important;
+}
+
+
+
+img.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+.alignright,
+.alignright img {
+	float: right;
+	margin-left: 1rem !important;
+	}
+
+
+.alignleft,
+.alignleft img {
+	margin-right: 1rem !important;
+	float: left;
+	}
+
+
+@media @mq-mobile {
+
+	.alignleft,
+	.alignleft img,
+	.alignright,
+	.alignright img {
+		width: 33% !important;
+	}	
+}
+
+
+@media @mq-small {
+	.alignleft,
+	.alignleft img,
+	.alignright,
+	.alignright img {	 
+		width: 100% !important;
+		margin-left: 0 !important;
+		float: none;
+	}
+}
+
+
+
+img.size-large {
+	width: 100% !important;
+	margin-bottom: 20px;
+	display: block;
+	}
+
+
+
+/* Captions */
+
+.aligncenter,
+div.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.gallery-icon {
+}
+
+.gallery img { 
+	padding: 0px;
+	display: block;
+	border: 5px solid @charcoal;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+ }
+
+.gallery-caption {
+	.rem (font-size,.75);
+	font-weight: normal;
+	margin-top: -8px;
+	padding: 16px 0 0 0px;
+	background: @charcoal;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	
+	}
+
+.gallery {
+	margin: 0 0 20px 20px;
+	padding: 0 0 10px 0px;
+	}
+
+.gallery img {
+	padding: 0px;
+	}	
+
+.wp-caption {
+	color: @charcoal;
+	padding: 0px !important;
+	margin: 0 0px 20px 0px !important;
+	}
+		
+	.wp-caption img {
+		display: block;
+		margin: 0px !important;
+		padding: 0px !important;
+		}
+	
+	.wp-caption-text {
+		padding: 10px 0px 10px 0px;
+		.rem (font-size,.75);
+		color: #000;
+		margin: 0 10px 0 0px;
+		border-bottom: 1px solid #000;
+		background: #fff;
+	}
+
+
+.wp-caption,
+.size-medium {
+	width: 100% !important;
+	border-bottom: 1px solid #fff;
+	margin-right: 0px !important;
+	background: #333;
+	background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYlWNgYGCQwoKxgqGgcJA5h3yFAAs8BRWVSwooAAAAAElFTkSuQmCC);
+}
+
+

@@ -1,0 +1,166 @@
+//
+// The banner contains the MU shield and the site title image
+//
+
+.banner {
+	display: block;
+	position: relative; /* Must have position for absolute elements to work */
+	height: 120px;	
+	width: 100%;
+	margin-top: 0px;
+	.rem (margin-bottom,.75);
+}
+
+#missouri {
+
+	a {
+		position: absolute;
+		display: block;
+		height: 120px;
+		.rem(width, 15);	
+		text-decoration: none;
+		color: #000;
+		border: none;
+		
+		font-family: 'Janson';
+		font-weight: 200;
+		
+		overflow: hidden;
+		.transition8;
+	}	
+	
+	a:hover,
+	a:focus {
+		color: @brick;
+		.transition3;
+	}
+
+	/* Overide img styles from images.less */
+	img {
+		width: 108px !important;
+		max-width: 108px !important;
+		height: 62px !important;
+		max-height: 62px !important;
+	}
+
+	/* Frame the <image> */
+	.shield { 
+		position: absolute;
+		display: block;
+		left: 0;
+		.rem(top,.125);
+		width: 54px !important;
+		height:62px !important;
+		border: none;
+		overflow: hidden;
+		z-index: 99;
+		max-width: none;
+
+
+	} // end .shield
+	a:hover .shield,
+	a:focus .shield {
+		text-indent: -54px;
+	}
+
+	.text {
+		display: block;
+		width: 400px;
+		.rem(font-size,1) !important;
+		.space(padding, .25,.25,0,.25);
+		.space(margin, 4,.25,0,3.75);
+		.radius(.25,.25,.25,.25);
+		.transition8;
+
+		@media @mq-medium {
+			.rem(margin-top, 3.5);
+		} // end @media
+
+		@media @mq-small {
+			.rem(margin-top, 4.75);
+		} // end @media
+
+	}
+
+	a:hover .text,
+	a:focus .text {
+		background-color: rgba(255,255,255,.3);
+		.transition3;
+	}
+
+
+} // end #missouri
+
+#division { 
+	a {
+		display: inline-block;
+		text-decoration: none;
+		position: relative;
+		z-index: 100;
+		
+		.rem(font-size,1);
+		font-family: 'Janson';
+		font-weight: 200;
+		.space(padding, .25,.25,0,.25);
+		.space(margin, -.25,-.25,0,3.75);
+		
+		.radius(.25,.25,.25,.25);
+		.transition8;
+		
+		@media @mq-mobile {
+			width: auto;
+			margin-right: 48px;
+		} // end @media
+	
+	} // end a 
+	
+	a:hover,
+	a:focus {
+		background-color: rgba(255,255,255,.3);
+		color: @brick;
+		.transition3;
+	}
+	
+
+} // end #division
+
+
+#site-title { 
+
+	a {
+		display: inline-block;
+		text-decoration:none;
+		position: relative;
+		z-index: 100;
+		.rem(font-size,2);
+		font-family: 'Janson';
+		font-weight: 200;
+		overflow: hidden;
+
+		.space(padding, .5,.25,0,.25);
+		.space(margin, 0,-.25,0,3.75);
+
+		.radius(.25,.25,.25,.25);
+		.transition8;
+		
+		@media @mq-mobile {
+			.rem(font-size, 1.5);
+			.rem(margin-right,2.66666666667);
+			width: auto;
+		} // end @media
+		
+		@media @mq-medium {
+			.rem(font-size, 1.5);
+		} // end @media
+		
+	} // end a
+	a:hover,
+	a:focus {
+		background-color: rgba(255,255,255,.3);
+		color: @brick;
+		.transition3;
+	}
+
+} // end #site-title
+
+

@@ -1,0 +1,150 @@
+@mu-gold:		#F1B82D;
+@oldgold: 		#b38218;
+@charcoal:		#333;
+@ebony:			#222;
+@gray:			#555;
+@gray-light:	#DDDDDD;
+@smoke:			#f4f4f4;
+@brick:			#900000;
+
+@mu-gold-dark: 		darken(@mu-gold, 12%);
+@mu-gold-medium: 	lighten(@mu-gold, 15%);
+@mu-gold-light: 	lighten(@mu-gold, 35%);
+
+@box-shadow: 			0px 1px 8px @mu-gold-light;	
+@box-shadow-inset:		inset @box-shadow;
+
+@html_font_size: 18px;
+
+.rem (@name, @value)
+{
+   @{name}: unit(@value * @html_font_size, px);
+   @{name}: unit(@value, rem);
+}
+
+.space (@name, @value1, @value2, @value3, @value4) 
+{
+   @{name}-top: unit(@value1 * @html_font_size, px);
+   @{name}-right: unit(@value2 * @html_font_size, px);
+   @{name}-bottom: unit(@value3 * @html_font_size, px);
+   @{name}-left: unit(@value4 * @html_font_size, px);
+
+   @{name}-top: unit(@value1, rem);
+   @{name}-right: unit(@value2, rem);
+   @{name}-bottom: unit(@value3, rem);
+   @{name}-left: unit(@value4, rem);
+
+}
+
+
+.radius (@value1, @value2, @value3, @value4) 
+{
+	border-radius: 			unit(@value1 * @html_font_size, px) unit(@value2 * @html_font_size, px) unit(@value3 * @html_font_size, px) unit(@value4 * @html_font_size, px);
+	border-radius: 			unit(@value1, rem) unit(@value2, rem) unit(@value3, rem) unit(@value4, rem);
+	.background-clip();
+}
+
+/* Fonts */ 
+@sans: 			"proxima-nova", "Helvetica Neue", Arial, sans-serif;
+@mono:		 	"andale mono", "lucida console", monospace; 
+
+/* Font Weights */
+@light:			300; 
+@normal:		400;
+@bold:			700;
+
+
+.red {
+	border-top: 1px solid red;
+	border-bottom: 1px solid red;
+}
+
+.transition3 {
+	transition: .3s ease-out;	
+	transition-property: color, background, background-color, opacity, border;
+}
+
+.transition8 {
+	transition: .8s ease-in;		
+	transition-property: color, background, background-color, opacity, border;
+}
+
+
+.background-clip() {
+	background-clip: padding-box;
+}
+
+
+/*! Drop shadows */
+
+.box-shadow(@shadow: @box-shadow) {
+	box-shadow: 			@shadow;
+}
+
+.box-shadow-inset(@shadow: @box-shadow-inset) {
+	box-shadow: 			@shadow;
+}
+
+/*! Gradients */
+
+
+#gradient {
+	.vertical-3 (@bg: #000, @c1: #666, @cs1: 0%, @c2: #333, @cs2: 50%, @c3: #000, @cs3: 100% ) {
+		background: @bg; /* Old browsers */
+		background: -moz-linear-gradient(top, @c1 @cs1, @c2 @cs2, @c3 @cs3); /* FF 3.6+ */ 
+		background: -ms-linear-gradient(top, @c1 @cs1, @c2 @cs2, @c3 @cs3); /* IE10 */
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(@cs1, @c1), color-stop(@cs2, @c2), color-stop(@cs3, @c3)); /* Safari 4+, Chrome 2+ */
+		background: -webkit-linear-gradient(top, @c1 @cs1, @c2 @cs2, @c3 @cs3); /* Safari 5.1+, Chrome 10+ */
+		background: -o-linear-gradient(top, @c1 @cs1, @c2 @cs2, @c3 @cs3); /* Opera 11.10 */
+		background: linear-gradient(top, @c1 @cs1, @c2 @cs2, @c3 @cs3); /* the standard */
+	}
+}
+
+.nobullet {
+	list-style: none !important;
+	list-style-type: none !important;
+	margin-left: 0 !important;
+	padding-left: 0 !important;
+}
+
+.listfloat() {
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+/* #Clearing  */
+/* Use clearfix class on parent to clear nested columns, 
+or wrap each row of columns in a <div class="row"> */
+.clearfix:before,
+.clearfix:after {
+content: '\0020';
+display: block;
+overflow: hidden;
+visibility: hidden;
+width: 0;
+height: 0; }
+.clearfix:after {
+clear: both; }
+.clearfix {
+zoom: 1; }
+
+/* You can also use a <br class="clear" /> to clear columns */
+.clear {
+clear: both;
+display: block;
+overflow: hidden;
+visibility: hidden;
+width: 0;
+height: 0;
+}
+
+
+
+/* Media Break Points */
+@mq-full: 	~"screen and (max-width: 1120px)"; 
+@mq-medium: ~"screen and (min-width: 740px) and (max-width: 960px)";
+@mq-mobile: ~"screen and (max-width: 740px)";
+@mq-small: ~"only screen and (max-width: 385px)";
+

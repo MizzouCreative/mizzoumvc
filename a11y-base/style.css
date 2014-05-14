@@ -1,0 +1,11 @@
+/*
+Theme Name: A11y Base
+Theme URI: http://lifesciencesweek.missouri.edu/
+Description: Base Theme
+Author: Charlie Triplett, University of Missouri
+Author URI: http://universityaffairs.missouri.edu/department/web-communications/
+Version: 1.0
+*/
+
+@import url('styles/css/screen.css');
+@import url('styles/css/grid.css');

@@ -1,0 +1,125 @@
+$cols: 12;
+$gutter: 2%;
+$padding: 4%;
+
+$one_col: (100% - ($gutter * ($cols - 1)) - $gutter) / $cols;
+$one_padded_col: ((100% - ($gutter * ($cols - 1)) - ($padding * ($cols - 1))) / $cols);
+
+@mixin cols($num) {
+	width: ($one_col * $num) + ($gutter * ($num - 1));
+}
+
+@mixin padded_cols($num) {
+	width: ($one_col * $num) + ($gutter * ($num - 1)) - $padding ;
+	padding-left: $padding / 2;
+	padding-right: $padding / 2;
+}
+
+@mixin left_offset_cols($num) {
+	padding-left: ($padding / 2) + ($one_col * $num) + ($gutter * ($num - 1));
+}
+
+@mixin right_offset_cols($num) {
+	padding-right: ($padding / 2) + ($one_col * $num) + ($gutter * ($num - 1));
+}
+
+@mixin sub_cols($num_child, $num_parent) {
+	$parent_size: ($one_col * $num_parent) + ($gutter * ($num_parent - 1));
+	$child_size: ($one_col * $num_child) + ($gutter * ($num_child - 1));
+	margin-right: ($gutter / $parent_size) * 100% - ($gutter/2);
+	width: ($child_size / $parent_size) * 100% ;
+}
+
+@mixin padded_sub_cols($num_child, $num_parent) {
+	$parent_size: ($one_col * $num_parent) + ($gutter * ($num_parent - 1));
+	$child_size: ($one_col * $num_child) + ($gutter * ($num_child - 1));
+	padding-left: (100% / $parent_size) * ($padding / 2);
+	padding-right: (100% / $parent_size) * ($padding / 2);
+	margin-right: ($gutter / $parent_size) * 100% - ($gutter/2);
+	width: ($child_size / $parent_size) * 100% - $padding;
+}
+
+
+/* @group grid */
+.container {
+#{enumerate('.span', 1, $cols, '')} {
+	float: left;
+	margin-left: $gutter/2;
+	margin-right: $gutter/2;
+}
+	@for $i from 1 through $cols {
+		.span#{$i} {
+			@include cols($i);
+		}
+	@for $i from 1 through $cols {
+		.span#{$i}.pad {
+			@include padded_cols($i);
+		}
+	}
+		
+		.span#{$i} {
+			@for $j from 1 through ($i - 1) {
+				.span#{$j} {
+					@include sub_cols($j, $i);
+				
+    				@for $k from 1 through ($j - 1) {
+    				    .span#{$k} {
+    					    @include sub_cols($k, $j);
+    				    
+    				    }
+			        }   
+				}
+			}
+		}
+		
+			.span#{$i} {
+			@for $j from 1 through ($i - 1) {
+				.span#{$j}.pad {
+					@include padded_sub_cols($j, $i);
+				
+				}
+			}
+		}
+	}
+	
+}
+
+@for $i from 1 through $cols {
+	.left-offset#{$i} {
+		@include left_offset_cols($i);
+	}
+}	
+
+@for $i from 1 through $cols {
+	.right-offset#{$i} {
+		@include right_offset_cols($i);
+	}
+}	
+
+
+@media only screen and (max-width: 720px) {
+.container {
+#{enumerate('.span', 1, $cols, '')} {
+	float: left; 
+	margin-left: 4%; 
+	margin-right: 4%; 
+	width: 92%!important; 
+}
+	
+}
+
+}
+.alpha {
+    margin-left: 0 !important;
+}
+
+.omega {
+    margin-right: 0 !important;
+}
+
+
+.container {
+	margin: 0 auto;
+	max-width: 1120px;
+}
+/* @end */
