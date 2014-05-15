@@ -14,15 +14,17 @@
  * @version 201303281326
  */
 
-require dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php';
-require dirname(__FILE__).DIRECTORY_SEPARATOR.'class-MizzouPost.php';
-include 'functions/settings.php';
-include 'functions/post-types.php'; 
-include 'functions/menus.php';
-include 'functions/editor.php';
-include 'functions/childnav.php';
-include 'functions/shortcodes.php';
-include 'functions/widgets.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'class-PostMetaData.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'class-MizzouPost.php';
+
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'settings.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'post-types.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'menus.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'editor.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'childnav.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'shortcodes.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'widgets.php';
 
 
 function mizzou_setup(){
