@@ -21,10 +21,15 @@
  * @param string $strTaxField
  * @param string $strOrderBy
  * @param string $strOrderDirection
- * @return WP_Query
+ * @param bool $boolIncludeMeta
+ * @param string $strMetaPrefix
+ * @return array
  */
-function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',$strTaxTerm='',$strTaxField='slug',$strOrderBy='date',$strOrderDirection='DESC')
-{
+function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',$strTaxTerm='',$strTaxField='slug',
+        $strOrderBy='date',$strOrderDirection='DESC',$boolIncludeMeta = false,$strMetaPrefix=''
+) {
+    $aryReturn = array();
+
     $aryArgs = array(
         'post_type'     =>  $strPostType,
         'numberposts'   =>  $intCount,
@@ -32,7 +37,7 @@ function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',
         'order'         =>  $strOrderDirection
     );
 
-    if('' != $strTaxonomy && '' != $strRelatedTerm){
+    if('' != $strTaxonomy && '' != $strTaxTerm){
         $aryTaxQuery = array(
             'taxonomy'  => $strTaxonomy,
             'field'     => $strTaxField,
@@ -42,14 +47,33 @@ function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',
         $aryArgs = array_merge($aryArgs,array('tax_query'=>array($aryTaxQuery)));
     }
 
-    return new WP_Query($aryArgs);
+    $objQuery =  new WP_Query($aryArgs);
 
+    if (isset($objQuery->posts) && count($objQuery->posts) > 0){
+        foreach($objQuery->posts as $objPost){
+            $objMizzouPost = new MizzouPost($objPost);
+            if($boolIncludeMeta){
+                $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$strMetaPrefix);
+            }
+
+            $aryReturn[] = $objMizzouPost;
+        }
+    }
+
+    return $aryReturn;
 
 }
 
-function mizzouIppRetrieveRelatedPublications($strTerm){
+function mizzouIppRetrieveRelatedPublications($strTerm)
+{
     $intNumber = 4; //this needs to be retrieved from config variable or theme option
     return mizzouRetrieveRelatedContent('publication',$intNumber,'policy_area',$strTerm);
+}
+
+function mizzouIppRetrieveRelatedProjects($strTerm)
+{
+    $intNumber = 4; //this needs to be retrieved from config variable or theme option
+    return mizzouRetrieveRelatedContent('project',$intNumber,'policy_area',$strTerm);
 }
 
 /**
@@ -61,7 +85,9 @@ function mizzouIppRetrieveRelatedPublications($strTerm){
  */
 
 $strPageContent = apply_filters('the_content',get_the_content());
+$aryRelatedPublications = mizzouIppRetrieveRelatedPublications('education');
+$aryRelatedProjects = mizzouIppRetrieveRelatedProjects('education');
 
 get_header();
-var_export(mizzouIppRetrieveRelatedPublications('education'));
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'policy-area.php';
 get_footer();

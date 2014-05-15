@@ -14,7 +14,8 @@
  * @version 201303281326
  */
 
-require dirname(__FILE__).'/config.php';
+require dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php';
+require dirname(__FILE__).DIRECTORY_SEPARATOR.'class-MizzouPost.php';
 include 'functions/settings.php';
 include 'functions/post-types.php'; 
 include 'functions/menus.php';
