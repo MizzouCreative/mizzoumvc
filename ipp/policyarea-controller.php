@@ -136,6 +136,5 @@ $objMainContact = mizzouIppRetrieveContact('education');
 
 get_header();
 get_sidebar();
-breadcrumbs(); //this is from Mizzou Breadcrumbs plugin.
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'policy-area.php';
 get_footer();
