@@ -15,6 +15,7 @@
  */
 
 require dirname(__FILE__).'/config.php';
+require dirname(__FILE__).'class-MizzouPost.php';
 include 'functions/settings.php';
 include 'functions/post-types.php'; 
 include 'functions/menus.php';
