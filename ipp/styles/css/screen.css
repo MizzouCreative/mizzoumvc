@@ -1889,6 +1889,12 @@ Interface Elements
   margin-bottom: 0px;
   margin-bottom: 0rem;
 }
+.menu a {
+  display: block;
+  text-decoration: none;
+  transition: 0.3s ease-out;
+  transition-property: color, background, background-color, opacity, border;
+}
 .menu-wrapper {
   background: #fcf1d4;
   background-color: #f1b82d;
@@ -1907,18 +1913,6 @@ Interface Elements
   background: linear-gradient(top, #ffffff 40%, #ffffff 86%, #ffffff 100%);
   /* the standard */
   /* Primary Nav */
-  /* Audience Nav */
-}
-.menu-wrapper .menu a {
-  display: block;
-  text-decoration: none;
-  transition: 0.3s ease-out;
-  transition-property: color, background, background-color, opacity, border;
-}
-.menu-wrapper .a-z {
-  float: right;
-  display: block;
-  line-height: 44px;
 }
 .menu-wrapper .menu-primary li {
   display: block;
@@ -1970,69 +1964,6 @@ Interface Elements
   padding-left: 13.5px;
   padding-left: 0.75rem;
 }
-.menu-wrapper .menu-audience-container {
-  position: relative;
-}
-.menu-wrapper .menu-audience {
-  position: absolute;
-  display: block;
-  top: 0;
-  right: 0;
-  margin-bottom: 0px;
-  margin-bottom: 0rem;
-  padding-left: 18px;
-  padding-left: 1rem;
-}
-.menu-wrapper .menu-audience .label {
-  color: #555555;
-  display: block;
-  margin: 0;
-  font-weight: 300;
-  padding-top: 22.5px;
-  padding-right: 9px;
-  padding-bottom: 0px;
-  padding-left: 18px;
-  padding-top: 1.25rem;
-  padding-right: 0.5rem;
-  padding-bottom: 0rem;
-  padding-left: 1rem;
-}
-.menu-wrapper .menu-audience li {
-  font-weight: 400;
-  display: block;
-  float: left;
-  margin: 0;
-  padding: 0;
-}
-.menu-wrapper .menu-audience a {
-  padding-top: 22.5px;
-  padding-right: 13.5px;
-  padding-bottom: 18px;
-  padding-left: 13.5px;
-  padding-top: 1.25rem;
-  padding-right: 0.75rem;
-  padding-bottom: 1rem;
-  padding-left: 0.75rem;
-  font-weight: 400;
-  color: #333333;
-  border-radius: 0px 0px 9px 9px;
-  border-radius: 0rem 0rem 0.5rem 0.5rem;
-  background-clip: padding-box;
-  background: url('../../images/dip.png') center top no-repeat;
-}
-.menu-wrapper .menu-audience a:hover,
-.menu-wrapper .menu-audience a:focus {
-  background-color: #fcf1d4;
-  background-color: rgba(255, 255, 255, 0.4);
-}
-.menu-wrapper .menu-audience li:nth-child(2) a {
-  padding-left: 7.2px;
-  padding-left: 0.4rem;
-}
-.menu-wrapper .menu-audience li:last-child a {
-  margin-right: -13.5px;
-  margin-right: -0.75rem;
-}
 @media screen and (min-width: 740px) and (max-width: 960px) {
   .menu-wrapper .menu-primary a {
     margin-top: 0px;
@@ -2051,6 +1982,58 @@ Interface Elements
   .menu-wrapper .menu-primary li.current_page_item a {
     border-top: 1px solid #fff;
   }
+}
+/* Audience Nav */
+.menu-secondary-container {
+  position: relative;
+}
+.menu-secondary-container .menu-secondary {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  margin-bottom: 0px;
+  margin-bottom: 0rem;
+  padding-left: 18px;
+  padding-left: 1rem;
+}
+.menu-secondary-container .menu-secondary li {
+  font-weight: 400;
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  margin-left: 9px;
+  margin-left: 0.5rem;
+}
+.menu-secondary-container .menu-secondary a {
+  padding-top: 22.5px;
+  padding-right: 13.5px;
+  padding-bottom: 18px;
+  padding-left: 13.5px;
+  padding-top: 1.25rem;
+  padding-right: 0.75rem;
+  padding-bottom: 1rem;
+  padding-left: 0.75rem;
+  font-weight: 400;
+  color: #333333;
+  border-radius: 0px 0px 9px 9px;
+  border-radius: 0rem 0rem 0.5rem 0.5rem;
+  background-clip: padding-box;
+  background: url('../../images/dip.png') center top no-repeat;
+}
+.menu-secondary-container .menu-secondary a:hover,
+.menu-secondary-container .menu-secondary a:focus {
+  background-color: #fcf1d4;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.menu-secondary-container .menu-secondary li:nth-child(2) a {
+  padding-left: 7.2px;
+  padding-left: 0.4rem;
+}
+.menu-secondary-container .menu-secondary li:last-child a {
+  margin-right: -13.5px;
+  margin-right: -0.75rem;
 }
 /* Breadcrumbs */
 .breadcrumb-wrapper {
@@ -2597,20 +2580,23 @@ ol.categories li:last-child a {
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
 }
-ol.calendar {
-  margin: 0 !important;
-  margin-top: 18px !important;
-  margin-top: 1rem !important;
+#content .calendar,
+.calendar {
+  margin: 0;
+  margin-top: 18px;
+  margin-top: 1rem;
 }
-ol.calendar li ol {
-  margin: 0 !important;
+#content .calendar li ol,
+.calendar li ol {
+  margin: 0;
 }
-ol.calendar li {
-  list-style: none !important;
-  display: block !important;
-  margin: 0 !important;
+#content .calendar li,
+.calendar li {
+  list-style: none;
+  display: block;
+  margin: 0;
 }
-li.calendar-item {
+.calendar-item {
   position: relative;
   display: block;
   clear: both;
@@ -2618,8 +2604,8 @@ li.calendar-item {
   padding-bottom: 18px;
   padding-bottom: 1rem;
 }
-a.mu-event-link {
-  border-top: 1px solid #dddddd;
+a.event-link {
+  border-top: 7px solid #ccc;
   text-decoration: none !important;
   display: block;
   font-weight: 300;
@@ -2638,13 +2624,13 @@ a.mu-event-link {
   transition: 0.8s ease-in;
   transition-property: color, background, background-color, opacity, border;
 }
-a.mu-event-link:hover,
-a.mu-event-link:focus {
-  border-top: 1px solid #900000;
+a.event-link:hover,
+a.event-link:focus {
+  border-top: 7px solid #900000;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
 }
-a.mu-event-link .mu-event-title {
+a.event-link .event-title {
   font-size: 20.25px;
   font-size: 1.125rem;
   margin-bottom: 9px;
@@ -2656,31 +2642,20 @@ a.mu-event-link .mu-event-title {
   transition: 0.8s ease-in;
   transition-property: color, background, background-color, opacity, border;
 }
-#content a.mu-event-link .mu-event-title {
+#content a.event-link .event-title {
   font-weight: 700;
 }
-a.mu-event-link:hover .mu-event-title,
-a.mu-event-link:focus .mu-event-title {
+a.event-link:hover .event-title,
+a.event-link:focus .event-title {
   color: #000;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
 }
-.mu-event-link,
-.mu-event-title,
-.mu-event-description,
-.mu-event-location {
-  display: block;
+.event-link,
+.event-title,
+.event-description,
+.event-location {
   padding-right: 90px;
-  color: #555555;
-}
-.mu-event-description {
-  font-weight: 400 !important;
-}
-.mu-event-location {
-  padding-top: 9px;
-  padding-top: 0.5rem;
-  font-weight: 400 !important;
-  color: #555555;
 }
 .calendar-icon {
   margin-left: 18px;
@@ -2728,8 +2703,8 @@ a.mu-event-link:focus .mu-event-title {
   transition: 0.8s ease-in;
   transition-property: color, background, background-color, opacity, border;
 }
-a.mu-event-link:hover .calendar-month,
-a.mu-event-link:focus .calendar-month {
+a.event-link:hover .calendar-month,
+a.event-link:focus .calendar-month {
   background: #900000;
   /* fallback color */
   transition: 0.3s ease-out;
@@ -2753,10 +2728,19 @@ a.mu-event-link:focus .calendar-month {
   line-height: 27px;
   line-height: 1.5rem;
 }
+.location {
+  width: 64%;
+  font-size: 13.5px;
+  font-size: 0.75rem;
+}
+.event-description {
+  font-weight: 400 !important;
+  color: #555555;
+}
 .calendar-full a {
   text-decoration: none;
-  border-radius: 4.5px 4.5px 4.5px 4.5px;
-  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+  border-radius: 9px 9px 9px 9px;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
   background-clip: padding-box;
   background: #dddddd;
   padding-top: 9px;
@@ -2771,8 +2755,7 @@ a.mu-event-link:focus .calendar-month {
   transition-property: color, background, background-color, opacity, border;
   color: #555555;
 }
-.calendar-full a:hover,
-.calendar-full a:focus {
+.calendar-full a:hover {
   background: #fcf1d4;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
