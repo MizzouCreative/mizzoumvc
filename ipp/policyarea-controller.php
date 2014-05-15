@@ -51,6 +51,8 @@ function mizzouRetrieveRelatedContent($aryOptions) {
         $aryArgs = array_merge($aryArgs,array('tax_query'=>$aryOptions['complex_tax']));
     }
 
+    _mizzou_log($aryArgs,'args i\'m getting ready to hand to WP_Query');
+
     $objQuery =  new WP_Query($aryArgs);
 
     if (isset($objQuery->posts) && count($objQuery->posts) > 0){
