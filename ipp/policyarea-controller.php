@@ -57,7 +57,7 @@ function mizzouRetrieveRelatedContent($aryOptions) {
         foreach($objQuery->posts as $objPost){
             $objMizzouPost = new MizzouPost($objPost);
             if($aryOptions['include_meta']){
-                $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$strMetaPrefix);
+                $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix']);
             }
 
             $aryReturn[] = $objMizzouPost;
@@ -136,6 +136,6 @@ $objMainContact = mizzouIppRetrieveContact('education');
 
 get_header();
 get_sidebar();
-getbreadcrumbs(); //this is from Mizzou Breadcrumbs plugin.
+breadcrumbs(); //this is from Mizzou Breadcrumbs plugin.
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'policy-area.php';
 get_footer();
