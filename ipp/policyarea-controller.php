@@ -132,9 +132,9 @@ function mizzouIppRetrieveContact($strTerm)
  */
 
 $objMainPost = new MizzouPost($post);
-$aryRelatedPublications = mizzouIppRetrieveRelatedPublications($post->name);
-$aryRelatedProjects = mizzouIppRetrieveRelatedProjects($post->name);
-$objMainContact = mizzouIppRetrieveContact($post->name);
+$aryRelatedPublications = mizzouIppRetrieveRelatedPublications($post->post_name);
+$aryRelatedProjects = mizzouIppRetrieveRelatedProjects($post->post_name);
+$objMainContact = mizzouIppRetrieveContact($post->post_name);
 
 get_header();
 get_sidebar();
