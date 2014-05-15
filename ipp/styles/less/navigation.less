@@ -87,6 +87,14 @@
 	.rem (margin-bottom,0);
 }
 
+
+
+.menu a {
+		display: block;
+		text-decoration: none;
+  	.transition3;
+	}
+
 .menu-wrapper {
 	background: @mu-gold-light;
 
@@ -98,23 +106,10 @@
 		#fff, 100% 
 	);
 
-
-   	.menu a {
-		display: block;
-		text-decoration: none;
-		.transition3;
-	}
-	
-	.a-z {
-		float: right;
-		display: block;
-		line-height: 44px;
-	}
-	
+		
 	.menu-primary li {
 		.listfloat;
 	}
-
 
 	/* Primary Nav */
 	.menu-primary a {
@@ -165,56 +160,7 @@
 		.menu-primary .current_page_item a:hover,
 		.menu-primary .current_page_item a:focus {
 		}
-
-	/* Audience Nav */
-	.menu-audience-container {
-		position: relative;
-	}
-
-	.menu-audience {
-		position: absolute;
-		display: block;
-		top: 0;
-		right: 0;
-		.rem (margin-bottom,.0);
-		.rem (padding-left,1);
-	}
-
-	.menu-audience .label {
-		color: @gray;
-		display: block;
-		margin: 0;
-		font-weight: @light;
-		.space (padding, 1.25, .5, 0, 1);		
-	}
-
-
-	.menu-audience li {
-		font-weight: @normal;
-		.listfloat;
-	}
-
-
-	.menu-audience a {
-		.space (padding, 1.25, .75, 1, .75);
-		font-weight: @normal;
-		color: @charcoal;
-		.radius(0,0,.5,.5);
- 		background: url('../../images/dip.png') center top no-repeat;
-	}
-	
-	.menu-audience a:hover,
-	.menu-audience a:focus {
-		background-color: @mu-gold-light;
-		background-color: rgba(255,255,255,.4);	
-	}
-
-	.menu-audience li:nth-child(2) a {
-		.rem (padding-left,.4);
-	}
-	.menu-audience li:last-child a {
-		.rem (margin-right,-.75);
-	}
+		
 
 @media @mq-medium {
 
@@ -237,7 +183,53 @@
 	} // end mq-medium
 
 
+
+
 } // end #header
+
+
+	/* Audience Nav */
+	.menu-secondary-container {
+		position: relative;
+
+	.menu-secondary {
+		position: absolute;
+		display: block;
+		top: 0;
+		right: 0;
+		.rem (margin-bottom,.0);
+		.rem (padding-left,1);
+
+		li {
+			font-weight: @normal;
+			.listfloat;
+			.rem(margin-left, .5);
+		}
+
+		a {
+			.space (padding, 1.25, .75, 1, .75);
+			font-weight: @normal;
+			color: @charcoal;
+			.radius(0,0,.5,.5);
+	 		background: url('../../images/dip.png') center top no-repeat;
+		}
+	
+		a:hover,
+		a:focus {
+			background-color: @mu-gold-light;
+			background-color: rgba(255,255,255,.4);	
+		}
+
+		li:nth-child(2) a {
+			.rem (padding-left,.4);
+		}
+		li:last-child a {
+			.rem (margin-right,-.75);
+		}
+		
+	} // end .menu-secondary
+
+} // end .menu-secondary-container 
 
 
 /* Breadcrumbs */

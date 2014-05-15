@@ -84,13 +84,13 @@
 
 			
 				<div class="span6">
-                <div>
-                    <?php wp_nav_menu( array(
-                        'theme_location' => 'audience',
-                        'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
-                    ) ); ?>
-                </div>
 					<?php get_search_form(); ?>
+
+            <?php wp_nav_menu( array(
+                'theme_location' => 'audience',
+                'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
+            ) ); ?>
+
 				</div> <!-- end span6 -->
 
 	</div> <!-- end .container #header -->
