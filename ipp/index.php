@@ -22,7 +22,7 @@
 		<article role="article"> 
 
 		<div class="span4">
-			<?php dynamic_sidebar('home_left')  ?>
+
 		</div>
 
 <?php  // get total # of abstracts for Monday 
