@@ -64,9 +64,16 @@ function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',
 
 }
 
-function mizzouIppRetrieveRelatedPublications($strTerm){
+function mizzouIppRetrieveRelatedPublications($strTerm)
+{
     $intNumber = 4; //this needs to be retrieved from config variable or theme option
     return mizzouRetrieveRelatedContent('publication',$intNumber,'policy_area',$strTerm);
+}
+
+function mizzouIppRetrieveRelatedProjects($strTerm)
+{
+    $intNumber = 4; //this needs to be retrieved from config variable or theme option
+    return mizzouRetrieveRelatedContent('project',$intNumber,'policy_area',$strTerm);
 }
 
 /**
@@ -78,7 +85,9 @@ function mizzouIppRetrieveRelatedPublications($strTerm){
  */
 
 $strPageContent = apply_filters('the_content',get_the_content());
+$aryRelatedPublications = mizzouIppRetrieveRelatedPublications('education');
+$aryRelatedProjects = mizzouIppRetrieveRelatedProjects('education');
 
 get_header();
-echo '<pre>',var_export(mizzouIppRetrieveRelatedPublications('education'),true),'</pre>';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'policy-area.php';
 get_footer();
