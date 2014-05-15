@@ -87,5 +87,5 @@ $slides = new WP_Query( $slide_args ); ?>
 	
 
 
-	
-<?php get_footer(); ?>
+<!-- using file : <?php echo (__FILE__); ?> -->
+<?php get_footer();
