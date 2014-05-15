@@ -117,7 +117,7 @@ function mizzouIppRetrieveContact($strTerm)
     $aryMatches = mizzouRetrieveRelatedContent($aryArgs);
 
     if(count($aryMatches) !== 1) //@todo throw an exception, log it, something!
-
+    _mizzou_log($aryMatches,'Array Matches',false,array('func'=>__FUNCTION__));
     return $aryMatches[0];
 }
 
