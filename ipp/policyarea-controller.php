@@ -21,10 +21,15 @@
  * @param string $strTaxField
  * @param string $strOrderBy
  * @param string $strOrderDirection
- * @return WP_Query
+ * @param bool $boolIncludeMeta
+ * @param string $strMetaPrefix
+ * @return array
  */
-function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',$strTaxTerm='',$strTaxField='slug',$strOrderBy='date',$strOrderDirection='DESC')
-{
+function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',$strTaxTerm='',$strTaxField='slug',
+        $strOrderBy='date',$strOrderDirection='DESC',$boolIncludeMeta = false,$strMetaPrefix=''
+) {
+    $aryReturn = array();
+
     $aryArgs = array(
         'post_type'     =>  $strPostType,
         'numberposts'   =>  $intCount,
@@ -32,7 +37,7 @@ function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',
         'order'         =>  $strOrderDirection
     );
 
-    if('' != $strTaxonomy && '' != $strRelatedTerm){
+    if('' != $strTaxonomy && '' != $strTaxTerm){
         $aryTaxQuery = array(
             'taxonomy'  => $strTaxonomy,
             'field'     => $strTaxField,
@@ -42,8 +47,20 @@ function mizzouRetrieveRelatedContent($strPostType,$intCount=-1,$strTaxonomy='',
         $aryArgs = array_merge($aryArgs,array('tax_query'=>array($aryTaxQuery)));
     }
 
-    return new WP_Query($aryArgs);
+    $objQuery =  new WP_Query($aryArgs);
 
+    if (isset($objQuery->posts) && count($objQuery->posts) > 0){
+        foreach($objQuery->posts as $objPost){
+            $objMizzouPost = new MizzouPost($objPost);
+            if($boolIncludeMeta){
+                $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$strMetaPrefix);
+            }
+
+            $aryReturn[] = $objMizzouPost;
+        }
+    }
+
+    return $aryReturn;
 
 }
 
