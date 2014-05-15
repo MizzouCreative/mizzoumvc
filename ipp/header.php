@@ -86,7 +86,7 @@
 				<div class="span6">
                 <div>
                     <?php wp_nav_menu( array(
-                        'theme_location' => 'primary',
+                        'theme_location' => 'audience',
                         'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
                     ) ); ?>
                 </div>
@@ -104,7 +104,10 @@
 		<div class="container">
 
 			<div class="menu-container span12">
-                <?php dynamic_sidebar('home_left')  ?>
+                <?php wp_nav_menu( array(
+                    'theme_location' => 'primary',
+                    'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
+                ) ); ?>
             </div>
 		
 		</div>
