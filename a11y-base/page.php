@@ -83,5 +83,5 @@ if ( is_user_logged_in() ) {
 
 </div> <!-- end .eight .spans -->
 
-
-<?php get_footer(); ?>
+<!-- using file: <?php echo(__FILE__); ?> -->
+<?php get_footer();
