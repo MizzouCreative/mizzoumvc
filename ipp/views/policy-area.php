@@ -68,7 +68,3 @@
         </div>
     </main>
 </div>
-<p>Main Staff Contact:</p>
-<pre>
-<?php print_r($objMainContact); ?>
-</pre>
