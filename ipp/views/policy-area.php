@@ -21,7 +21,7 @@
         <div id="content">
             <article role="article">
                 <header>
-                    <h1 id="title"><?php echo $objMainPost->title; ?></h1>
+                    <h1 id="title"><?php echo $objMainPost->title, ' ',edit_post_link('Edit'); ?></h1>
                 </header>
                 <section aria-label="content" role="region">
                     <?php echo $objMainPost->content; ?>
