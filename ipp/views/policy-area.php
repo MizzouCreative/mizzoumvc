@@ -68,58 +68,6 @@
         </div>
     </main>
 </div>
-<main id="main" role="main">
-    <div id="content">
-        <article role="article">
-            <header>
-                <h1 id="title"><?php echo $objMainPost->title; ?></h1>
-            </header>
-            <section aria-label="content" role="region">
-                <?php echo $objMainPost->content; ?>
-            </section>
-
-
-
-            <?php if (count($aryRelatedPublications) > 0) : ?>
-            <section>
-                <h3>Related Publications:</h3>
-                <ul>
-                    <?php foreach ($aryRelatedPublications as $objPublication) : ?>
-                    <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
-                    <?php endforeach;?>
-                </ul>
-            </section>
-            <?php endif; ?>
-
-            <?php if (count($aryRelatedProjects) > 0) : ?>
-                <section>
-                    <h3>Related Projects:</h3>
-                    <ul>
-                        <?php foreach ($aryRelatedProjects as $objProject) : ?>
-                            <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
-                        <?php endforeach;?>
-                    </ul>
-                </section>
-            <?php endif; ?>
-
-            <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
-                <section>
-                    <h3><?php echo $objMainPost->title; ?> Contact:</h3>
-                    <p>
-                        Name: <?php echo $objMainContact->title; ?><br>
-                        Title: <?php echo $objMainContact->meta_data->title1; ?><br>
-                        Address: <?php echo $objMainContact->meta_data->address1; ?><br>
-                        Email: <a href="mailto:<?php echo $objMainContact->meta_data->email; ?>"><?php echo $objMainContact->meta_data->email; ?></a><br>
-                        Phone: <?php echo $objMainContact->meta_data->phone;?>
-                    </p>
-                </section>
-            <?php endif; ?>
-
-        </article>
-    </div>
-</main>
-
-
 <p>Main Staff Contact:</p>
 <pre>
 <?php print_r($objMainContact); ?>
