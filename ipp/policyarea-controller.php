@@ -63,5 +63,5 @@ function mizzouIppRetrieveRelatedPublications($strTerm){
 $strPageContent = apply_filters('the_content',get_the_content());
 
 get_header();
-var_export(mizzouIppRetrieveRelatedPublications('education'));
+echo '<pre>',var_export(mizzouIppRetrieveRelatedPublications('education'),true),'</pre>';
 get_footer();
