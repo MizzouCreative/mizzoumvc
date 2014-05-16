@@ -25,10 +25,16 @@
  * 4 publications, link to all pubs
  */
 
+/**
+ * get our model
+ * @todo move this higher up
+ */
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.basename(__FILE__);
+
 $aryData = array();
 $aryData['objMainPost'] = new MizzouPost($post);
-$aryData['aryRelatedPublications'] = mizzouIppRetrieveRelatedPublications($post->post_name);
-$aryData['aryRelatedProjects'] = mizzouIppRetrieveRelatedProjects($post->post_name);
 $aryData['objMainContact'] = mizzouIppRetrieveContact($post->post_name);
+mizzouRetrieveProjectData($post->post_name,$aryData);
+mizzouRetrievePublicationData($post->post_name,$aryData);
 
 mizzouOutPutView('policy-area',$aryData);
