@@ -6,6 +6,9 @@
 /**
  * @param $aryOptions
  * @return array
+ * @uses PostMetaData
+ * @uses WP_Query
+ *
  */
 function mizzouRetrieveRelatedContent($aryOptions) {
     $aryDefaults = array(
@@ -58,6 +61,18 @@ function mizzouRetrieveRelatedContent($aryOptions) {
     }
 
     return $aryReturn;
+
+}
+
+/**
+ * @uses breadcrumbs() from Mizzou Breadcrumbs plugin
+ * @return string
+ */
+function mizzouRetrieveBreadCrumbData()
+{
+    ob_start();
+    breadcrumbs();
+    return ob_get_flush();
 
 }
 ?>
