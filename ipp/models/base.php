@@ -75,4 +75,15 @@ function mizzouRetrieveBreadCrumbData()
     return ob_get_flush();
 
 }
+
+function mizzouConvertPosts($aryPosts)
+{
+    $aryReturn = array();
+    foreach($aryPosts as $objPost){
+        $aryReturn[] = new MizzouPost($objPost);
+    }
+
+    return $aryReturn;
+}
+
 ?>
