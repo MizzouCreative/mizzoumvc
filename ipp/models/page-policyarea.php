@@ -69,3 +69,15 @@ function mizzouIppRetrieveContact($strTerm)
         _mizzou_log($aryMatches,'Array Matches',false,array('func'=>__FUNCTION__));
     return $aryMatches[0];
 }
+
+function mizzouRetrievePublicationData($strTerm,&$aryData)
+{
+    $aryData['strPublicationArchiveURL'] = get_post_type_archive_link('publication');
+    $aryData['aryRelatedPublications'] = mizzouIppRetrieveRelatedProjects($strTerm);
+}
+
+function mizzouRetrieveProjectData($strTerm,&$aryData)
+{
+    $aryData['strProjectArchiveURL'] = get_post_type_archive_link('project');
+    $aryData['aryRelatedProjects'] = mizzouIppRetrieveRelatedProjects($strTerm);
+}
