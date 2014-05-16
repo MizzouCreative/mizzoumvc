@@ -31,6 +31,7 @@ function mizzouIppProjectShortcode($aryAttributes)
     require_once $strTemplatePath.'models'.DIRECTORY_SEPARATOR.'project.php';
 
     $aryProjects = mizzouIppRetrieveProjects($aryAttributes['count']);
+    _mizzou_log($aryProjects,'contents of aryProjects');
     $strTitle = 'Recent Projects';
     ob_start();
     require_once $strTemplatePath . 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
