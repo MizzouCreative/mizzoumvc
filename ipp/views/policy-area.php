@@ -15,8 +15,6 @@
  * You do not need to call get_header() and get_footer
  */
 ?>
-<div class="flex span7">
-    <?php breadcrumbs(); //@todo this needs to moved out of here. REFACTOR. ?>
     <main id="main" role="main">
         <div id="content">
             <article role="article">
@@ -66,5 +64,4 @@
 
             </article>
         </div>
-    </main>
-</div>
+    </main>s
