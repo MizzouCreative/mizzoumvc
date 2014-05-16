@@ -24,8 +24,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     breadcrumbs();
     $strBreadCrumbs = ob_get_clean();
 
-    $strThemePath = get_template_directory() . DIRECTORY_SEPARATOR;
-    $strViewsPath = $strThemePath.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
+    $strThemePath = mizzouDeterminePathToTheme();
+    $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
     $strInnerView = $strViewsPath . $strInnerViewFileName . '.php';
     //get contents from the inner view
     if(file_exists($strInnerView)){
@@ -42,4 +42,16 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     get_sidebar();
     require_once $strViewsPath . 'outerView.php';
     get_footer();
+}
+
+function mizzouDeterminePathToTheme()
+{
+    $strReturn = '';
+    if(is_child_theme()){
+        $strReturn = get_stylesheet_directory();
+    } else {
+        $strReturn = get_template_directory();
+    }
+
+    return $strReturn . DIRECTORY_SEPARATOR;
 }
