@@ -4,6 +4,9 @@
  *
  */
 
+//pull in the base model
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
+
 /**
  * @param $strTerm
  * @return array
