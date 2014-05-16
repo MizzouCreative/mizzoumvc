@@ -18,5 +18,5 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 //@todo move this up higher as well
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
 $aryData = array();
-
+global $WP_Query;s
 var_export($WP_Query);
