@@ -18,18 +18,17 @@
 
 /**
  * Data needed by the view
+ * breadcrumbs
  * default content for the page
  * 4 related projects, link to all projects
  * 1 main contact
  * 4 publications, link to all pubs
  */
 
-$objMainPost = new MizzouPost($post);
-$aryRelatedPublications = mizzouIppRetrieveRelatedPublications($post->post_name);
-$aryRelatedProjects = mizzouIppRetrieveRelatedProjects($post->post_name);
-$objMainContact = mizzouIppRetrieveContact($post->post_name);
+$aryData = array();
+$aryData['objMainPost'] = new MizzouPost($post);
+$aryData['aryRelatedPublications'] = mizzouIppRetrieveRelatedPublications($post->post_name);
+$aryData['aryRelatedProjects'] = mizzouIppRetrieveRelatedProjects($post->post_name);
+$aryData['objMainContact'] = mizzouIppRetrieveContact($post->post_name);
 
-get_header();
-get_sidebar();
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'policy-area.php';
-get_footer();
+mizzouOutPutView('policy-area',$aryData);
