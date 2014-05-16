@@ -7,6 +7,7 @@
  */
 
 ?>
+<?php if(isset($aryProjects) && is_array($aryProjects) && count($aryProjects) > 0) :?>
     <?php if (isset($strTitle) && $strTitle != ''): ?>
     <h4><?php echo $strTitle; ?></h4>
     <?php endif; ?>
@@ -17,3 +18,4 @@
             </li>
         <?php endforeach; ?>
     </ul>
+<?php endif;
