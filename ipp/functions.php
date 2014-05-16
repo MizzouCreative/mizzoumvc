@@ -1,13 +1,24 @@
 <?php
-//handle to add custom post type 
-add_action('init', 'quote_post_type_init');
 
-//callback function
-function quote_post_type_init() 
+
+/**
+ * @todo figure out a way to dynamically load all files in the helpers dir
+ */
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'paths.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'shortcodes.php';
+
+/**
+ *
+ */
+function mizzouIppInit()
 {
-	quote_init();
-	modify_post_type();
+    quote_init(); //is this still needed
 }
+//handle to add custom post type 
+
+/**
+ *
+ */
 function quote_init()
 {
 //labels for the UI for the custom post type
@@ -40,4 +51,6 @@ function quote_init()
   ); 
   register_post_type('quote',$args);
 }
+
+add_action('init', 'mizzouIppInit');
 ?>
