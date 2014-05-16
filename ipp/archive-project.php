@@ -19,4 +19,10 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
 $aryData = array();
 global $wp_query;
-var_export($wp_query);
+$aryProjects = mizzouConvertPosts($wp_query->posts);
+//we need to get the contents from the loop view
+ob_start();
+require_once 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
+$aryData['strLoopContent'] = ob_get_clean();
+$aryData['strPageTitle'] = post_type_archive_title();
+mizzouOutPutView('archive-project',$aryData);
