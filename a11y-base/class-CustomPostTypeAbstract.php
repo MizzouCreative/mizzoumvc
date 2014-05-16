@@ -13,7 +13,7 @@
 */
 abstract class CustomPostType {
     /**
-    * Stores the base data we need to access post reformatting
+    * Stores the base.php data we need to access post reformatting
     * 
     * @var array
     */
