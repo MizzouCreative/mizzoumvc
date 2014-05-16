@@ -1,7 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Model for pages using the policy area template
  *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ * @uses is_user_logged_in()
+ * @uses comments_template()
+ * @todo move function calls out of this view
  */
 
 //pull in the base model

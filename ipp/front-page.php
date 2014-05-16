@@ -6,7 +6,7 @@
  *
  *
  * @package WordPress
- * @subpackage SITENAME
+ * @subpackage IPP
  * @category theme
  * @category template
  * @author Charlie Triplett, Web Communications, University of Missouri

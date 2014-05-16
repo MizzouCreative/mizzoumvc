@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Frank
- * Date: 5/16/14
- * Time: 12:36 PM
+ * Controller for the archive of Person CPTs
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category controller
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 ?>
 <p>Archive of Persons</p>

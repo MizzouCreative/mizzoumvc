@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Frank
- * Date: 5/16/14
- * Time: 9:31 AM
+ * Helper for outputting the different view files that make up a page
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category helper
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 /**
