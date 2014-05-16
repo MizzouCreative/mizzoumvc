@@ -1,6 +1,8 @@
 <?php
 /**
- *
+ * @uses is_user_logged_in()
+ * @uses comments_template()
+ * @todo move function calls out of this view
  */
 ?>
 <div class="flex span7">
