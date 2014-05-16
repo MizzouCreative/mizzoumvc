@@ -22,7 +22,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //get the contents for the breadcrumbs
     ob_start();
     breadcrumbs();
-    $strBreadCrumbs = ob_get_clean();
+    $strBreadCrumbs = ob_get_contents();
+    ob_clean();
 
     $strThemePath = mizzouDeterminePathToTheme();
     $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
