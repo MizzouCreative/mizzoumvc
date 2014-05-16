@@ -33,7 +33,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         require_once $strInnerView;
         $strInnerViewContents = ob_get_clean();
     } else {
-        $strInnerView = '<p>Unable to retrieve inner view.</p>';
+        $strInnerViewContents = '<p>Unable to retrieve inner view.</p>';
     }
 
     ob_end_clean();
