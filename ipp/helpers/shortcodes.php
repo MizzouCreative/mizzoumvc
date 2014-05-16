@@ -33,7 +33,7 @@ function mizzouIppProjectShortcode($aryAttributes)
     $aryProjects = mizzouIppRetrieveProjects($aryAttributes['count']);
     $strTitle = 'Recent Projects';
     ob_start();
-    $strTemplatePath . 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
+    require_once $strTemplatePath . 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
     return ob_get_clean();
 }
 
