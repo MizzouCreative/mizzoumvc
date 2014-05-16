@@ -28,7 +28,7 @@ function mizzouIppProjectShortcode($aryAttributes)
 
     $strTemplatePath = mizzouDeterminePathToTheme();
     //use the model for projects, lazy-load style
-    require_once $strTemplatePath.'models'.'project.php';
+    require_once $strTemplatePath.'models'.DIRECTORY_SEPARATOR.'project.php';
 
     $aryProjects = mizzouIppRetrieveProjects($aryAttributes['count']);
     $strTitle = 'Recent Projects';
