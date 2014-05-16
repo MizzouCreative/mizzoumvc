@@ -55,7 +55,7 @@
 						    echo '</div> ';//has an image / you can use $c saves calling the function again 
 						} ?>
 
-						<?php $pagemeta = get_post_custom($post_id); ?>
+						<?php $pagemeta = get_post_custom(get_the_ID()); ?>
 						<?php  if ($pagemeta['form_container'][0]) { //  if childnav is populated ?>
 							<?php echo $pagemeta['form_container'][0]; ?>
 						<?php  } ?>
