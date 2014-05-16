@@ -14,7 +14,7 @@
     <ul>
         <?php foreach($aryProjects as $objProject): ?>
             <li>
-                <a href="<?php $objProject->permalink; ?>" title="Link to <?php $objProject->title; ?>"><?php $objProject->title; ?></a>
+                <a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a>
             </li>
         <?php endforeach; ?>
     </ul>
