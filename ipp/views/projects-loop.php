@@ -18,4 +18,8 @@
             </li>
         <?php endforeach; ?>
     </ul>
+
+    <?php if (isset($strProjectArchiveURL) && $strProjectArchiveURL != '') :?>
+    <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to list of all projects">All Projects</a> </p>
+    <?php endif;?>
 <?php endif;
