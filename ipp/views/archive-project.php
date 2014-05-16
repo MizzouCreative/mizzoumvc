@@ -11,7 +11,7 @@
     <div id="content">
         <article role="article">
             <header>
-                <h1 id="title"><?php echo $strPageTitle, ' ',edit_post_link('Edit'); ?></h1>
+                <h1 id="title"><?php echo $strPageTitle; ?></h1>
             </header>
             <section aria-label="content" role="region">
                 <?php echo $strLoopContent; ?>
