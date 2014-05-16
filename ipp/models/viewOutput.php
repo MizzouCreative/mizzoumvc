@@ -15,6 +15,7 @@
  * @param $aryData
  * @uses breadcrumbs() from Mizzou Breadcrumbs plugin
  * @uses get_template_directory() from Wordpress core
+ * @uses mizzouDeterminePathToTheme() from helpers\paths.php
  */
 function mizzouOutPutView($strInnerViewFileName,$aryData)
 {
@@ -47,16 +48,4 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     get_sidebar();
     require_once $strViewsPath . 'outerView.php';
     get_footer();
-}
-
-function mizzouDeterminePathToTheme()
-{
-    $strReturn = '';
-    if(is_child_theme()){
-        $strReturn = get_stylesheet_directory();
-    } else {
-        $strReturn = get_template_directory();
-    }
-
-    return $strReturn . DIRECTORY_SEPARATOR;
 }
