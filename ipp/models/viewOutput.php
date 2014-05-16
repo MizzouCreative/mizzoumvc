@@ -6,6 +6,12 @@
  * Time: 9:31 AM
  */
 
+/**
+ * @param $strInnerViewFileName
+ * @param $aryData
+ * @uses breadcrumbs() from Mizzou Breadcrumbs plugin
+ * @uses get_template_directory() from Wordpress core
+ */
 function mizzouOutPutView($strInnerViewFileName,$aryData)
 {
     //convert all the data for the inner view into variables
