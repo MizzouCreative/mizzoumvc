@@ -44,6 +44,7 @@ $aryData['aryRelatedProjects'] = $objPageModel->retrieveProjects($post->post_nam
 $aryData['strProjectArchiveURL'] = $objPageModel->retrieveProjectsArchivePermalink();
 $aryData['aryRelatedPublications'] = $objPageModel->retrievePublications($post->post_name);
 $aryData['strPublicationArchiveURL'] = $objPageModel->retrievePublicationsArchivePermalink();
+$aryData['aryPolicyScholars'] = $objPageModel->retrievePolicyResearchScholars($post->post_name);
 
 
 mizzouOutPutView('policy-area',$aryData);
