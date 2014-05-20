@@ -71,7 +71,6 @@ class PolicyArea
         );
 
         $aryArgs = array(
-            'post_type'     => 'person',
             'count'         => 1, //@todo this needs to be retrieved from config variable or theme option
             'complex_tax'   => $aryTax,
             'include_meta'  => true,
