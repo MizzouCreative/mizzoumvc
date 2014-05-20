@@ -82,6 +82,7 @@ class WpBase
         'tax_term'          => '',
         'tax_field'         => 'slug',
         'complex_tax'       => null,
+        'complex_meta'      => null,
         'order_by'          => 'date',
         'order_direction'   => 'DESC',
         'include_meta'      => false,
@@ -126,6 +127,10 @@ class WpBase
             $aryArgs = array_merge($aryArgs,array('tax_query'=>array($aryTaxQuery)));
         } elseif (is_array($aryOptions['complex_tax']) && !is_null($aryOptions['complex_tax'])) {
             $aryArgs = array_merge($aryArgs,array('tax_query'=>$aryOptions['complex_tax']));
+        }
+
+        if(!is_null($aryOptions['complex_meta'])){
+            $aryArgs = array_merge($aryArgs,array('meta_query'=>$aryOptions['complex_meta']));
         }
 
         $objQuery =  new WP_Query($aryArgs);
