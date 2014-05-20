@@ -3,6 +3,15 @@
  *
  */
 
+//assumed that /theme/helpers/paths.php has been loaded already in functions.php
+
+/**
+ * Require once the PostMetaData class
+ * @todo PostMetaData class should be integrated into the MVC structure
+ */
+locate_template('class-PostMetaData.php',true,true);
+locate_template('class-MizzouPost.php',true,true);
+
 /**
  * @param $aryOptions
  * @return array
@@ -10,7 +19,7 @@
  * @uses WP_Query
  *
  */
-function mizzouRetrieveRelatedContent($aryOptions) {
+function mizzouRetrieveRelatedContent($aryOptions=array()) {
     $aryDefaults = array(
         'post_type'         => 'post',
         'count'             => -1,
@@ -64,26 +73,129 @@ function mizzouRetrieveRelatedContent($aryOptions) {
 
 }
 
-/**
- * @uses breadcrumbs() from Mizzou Breadcrumbs plugin
- * @return string
- */
-function mizzouRetrieveBreadCrumbData()
+class WpBase
 {
-    ob_start();
-    breadcrumbs();
-    return ob_get_flush();
+    protected $aryDefaults = array(
+        'post_type'         => '',
+        'count'             => -1,
+        'taxonomy'          => '',
+        'tax_term'          => '',
+        'tax_field'         => 'slug',
+        'complex_tax'       => null,
+        'order_by'          => 'date',
+        'order_direction'   => 'DESC',
+        'include_meta'      => false,
+        'meta_prefix'       => ''
+    );
 
-}
+    protected $strPostType          = 'post';
 
-function mizzouConvertPosts($aryPosts)
-{
-    $aryReturn = array();
-    foreach($aryPosts as $objPost){
-        $aryReturn[] = new MizzouPost($objPost);
+    protected $strArchivePermalink  = '';
+
+    public $strPostPrefix = null;
+
+    public function __construct($strPostPreFix = null)
+    {
+        $this->_setDefaults();
+        $this->_setPermalink();
+        $this->setPostPrefix($strPostPreFix);
     }
 
-    return $aryReturn;
+
+    public function retrieveContent($aryOptions)
+    {
+
+        $aryOptions = array_merge($this->aryDefaults,$aryOptions);
+
+        $aryReturn = array();
+
+        $aryArgs = array(
+            'post_type'     =>  $aryOptions['post_type'],
+            'numberposts'   =>  $aryOptions['count'],
+            'orderby'       =>  $aryOptions['order_by'],
+            'order'         =>  $aryOptions['order_direction']
+        );
+
+        if ('' != $aryOptions['taxonomy'] && '' != $aryOptions['tax_term']){
+            $aryTaxQuery = array(
+                'taxonomy'  => $aryOptions['taxonomy'],
+                'field'     => $aryOptions['tax_field'],
+                'terms'     => $aryOptions['tax_term']
+            );
+
+            $aryArgs = array_merge($aryArgs,array('tax_query'=>array($aryTaxQuery)));
+        } elseif (is_array($aryOptions['complex_tax']) && !is_null($aryOptions['complex_tax'])) {
+            $aryArgs = array_merge($aryArgs,array('tax_query'=>$aryOptions['complex_tax']));
+        }
+
+        $objQuery =  new WP_Query($aryArgs);
+
+        if (isset($objQuery->posts) && count($objQuery->posts) > 0){
+            foreach($objQuery->posts as $objPost){
+                $objMizzouPost = new MizzouPost($objPost);
+                if($aryOptions['include_meta']){
+                    $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix']);
+                }
+
+                $aryReturn[] = $objMizzouPost;
+            }
+        }
+
+        return $aryReturn;
+    }
+
+    public function retrieveAll($intCount=null)
+    {
+        $aryArgs = $this->aryDefaults;
+        if(!is_null($intCount) && is_numeric($intCount)){
+            $aryArgs = array_merge($aryArgs,array('count'=>(int)$intCount));
+        }
+
+        return $this->retrieveContent($aryArgs);
+    }
+
+    /**
+     * @param $aryPosts
+     * @return array
+     * @todo does this really belong in this class?
+     */
+    public function convertPosts($aryPosts)
+    {
+        $aryReturn = array();
+        foreach($aryPosts as $objPost){
+            $aryReturn[] = new MizzouPost($objPost);
+        }
+
+        return $aryReturn;
+    }
+
+    public function setPostPrefix($strPostPrefix=null)
+    {
+        if(is_null($strPostPrefix)){
+            $strPostPrefix = $this->strPostType.'_';
+        }
+
+        $this->strPostPrefix = $strPostPrefix;
+        //now update our defaults
+        $this->aryDefaults['meta_prefix'] = $this->strPostPrefix;
+    }
+
+    public function getPermalink()
+    {
+        return $this->strArchivePermalink;
+    }
+
+    private function _setDefaults()
+    {
+        $this->aryDefaults['post_type'] = $this->strPostType;
+    }
+
+    private function _setPermalink()
+    {
+        $this->strArchivePermalink = get_post_type_archive_link($this->strPostType);
+    }
+
+
 }
 
 ?>
