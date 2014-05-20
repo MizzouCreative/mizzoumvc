@@ -14,82 +14,86 @@
  */
 
 //pull in the base model
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'people.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'publication.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'project.php';
 
-/**
- * @param $strTerm
- * @return array
- */
-function mizzouIppRetrieveRelatedPublications($strTerm)
+class PolicyArea
 {
-    $aryArgs = array(
-        'post_type' => 'publication',
-        'count'     => 4, //this needs to be retrieved from config variable or theme option
-        'taxonomy'  => 'policy_area',
-        'tax_term'  => $strTerm
-    );
-    return mizzouRetrieveRelatedContent($aryArgs);
-}
+    protected $objPeople        = null;
+    protected $objPublication   = null;
+    protected $objProject       = null;
 
-/**
- * @param $strTerm
- * @return array
- */
-function mizzouIppRetrieveRelatedProjects($strTerm)
-{
-    $aryArgs = array(
-        'post_type' => 'project',
-        'count'     => 4, //@todo this needs to be retrieved from config variable or theme option
-        'taxonomy'  => 'policy_area',
-        'tax_term'  => $strTerm
-    );
-    return mizzouRetrieveRelatedContent($aryArgs);
-}
-
-/**
- * @param $strTerm
- * @return mixed
- */
-function mizzouIppRetrieveContact($strTerm)
-{
-    $aryTax = array(
-        'relation'  => 'AND',
-        array(
-            'taxonomy'  => 'policy_area',
-            'field'     => 'slug',
-            'terms'     => $strTerm
-        ),
-        array(
-            'taxonomy'  => 'person_type', //defined in Mizzou People plugin
-            'field'     => 'slug',
-            'terms'     => 'lead-analyst' //@todo this should be moved into config or theme option
-        )
+    protected $aryPolicyDefaults = array(
+          'taxonomy'    => 'policy_area'
     );
 
-    $aryArgs = array(
-        'post_type'     => 'person',
-        'count'         => 1, //@todo this needs to be retrieved from config variable or theme option
-        'complex_tax'   => $aryTax,
-        'include_meta'  => true,
-        'meta_prefix'   => 'person_'//@todo needs to be rerieved, not hardcoded
-    );
+    public function __construct()
+    {
+        $this->objPeople = new People();
+        $this->objProject = new Project();
+        $this->objPublication = new Publication();
+    }
 
-    $aryMatches = mizzouRetrieveRelatedContent($aryArgs);
+    public function retrievePublications($strTerm)
+    {
+        $aryArgs = array(
+            'count'     => 4, //this needs to be retrieved from config variable or theme option
+            'tax_term'  => $strTerm
+        );
 
-    if(count($aryMatches) !== 1) //@todo throw an exception, log it, something!
-        //@todo ask if we should grab some default contact info to display?
-        _mizzou_log($aryMatches,'Array Matches',false,array('func'=>__FUNCTION__));
-    return $aryMatches[0];
-}
+        return $this->objPublication->retrieveContent(array_merge($this->aryPolicyDefaults,$aryArgs));
+    }
 
-function mizzouRetrievePublicationData($strTerm,&$aryData)
-{
-    $aryData['strPublicationArchiveURL'] = get_post_type_archive_link('publication');
-    $aryData['aryRelatedPublications'] = mizzouIppRetrieveRelatedProjects($strTerm);
-}
+    public function retrieveProjects($strTerm)
+    {
+        $aryArgs = array(
+            'count'     => 4,//this needs to be retrieved from config variable or theme option
+            'tax_term'  => $strTerm
+        );
 
-function mizzouRetrieveProjectData($strTerm,&$aryData)
-{
-    $aryData['strProjectArchiveURL'] = get_post_type_archive_link('project');
-    $aryData['aryRelatedProjects'] = mizzouIppRetrieveRelatedProjects($strTerm);
+        return $this->objProject->retrieveContent(array_merge($this->aryPolicyDefaults,$aryArgs));
+    }
+
+    public function retrieveContact($strTerm)
+    {
+        $aryTax = array(
+            'relation'  => 'AND',
+            array_merge($this->aryPolicyDefaults,array(
+                'field'     => 'slug',
+                'terms'     => $strTerm
+            )),
+            array(
+                'taxonomy'  => 'person_type', //defined in Mizzou People plugin
+                'field'     => 'slug',
+                'terms'     => 'lead-analyst' //@todo this should be moved into config or theme option
+            )
+        );
+
+        $aryArgs = array(
+            'post_type'     => 'person',
+            'count'         => 1, //@todo this needs to be retrieved from config variable or theme option
+            'complex_tax'   => $aryTax,
+            'include_meta'  => true,
+        );
+
+        $aryMatches = $this->objPeople->retrieveContent($aryArgs);
+
+        if(count($aryMatches) !== 1) { //@todo throw an exception, log it, something!
+            //@todo ask if we should grab some default contact info to display?
+            _mizzou_log($aryMatches,'Array Matches',false,array('func'=>__FUNCTION__));
+        }
+
+        return $aryMatches[0];
+    }
+
+    public function retrievePublicationsArchivePermalink()
+    {
+        return $this->objPublication->getPermalink();
+    }
+
+    public function retrieveProjectsArchivePermalink()
+    {
+        return $this->objProject->getPermalink();
+    }
 }
