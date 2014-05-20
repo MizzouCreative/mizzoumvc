@@ -88,6 +88,29 @@ class PolicyArea
         return $aryMatches[0];
     }
 
+    public function retrievePolicyResearchScholars($strTerm)
+    {
+        $aryTax = array(
+            'relation'  => 'AND',
+            array_merge($this->aryPolicyDefaults,array(
+                'field' => 'slug',
+                'terms' => $strTerm
+            )),
+            array(
+                'taxonomy'  => 'person_type',
+                'field'     => 'slug',
+                'terms'     => 'policy-research-scholars'
+            )
+        );
+
+        $aryArgs = array(
+            'complex_tax'   => $aryTax,
+            'include_meta'  => true
+        );
+
+        return $this->objPeople->retrieveContent($aryArgs);
+    }
+
     public function retrievePublicationsArchivePermalink()
     {
         return $this->objPublication->getPermalink();
