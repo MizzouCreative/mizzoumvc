@@ -77,6 +77,8 @@ class PolicyArea
             'include_meta'  => true,
         );
 
+        _mizzou_log($aryArgs,'aryArgs',false,array('func'=>__FUNCTION__));
+
         $aryMatches = $this->objPeople->retrieveContent($aryArgs);
 
         if(count($aryMatches) !== 1) { //@todo throw an exception, log it, something!
