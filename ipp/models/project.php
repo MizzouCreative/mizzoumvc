@@ -9,12 +9,12 @@
 //pull in the base model
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
 
-function mizzouIppRetrieveProjects($intCount)
+class Project extends WpBase
 {
-    $aryArgs = array(
-        'post_type' => 'project',
-        'count'     => $intCount
-    );
+    /**
+     * overload parent member
+     * @var string
+     */
+    protected $strPostType = 'project';
 
-    return mizzouRetrieveRelatedContent($aryArgs);
 }
