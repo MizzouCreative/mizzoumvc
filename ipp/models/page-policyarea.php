@@ -66,7 +66,7 @@ class PolicyArea
             array(
                 'taxonomy'  => 'person_type', //defined in Mizzou People plugin
                 'field'     => 'slug',
-                'terms'     => 'lead-analyst' //@todo this should be moved into config or theme option
+                'terms'     => 'lead-analysts' //@todo this should be moved into config or theme option
             )
         );
 
