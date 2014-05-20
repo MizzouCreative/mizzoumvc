@@ -68,19 +68,20 @@
                         <h3><?php echo $objMainPost->title; ?> Contact:</h3>
                         <p>
                             Name: <?php echo $objMainContact->title; ?><br>
-                            <?php if(isset($objMainContact->title1)): ?>
+
+                            <?php if('' != $objMainContact->meta_data->title1): ?>
                                 Title: <?php echo $objMainContact->meta_data->title1; ?><br>
                             <?php endif; ?>
 
-                            <?php if(isset($objMainContact->meta_data->address1)): ?>
+                            <?php if('' != $objMainContact->meta_data->address1): ?>
                                 Address: <?php echo $objMainContact->meta_data->address1; ?><br>
                             <?php endif; ?>
 
-                            <?php if(isset($objMainContact->meta_data->email)): ?>
+                            <?php if('' != $objMainContact->meta_data->email): ?>
                                 Email: <a href="mailto:<?php echo $objMainContact->meta_data->email; ?>"><?php echo $objMainContact->meta_data->email; ?></a><br>
                             <?php endif; ?>
 
-                            <?php if(isset($objMainContact->meta_data->phone)): ?>
+                            <?php if('' != $objMainContact->meta_data->phone): ?>
                                 Phone: <?php echo $objMainContact->meta_data->phone;?>
                             <?php endif; ?>
 
