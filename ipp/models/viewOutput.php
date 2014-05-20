@@ -24,6 +24,9 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     //outerView needs breadcrumbs and inner view data
 
+    /**
+     * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
+     */
     //get the contents for the breadcrumbs
     ob_start();
     breadcrumbs();
