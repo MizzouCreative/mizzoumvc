@@ -78,6 +78,7 @@ class People extends WpBase
                 $aryTopStaffOrdered[array_search($objTopStaff->meta_value,$this->aryTopStaff)] = $objTopStaff->post_id;
             }
 
+            ksort($aryTopStaffOrdered);
             _mizzou_log($aryTopStaffOrdered,'our ordered top staff');
 
             foreach($aryTopStaffIDs as $objTopStaff){
