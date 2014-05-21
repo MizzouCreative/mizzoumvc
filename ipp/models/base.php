@@ -142,6 +142,8 @@ class WpBase
             $aryArgs = array_merge($aryArgs,$aryOptions['passthru']);
         }
 
+        _mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__));
+
         $objQuery =  new WP_Query($aryArgs);
 
         if (isset($objQuery->posts) && count($objQuery->posts) > 0){
