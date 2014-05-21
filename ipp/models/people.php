@@ -76,7 +76,7 @@ AND 	a.meta_value IN (%s);";
         _mizzou_log($strSQL,'Our SQL');
         global $wpdb;
         //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
-        $aryTopStafIDs = $wpdb->get_result($strSQL);
+        $aryTopStafIDs = $wpdb->get_results($strSQL);
         return $aryTopStafIDs;
     }
 }
