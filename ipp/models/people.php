@@ -70,7 +70,7 @@ AND
 AND 	a.meta_value IN (%s);";
 
         $strTitleVals = "'".implode("','",$this->aryTopStaff)."'";
-
+        _mizzou_log($strTitleVals,'result of strTitleVals');
         global $wpdb;
         //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
         $aryTopStafIDs = $wpdb->get_results($wpdb->prepare($strSQL,$strTitleVals),ARRAY_N);
