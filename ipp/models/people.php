@@ -45,7 +45,7 @@ class People extends WpBase
         if($boolTopStaff){
             $aryReturn = $this->retrieveTopStaff();
 
-            $aryArgs['passthru'] = array_merge($aryArgs['passthru'],array('post__not_in'=>$this));
+            $aryArgs['passthru'] = array_merge($aryArgs['passthru'],array('post__not_in'=>$this->aryTopStaffIds));
         }
 
         $aryOtherStaff = $this->retrieveContent($aryArgs);
