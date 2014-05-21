@@ -40,6 +40,20 @@ class People extends WpBase
 
     public function retrieveTopStaff()
     {
+        $aryMeta = array('relation'=>'OR');
+        foreach($this->aryTopStaff as $strStaffTitle){
+            $aryMeta[] = array(
+                'key'   => $this->strPostPrefix.'title1',
+                'value' => $strStaffTitle
+            );
+        }
 
+        $aryArgs = array(
+            'count'         => 3, //@todo this needs to be retrieved from config variable or theme option
+            'complex_meta'   => $aryMeta,
+            'include_meta'  => true,
+        );
+
+        return $this->retrieveContent($aryArgs);
     }
 }
