@@ -100,7 +100,7 @@ AND 	a.meta_value IN (%s);";
         }
 
         $aryArgs = array(
-            'passthru'=>array('post__in',$aryStaffIDs)
+            'passthru'=>array('post__in'=>$aryStaffIDs)
         );
 
         return $this->retrieveContent($aryArgs);
