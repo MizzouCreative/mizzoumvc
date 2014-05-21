@@ -40,71 +40,52 @@ class People extends WpBase
 
     public function retrieveTopStaff()
     {
+        global $wpdb;
+        $aryReturn = array();
         /**
-         * Doing a complex meta query for three titles (with two results) was taking 23.1333 seconds
-
-        $aryMeta = array('relation'=>'OR');
-        foreach($this->aryTopStaff as $strStaffTitle){
-            $aryMeta[] = array(
-                'key'   => $this->strPostPrefix.'title1',
-                'value' => $strStaffTitle
-            );
-        }
-
-        $aryArgs = array(
-            'count'         => 3, //@todo this needs to be retrieved from config variable or theme option
-            'complex_meta'   => $aryMeta,
-            'include_meta'  => true,
-        );
-
-        return $this->retrieveContent($aryArgs);
-         * */
+         * Doing a complex meta query for three titles (with two results) was taking 23.1333 seconds.
+         * Meta query removed
+         */
 
         $strSQL = "SELECT a.post_id FROM mutspaipp_2.ipp_postmeta a, mutspaipp_2.ipp_posts b
-WHERE
-	a.post_id = b.ID AND
-	b.post_status = 'publish'
-AND
+                    WHERE
+                        a.post_id = b.ID AND
+                        b.post_status = 'publish'
+                    AND
 
-		a.meta_key = 'person_title1'
-AND 	a.meta_value IN (%s);";
+                            a.meta_key = 'person_title1'
+                    AND 	a.meta_value IN (%s);";
 
         $strTitleVals = "'".implode("','",$this->aryTopStaff)."'";
-        $strSQL = sprintf($strSQL,$strTitleVals);
-
-        global $wpdb;
-        //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
-        $aryTopStafIDs = $wpdb->get_results($strSQL);
-        //_mizzou_log($aryTopStafIDs,'the post ids of the top staff');
         /**
          * ok, running our query above using $wpdb->prepare was taking 1.6s. Cutting out prepare and doing sprintf
          * brought that down to 0.833
          * */
-        /**
-         * Taking the IDs from our SQL above and looping over each one and querying took about 0.9 seconds
-        */
-        $aryReturn = array();
-        foreach($aryTopStafIDs as $objTopStaff){
-            $aryArg = array(
-                'passthru'=>array('p'=>$objTopStaff->post_id)
-            );
-            //_mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
-            $aryResults = $this->retrieveContent($aryArg);
-            $aryReturn[] = $aryResults[0];
+        $strSQL = sprintf($strSQL,$strTitleVals);
 
+
+        $aryTopStaffIDs = $wpdb->get_results($strSQL);
+
+        /**
+         * ok, this next piece might seem confusing. Why are we looping and then running a query over each item, instead
+         * of doing one query with post__in and the array of post ids?  Because, surprisingly, it's actually faster
+         * to loop and query each one separately.  Using post__in took about 1.1 seconds to return the results. Looping'
+         * over each one, as below, takes 0.9s.
+         */
+        if(is_array($aryTopStaffIDs) && count($aryTopStaffIDs) > 0){
+            foreach($aryTopStaffIDs as $objTopStaff){
+                $aryArg = array(
+                    'passthru'=>array('p'=>$objTopStaff->post_id)
+                );
+                //_mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
+                $aryResults = $this->retrieveContent($aryArg);
+                if(isset($aryResults[0])){
+                    $aryReturn[] = $aryResults[0];
+                }
+            }
         }
 
         return $aryReturn;
-        /*
-        $aryStaffIDs = array();
-        foreach($aryTopStafIDs as $objTopStaff){
-            $aryStaffIDs[] = $objTopStaff->post_id;
-        }
 
-        $aryArgs = array(
-            'passthru'=>array('post__in'=>$aryStaffIDs)
-        );
-
-        return $this->retrieveContent($aryArgs);*/
     }
 }
