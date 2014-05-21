@@ -72,12 +72,10 @@ AND 	a.meta_value IN (%s);";
         $strTitleVals = "'".implode("','",$this->aryTopStaff)."'";
         $strSQL = sprintf($strSQL,$strTitleVals);
 
-
-        _mizzou_log($strSQL,'Our SQL');
         global $wpdb;
         //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
         $aryTopStafIDs = $wpdb->get_results($strSQL);
-
+        _mizzou_log($aryTopStafIDs,'the post ids of the top staff');
         /**
          * ok, running our query above using $wpdb->prepare was taking 1.6s. Cutting out prepare and doing sprintf
          * brought that down to 0.833
