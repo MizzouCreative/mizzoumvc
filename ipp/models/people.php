@@ -69,7 +69,7 @@ AND
 		a.meta_key = 'person_title1'
 AND 	a.meta_value IN (%s);";
 
-        $strTitleVals = "'".implode("','",$this->aryTopStaff."'");
+        $strTitleVals = "'".implode("','",$this->aryTopStaff)."'";
 
         global $wpdb;
         $aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
