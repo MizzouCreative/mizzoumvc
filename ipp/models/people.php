@@ -70,10 +70,13 @@ AND
 AND 	a.meta_value IN (%s);";
 
         $strTitleVals = "'".implode("','",$this->aryTopStaff)."'";
-        _mizzou_log($strTitleVals,'result of strTitleVals');
+        $strSQL = sprintf($strSQL,$strTitleVals);
+
+
+        _mizzou_log($strSQL,'Our SQL');
         global $wpdb;
         //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
-        $aryTopStafIDs = $wpdb->get_results($wpdb->prepare($strSQL,$strTitleVals),ARRAY_N);
+        $aryTopStafIDs = $wpdb->get_results($strSQL,ARRAY_N);
         return $aryTopStafIDs;
     }
 }
