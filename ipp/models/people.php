@@ -75,7 +75,7 @@ AND 	a.meta_value IN (%s);";
         global $wpdb;
         //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
         $aryTopStafIDs = $wpdb->get_results($strSQL);
-        _mizzou_log($aryTopStafIDs,'the post ids of the top staff');
+        //_mizzou_log($aryTopStafIDs,'the post ids of the top staff');
         /**
          * ok, running our query above using $wpdb->prepare was taking 1.6s. Cutting out prepare and doing sprintf
          * brought that down to 0.833
@@ -83,9 +83,9 @@ AND 	a.meta_value IN (%s);";
         $aryReturn = array();
         foreach($aryTopStafIDs as $objTopStaff){
             $aryArg = array(
-                'p'=>$objTopStaff->post_id
+                'passthru'=>array('p'=>$objTopStaff->post_id);
             );
-            _mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
+            //_mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
             $aryResults = $this->retrieveContent($aryArg);
             $aryReturn[] = $aryResults[0];
 
