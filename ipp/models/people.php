@@ -47,7 +47,7 @@ class People extends WpBase
          * Meta query removed
          */
 
-        $strSQL = "SELECT a.post_id FROM mutspaipp_2.ipp_postmeta a, mutspaipp_2.ipp_posts b
+        $strSQL = "SELECT a.post_id,a.meta_value FROM mutspaipp_2.ipp_postmeta a, mutspaipp_2.ipp_posts b
                     WHERE
                         a.post_id = b.ID AND
                         b.post_status = 'publish'
@@ -73,6 +73,13 @@ class People extends WpBase
          * over each one, as below, takes 0.9s.
          */
         if(is_array($aryTopStaffIDs) && count($aryTopStaffIDs) > 0){
+            $aryTopStaffOrdered = array();
+            foreach($aryTopStaffIDs as $objTopStaff){
+                $aryTopStaffOrdered[array_search($objTopStaff->meta_value,$this->aryTopStaff)] = $objTopStaff->post_id;
+            }
+
+            _mizzou_log($aryTopStaffOrdered,'our ordered top staff');
+
             foreach($aryTopStaffIDs as $objTopStaff){
                 $aryArg = array(
                     'passthru'=>array('p'=>$objTopStaff->post_id)
