@@ -40,6 +40,9 @@ class People extends WpBase
 
     public function retrieveTopStaff()
     {
+        /**
+         * Doing a complex meta query for three titles (with two results) was taking 23.1333 seconds
+
         $aryMeta = array('relation'=>'OR');
         foreach($this->aryTopStaff as $strStaffTitle){
             $aryMeta[] = array(
@@ -55,5 +58,18 @@ class People extends WpBase
         );
 
         return $this->retrieveContent($aryArgs);
+         * */
+
+        $strSQL = "SELECT a.post_id FROM mutspaipp_2.ipp_postmeta a, mutspaipp_2.ipp_posts b
+WHERE
+	a.post_id = b.ID AND
+	b.post_status = 'publish'
+AND
+
+		a.meta_key = 'person_title1'
+AND 	a.meta_value IN (%s);";
+        global $wpdb;
+        $aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,"'".implode("','",$this->aryTopStaff."'")));
+        return $aryTopStafIDs;
     }
 }
