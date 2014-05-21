@@ -48,7 +48,10 @@ class People extends WpBase
             $aryArgs['passthru'] = array_merge($aryArgs['passthru'],array('post__not_in'=>$this));
         }
 
-        return array_merge($aryReturn,$this->retrieveContent($aryArgs));
+        $aryOtherStaff = $this->retrieveContent($aryArgs);
+        _mizzou_log($aryOtherStaff,'all our other staff');
+
+        return array_merge($aryReturn,$aryOtherStaff);
 
     }
 
