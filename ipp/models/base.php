@@ -86,7 +86,8 @@ class WpBase
         'order_by'          => 'date',
         'order_direction'   => 'DESC',
         'include_meta'      => false,
-        'meta_prefix'       => ''
+        'meta_prefix'       => '',
+        'passthru'          => null
     );
 
     protected $strPostType          = 'post';
@@ -131,6 +132,14 @@ class WpBase
 
         if(!is_null($aryOptions['complex_meta'])){
             $aryArgs = array_merge($aryArgs,array('meta_query'=>$aryOptions['complex_meta']));
+        }
+
+        /**
+         * Every once in awhile we need to query for things that dont fit above, so we have an option to pass in other
+         * WP_Query parameters directly
+         */
+        if(!is_null($aryOptions['passthru']) && is_array($aryOptions['passthru'])){
+            $aryArgs = array_merge($aryArgs,$aryOptions['passthru']);
         }
 
         $objQuery =  new WP_Query($aryArgs);
