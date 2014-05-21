@@ -80,6 +80,9 @@ AND 	a.meta_value IN (%s);";
          * ok, running our query above using $wpdb->prepare was taking 1.6s. Cutting out prepare and doing sprintf
          * brought that down to 0.833
          * */
+        /**
+         * Taking the IDs from our SQL above and looping over each one and querying took about 0.9 seconds
+
         $aryReturn = array();
         foreach($aryTopStafIDs as $objTopStaff){
             $aryArg = array(
@@ -90,7 +93,16 @@ AND 	a.meta_value IN (%s);";
             $aryReturn[] = $aryResults[0];
 
         }
+        */
+        $aryStaffIDs = array();
+        foreach($aryTopStafIDs as $objTopStaff){
+            $aryStaffIDs[] = $objTopStaff->post_id;
+        }
 
-        return $aryReturn;
+        $aryArgs = array(
+            'passthru'=>array('post__in',$aryStaffIDs)
+        );
+
+        return $this->retrieveContent($aryArgs);
     }
 }
