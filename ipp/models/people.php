@@ -83,7 +83,7 @@ AND 	a.meta_value IN (%s);";
         $aryReturn = array();
         foreach($aryTopStafIDs as $objTopStaff){
             $aryArg = array(
-                'passthru'=>array('p'=>$objTopStaff->post_id);
+                'passthru'=>array('p'=>$objTopStaff->post_id)
             );
             //_mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
             $aryResults = $this->retrieveContent($aryArg);
