@@ -36,7 +36,7 @@ class People extends WpBase
         $aryArgs = array(
             'taxonomy'  =>'person_type',
             'tax_term'  =>'staff',
-            'order_by'  =>'meta_value title',
+            'order_by'  =>'meta_value',
             'order'     => 'ASC',
             'passthru'=>array(
                 'meta_key'=>$this->strPostPrefix.'lastName'
