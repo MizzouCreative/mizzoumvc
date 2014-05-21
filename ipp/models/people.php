@@ -85,7 +85,7 @@ AND 	a.meta_value IN (%s);";
             $aryArg = array(
                 'p'=>$objTopStaff->post_id
             );
-
+            _mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
             $aryResults = $this->retrieveContent($aryArg);
             $aryReturn[] = $aryResults[0];
 
