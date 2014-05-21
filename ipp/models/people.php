@@ -81,9 +81,9 @@ class People extends WpBase
             ksort($aryTopStaffOrdered);
             _mizzou_log($aryTopStaffOrdered,'our ordered top staff');
 
-            foreach($aryTopStaffIDs as $objTopStaff){
+            foreach($aryTopStaffOrdered as $intPostId){
                 $aryArg = array(
-                    'passthru'=>array('p'=>$objTopStaff->post_id)
+                    'passthru'=>array('p'=>$intPostId)
                 );
                 //_mizzou_log($aryArg,'aryArg for what should be post_id ' . $objTopStaff->post_id);
                 $aryResults = $this->retrieveContent($aryArg);
