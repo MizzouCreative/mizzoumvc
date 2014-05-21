@@ -34,10 +34,10 @@ class People extends WpBase
     {
         $aryReturn = array();
         $aryArgs = array(
-            'taxonomy'  =>'person_type',
-            'tax_term'  =>'staff',
-            'order_by'  =>'meta_value',
-            'order'     => 'ASC',
+            'taxonomy'          =>'person_type',
+            'tax_term'          =>'staff',
+            'order_by'          =>'meta_value',
+            'order_direction'   => 'ASC',
             'passthru'=>array(
                 'meta_key'=>$this->strPostPrefix.'lastName'
             )
