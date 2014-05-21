@@ -28,8 +28,27 @@ class People extends WpBase
      */
     protected $strPostType = 'person';
 
-    public function retrieveAllStaff($boolTopStaff)
+    protected $aryTopStaffIds = array();
+
+    public function retrieveAllStaff($boolTopStaff=false)
     {
+        $aryReturn = array();
+        $aryArgs = array(
+            'taxonomy'  =>'person_type',
+            'tax_term'  =>'staff',
+            'order_by'  =>'meta_value title',
+            'order'     => 'ASC',
+            'passthru'=>array(
+                'meta_key'=>$this->strPostPrefix.'lastName'
+            )
+        );
+        if($boolTopStaff){
+            $aryReturn = $this->retrieveTopStaff();
+
+            $aryArgs['passthru'] = array_merge($aryArgs['passthru'],array('post__not_in'=>$this));
+        }
+
+        return array_merge($aryReturn,$this->retrieveContent($aryArgs));
 
     }
 
@@ -47,6 +66,11 @@ class People extends WpBase
          * Meta query removed
          */
 
+        /**
+         * One potential problem is that we arent checking if the person is also a staff member. So if they create a
+         * person that is a different person type, but then give them a title that matches our top titles, they'll
+         * still be selected here
+         */
         $strSQL = "SELECT a.post_id,a.meta_value FROM mutspaipp_2.ipp_postmeta a, mutspaipp_2.ipp_posts b
                     WHERE
                         a.post_id = b.ID AND
@@ -73,13 +97,14 @@ class People extends WpBase
          * over each one, as below, takes 0.9s.
          */
         if(is_array($aryTopStaffIDs) && count($aryTopStaffIDs) > 0){
+            //first we need to resort the post_ids into the correct order
             $aryTopStaffOrdered = array();
             foreach($aryTopStaffIDs as $objTopStaff){
                 $aryTopStaffOrdered[array_search($objTopStaff->meta_value,$this->aryTopStaff)] = $objTopStaff->post_id;
             }
 
             ksort($aryTopStaffOrdered);
-            _mizzou_log($aryTopStaffOrdered,'our ordered top staff');
+            $this->aryTopStaffIds = $aryTopStaffOrdered;
 
             foreach($aryTopStaffOrdered as $intPostId){
                 $aryArg = array(
