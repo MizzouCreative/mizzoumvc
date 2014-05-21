@@ -77,6 +77,22 @@ AND 	a.meta_value IN (%s);";
         global $wpdb;
         //$aryTopStafIDs = $wpdb->get_col($wpdb->prepare($strSQL,$strTitleVals));
         $aryTopStafIDs = $wpdb->get_results($strSQL);
-        return $aryTopStafIDs;
+
+        /**
+         * ok, running our query above using $wpdb->prepare was taking 1.6s. Cutting out prepare and doing sprintf
+         * brought that down to 0.833
+         * */
+        $aryReturn = array();
+        foreach($aryTopStafIDs as $objTopStaff){
+            $aryArg = array(
+                'p'=>$objTopStaff->post_id
+            );
+
+            $aryResults = $this->retrieveContent($aryArg);
+            $aryReturn[] = $aryResults[0];
+
+        }
+
+        return $aryReturn;
     }
 }
