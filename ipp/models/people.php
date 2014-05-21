@@ -82,7 +82,7 @@ AND 	a.meta_value IN (%s);";
          * */
         /**
          * Taking the IDs from our SQL above and looping over each one and querying took about 0.9 seconds
-
+        */
         $aryReturn = array();
         foreach($aryTopStafIDs as $objTopStaff){
             $aryArg = array(
@@ -93,7 +93,9 @@ AND 	a.meta_value IN (%s);";
             $aryReturn[] = $aryResults[0];
 
         }
-        */
+
+        return $aryReturn;
+        /*
         $aryStaffIDs = array();
         foreach($aryTopStafIDs as $objTopStaff){
             $aryStaffIDs[] = $objTopStaff->post_id;
@@ -103,6 +105,6 @@ AND 	a.meta_value IN (%s);";
             'passthru'=>array('post__in'=>$aryStaffIDs)
         );
 
-        return $this->retrieveContent($aryArgs);
+        return $this->retrieveContent($aryArgs);*/
     }
 }
