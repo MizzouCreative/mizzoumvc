@@ -13,7 +13,7 @@
     <div class="column-archive">
         <div class="span1 one-third portrait<?php echo ' ',$strFirstColClass; ?>">
             <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>">
-                <img src="<?php $objStaff->meta_data->image_data->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->meta_data->image_data->alt; ?>">
+                <img src="<?php echo $objStaff->meta_data->image_data->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->meta_data->image_data->alt; ?>">
             </a>
         </div>
         <div class="span2 two-thirds omega">
