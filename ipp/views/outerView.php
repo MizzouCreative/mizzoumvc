@@ -14,12 +14,22 @@
  */
 ?>
 <div class="flex span7">
-<?php
-    echo $strBreadCrumbs;
-    echo $strInnerViewContent;
-    //<div class="clear"></div>
-    if (is_user_logged_in()) {
-        comments_template();
-    }
-?>
+<?php echo $strBreadCrumbs; ?>
+    <main id="main" role="main">
+        <div id="content">
+            <article role="article">
+                <header>
+                    <h1 id="title"><?php echo $strPageTitle, ' ',edit_post_link('Edit'); ?></h1>
+                </header>
+                <?php echo $strInnerViewContent;?>
+            </article>
+        </div>
+    </main>
+
+
+    <?php
+        if (is_user_logged_in()) {
+            comments_template();
+        }
+    ?>
 </div> <!-- end flex span7
