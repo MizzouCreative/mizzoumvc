@@ -9,5 +9,6 @@
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'people.php';
 
 $objPeople = new People();
-var_export($objPeople->retrieveAllStaff(true));
+//var_export($objPeople->retrieveAllStaff(true));
+var_export($objPeople->retrieveTopStaff());
 ?>
