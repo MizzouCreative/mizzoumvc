@@ -62,8 +62,8 @@ class People extends WpBase
 
     public function retrieveTopStaff()
     {
-        global $wpdb;
-        $aryReturn = array();
+        //global $wpdb;
+        //$aryReturn = array();
         /**
          * Doing a complex meta query for three titles (with two results) was taking 23.1333 seconds.
          * Meta query removed
