@@ -67,6 +67,13 @@ class People extends WpBase
         /**
          * Doing a complex meta query for three titles (with two results) was taking 23.1333 seconds.
          * Meta query removed
+         *
+         * Doing our own direct query on postmeta to pull IDs that match our titles took 1.6s when using wpdb->prepare.
+         * Removing prepare and using sprintf dropped that to .8333s.
+         *
+         * Taking the list of ids and using post__in took about 1.1s. Looping over each ID and running a query took 0.9s
+         *
+         *
          */
 
         /**
@@ -74,6 +81,7 @@ class People extends WpBase
          * person that is a different person type, but then give them a title that matches our top titles, they'll
          * still be selected here
          */
+        /*
         $strSQL = "SELECT a.post_id,a.meta_value FROM mutspaipp_2.ipp_postmeta a, mutspaipp_2.ipp_posts b
                     WHERE
                         a.post_id = b.ID AND
@@ -87,7 +95,7 @@ class People extends WpBase
         /**
          * ok, running our query above using $wpdb->prepare was taking 1.6s. Cutting out prepare and doing sprintf
          * brought that down to 0.833
-         * */
+         *
         $strSQL = sprintf($strSQL,$strTitleVals);
 
 
@@ -98,7 +106,7 @@ class People extends WpBase
          * of doing one query with post__in and the array of post ids?  Because, surprisingly, it's actually faster
          * to loop and query each one separately.  Using post__in took about 1.1 seconds to return the results. Looping'
          * over each one, as below, takes 0.9s.
-         */
+
         if(is_array($aryTopStaffIDs) && count($aryTopStaffIDs) > 0){
             //first we need to resort the post_ids into the correct order
             $aryTopStaffOrdered = array();
@@ -118,6 +126,30 @@ class People extends WpBase
                 if(isset($aryResults[0])){
                     $aryReturn[] = $aryResults[0];
                 }
+            }
+        }
+
+        return $aryReturn;
+
+        */
+        $aryReturn = array();
+        //how long does it take if we just do a meta query for each title?
+        foreach($this->aryTopStaff as $strTitle){
+            $aryMeta = array(
+                'key'   => $this->strPostPrefix.'title1',
+                'value' => $strTitle
+            );
+
+            $aryArgs = array(
+                'taxonomy'      => 'person_type',
+                'tax_term'      => 'staff',
+                'complex_meta'  => $aryMeta
+            );
+
+            $aryResult = $this->retrieveContent($aryArgs);
+            if(count($aryResult) == 1){ //there should be only one highlander
+                $this->aryTopStaffIds[] = $aryResult[0]->ID;
+                $aryReturn[] = $aryResult[0];
             }
         }
 
