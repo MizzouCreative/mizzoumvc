@@ -56,7 +56,7 @@ class People extends WpBase
         }
 
         $aryOtherStaff = $this->retrieveContent($aryArgs);
-        _mizzou_log($aryOtherStaff,'all our other staff');
+        //_mizzou_log($aryOtherStaff,'all our other staff');
 
         return array_merge($aryReturn,$aryOtherStaff);
 
