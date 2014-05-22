@@ -62,7 +62,7 @@ class ImageData extends CustomPostType {
          */
         $arySizes = (is_null($_wp_additional_image_sizes)) ? array() : array_keys($_wp_additional_image_sizes);
         $arySizes = array_merge($arySizes,$this->aryImageSizes);
-        $this->_log($arySizes, 'array of image sizes', false, array());
+        //$this->_log($arySizes, 'array of image sizes', false, array());
         foreach($arySizes as $strSize){
             $arySizeSrc = wp_get_attachment_image_src($this->intPostID,$strSize);
             $this->add_data('src_'.$strSize,$arySizeSrc[0]);
