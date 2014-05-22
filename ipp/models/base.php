@@ -15,7 +15,7 @@ locate_template('class-MizzouPost.php',true,true);
 class WpBase
 {
     protected $aryDefaults = array(
-        'post_type'         => 'post',
+        'post_type'         => '',
         'count'             => -1,
         'taxonomy'          => '',
         'tax_term'          => '',
@@ -33,6 +33,8 @@ class WpBase
     protected $strArchivePermalink  = '';
 
     public $strPostPrefix = null;
+
+    protected $strPostType = 'post';
 
     public function __construct($strPostPreFix = null)
     {
@@ -144,7 +146,7 @@ class WpBase
 
     protected function _setDefaults()
     {
-
+        $this->aryDefaults['post_type'] = $this->strPostType;
     }
 
     private function _setPermalink()
