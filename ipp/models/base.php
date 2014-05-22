@@ -146,7 +146,6 @@ class WpBase
 
     protected function _setDefaults()
     {
-        _mizzou_log($this->strPostType,'post type as seen by the parent',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
         $this->aryDefaults['post_type'] = $this->strPostType;
     }
 
