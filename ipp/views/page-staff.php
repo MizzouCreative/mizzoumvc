@@ -17,7 +17,7 @@
                     _mizzou_log($objStaff->meta_data->image_data,'image data for ' . $objStaff->title);
                 ?>
 
-                <img src="<?php echo $objStaff->meta_data->featured_image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->featured_image->image_data->alt; ?>">
+                <img src="<?php echo $objStaff->meta_data->image_data->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->meta_data->image_data->alt; ?>">
             </a>
         </div>
         <div class="span2 two-thirds omega">
