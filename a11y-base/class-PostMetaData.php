@@ -207,7 +207,7 @@ class PostMetaData extends CustomPostType{
             );
             
             $aryImages = get_posts($aryParams);
-            $this->_log($aryImages,'images for post '.$this->intPostID);
+            //$this->_log($aryImages,'images for post '.$this->intPostID);
             foreach($aryImages as $objImage){
                 if(!array_key_exists($objImage->ID,$this->image_data)){
                     $objImageData = new ImageData($objImage->ID,$aryOptions['captions']);
