@@ -86,6 +86,7 @@ class WpBase
         'order_by'          => 'date',
         'order_direction'   => 'DESC',
         'include_meta'      => false,
+        'include_image'     => false,
         'meta_prefix'       => '',
         'passthru'          => null
     );
@@ -151,6 +152,9 @@ class WpBase
                 $objMizzouPost = new MizzouPost($objPost);
                 if($aryOptions['include_meta']){
                     $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix']);
+                    if($aryOptions['include_image']){
+                        $objMizzouPost->meta_data->retrieve_feature_image_data(array('return'=>false));
+                    }
                 }
 
                 $aryReturn[] = $objMizzouPost;
