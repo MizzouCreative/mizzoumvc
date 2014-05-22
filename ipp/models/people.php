@@ -23,7 +23,6 @@ class People extends WpBase
     );
 
     protected $aryPeopleDefaults = array(
-        'post_type'     => 'person',
         'taxonomy'      => 'person_type',
         'tax_term'      => 'staff',
         'include_meta'  => true,
@@ -100,6 +99,7 @@ class People extends WpBase
      */
     protected function _setDefaults()
     {
+        parent::_setDefaults();
         _mizzou_log($this->aryDefaults,'our defaults from parent',false,array('func'=>__FUNCTION__));
         $this->aryDefaults = array_merge($this->aryDefaults,$this->aryPeopleDefaults);
         _mizzou_log($this->aryDefaults,'our defaults after we merge',false,array('func'=>__FUNCTION__));
