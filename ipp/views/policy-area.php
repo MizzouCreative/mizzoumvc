@@ -29,12 +29,6 @@
  * @copyright 2014 Curators of the University of Missouri
  */
 ?>
-    <main id="main" role="main">
-        <div id="content">
-            <article role="article">
-                <header>
-                    <h1 id="title"><?php echo $objMainPost->title, ' ',edit_post_link('Edit'); ?></h1>
-                </header>
                 <section aria-label="content" role="region">
                     <?php echo $objMainPost->content; ?>
                 </section>
@@ -99,7 +93,3 @@
                     </ul>
                 </section>
                 <?php endif;?>
-
-            </article>
-        </div>
-    </main>
