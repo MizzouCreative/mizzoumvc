@@ -92,7 +92,7 @@ class WpBase
                 if($aryOptions['include_meta']){
                     $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix']);
                     if($aryOptions['include_image']){
-                        $objMizzouPost->meta_data->retrieve_feature_image_data(array('return'=>false));
+                        $objMizzouPost->meta_data->add_data('image',$objMizzouPost->meta_data->retrieve_feature_image_data());
                     }
                 }
 
