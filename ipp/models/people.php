@@ -99,6 +99,8 @@ class People extends WpBase
      */
     private function _setDefaults()
     {
+        _mizzou_log($this->aryDefaults,'our defaults from parent',false,array('func'=>__FUNCTION__));
         $this->aryDefaults = array_merge($this->$aryDefaults,$this->aryPeopleDefaults);
+        _mizzou_log($this->aryDefaults,'our defaults after we merge',false,array('func'=>__FUNCTION__));
     }
 }
