@@ -143,7 +143,7 @@ class People extends WpBase
             $aryArgs = array(
                 'taxonomy'      => 'person_type',
                 'tax_term'      => 'staff',
-                'complex_meta'  => $aryMeta
+                'complex_meta'  => array($aryMeta)
             );
 
             $aryResult = $this->retrieveContent($aryArgs);
