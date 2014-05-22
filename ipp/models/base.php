@@ -142,7 +142,7 @@ class WpBase
         return $this->strArchivePermalink;
     }
 
-    private function _setDefaults()
+    protected function _setDefaults()
     {
 
     }

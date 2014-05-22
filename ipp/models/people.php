@@ -97,7 +97,7 @@ class People extends WpBase
     /**
      * Overload parent
      */
-    private function _setDefaults()
+    protected function _setDefaults()
     {
         _mizzou_log($this->aryDefaults,'our defaults from parent',false,array('func'=>__FUNCTION__));
         $this->aryDefaults = array_merge($this->$aryDefaults,$this->aryPeopleDefaults);
