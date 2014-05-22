@@ -23,6 +23,7 @@ class People extends WpBase
     );
 
     protected $aryPeopleDefaults = array(
+        'post_type'     => 'person',
         'taxonomy'      => 'person_type',
         'tax_term'      => 'staff',
         'include_meta'  => true,
