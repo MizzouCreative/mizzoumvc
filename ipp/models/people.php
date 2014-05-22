@@ -22,6 +22,12 @@ class People extends WpBase
         'Administrative Assistant'
     );
 
+    protected $aryDefaults = array(
+        'taxonomy'      => 'person_type',
+        'tax_term'      => 'staff',
+        'include_meta'  => true,
+        'include_image' => true
+    );
     /**
      * overload parent member
      * @var string
@@ -34,14 +40,15 @@ class People extends WpBase
     {
         $aryReturn = array();
         $aryArgs = array(
-            'taxonomy'          =>'person_type',
-            'tax_term'          =>'staff',
             'order_by'          =>'meta_value',
             'order_direction'   => 'ASC',
             'passthru'=>array(
                 'meta_key'=>$this->strPostPrefix.'lastName'
             )
         );
+
+        $aryArgs = array_merge($this->aryDefaults,$aryArgs);
+
         if($boolTopStaff){
             $aryReturn = $this->retrieveTopStaff();
 
@@ -65,16 +72,16 @@ class People extends WpBase
         $aryReturn = array();
 
         foreach($this->aryTopStaff as $strTitle){
-            $aryMeta = array(
-                'key'   => $this->strPostPrefix.'title1',
-                'value' => $strTitle
+            $aryArgs = array(
+                'complex_meta'  => array(
+                        array(
+                        'key'   => $this->strPostPrefix.'title1',
+                        'value' => $strTitle
+                    )
+                )
             );
 
-            $aryArgs = array(
-                'taxonomy'      => 'person_type',
-                'tax_term'      => 'staff',
-                'complex_meta'  => array($aryMeta)
-            );
+            $aryArgs = array_merge($this->aryDefaults,$aryArgs);
 
             $aryResult = $this->retrieveContent($aryArgs);
             if(count($aryResult) == 1){ //there should be only one highlander
