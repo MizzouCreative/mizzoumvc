@@ -14,8 +14,7 @@
         <div class="span1 one-third portrait<?php echo ' ',$strFirstColClass; ?>">
             <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>">
                 <?php
-                    $objImageData = $objStaff->meta_data->featured_image;
-                    _mizzou_log($objImageData,'image data for ' . $objStaff->title);
+                    _mizzou_log($objStaff,'all data for ' . $objStaff->title);
                 ?>
 
                 <img src="<?php echo $objStaff->meta_data->featured_image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->featured_image->image_data->alt; ?>">
