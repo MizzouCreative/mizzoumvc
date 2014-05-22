@@ -22,7 +22,7 @@ class People extends WpBase
         'Administrative Assistant'
     );
 
-    protected $aryDefaults = array(
+    protected $aryPeopleDefaults = array(
         'taxonomy'      => 'person_type',
         'tax_term'      => 'staff',
         'include_meta'  => true,
@@ -92,5 +92,13 @@ class People extends WpBase
 
         return $aryReturn;
 
+    }
+
+    /**
+     * Overload parent
+     */
+    private function _setDefaults()
+    {
+        $this->aryDefaults = array_merge($this->$aryDefaults,$this->aryPeopleDefaults);
     }
 }
