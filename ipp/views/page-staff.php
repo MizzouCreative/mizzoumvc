@@ -9,6 +9,9 @@
 <section aria-label="content" role="region">
     <?php $intColPlace = 0; ?>
     <?php foreach($aryStaff as $objStaff): ?>
+        <!--
+        <?php var_export($objStaff); ?>
+        -->
         <?php $strFirstColClass = ($intColPlace == 0) ? 'alpha' : '';  ?>
     <div class="column-archive">
         <div class="span1 one-third portrait<?php echo ' ',$strFirstColClass; ?>">
