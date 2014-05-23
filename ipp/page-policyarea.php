@@ -41,9 +41,11 @@ $aryData = array();
 $aryData['objMainPost'] = new MizzouPost($post);
 $aryData['objMainContact'] = $objPageModel->retrieveContact($post->post_name);
 $aryData['aryRelatedProjects'] = $objPageModel->retrieveProjects($post->post_name);
-$aryData['strProjectArchiveURL'] = $objPageModel->retrieveProjectsArchivePermalink();
+// hack. leave here in the controller? Or move to the model?
+$aryData['strProjectArchiveURL'] = $objPageModel->retrieveProjectsArchivePermalink().'?policy_area='.$post->post_name;;
 $aryData['aryRelatedPublications'] = $objPageModel->retrievePublications($post->post_name);
-$aryData['strPublicationArchiveURL'] = $objPageModel->retrievePublicationsArchivePermalink();
+// see hack comment above
+$aryData['strPublicationArchiveURL'] = $objPageModel->retrievePublicationsArchivePermalink().'?policy_area='.$post->post_name;
 $aryData['aryPolicyScholars'] = $objPageModel->retrievePolicyResearchScholars($post->post_name);
 
 
