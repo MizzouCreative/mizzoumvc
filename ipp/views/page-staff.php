@@ -32,7 +32,7 @@
 
                         <?php if($objStaff->meta_data->email != '') : ?>
                         <li class="email">
-                            <a href="mailto:<?php echo $objStaff->meta_data->email; ?>" class="break"><?php echo $objStaff->meta_data->email; ?></a>
+                            <a href="mailto:<?php echo $objStaff->meta_data->email; ?>" class="break">Email</a>
                         </li>
                         <?php endif; ?>
                     </ol>
