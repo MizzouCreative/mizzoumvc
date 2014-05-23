@@ -23,7 +23,7 @@
 ?>
 <section aria-label="content" role="region">
     <ol>
-        <?php foreach($aryPublication as $objPublication) : ?>
+        <?php foreach($aryPublications as $objPublication) : ?>
         <li><a href="<?php echo $objPublication->permalink; ?>" title="Permanent link for <?php echo $objPublication->title; ?>"></a></li>
         <?php endforeach; ?>
     </ol>
