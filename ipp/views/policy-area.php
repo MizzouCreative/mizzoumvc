@@ -13,10 +13,10 @@
  * To facilitate this, you have access to the following variables:
  *  - $objMainPost Post object for the page
  *  - $aryRelatedPublications list/array of Publication Post objects that match
- *  - $strPublicationArchiveURL the url for the publication CPT archive
+ *  - $strPublicationArchiveURL the url for the "more publications" link
  *  - $aryRelatedProjects list/array of Project Post objects that match
- *  - $strProjectArchiveURL the url for the project CPT archive
- *  - $objMainContact Person Post object that matches
+ *  - $strProjectArchiveURL the url for the "more projects" link
+ *  - $objMainContact Person Post object that matches for the policy area
  *
  * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
  * functions.
