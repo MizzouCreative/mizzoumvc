@@ -10,7 +10,7 @@
     <?php $intColPlace = 0; ?>
     <?php foreach($aryStaff as $objStaff): ?>
         <!--
-        <?php var_export($objStaff->image); ?>
+        <?php var_export($objStaff); ?>
         -->
         <?php $strFirstColClass = ($intColPlace == 0) ? 'alpha' : '';  ?>
     <div class="column-archive">
