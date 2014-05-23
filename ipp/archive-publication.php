@@ -5,4 +5,4 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.
 global $wp_query;
 $objWpBase = new WpBase();
 
-var_export($wp_query);
+echo '<xmp>',var_export($wp_query,true),'</xmp>';
