@@ -9,17 +9,10 @@
 <section aria-label="content" role="region">
     <?php $intColPlace = 0; ?>
     <?php foreach($aryStaff as $objStaff): ?>
-        <!--
-        <?php var_export($objStaff->meta_data->image); ?>
-        -->
         <?php $strFirstColClass = ($intColPlace == 0) ? 'alpha' : '';  ?>
     <div class="column-archive">
         <div class="span1 one-third portrait<?php echo ' ',$strFirstColClass; ?>">
             <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>">
-                <?php
-                    _mizzou_log($objStaff->meta_data->image_data,'image data for ' . $objStaff->title);
-                ?>
-
                 <img src="<?php echo $objStaff->meta_data->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->meta_data->image->alt; ?>">
             </a>
         </div>
