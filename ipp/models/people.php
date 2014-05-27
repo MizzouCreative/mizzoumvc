@@ -10,11 +10,17 @@
 
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
 
+/**
+ * Class People
+ * @todo add a check and method for assigning a default image in case we come across someone who didnt have one assigned
+ *
+ */
 class People extends WpBase
 {
     /**
      * @var array these are the staff that should be listed first in the all staff area, and will also need to be listed
      * in the contact area
+     * @todo needs to be pulled dynamically
      */
     protected $aryTopStaff = array(
         'Director',
