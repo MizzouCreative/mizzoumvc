@@ -33,6 +33,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     }
 
     /**
+     * @wp-hack
      * hack. we only want the sidebar on specific pages. change this into a function that determines if a sidebar is actually
      * needed
      */
