@@ -13,7 +13,7 @@
  * @todo move function calls out of this view
  */
 ?>
-<div class="flex span7">
+<div class="flex span<?php echo $intSpanWidth; ?>">
 <?php echo $strBreadCrumbs; ?>
     <main id="main" role="main">
         <div id="content">
