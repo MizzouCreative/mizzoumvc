@@ -32,12 +32,26 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $strEditPostLink = ' '.get_edit_post_link();
     }
 
+    /**
+     * hack. we only want the sidebar on two pages. change this into a function that determines if a sidebar is actually
+     * needed
+     */
+
+    $boolIncludeSidebar = false;
+
+    if(is_page('about') || is_page('contact')){
+        $boolIncludeSidebar = true;
+    }
+
+    $intSpanWidth = ($boolIncludeSidebar) ? 9 : 12;
+
     //outerView needs breadcrumbs and inner view data
 
     /**
      * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
      */
     //get the contents for the breadcrumbs
+
     ob_start();
     breadcrumbs();
     $strBreadCrumbs = ob_get_contents();
@@ -58,7 +72,10 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     //start actual output
     get_header();
-    get_sidebar();
+    if($boolIncludeSidebar) {
+        get_sidebar();
+    }
+
     require_once $strViewsPath . 'outerView.php';
     get_footer();
 }
