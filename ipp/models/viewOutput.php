@@ -33,13 +33,21 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     }
 
     /**
-     * hack. we only want the sidebar on two pages. change this into a function that determines if a sidebar is actually
+     * hack. we only want the sidebar on specific pages. change this into a function that determines if a sidebar is actually
      * needed
      */
 
     $boolIncludeSidebar = false;
 
-    if(is_page('about') || is_page('contact')){
+    if(
+            is_page('about')
+        ||  is_page('strategic-plan')
+        ||  is_page('annual-reports')
+        ||  is_page('contact')
+        ||  is_page('staff')
+        ||  is_page('policy-research-scholars')
+        ||  is_page('graduate-research-assistants')
+    ){
         $boolIncludeSidebar = true;
     }
 
