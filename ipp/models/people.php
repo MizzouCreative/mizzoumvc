@@ -88,7 +88,7 @@ class People extends WpBase
                 return $aryStaff;
             }
         } else {
-            return new WP_Error('no-match','No matching staff')
+            return new WP_Error('no-match','No matching staff');
         }
     }
 
