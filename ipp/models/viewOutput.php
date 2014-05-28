@@ -19,6 +19,16 @@
  */
 function mizzouOutPutView($strInnerViewFileName,$aryData)
 {
+    $aryIncludeSidebarPages = array(
+        'about',
+        'strategic-plan',
+        'annual-reports',
+        'contact',
+        'staff',
+        'policy-research-scholars',
+        'graduate-research-assistants'
+    );
+
     //convert all the data for the inner view into variables
     extract($aryData);
 
@@ -40,6 +50,11 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     $boolIncludeSidebar = false;
 
+    if(is_page() && in_array($objMainPost->name,$aryIncludeSidebarPages)){
+        $boolIncludeSidebar = true;
+    }
+
+    /*
     if(
             is_page('about')
         ||  is_page('strategic-plan')
@@ -50,7 +65,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         ||  is_page('graduate-research-assistants')
     ){
         $boolIncludeSidebar = true;
-    }
+    }*/
 
     $intSpanWidth = ($boolIncludeSidebar) ? 9 : 12;
 
