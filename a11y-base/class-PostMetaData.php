@@ -286,8 +286,8 @@ class PostMetaData extends CustomPostType{
                 }
 
 
-                if(!$boolSuppressEmptyFields || ($boolSuppressEmptyFields && trim($this->aryOriginalData[$strKeyInGroup]) != '')){
-                    $this->aryData[$aryMatch[1]][] = $this->aryOriginalData[$strKeyInGroup];
+                if(!$boolSuppressEmptyFields || ($boolSuppressEmptyFields && trim($this->aryOriginalData[$strKeyInGroup][0]) != '')){
+                    $this->aryData[$aryMatch[1]][] = $this->aryOriginalData[$strKeyInGroup][0];
                 }
             }
         }
