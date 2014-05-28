@@ -270,6 +270,7 @@ class PostMetaData extends CustomPostType{
 
     protected function _consolidateMetaGroups($boolSuppressEmptyFields)
     {
+        _mizzou_log($boolSuppressEmptyFields,'are we suppressing empty fields?',false,array('func'=>__FUNCTION__));
         //we need the full pattern to use including the prefix, if applicable
         $strFullPattern = $this->_buildFullMetaGroupPattern();
         //find all of the field keys that match our pattern
@@ -283,6 +284,7 @@ class PostMetaData extends CustomPostType{
                 if(!isset($this->aryData[$aryMatch[1]])){
                     $this->aryData[$aryMatch[1]] = array();
                 }
+
 
                 if(!$boolSuppressEmptyFields || ($boolSuppressEmptyFields && trim($this->aryOriginalData[$strKeyInGroup]) != '')){
                     $this->aryData[$aryMatch[1]][] = $this->aryOriginalData[$strKeyInGroup];
