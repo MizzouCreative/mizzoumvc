@@ -68,9 +68,15 @@ class People extends WpBase
 
     }
 
-    public function retrieveStaff($objPost)
+    public function retrieveStaff($mxdPost)
     {
-        $aryStaff = $this->convertPosts(array($objPost),array('suppress_empty_meta'=> true));
+        if(!is_array($mxdPost) && is_object($mxdPost)){
+            $aryRetrieve = array($mxdPost);
+        } else {
+            $aryRetrieve = $mxdPost;
+        }
+
+        $aryStaff = $this->convertPosts($aryRetrieve,array('suppress_empty_meta'=> true));
 
         return (count($aryStaff) > 0) ? $aryStaff : new WP_Error('no-match','No matching staff');
 
