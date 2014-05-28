@@ -27,6 +27,7 @@ class WpBase
         'include_meta'      => false,
         'include_image'     => false,
         'meta_prefix'       => '',
+        'suppress_empty_meta'=> false,
         'passthru'          => null
     );
 
@@ -87,17 +88,8 @@ class WpBase
         $objQuery =  new WP_Query($aryArgs);
 
         if (isset($objQuery->posts) && count($objQuery->posts) > 0){
-            foreach($objQuery->posts as $objPost){
-                $objMizzouPost = new MizzouPost($objPost);
-                if($aryOptions['include_meta']){
-                    $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix']);
-                    if($aryOptions['include_image']){
-                        $objMizzouPost->meta_data->add_data('image',$objMizzouPost->meta_data->retrieve_feature_image_data());
-                    }
-                }
+                $aryReturn[] = $this->convertPosts($objQuery->posts,$aryOptions);
 
-                $aryReturn[] = $objMizzouPost;
-            }
         }
 
         return $aryReturn;
@@ -114,15 +106,26 @@ class WpBase
     }
 
     /**
-     * @param $aryPosts
+     * Convert Posts to our custom Post object
+     *
+     * @param array $aryPosts
+     * @param array $aryOptions
      * @return array
-     * @todo does this really belong in this class?
+     *
      */
-    public function convertPosts($aryPosts)
+    public function convertPosts($aryPosts,$aryOptions = array())
     {
+        $aryOptions = array_merge($this->aryDefaults,$aryOptions);
         $aryReturn = array();
         foreach($aryPosts as $objPost){
-            $aryReturn[] = new MizzouPost($objPost);
+            $objMizzouPost = new MizzouPost($objPost);
+            if($aryOptions['include_meta']){
+                $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix'],$aryOptions['suppress_empty_meta']);
+                if($aryOptions['include_image']){
+                    $objMizzouPost->meta_data->add_data('image',$objMizzouPost->meta_data->retrieve_feature_image_data());
+                }
+            }
+            $aryReturn[] = $objMizzouPost;
         }
 
         return $aryReturn;
