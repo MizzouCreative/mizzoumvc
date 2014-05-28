@@ -54,19 +54,6 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $boolIncludeSidebar = true;
     }
 
-    /*
-    if(
-            is_page('about')
-        ||  is_page('strategic-plan')
-        ||  is_page('annual-reports')
-        ||  is_page('contact')
-        ||  is_page('staff')
-        ||  is_page('policy-research-scholars')
-        ||  is_page('graduate-research-assistants')
-    ){
-        $boolIncludeSidebar = true;
-    }*/
-
     $intSpanWidth = ($boolIncludeSidebar) ? 9 : 12;
 
     //outerView needs breadcrumbs and inner view data
