@@ -37,21 +37,27 @@ class PostMetaData extends CustomPostType{
     * @var array
     */
     private $image_data = null;            
-    
+
+
+    private $strMetaGroupPattern = '([a-zA-Z]*)\d';
+
+    private $strFullMetaGroupPattern = '';
     /**
     * put your comment there...
     * 
     * @param integer $intPostID
     * @param string $strPrefix
+    * @param boolean $boolSuppressEmptyFieldInGroup
     * @return PostMetaData
     */
-    function __construct($intPostID,$strPrefix = null)
+    function __construct($intPostID,$strPrefix = null,$boolSuppressEmptyFieldInGroup = false)
     {
         if(is_numeric($intPostID)){
             $this->intPostID = $intPostID; 
             if(!is_null($strPrefix)) $this->strPrefix = $strPrefix; 
             $this->_retrieve_wp_data();
-            $this->_reformat_data(); 
+            $this->_reformat_data();
+            $this->_consolidateMetaGroups($boolSuppressEmptyFieldInGroup);
             $this->_retrieve_permalink();
             $this->_retrieve_post_format();
         } else {
@@ -262,9 +268,42 @@ class PostMetaData extends CustomPostType{
         return $this->get('post_parent_name');
     }
 
-    protected function _consolidateMetaGroups()
+    protected function _consolidateMetaGroups($boolSuppressEmptyFields)
+    {
+        //we need the full pattern to use including the prefix, if applicable
+        $strFullPattern = $this->_buildFullMetaGroupPattern();
+        //find all of the field keys that match our pattern
+        $aryMetaGroupKeys = preg_grep($strFullPattern,$this->aryOriginalData);
+
+        //loop through each match, pull out the group component and add it the group array
+        foreach($aryMetaGroupKeys as $strKeyInGroup){
+            if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
+                if(!isset($this->aryData[$aryMatch[1]])){
+                    $this->aryData[$aryMatch[1]] = array();
+                }
+
+                if(!$boolSuppressEmptyFields || ($boolSuppressEmptyFields && trim($this->aryOriginalData[$strKeyInGroup]) != '')){
+                    $this->aryData[$aryMatch[1]][] = $this->aryOriginalData[$strKeyInGroup];
+                }
+            }
+        }
+    }
+
+    protected function _retrieveMetaGroupKeys()
     {
 
+    }
+
+    protected function _buildFullMetaGroupPattern()
+    {
+        $strPattern = '';
+        if(!is_null($this->strPrefix)){
+            $strPattern = $this->strPrefix;
+        }
+
+        $strPattern = '/^'.$strPattern.$this->strMetaGroupPattern.'$/';
+
+        return $strPattern;
     }
 }
 
