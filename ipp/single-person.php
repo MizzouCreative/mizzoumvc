@@ -22,7 +22,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 $aryData = array();
 
 $objStaffModel = new People();
-$objPerson = $objStaffModel->retrieveStaff($post)
+$objPerson = $objStaffModel->retrieveStaff($post);
 
 $aryData['objPerson'] = $objPerson;
 
