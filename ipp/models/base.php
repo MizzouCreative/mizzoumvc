@@ -88,7 +88,7 @@ class WpBase
         $objQuery =  new WP_Query($aryArgs);
 
         if (isset($objQuery->posts) && count($objQuery->posts) > 0){
-                $aryReturn[] = $this->convertPosts($objQuery->posts,$aryOptions);
+                $aryReturn = $this->convertPosts($objQuery->posts,$aryOptions);
 
         }
 
