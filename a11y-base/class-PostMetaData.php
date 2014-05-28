@@ -45,7 +45,8 @@ class PostMetaData extends CustomPostType{
     * @param string $strPrefix
     * @return PostMetaData
     */
-    function __construct($intPostID,$strPrefix = null){
+    function __construct($intPostID,$strPrefix = null)
+    {
         if(is_numeric($intPostID)){
             $this->intPostID = $intPostID; 
             if(!is_null($strPrefix)) $this->strPrefix = $strPrefix; 
@@ -62,15 +63,18 @@ class PostMetaData extends CustomPostType{
     * Retrieves the custom post data for a post from wordress
     * 
     */
-    protected function _retrieve_wp_data(){
+    protected function _retrieve_wp_data()
+    {
         $this->aryOriginalData = get_post_custom($this->intPostID);        
     }
     
-    protected function _retrieve_permalink(){
+    protected function _retrieve_permalink()
+    {
         $this->add_data('permalink', get_permalink($this->intPostID));
     }
     
-    protected function _retrieve_post_format(){
+    protected function _retrieve_post_format()
+    {
         $this->add_data('post_format', (FALSE !== $strPostFormat = get_post_format($this->intPostID)) ? $strPostFormat : 'standard');
     }
 
@@ -81,7 +85,8 @@ class PostMetaData extends CustomPostType{
     * Removes the prefix from the id, and removes any internal custom data fields
     * 
     */
-    private function _reformat_data(){
+    private function _reformat_data()
+    {
         $boolRemovePrefix = (!is_null($this->strPrefix)) ? true : false;
         if($boolRemovePrefix) $intPrefixLen = strlen($this->strPrefix);
         foreach($this->aryOriginalData as $key=>$val){
@@ -101,7 +106,8 @@ class PostMetaData extends CustomPostType{
     * @param array $aryItems
     * @param string $strValue
     */
-    public function includeSideBar(array $aryItems,$strValue){
+    public function includeSideBar(array $aryItems,$strValue)
+    {
         $boolIncludeSidebar = false;
         
         if($this->member_of_group_set($aryItems)){
@@ -125,7 +131,8 @@ class PostMetaData extends CustomPostType{
     * @param array $aryOptions
     * @return mixed
     */
-    public function retrieve_feature_image_data($aryOptions=array()){
+    public function retrieve_feature_image_data($aryOptions=array())
+    {
         $aryDefaults = array(
             'return'=>true,
             'captions'=>false
@@ -159,7 +166,8 @@ class PostMetaData extends CustomPostType{
     * @return array
     * @uses wp_parse_args() from wordpress core. Could be replaced with a standard array_merge if needed
     */
-    protected function parse_arguments($aryOptions,$aryDefaults){
+    protected function parse_arguments($aryOptions,$aryDefaults)
+    {
 //         catch legacy code and inproper argument
          if(is_bool($aryOptions)){
             $aryOptions = array('return'=>$aryOptions);
@@ -178,7 +186,8 @@ class PostMetaData extends CustomPostType{
     * @param array $aryOptions
     * @return array
     */
-    public function retrieve_gallery_images($aryOptions=array()){
+    public function retrieve_gallery_images($aryOptions=array())
+    {
          $aryDefaults = array(
             'return'=>true,
             'featured'=>true,
@@ -232,11 +241,13 @@ class PostMetaData extends CustomPostType{
     * @return boolean
     * 
     */
-    protected function image_data_set(){
+    protected function image_data_set()
+    {
         return is_array($this->image_data);
     }
     
-    function retrieve_parent_name(){
+    public function retrieve_parent_name()
+    {
         if(!$this->is_set('post_parent_name')){
             $strParent = '';
             $objPost = get_post($this->intPostID);
@@ -249,6 +260,11 @@ class PostMetaData extends CustomPostType{
         }
         
         return $this->get('post_parent_name');
+    }
+
+    protected function _consolidateMetaGroups()
+    {
+
     }
 }
 
