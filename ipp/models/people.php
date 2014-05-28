@@ -70,16 +70,26 @@ class People extends WpBase
 
     public function retrieveStaff($mxdPost)
     {
+        $boolReturnSingle = false;
+
         if(!is_array($mxdPost) && is_object($mxdPost)){
             $aryRetrieve = array($mxdPost);
+            $boolReturnSingle = true;
         } else {
             $aryRetrieve = $mxdPost;
         }
 
         $aryStaff = $this->convertPosts($aryRetrieve,array('suppress_empty_meta'=> true));
 
-        return (count($aryStaff) > 0) ? $aryStaff : new WP_Error('no-match','No matching staff');
-
+        if(count($aryStaff) > 0){
+            if($boolReturnSingle && count($aryStaff) == 1){
+                return $aryStaff[0];
+            } else {
+                return $aryStaff;
+            }
+        } else {
+            return new WP_Error('no-match','No matching staff')
+        }
     }
 
     public function retrieveTopStaff()
