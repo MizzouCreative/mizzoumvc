@@ -273,6 +273,8 @@ class PostMetaData extends CustomPostType{
         //we need the full pattern to use including the prefix, if applicable
         $strFullPattern = $this->_buildFullMetaGroupPattern();
         //find all of the field keys that match our pattern
+        _mizzou_log($strFullPattern,'my full pattern for finding meta groups');
+        _mizzou_log($this->aryOriginalData,'contents of the original data array');
         $aryMetaGroupKeys = preg_grep($strFullPattern,$this->aryOriginalData);
         _mizzou_log($aryMetaGroupKeys,'my meta group keys');
         //loop through each match, pull out the group component and add it the group array
