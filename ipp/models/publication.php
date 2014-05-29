@@ -19,9 +19,10 @@ class Publication extends WpBase
     public function getPublicationsByStaff($intStaffID)
     {
         $aryArgs = array(
-            'taxonomy'  => 'author_archive',
-            'tax_term'  => $intStaffID,
-            'count'     => 4 //@todo move this somewhere higher
+            'taxonomy'      => 'author_archive',
+            'tax_term'      => $intStaffID,
+            'count'         => 4, //@todo move this somewhere higher
+            'include_meta'  => true
         );
 
         return $this->retrieveContent($aryArgs);
