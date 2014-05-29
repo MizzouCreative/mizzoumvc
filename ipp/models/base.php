@@ -59,6 +59,20 @@ class WpBase
             'order'         =>  $aryOptions['order_direction']
         );
 
+        if('' != $aryOptions['taxonomy'] && '' != $aryOptions['tax_term'] && !is_null($aryOptions['complex_tax']) && is_array($aryOptions['complex_tax'])){
+            /**
+             * whoah... we're asking for both a simple taxonomy and a complex taxonomy. that doesn't make sense. Let's
+             * log a message. we will then ASSUME that because a complex taxonomy was passed in that we dont want the
+             * simple taxonomy
+             * @todo double-check your assumption
+             * @todo throw an exception instead of logging a message?
+             */
+            $strLogMsg = "uh... you've requested both a complex and simple taxonomy query. That won't work. Here are "
+                . "the contents of the options you gave me: ";
+            _mizzou_log($aryOptions,$strLogMsg,true,array('func'=>__FUNCTION__));
+            $aryOptions['taxonomy'] = $aryOptions['tax_term'] = '';
+        }
+
         if ('' != $aryOptions['taxonomy'] && '' != $aryOptions['tax_term']){
             $aryTaxQuery = array(
                 'taxonomy'  => $aryOptions['taxonomy'],
