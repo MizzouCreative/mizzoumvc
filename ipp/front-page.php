@@ -50,7 +50,7 @@
                             <a class="clearfix" href="<? echo $themeta['link'][0]; ?>">
                                 <?php } ?>
 
-                                <div class="slide-text <? echo $themeta['position'][0]; ?>">
+                                <div class="slide-text">
                                     <h2><?php the_title(); ?></h2>
                                     <div class="slide-content">
                                         <?php the_content(); ?>
@@ -72,7 +72,7 @@
 
     <div class="clear"></div>
 
-    <div class="span4">
+    <div class="span8">
         <?php dynamic_sidebar( 'primary-widget' ); ?>
     </div>
 
@@ -81,9 +81,6 @@
         <?php dynamic_sidebar('home_right')  ?>
     </div>
 
-    <div class="span4">
-        <?php dynamic_sidebar( 'primary-widget' ); ?>
-    </div>
 
 
 
