@@ -98,6 +98,7 @@ class MizzouPost
 
     private function _setFormattedDate()
     {
+        _mizzou_log($this->date,'trying to set a format on a date using format: ' . $this->aryOptions['date_format']);
         $this->formatted_date = date($this->aryOptions['date_format'],$this->date);
     }
 } 
