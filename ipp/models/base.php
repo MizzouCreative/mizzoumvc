@@ -28,7 +28,8 @@ class WpBase
         'include_image'     => false,
         'meta_prefix'       => '',
         'suppress_empty_meta'=> false,
-        'passthru'          => null
+        'passthru'          => null,
+        'format_date'       => false
     );
 
     protected $strArchivePermalink  = '';
@@ -131,8 +132,13 @@ class WpBase
     {
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
         $aryReturn = array();
+        /**
+         * @todo there has GOT to be a more efficient way to do this. All i really want is a slice of the big array
+         * for two specific keys
+         */
+        $aryMizzouPostOptions = ($aryOptions['format_date']) ? array('format_date'=>$aryOptions['format_date'],'date_format'=>$aryOptions['date_format']) : array();
         foreach($aryPosts as $objPost){
-            $objMizzouPost = new MizzouPost($objPost);
+            $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
             if($aryOptions['include_meta']){
                 $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix'],$aryOptions['suppress_empty_meta']);
                 if($aryOptions['include_image']){
