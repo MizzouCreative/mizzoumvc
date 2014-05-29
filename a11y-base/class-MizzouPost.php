@@ -36,12 +36,19 @@ class MizzouPost
     public $comment_count   = '';
     public $filter          = '';
     public $meta_data       = '';
+    public $formatted_date  = '';
 
     protected $strPostPrefix= 'post_';
     protected $aryPropertyExclude = array('post_type');
 
-    public function __construct(WP_Post $objPost)
+    protected $aryOptions = array(
+        'format_date'   => false,
+        'date_format'   => 'F, j Y'
+    );
+
+    public function __construct(WP_Post $objPost, $aryOptions = array())
     {
+        $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
         $this->_set_members($objPost);
     }
 
@@ -62,6 +69,14 @@ class MizzouPost
         $this->_setPermalink();
         $this->_setContent();
         $this->_setTitle();
+        /**
+         * @todo maybe we should just always create a formatted date and simply allow the calling script to override
+         * the format?
+         */
+        if($this->aryOptions['format_date']){
+            $this->_setFormattedDate();
+        }
+
     }
 
     private function _setPermalink()
@@ -79,5 +94,10 @@ class MizzouPost
     {
         $this->title_raw = $this->title;
         $this->title = apply_filters('the_title',$this->title_raw);
+    }
+
+    private function _setFormattedDate()
+    {
+        $this->formatted_date = date($this->aryOptions['date_format'],$this->date);
     }
 } 
