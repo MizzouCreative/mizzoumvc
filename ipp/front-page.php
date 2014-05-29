@@ -76,7 +76,6 @@
         <?php dynamic_sidebar( 'primary-widget' ); ?>
     </div>
 
-
     <div class="span4">
         <?php dynamic_sidebar('home_right')  ?>
     </div>
