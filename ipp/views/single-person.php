@@ -105,7 +105,7 @@ global $objPerson;
                     <?php if($objPublication->meta_data->authors != '') : ?>
                     <p><?php echo $objPublication->meta_data->authors; ?></p>
                     <?php endif; ?>
-                    <p>Date</p>
+                    <p><?php echo $objPublication->formatted_date; ?></p>
                     <?php if($objPublication->content != '') : ?>
                     <p><?php echo $objPublication->content; ?></p>
                     <?php endif; ?>
