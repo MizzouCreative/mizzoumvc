@@ -101,7 +101,14 @@ global $objPerson;
         <?php foreach($aryPublications as $objPublication) : ?>
             <div class="publication-item">
                 <h4>
-                    <a title="" rel="bookmark" href=""></a>
+                    <a title="<?php echo $objPublication->title; ?>" rel="bookmark" href="<?php echo $objPublication->permalink; ?>"><?php echo $objPublication->title; ?></a>
+                    <?php if($objPublication->meta_data->authors != '') : ?>
+                    <p><?php echo $objPublication->meta_data->authors; ?></p>
+                    <?php endif; ?>
+                    <p>Date</p>
+                    <?php if($objPublication->content != '') : ?>
+                    <p><?php echo $objPublication->content; ?></p>
+                    <?php endif; ?>
                 </h4>
             </div>
         <?php endforeach; ?>
