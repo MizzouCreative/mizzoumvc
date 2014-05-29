@@ -287,6 +287,7 @@ class PostMetaData extends CustomPostType{
 
 
                 if(!$boolSuppressEmptyFields || ($boolSuppressEmptyFields && trim($this->aryOriginalData[$strKeyInGroup][0]) != '')){
+                    _mizzou_log($aryMatch[1],'getting ready to add an item to our group. group key is: ');
                     $this->aryData[$aryMatch[1]][] = $this->aryOriginalData[$strKeyInGroup][0];
                 }
             }
