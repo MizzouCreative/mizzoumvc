@@ -16,4 +16,15 @@ class Publication extends WpBase
      */
     protected $strPostType = 'publication';
 
+    public function getPublicationsByStaff($intStaffID)
+    {
+        $aryArgs = array(
+            'taxonomy'  => 'author_archive',
+            'tax_term'  => $intStaffID,
+            'count'     => 4 //@todo move this somewhere higher
+        );
+
+        return $this->retrieveContent($aryArgs);
+    }
+
 }
