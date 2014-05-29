@@ -54,7 +54,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $boolIncludeSidebar = true;
     }
 
-    $intSpanWidth = ($boolIncludeSidebar) ? 9 : 12;
+    $intSpanWidth = ($boolIncludeSidebar) ? 8 : 12;
 
     //outerView needs breadcrumbs and inner view data
 
