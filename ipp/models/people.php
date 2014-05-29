@@ -29,10 +29,13 @@ class People extends WpBase
     );
 
     protected $aryPeopleDefaults = array(
-        'taxonomy'      => 'person_type',
-        'tax_term'      => 'staff',
         'include_meta'  => true,
         'include_image' => true
+    );
+
+    protected $aryStaffDefaults = array(
+        'taxonomy'      => 'person_type',
+        'tax_term'      => 'staff',
     );
     /**
      * overload parent member
@@ -53,7 +56,7 @@ class People extends WpBase
             )
         );
 
-        $aryArgs = array_merge($this->aryDefaults,$aryArgs);
+        $aryArgs = array_merge($this->aryDefaults,$this->aryStaffDefaults,$aryArgs);
 
         if($boolTopStaff){
             $aryReturn = $this->retrieveTopStaff();
@@ -106,7 +109,7 @@ class People extends WpBase
                 )
             );
 
-            $aryArgs = array_merge($this->aryDefaults,$aryArgs);
+            $aryArgs = array_merge($this->aryDefaults,$this->aryStaffDefaults,$aryArgs);
 
             $aryResult = $this->retrieveContent($aryArgs);
             if(count($aryResult) == 1){ //there should be only one highlander
