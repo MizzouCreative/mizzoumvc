@@ -135,6 +135,7 @@ class WpBase
         /**
          * @todo there has GOT to be a more efficient way to do this. All i really want is a slice of the big array
          * for two specific keys
+         * Wait, do array_intersect_key($aryOptions,array_flip(array('format_date','date_format')))
          */
         $aryMizzouPostOptions = ($aryOptions['format_date']) ? array('format_date'=>$aryOptions['format_date'],'date_format'=>$aryOptions['date_format']) : array();
         foreach($aryPosts as $objPost){
