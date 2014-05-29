@@ -66,27 +66,21 @@
 
             </div><!-- end .span8 -->
 
-				    <div class="span4">
-				        <?php dynamic_sidebar( 'primary-widget' ); ?>
-				    </div>
-
-
-
         </article>
 
     </main>
 
     <div class="clear"></div>
 
+    <div class="span8">
+        <?php dynamic_sidebar( 'primary-widget' ); ?>
+    </div>
 
 
     <div class="span4">
         <?php dynamic_sidebar('home_right')  ?>
     </div>
 
-    <div class="span4">
-        <?php dynamic_sidebar( 'primary-widget' ); ?>
-    </div>
 
 
 
