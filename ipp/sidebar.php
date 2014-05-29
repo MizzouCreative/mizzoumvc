@@ -19,7 +19,7 @@
 
 <aside>
 
-<div id="sidebar" class="mobile-hide span3 flex">
+<div id="sidebar" class="mobile-hide span4 flex">
 	
 	<?php if (is_page() ) { ?>
 	
