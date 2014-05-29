@@ -65,6 +65,6 @@
             </ol>
         </div>
     </div>
-        <?php $intColPlace = ($intColPlace == 2) ? $intColPlace = 0 : ++$intColPlace; ?>
+        <?php $intColPlace = ($intColPlace == 1) ? $intColPlace = 0 : ++$intColPlace; ?>
     <?php endforeach; ?>
 </section>
