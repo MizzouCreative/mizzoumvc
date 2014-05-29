@@ -283,6 +283,17 @@ class PostMetaData extends CustomPostType{
             if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
                 if(!isset($this->aryData[$aryMatch[1]])){
                     $this->aryData[$aryMatch[1]] = array();
+                } elseif (!is_array($this->aryData[$aryMatch[1]])){
+                    /**
+                     * ok we have a situation where there is already a key set up for the group name, but it isnt an
+                     * array. Most likely we have something like "address" and then "address2". so, let's take the data
+                     * that is currently there and store it, create a new array, and then add that data back in
+                     */
+                    $strLogMsg = "looks like you have a meta field group but the first item is named what the group "
+                        . "name needs to become. Fixing it for you, but you should really go back and rename the key.";
+                    _mizzou_log($aryMatch[1],$strLogMsg,false,array('func'=>__FUNCTION__));
+                    $strTempData = $this->aryData[$aryMatch[1]];
+                    $this->aryData[$aryMatch[1]] = array($strTempData);
                 }
 
 
