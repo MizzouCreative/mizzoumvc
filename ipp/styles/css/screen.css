@@ -397,7 +397,7 @@ div.aligncenter {
   margin-bottom: 1rem;
   position: relative;
   overflow: hidden;
-  min-height: 360px;
+  min-height: 460px;
   max-height: 36px;
   max-height: 2rem;
   background-position: center center;
@@ -465,7 +465,7 @@ div.aligncenter {
   transition-property: color, background, background-color, opacity, border;
 }
 .slide .slide-text p {
-  color: #333333;
+  color: #555555;
   margin: 0 !important;
   padding-top: 18px;
   padding-right: 18px;
@@ -475,10 +475,10 @@ div.aligncenter {
   padding-right: 1rem;
   padding-bottom: 0rem;
   padding-left: 0rem;
-  line-height: 144%;
-  background: #ffffff;
-  font-size: 27px;
-  font-size: 1.5rem;
+  font-size: 54px;
+  font-size: 3rem;
+  line-height: 58.5px;
+  line-height: 3.25rem;
   font-weight: 300;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
