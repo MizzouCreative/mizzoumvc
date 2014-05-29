@@ -82,7 +82,7 @@ class PolicyArea
 
         if(count($aryMatches) !== 1) { //@todo throw an exception, log it, something!
             //@todo ask if we should grab some default contact info to display?
-            _mizzou_log($aryMatches,'Array Matches',false,array('func'=>__FUNCTION__));
+            _mizzou_log($aryMatches,'we should only have one match',false,array('func'=>__FUNCTION__));
         }
 
         return $aryMatches[0];
