@@ -65,3 +65,53 @@ global $objPerson;
     </section>
 </div>
 
+<div class="span5">
+<?php if(isset($objPerson->focus) && count($objPerson->focus) > 0) : ?>
+     <div class="clear"></div>
+    <h2>Research Interests</h2>
+    <ul>
+    <?php foreach($objPerson->focus as $strFocus) : ?>
+        <li><?php echo $strFocus; ?></li>
+    <?php endforeach; ?>
+    </ul>
+<?php else : ?>
+    <?php //should anything go here if they dont have research interests? ?>
+<?php endif; ?>
+</div>
+<div class="clear"></div>
+<hr>
+<div class="span6 right-offset1">
+    <?php if($objPerson->content != '') : ?>
+        <h2 class="hidden">Biography</h2>
+        <?php echo $objPerson->content; ?>
+    <?php endif; ?>
+   <?php if(count($objPerson->education) > 0) : ?>
+    <h2>Education</h2>
+       <ul>
+           <?php foreach($objPerson->education as $strEducation) : ?>
+           <li><?php echo $strEducation; ?></li>
+           <?php endforeach; ?>
+       </ul>
+    <?php endif; ?>
+</div>
+<div class="span5">
+    <?php if(count($aryPublications) > 0) : ?>
+    <h2>Selected Publications</h2>
+    <div class="clearfix">
+        <?php foreach($aryPublications as $objPublication) : ?>
+            <div class="publication-item">
+                <h4>
+                    <a title="" rel="bookmark" href=""></a>
+                </h4>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <p>
+        <a href="">Complete publications list</a>
+    </p>
+
+    <?php else : ?>
+        <?php //should anything go here if they dont have publications? ?>
+    <?php endif; ?>
+</div>
+
