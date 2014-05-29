@@ -40,7 +40,7 @@
                 <img src="<?php echo $objStaff->meta_data->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->meta_data->image->alt; ?>">
             </a>
         </div>
-        <div class="span2 two-thirds omega">
+        <div class="span3 two-thirds omega">
             <ol class="contact nobullet">
                 <li class="name">
                     <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>"><?php echo $objStaff->title; ?></a>
