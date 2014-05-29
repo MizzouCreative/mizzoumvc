@@ -29,15 +29,5 @@ $objPerson = $objStaffModel->retrieveStaff($post);
 $aryPublications = $objPublicationModel->getPublicationsByStaff($objPerson->ID);
 
 $aryData['objPerson'] = $objPerson;
-
-?>
-<p>Single Person:</p>
-
-<xmp>
-    <?php var_export($objPerson); ?>
-</xmp>
-
-<p>Related Publications:</p>
-<xmp>
-    <?php var_export($aryPublications); ?>
-</xmp>
+$aryData['aryPublications'] = $aryPublications;
+mizzouOutPutView('single-person',$aryData);
