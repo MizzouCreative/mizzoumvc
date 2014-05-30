@@ -77,7 +77,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //get contents from the inner view
     if(file_exists($strInnerView)){
         require_once $strInnerView;
-        $strInnerViewContent = ob_get_clean();
+        $strInnerViewContent = ob_get_contents();
+        ob_clean();
     } else {
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
