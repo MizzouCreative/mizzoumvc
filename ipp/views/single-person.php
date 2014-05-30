@@ -14,6 +14,7 @@ global $objPerson;
             <span id="portrait-label" class="hidden"><?php echo $objPerson->meta_data->image->alt; ?></span>
             <?php
             /**
+             * 20140530 PFG:
              * On truman, width and height are set to 400 X 600, but it also has a version of the image that matches
              * those dimensions.  Right now on IPP, medium is set to 200 X 300 and large is set to 682 X 1024. Do we
              * need to alter the medium/large settings? Or do we need a custom image size? For now, I've set the
@@ -57,7 +58,7 @@ global $objPerson;
             <?php if(isset($objPerson->meta_data->address2)) : ?>
             <li class="address_2"><?php echo $objPerson->meta_data->address2; ?></li>
             <?php endif; ?>
-            <li class="address_2">Columbia, MO 65211</li><?php //is this always hard-coded? ?>
+            <li class="address_2">Columbia, MO 65211</li><?php // 20140528 PFG: is this always hard-coded? ?>
        <?php endif; ?>
 
        <?php if(count($objPerson->meta_data->website) > 0) : ?>
@@ -87,7 +88,7 @@ global $objPerson;
     <?php endforeach; ?>
     </ul>
 <?php else : ?>
-    <?php //should anything go here if they dont have research interests? ?>
+    <?php // 20140528 PFG: should anything go here if they dont have research interests? ?>
 <?php endif; ?>
 </div>
 <div class="clear"></div>
@@ -106,6 +107,13 @@ global $objPerson;
        </ul>
     <?php endif; ?>
 </div>
+<?php
+/**
+ * 20140530 PFG:
+ * I had the span set to 5 like truman, but doing so caused it be pushed down below the biography div. span6 + 1 offset
+ * + span 5 should equal 12, so I'm not sure what the problem is.
+ */
+?>
 <div class="span5">
     <?php if(count($aryPublications) > 0) : ?>
     <h2>Selected Publications</h2>
@@ -121,6 +129,7 @@ global $objPerson;
                     <?php if($objPublication->content != '') : ?>
                     <?php
                         /**
+                         * 20140530 PFG:
                          * Do we want content_raw here? using content brings in the formatted version with <p> included.
                          * Removed the <p></p> surrounding content for now
                          */
@@ -135,7 +144,6 @@ global $objPerson;
     </p>
 
     <?php else : ?>
-        <?php //should anything go here if they dont have publications? ?>
-        <h2>No Publications</h2>
+        <?php // 20140528 PFG :should anything go here if they dont have publications? ?>
     <?php endif; ?>
 </div>
