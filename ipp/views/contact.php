@@ -8,4 +8,5 @@
 ?>
 <section aria-label="content" role="region">
     <?php echo $objMainPost->content; ?>
+    <?php echo $strStaffLoop; ?>
 </section>
