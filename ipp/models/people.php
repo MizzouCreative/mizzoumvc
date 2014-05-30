@@ -83,10 +83,9 @@ class People extends WpBase
         $aryOptions = array_merge($aryDefaults,$aryOptions);
 
         if($aryOptions['include_cv']){
-            $aryOptions['include_object'] = array(
-                'newkey'        =>'cv',
+            $aryOptions['include_attachment_link'] = array(
+                'newkey'        =>'curriculumVitaeURL',
                 'pullfrom'      =>'curriculumVitae',
-                'include_meta'  => true
             );
         }
 
