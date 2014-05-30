@@ -38,6 +38,11 @@ class People extends WpBase
         'taxonomy'      => 'person_type',
         'tax_term'      => 'staff',
     );
+
+    protected $aryPRSDefaults = array(
+        'taxonomy'  => 'person_type',
+        'tax_term'  => 'policy-research-scholars'
+    );
     /**
      * overload parent member
      * @var string
@@ -136,6 +141,12 @@ class People extends WpBase
 
         return $aryReturn;
 
+    }
+
+    public function retrievePolicyScholars()
+    {
+        $aryOptions = array_merge($this->aryDefaults,$this->aryPRSDefaults);
+        return $this->retrieveContent($aryOptions);
     }
 
     /**
