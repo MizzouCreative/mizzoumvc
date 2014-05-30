@@ -136,10 +136,6 @@ global $objPerson;
 
     <?php else : ?>
         <?php //should anything go here if they dont have publications? ?>
+        <h2>No Publications</h2>
     <?php endif; ?>
 </div>
-<br class="clearfix">
-<xmp>
-    <?php var_export($objPerson->meta_data->image); ?>s
-</xmp>
-
