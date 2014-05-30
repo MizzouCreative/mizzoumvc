@@ -16,6 +16,7 @@ locate_template('class-MizzouPost.php',true,true);
  * Class WpBase
  *
  * @uses get_post() @see self::convertPosts()
+ * @uses wp_get_attachment_url @see self::convertPosts()
  */
 class WpBase
 {
@@ -150,6 +151,24 @@ class WpBase
                 $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix'],$aryOptions['suppress_empty_meta']);
                 if($aryOptions['include_image']){
                     $objMizzouPost->meta_data->add_data('image',$objMizzouPost->meta_data->retrieve_feature_image_data());
+                }
+            }
+
+            /**
+             * Do we need to include an attachment URL?
+             */
+            if(isset($aryOptions['include_attachment_link'])){
+                if(isset($aryOptions['include_attachment_link']['pullfrom'])
+                    && isset($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
+                    && is_integer($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
+                    && isset($aryOptions['include_attachment_link']['newkey'])
+                    && !isset($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['newkey']})
+                ){
+                    $objMizzouPost->meta_data->add_data($aryOptions['include_attachment_link']['newkey'],wp_get_attachment_url($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']}));
+                } else {
+                    /**
+                     * @todo something happened. what do we do?
+                     */
                 }
             }
 
