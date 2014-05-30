@@ -78,7 +78,14 @@ global $objPerson;
     </section>
 </div>
 
-<div class="span5">
+<?php
+/**
+ * 20140530 PFG:
+ * similar to below and publications: using span5 is causing the div to drop a line. But 3 + 4 + 5 should equal 12,
+ * so i'm not sure what's up... Changing this to span4 until we can figure it out
+ */
+?>
+<div class="span4">
 <?php if(isset($objPerson->meta_data->focus) && count($objPerson->meta_data->focus) > 0) : ?>
      <div class="clear"></div>
     <h2>Research Interests</h2>
