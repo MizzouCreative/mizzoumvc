@@ -25,7 +25,7 @@ $aryData = array();
 $objStaffModel = new People();
 $objPublicationModel = new Publication();
 
-$objPerson = $objStaffModel->convertStaff($post);
+$objPerson = $objStaffModel->convertStaff($post,array('include_cv'=>true));
 $aryPublications = $objPublicationModel->getPublicationsByStaff($objPerson->ID);
 
 $aryData['objPerson'] = $objPerson;
