@@ -69,9 +69,9 @@ global $objPerson;
            <?php endforeach; ?>
        <?php endif; ?>
 
-       <?php if(isset($objPerson->cv)) : ?>
+       <?php if(isset($objPerson->meta_data->curriculumVitaeURL)) : ?>
             <li>
-                <a href="<?php echo $objPerson->cv->permalink; ?>">Curriculum Vitae</a>
+                <a href="<?php echo $objPerson->meta_data->curriculumVitaeURL; ?>">Curriculum Vitae</a>
             </li>
        <?php endif; ?>
         </ol>
