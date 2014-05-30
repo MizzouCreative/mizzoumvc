@@ -123,6 +123,7 @@ global $objPerson;
         <?php //should anything go here if they dont have publications? ?>
     <?php endif; ?>
 </div>
+<br class="clearfix">
 <xmp>
     <?php var_export($objPerson); ?>s
 </xmp>
