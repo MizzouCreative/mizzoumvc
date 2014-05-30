@@ -79,11 +79,11 @@ global $objPerson;
 </div>
 
 <div class="span5">
-<?php if(isset($objPerson->focus) && count($objPerson->focus) > 0) : ?>
+<?php if(isset($objPerson->meta_data->focus) && count($objPerson->meta_data->focus) > 0) : ?>
      <div class="clear"></div>
     <h2>Research Interests</h2>
     <ul>
-    <?php foreach($objPerson->focus as $strFocus) : ?>
+    <?php foreach($objPerson->meta_data->focus as $strFocus) : ?>
         <li><?php echo $strFocus; ?></li>
     <?php endforeach; ?>
     </ul>
