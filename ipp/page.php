@@ -20,7 +20,7 @@ switch($aryData['objMainPost']->name){
         $objPeople = new People();
         $aryStaff = $objPeople->retrieveTopStaff();
         ob_start();
-        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'staff-loop.php';
+        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'people-loop.php';
         $aryData['strStaffLoop'] = ob_get_contents();
         ob_end_clean();
         $strView = 'contact';
@@ -33,7 +33,7 @@ switch($aryData['objMainPost']->name){
         $objPeople = new People();
         $aryStaff = $objPeople->retrieveAllStaff(true);
         ob_start();
-        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'staff-loop.php';
+        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'people-loop.php';
         $aryData['strStaffLoop'] = ob_get_contents();
         ob_end_clean();
         $strView = 'staff';
@@ -46,7 +46,7 @@ switch($aryData['objMainPost']->name){
         $objPeople = new People();
         $aryStaff = $objPeople->retrievePolicyScholars();
         ob_start();
-        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'staff-loop.php';
+        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'people-loop.php';
         $aryData['strStaffLoop'] = ob_get_contents();
         ob_end_clean();
         /**
