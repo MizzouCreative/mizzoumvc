@@ -168,7 +168,21 @@ class WpBase
             ){
                     $objNew = get_post($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']});
                     if(!is_null($objNew)){
-                        $objMizzouPost->{$aryOptions['include_object']['newkey']} = new MizzouPost($objNew);
+                        $arySubOptions = array();
+                        if(isset($aryOptions['include_object']['include_meta']) && $aryOptions['include_object']['include_meta']){
+                            $arySubOptions['include_meta'] = true;
+                        }
+
+                        //yes, we're calling ourself to help ourself convert ourself
+                        $aryNewObjects = $this->convertPosts(array($objNew),$arySubOptions);
+
+                        if(count($aryNewObjects) == 1){
+                            $objMizzouPost->{$aryOptions['include_object']['newkey']} = $aryNewObjects[0];
+                        } else {
+                            /**
+                             * @todo technically this should never happen. throw an exception?
+                             */
+                        }
                     } else {
                         /**
                          * @todo something went wrong trying to get the post. What do we do here?
