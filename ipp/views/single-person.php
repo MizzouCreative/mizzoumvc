@@ -10,9 +10,19 @@ global $objPerson;
 
 <div class="span3 one-third" id="portrait-container">
     <section aria-labelledby="portait" role="img">
-        <a href="" title="">
-            <span id="portrait-label" class="hidden">IMG ALT CONTENT</span>
-            <img src="" alt="" class="attachment-medium wp-post-image" width="" height="">
+        <a href="<?php echo $objPerson->meta_data->image_data->src_full; ?>" title="<?php echo $objPerson->meta_data->image_data->alt; ?>">
+            <span id="portrait-label" class="hidden"><?php echo $objPerson->meta_data->image_data->alt; ?></span>
+            <?php
+            /**
+             * On truman, width and height are set to 400 X 600, but it also has a version of the image that matches
+             * those dimensions.  Right now on IPP, medium is set to 200 X 300 and large is set to 682 X 1024. Do we
+             * need to alter the medium/large settings? Or do we need a custom image size? For now, I've set the
+             * width/height to match the medium-sized dimensions
+             *
+             * @todo change width height, and/or alter settings in IPP
+             */
+            ?>
+            <img src="<?php echo $objPerson->meta_data->image_data->src_medium; ?>" alt="<?php echo $objPerson->meta_data->image_data->alt; ?>" class="attachment-medium wp-post-image" width="200" height="300">
         </a>
     </section>
 </div>
@@ -109,7 +119,12 @@ global $objPerson;
                     <?php endif; ?>
                     <p><?php echo $objPublication->formatted_date; ?></p>
                     <?php if($objPublication->content != '') : ?>
-                    <p><?php echo $objPublication->content; ?></p>
+                    <?php
+                        /**
+                         * Do we want content_raw here? using content brings in the formatted version with <p> included.
+                         * Removed the <p></p> surrounding content for now
+                         */
+                        echo $objPublication->content; ?>
                     <?php endif; ?>
                 </h4>
             </div>
