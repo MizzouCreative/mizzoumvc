@@ -54,6 +54,23 @@ switch($aryData['objMainPost']->name){
          */
         $strView = 'staff';
         break;
+    case 'graduate-research-assistants':
+        /**
+         * We've got duplicate code here. How can we refactor so we're not doing the same thing over and over?
+         */
+        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'people.php';
+        $objPeople = new People();
+        $aryStaff = $objPeople->retrieveGRAs();
+        ob_start();
+        require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'people-loop.php';
+        $aryData['strStaffLoop'] = ob_get_contents();
+        ob_end_clean();
+        /**
+         * Is there any reason to NOT reuse the staff view here?
+         */
+        $strView = 'staff';
+        break;
+        break;
     default:
         $strView = 'page';
         break;
