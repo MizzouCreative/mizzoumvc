@@ -97,7 +97,7 @@ class People extends WpBase
         } else {
             $aryRetrieve = $mxdPost;
         }
-
+        _mizzou_log($aryOptions,'our options before converting staff members',false,array('func'=>__FUNCTION__));
         $aryStaff = $this->convertPosts($aryRetrieve,$aryOptions);
 
         if(count($aryStaff) > 0){

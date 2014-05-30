@@ -173,11 +173,13 @@ class WpBase
                         /**
                          * @todo something went wrong trying to get the post. What do we do here?
                          */
+                        _mizzou_log($aryOptions,'we were unable to get a post. Here are the options we were working with.',false, array('func'=>__FUNCTION__));
                     }
                 } else {
                     /**
                      * @todo Something went wrong while
                      */
+                    _mizzou_log($aryOptions,'well something went wrong in our checks. Here are the options we were working with',false,array('func'=>__FUNCTION__));
                 }
             }
 
