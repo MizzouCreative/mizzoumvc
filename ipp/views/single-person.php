@@ -10,8 +10,8 @@ global $objPerson;
 
 <div class="span3 one-third" id="portrait-container">
     <section aria-labelledby="portait" role="img">
-        <a href="<?php echo $objPerson->meta_data->image_data->src_full; ?>" title="<?php echo $objPerson->meta_data->image_data->alt; ?>">
-            <span id="portrait-label" class="hidden"><?php echo $objPerson->meta_data->image_data->alt; ?></span>
+        <a href="<?php echo $objPerson->meta_data->image->src_full; ?>" title="<?php echo $objPerson->meta_data->image->alt; ?>">
+            <span id="portrait-label" class="hidden"><?php echo $objPerson->meta_data->image->alt; ?></span>
             <?php
             /**
              * On truman, width and height are set to 400 X 600, but it also has a version of the image that matches
@@ -22,7 +22,7 @@ global $objPerson;
              * @todo change width height, and/or alter settings in IPP
              */
             ?>
-            <img src="<?php echo $objPerson->meta_data->image_data->src_medium; ?>" alt="<?php echo $objPerson->meta_data->image_data->alt; ?>" class="attachment-medium wp-post-image" width="200" height="300">
+            <img src="<?php echo $objPerson->meta_data->image->src_medium; ?>" alt="<?php echo $objPerson->meta_data->image->alt; ?>" class="attachment-medium wp-post-image" width="200" height="300">
         </a>
     </section>
 </div>
