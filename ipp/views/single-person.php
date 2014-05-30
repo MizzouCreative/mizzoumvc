@@ -158,6 +158,4 @@ global $objPerson;
 
     <?php
     var_export($objPerson);
-    ?>
-
--->
+    ?> -->
