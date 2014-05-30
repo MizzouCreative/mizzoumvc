@@ -105,10 +105,10 @@ global $objPerson;
         <h2 class="hidden">Biography</h2>
         <?php echo $objPerson->content; ?>
     <?php endif; ?>
-   <?php if(count($objPerson->education) > 0) : ?>
+   <?php if(count($objPerson->meta_data->education) > 0) : ?>
     <h2>Education</h2>
        <ul>
-           <?php foreach($objPerson->education as $strEducation) : ?>
+           <?php foreach($objPerson->meta_data->education as $strEducation) : ?>
            <li><?php echo $strEducation; ?></li>
            <?php endforeach; ?>
        </ul>
