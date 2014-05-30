@@ -12,6 +12,11 @@
 locate_template('class-PostMetaData.php',true,true);
 locate_template('class-MizzouPost.php',true,true);
 
+/**
+ * Class WpBase
+ *
+ * @uses get_post() @see self::convertPosts()
+ */
 class WpBase
 {
     protected $aryDefaults = array(
@@ -29,7 +34,7 @@ class WpBase
         'meta_prefix'       => '',
         'suppress_empty_meta'=> false,
         'passthru'          => null,
-        'format_date'       => false
+        'format_date'       => false,
     );
 
     protected $strArchivePermalink  = '';
@@ -131,13 +136,14 @@ class WpBase
     public function convertPosts($aryPosts,$aryOptions = array())
     {
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
+
         $aryReturn = array();
         /**
-         * @todo there has GOT to be a more efficient way to do this. All i really want is a slice of the big array
-         * for two specific keys
-         * Wait, do array_intersect_key($aryOptions,array_flip(array('format_date','date_format')))
+         * If they've set format_date to true, then what we want is a new array that contains the keys format_date
+         * and date_format with their respective values. We should already have them in the larger aryOptions, but
+         * we need an array with just those two keys.
          */
-        $aryMizzouPostOptions = ($aryOptions['format_date']) ? array('format_date'=>$aryOptions['format_date'],'date_format'=>$aryOptions['date_format']) : array();
+        $aryMizzouPostOptions = ($aryOptions['format_date']) ? array_intersect_key($aryOptions,array_flip(array('format_date','date_format'))) : array();
         foreach($aryPosts as $objPost){
             $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
             if($aryOptions['include_meta']){
@@ -146,6 +152,35 @@ class WpBase
                     $objMizzouPost->meta_data->add_data('image',$objMizzouPost->meta_data->retrieve_feature_image_data());
                 }
             }
+
+            /**
+             * @todo Do/will we ever need the ability to include related objects outside this method?
+             * @todo I dont like relying on get_post here...
+             * @todo we are also having to assume that the pullfrom value is a member in the meta_data object, and not
+             * contained somewhere else.
+             */
+            if(isset($aryOptions['include_object']) && is_array($aryOptions['include_object'])){
+                if(isset($aryOptions['include_object']['newkey'])
+                    && isset($aryOptions['include_object']['pullfrom'])
+                    && isset($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
+                    && is_int($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
+                    && !isset($objMizzouPost->meta_data->{$aryOptions['include_object']['newkey']})
+            ){
+                    $objNew = get_post($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']});
+                    if(!is_null($objNew)){
+                        $objMizzouPost->{$aryOptions['include_object']['newkey']} = new MizzouPost($objNew);
+                    } else {
+                        /**
+                         * @todo something went wrong trying to get the post. What do we do here?
+                         */
+                    }
+                } else {
+                    /**
+                     * @todo Something went wrong while
+                     */
+                }
+            }
+
             $aryReturn[] = $objMizzouPost;
         }
 
