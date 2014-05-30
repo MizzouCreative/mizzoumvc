@@ -173,6 +173,8 @@ class WpBase
             }
 
             /**
+             * Do we need to include a subobject?
+             *
              * @todo Do/will we ever need the ability to include related objects outside this method?
              * @todo I dont like relying on get_post here...
              * @todo we are also having to assume that the pullfrom value is a member in the meta_data object, and not
