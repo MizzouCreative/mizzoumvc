@@ -38,8 +38,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
 
     $strEditPostLink = '';
-    if(is_single() || is_page()){
-        $strEditPostLink = ' '.get_edit_post_link();
+    if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
+        $strEditPostLink = ' '. $strPostLink;
     }
 
     /**
