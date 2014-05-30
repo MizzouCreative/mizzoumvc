@@ -39,9 +39,18 @@ class People extends WpBase
         'tax_term'      => 'staff',
     );
 
+    /**
+     * @var array
+     * @todo should these be contained within the calling method?
+     */
     protected $aryPRSDefaults = array(
         'taxonomy'  => 'person_type',
         'tax_term'  => 'policy-research-scholars'
+    );
+
+    protected $aryGRADefaults = array(
+        'taxonomy'  => 'person_type',
+        'tax_term'  => 'graduate-research-assistants'
     );
     /**
      * overload parent member
@@ -146,6 +155,16 @@ class People extends WpBase
     public function retrievePolicyScholars()
     {
         $aryOptions = array_merge($this->aryDefaults,$this->aryPRSDefaults);
+        return $this->retrieveContent($aryOptions);
+    }
+
+    /**
+     * @return array
+     * @todo with the exception of merging the GRAdefaults, this is identical to self::retrievePolicyScholars. Refactor
+     */
+    public function retrieveGRAs()
+    {
+        $aryOptions = array_merge($this->aryDefaults,$this->aryGRADefaults);
         return $this->retrieveContent($aryOptions);
     }
 
