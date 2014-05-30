@@ -71,7 +71,7 @@ global $objPerson;
 
        <?php if(isset($objPerson->cv)) : ?>
             <li>
-                <a href="<?php echo $objPerson->cv; ?>">Curriculum Vitae</a>
+                <a href="<?php echo $objPerson->cv->permalink; ?>">Curriculum Vitae</a>
             </li>
        <?php endif; ?>
         </ol>
