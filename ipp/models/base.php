@@ -163,7 +163,7 @@ class WpBase
                 if(isset($aryOptions['include_object']['newkey'])
                     && isset($aryOptions['include_object']['pullfrom'])
                     && isset($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
-                    && is_int($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
+                    && is_numeric($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
                     && !isset($objMizzouPost->meta_data->{$aryOptions['include_object']['newkey']})
             ){
                     $objNew = get_post($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']});
