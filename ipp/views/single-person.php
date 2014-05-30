@@ -114,7 +114,7 @@ global $objPerson;
  * + span 5 should equal 12, so I'm not sure what the problem is.
  */
 ?>
-<div class="span5">
+<div class="span4">
     <?php if(count($aryPublications) > 0) : ?>
     <h2>Selected Publications</h2>
     <div class="clearfix">
