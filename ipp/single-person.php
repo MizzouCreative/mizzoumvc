@@ -25,7 +25,7 @@ $aryData = array();
 $objStaffModel = new People();
 $objPublicationModel = new Publication();
 
-$objPerson = $objStaffModel->retrieveStaff($post);
+$objPerson = $objStaffModel->convertStaff($post);
 $aryPublications = $objPublicationModel->getPublicationsByStaff($objPerson->ID);
 
 $aryData['objPerson'] = $objPerson;
