@@ -30,7 +30,8 @@ class People extends WpBase
 
     protected $aryPeopleDefaults = array(
         'include_meta'  => true,
-        'include_image' => true
+        'include_image' => true,
+
     );
 
     protected $aryStaffDefaults = array(
@@ -71,8 +72,23 @@ class People extends WpBase
 
     }
 
-    public function retrieveStaff($mxdPost)
+    public function convertStaff($mxdPost,$aryOptions = array())
     {
+
+        $aryDefaults = array(
+            'include_cv'            => false,
+            'suppress_empty_meta'   => true
+        );
+
+        $aryOptions = array_merge($aryDefaults,$aryOptions);
+
+        if($aryOptions['include_cv']){
+            $aryOptions['include_object'] = array(
+                'newkey'=>'cv',
+                'pullfrom'=>'curriculumVitae'
+            );
+        }
+
         $boolReturnSingle = false;
 
         if(!is_array($mxdPost) && is_object($mxdPost)){
@@ -82,7 +98,7 @@ class People extends WpBase
             $aryRetrieve = $mxdPost;
         }
 
-        $aryStaff = $this->convertPosts($aryRetrieve,array('suppress_empty_meta'=> true));
+        $aryStaff = $this->convertPosts($aryRetrieve,$aryOptions);
 
         if(count($aryStaff) > 0){
             if($boolReturnSingle && count($aryStaff) == 1){
