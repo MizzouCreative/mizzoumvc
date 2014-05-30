@@ -32,8 +32,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //convert all the data for the inner view into variables
     extract($aryData);
 
-    if(!isset($strTitle) || $strTitle == ''){
-        $strTitle = wp_title('',false);
+    if(!isset($strPageTitle) || $strPageTitle == ''){
+        $strPageTitle = wp_title('',false);
     }
 
 

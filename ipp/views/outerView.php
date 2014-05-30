@@ -19,7 +19,7 @@
         <div id="content">
             <article role="article">
                 <header>
-                    <h1 id="title"><?php echo $strTitle; if($strEditPostLink != '') :?> <a href="<?php echo $strEditPostLink; ?>" class="post-edit-link">Edit</a><?php endif; ?></h1>
+                    <h1 id="title"><?php echo $strPageTitle; if($strEditPostLink != '') :?> <a href="<?php echo $strEditPostLink; ?>" class="post-edit-link">Edit</a><?php endif; ?></h1>
                 </header>
                 <?php echo $strInnerViewContent;?>
             </article>
