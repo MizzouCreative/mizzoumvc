@@ -140,6 +140,6 @@ global $objPerson;
 </div>
 <br class="clearfix">
 <xmp>
-    <?php var_export($objPerson->meta_data->image_data); ?>s
+    <?php var_export($objPerson->meta_data->image); ?>s
 </xmp>
 
