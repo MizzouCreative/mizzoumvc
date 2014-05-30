@@ -160,7 +160,7 @@ class WpBase
             if(isset($aryOptions['include_attachment_link'])){
                 if(isset($aryOptions['include_attachment_link']['pullfrom'])
                     && isset($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
-                    && is_integer($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
+                    && is_numeric($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
                     && isset($aryOptions['include_attachment_link']['newkey'])
                     && !isset($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['newkey']})
                 ){
