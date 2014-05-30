@@ -30,7 +30,8 @@ function mizzouIppProjectShortcode($aryAttributes)
     //use the model for projects, lazy-load style
     require_once $strTemplatePath.'models'.DIRECTORY_SEPARATOR.'project.php';
 
-    $aryProjects = mizzouIppRetrieveProjects($aryAttributes['count']);
+    $objProject = new Project();
+    $aryProjects = $objProject->retrieveContent(array('count'=>$aryAttributes['count']));
     $strTitle = 'Recent Projects';
     $strProjectArchiveURL = get_post_type_archive_link('project');
     ob_start();
