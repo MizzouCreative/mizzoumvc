@@ -50,10 +50,12 @@ global $objPerson;
             <li class="address_2">Columbia, MO 65211</li><?php //is this always hard-coded? ?>
        <?php endif; ?>
 
-       <?php if(isset($objPerson->meta_data->website)) : ?>
-            <li class="website break">
-                <a href="<?php echo $objPerson->meta_data->website; ?>"><?php echo $objPerson->meta_data->website; ?></a>
+       <?php if(count($objPerson->meta_data->website) > 0) : ?>
+           <?php foreach($objPerson->meta_date->website as $strWebsite) : ?>
+           <li class="website break">
+                <a href="<?php echo $strWebsite; ?>"><?php echo $strWebsite; ?></a>
             </li>
+           <?php endforeach; ?>
        <?php endif; ?>
 
        <?php if(isset($objPerson->cv)) : ?>
@@ -121,4 +123,7 @@ global $objPerson;
         <?php //should anything go here if they dont have publications? ?>
     <?php endif; ?>
 </div>
+<xmp>
+    <?php var_export($objPerson); ?>s
+</xmp>
 
