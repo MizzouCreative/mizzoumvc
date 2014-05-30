@@ -84,8 +84,9 @@ class People extends WpBase
 
         if($aryOptions['include_cv']){
             $aryOptions['include_object'] = array(
-                'newkey'=>'cv',
-                'pullfrom'=>'curriculumVitae'
+                'newkey'        =>'cv',
+                'pullfrom'      =>'curriculumVitae',
+                'include_meta'  => true
             );
         }
 
