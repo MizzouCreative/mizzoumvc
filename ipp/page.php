@@ -35,6 +35,7 @@ switch($aryData['objMainPost']->name){
         ob_start();
         require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'staff-loop.php';
         $aryData['strStaffLoop'] = ob_get_contents();
+        ob_end_clean();
         $strView = 'staff';
         break;
     default:
