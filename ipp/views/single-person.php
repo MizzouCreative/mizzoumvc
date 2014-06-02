@@ -1,9 +1,36 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 5/28/14
- * Time: 3:14 PM
+ * Inner view file for Policy Area pages
+ *
+ * From the IA, this view needs to display the following data:
+ *  - Person's name (post title)
+ *  - Biography (post content)
+ *  - All titles
+ *  - Phone number
+ *  - Fax number
+ *  - email address
+ *  - Office address
+ *  - link to CV
+ *  - Research interest
+ *  - Selected Publications
+ *  - Link to all Publications
+ *  - All education
+ *
+ * To facilitate this, you have access to the following variables:
+ *  - $objMainPost Post object for the page
+ *  - $objPerson customized post object. should have almost everything you need
+ *  - $strPublicationArchiveURL the url for the "all publications" link
+ *
+ * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
+ * functions.
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ *
  */
 global $objPerson;
 ?>
