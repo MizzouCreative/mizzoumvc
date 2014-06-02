@@ -31,7 +31,7 @@ function mizzouIppProjectShortcode($aryAttributes)
     require_once $strTemplatePath.'models'.DIRECTORY_SEPARATOR.'project.php';
 
     $objProject = new Project();
-    $aryProjects = $objProject->retrieveContent(array('count'=>$aryAttributes['count']));
+    $aryProjects = $objProject->retrieveContent(array('numberposts'=>$aryAttributes['count']));
     $strTitle = 'Recent Projects';
     $strProjectArchiveURL = get_post_type_archive_link('project');
     ob_start();
