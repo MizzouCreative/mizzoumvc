@@ -30,7 +30,9 @@ _mizzou_log($aryData['aryProjects'],'our converted projects');
 //we need to get the contents from the loop view
 ob_start();
 require_once 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
-$aryData['strLoopContent'] = ob_get_clean();
+$aryData['strLoopContent'] = ob_get_contents();
+
+ob_end_clean();
 
 _mizzou_log($aryData['strLoopContent'],'contents of LoopContent');
 
