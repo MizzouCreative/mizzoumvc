@@ -26,12 +26,14 @@ function mizzouIppProjectShortcode($aryAttributes)
         $aryAttributes['count'] = $aryDefaults['count']; //set it back to the default
     }
 
+    _mizzou_log($aryAttributes,'aryAttributes',false,array('func'=>__FUNCTION__));
+
     $strTemplatePath = mizzouDeterminePathToTheme();
     //use the model for projects, lazy-load style
     require_once $strTemplatePath.'models'.DIRECTORY_SEPARATOR.'project.php';
 
     $objProject = new Project();
-    $aryProjects = $objProject->retrieveContent(array('numberposts'=>$aryAttributes['count']));
+    $aryProjects = $objProject->retrieveContent(array('count'=>$aryAttributes['count']));
     $strTitle = 'Recent Projects';
     $strProjectArchiveURL = get_post_type_archive_link('project');
     ob_start();

@@ -66,6 +66,8 @@ class WpBase
             'order'         =>  $aryOptions['order_direction']
         );
 
+        _mizzou_log($aryArgs,'aryArgs, looking for the one for projects',false,array('func'=>__FUNCTION__));
+
         if('' != $aryOptions['taxonomy'] && '' != $aryOptions['tax_term'] && !is_null($aryOptions['complex_tax']) && is_array($aryOptions['complex_tax'])){
             /**
              * whoah... we're asking for both a simple taxonomy and a complex taxonomy. that doesn't make sense. Let's
