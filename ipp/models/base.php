@@ -66,7 +66,7 @@ class WpBase
             'order'         =>  $aryOptions['order_direction']
         );
 
-        _mizzou_log($aryArgs,'aryArgs, looking for the one for projects',false,array('func'=>__FUNCTION__));
+        _mizzou_log($aryArgs,'aryArgs, looking for the one for projects',false,array('func'=>__FUNCTION__,'line'=>__LINE__));
 
         if('' != $aryOptions['taxonomy'] && '' != $aryOptions['tax_term'] && !is_null($aryOptions['complex_tax']) && is_array($aryOptions['complex_tax'])){
             /**
@@ -106,7 +106,7 @@ class WpBase
             $aryArgs = array_merge($aryArgs,$aryOptions['passthru']);
         }
 
-        //_mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+        _mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
 
         $objQuery =  new WP_Query($aryArgs);
 
