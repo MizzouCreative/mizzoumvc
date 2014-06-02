@@ -59,6 +59,11 @@ class WpBase
 
         $aryReturn = array();
 
+        /**
+         * 20140602 PFG:
+         * posts_per_page HAD been set to numberposts, but it appears that **ONLY** get_posts allows numberposts as an
+         * argument value and converts it to posts_per_page before calling wp_query.
+         */
         $aryArgs = array(
             'post_type'     =>  $aryOptions['post_type'],
             'posts_per_page'   =>  $aryOptions['count'],
