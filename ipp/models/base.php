@@ -61,7 +61,7 @@ class WpBase
 
         $aryArgs = array(
             'post_type'     =>  $aryOptions['post_type'],
-            'numberposts'   =>  $aryOptions['count'],
+            'posts_per_page'   =>  $aryOptions['count'],
             'orderby'       =>  $aryOptions['order_by'],
             'order'         =>  $aryOptions['order_direction']
         );
