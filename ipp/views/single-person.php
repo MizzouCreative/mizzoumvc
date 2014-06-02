@@ -63,26 +63,26 @@ global $objPerson;
             <li class="job-title"><?php echo $strTitle; ?></li>
             <?php endforeach; ?>
         <?php endif; ?>
-        <?php if($objPerson->meta_data->phone != '') : ?>
+        <?php if('' != $objPerson->meta_data->phone) : ?>
             <li class="phone"><?php echo $objPerson->meta_data->phone; ?></li>
         <?php endif; ?>
-        <?php if($objPerson->meta_data->fax != '') : ?>
+        <?php if('' != $objPerson->meta_data->fax) : ?>
             <li class="fax">
                 <span class="uncolor">Fax: <?php echo $objPerson->meta_data->fax; ?></span>
             </li>
         <?php endif; ?>
-        <?php if($objPerson->meta_data->email != '') : ?>
+        <?php if('' != $objPerson->meta_data->email) : ?>
             <li class="email break">
                 <a href="mailto:<?php echo $objPerson->meta_data->email; ?>"><?php echo $objPerson->meta_data->email; ?></a>
             </li>
         <?php endif; ?>
 
-        <?php if($objPerson->meta_data->address1 != '') : ?>
+        <?php if('' != $objPerson->meta_data->address1) : ?>
             <li class="office-label">
                 <strong>Office</strong>
             </li>
             <li class="address_1"><?php echo $objPerson->meta_data->address1; ?></li>
-            <?php if(isset($objPerson->meta_data->address2)) : ?>
+            <?php if('' != $objPerson->meta_data->address2) : ?>
             <li class="address_2"><?php echo $objPerson->meta_data->address2; ?></li>
             <?php endif; ?>
             <li class="address_2">Columbia, MO 65211</li><?php // 20140528 PFG: is this always hard-coded? ?>
@@ -96,7 +96,7 @@ global $objPerson;
            <?php endforeach; ?>
        <?php endif; ?>
 
-       <?php if(isset($objPerson->meta_data->curriculumVitaeURL) && $objPerson->meta_data->curriculumVitaeURL != '') : ?>
+       <?php if(isset($objPerson->meta_data->curriculumVitaeURL) && '' != $objPerson->meta_data->curriculumVitaeURL) : ?>
             <li>
                 <a href="<?php echo $objPerson->meta_data->curriculumVitaeURL; ?>">Curriculum Vitae</a>
             </li>
@@ -128,7 +128,7 @@ global $objPerson;
 <div class="clear"></div>
 <hr>
 <div class="span6 right-offset1">
-    <?php if($objPerson->content != '') : ?>
+    <?php if('' != $objPerson->content) : ?>
         <h2 class="hidden">Biography</h2>
         <?php echo $objPerson->content; ?>
     <?php endif; ?>
@@ -156,11 +156,11 @@ global $objPerson;
             <div class="publication-item">
                 <h4>
                     <a title="<?php echo $objPublication->title; ?>" rel="bookmark" href="<?php echo $objPublication->permalink; ?>"><?php echo $objPublication->title; ?></a>
-                    <?php if($objPublication->meta_data->authors != '') : ?>
+                    <?php if('' != $objPublication->meta_data->authors) : ?>
                     <p><?php echo $objPublication->meta_data->authors; ?></p>
                     <?php endif; ?>
                     <p><?php echo $objPublication->formatted_date; ?></p>
-                    <?php if($objPublication->content != '') : ?>
+                    <?php if('' != $objPublication->content) : ?>
                     <?php
                         /**
                          * 20140530 PFG:
