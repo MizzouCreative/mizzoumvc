@@ -7,8 +7,8 @@
  *  - Publication permalink
  *
  * To facilitate this, you have access to the following variables:
- *  - $objMainPost Main Post object for the page, you shouldnt need it, but just in case you do
- *  - $aryPublications
+ *  - $objMainPost Main Mizzou Post object for the page, you shouldnt need it, but just in case you do
+ *  - $aryPublications array of all of the publications
  *
  * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
  * functions and/or views.
