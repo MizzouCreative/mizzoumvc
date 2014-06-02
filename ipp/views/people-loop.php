@@ -1,9 +1,31 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Frank
- * Date: 5/30/14
- * Time: 3:10 PM
+ * Loop file for people listings
+ *
+ * From the IA, each person needs the following data:
+ *  - thumbnail
+ *  - Name (post title)
+ *  - permalink to their profile on the site
+ *  - Title1
+ *  - Phone
+ *  - Email link
+ *
+ * View has access to the following variables:
+ *  - $objMainPost Mizzou Post object for the page
+ *  - $aryStaff array of People post objects
+ *
+ * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
+ * functions.
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ *
+ * @todo rename $aryStaff to $aryPeople to be more accurate?
+ *
  */
 ?>
 <?php $intColPlace = 0; ?>
