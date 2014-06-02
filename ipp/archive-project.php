@@ -22,7 +22,7 @@ global $wp_query;
 $aryData = array();
 $objWpBase = new WpBase();
 
-$aryData['objMainPost'] = new MizzouPost($post);
+//$aryData['objMainPost'] = new MizzouPost($post);
 $aryData['aryProjects'] = $objWpBase->convertPosts($wp_query->posts);
 
 //we need to get the contents from the loop view
