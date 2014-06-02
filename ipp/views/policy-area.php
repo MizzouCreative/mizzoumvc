@@ -59,7 +59,7 @@
 
                 <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
                     <section>
-                        <h3><?php echo $objMainPost->title; ?> Contact:</h3>
+                        <h3>Contact:</h3>
                         <p>
                             Name: <?php echo $objMainContact->title; ?><br>
 
