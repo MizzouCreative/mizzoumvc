@@ -1,6 +1,6 @@
 <?php
 /**
- * Inner view file for Staff page
+ * Inner view file for Publications archive page
  *
  * From the IA, this view needs to display the following data:
  *  - Publication title
@@ -8,7 +8,7 @@
  *
  * To facilitate this, you have access to the following variables:
  *  - $objMainPost Main Mizzou Post object for the page, you shouldnt need it, but just in case you do
- *  - $aryPublications array of all of the publications
+ *  - $aryPublications array of Mizzou post objects for each publication
  *
  * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
  * functions and/or views.
