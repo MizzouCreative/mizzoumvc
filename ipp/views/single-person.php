@@ -36,21 +36,21 @@ global $objPerson;
             <li class="job-title"><?php echo $strTitle; ?></li>
             <?php endforeach; ?>
         <?php endif; ?>
-        <?php if(isset($objPerson->meta_data->phone)) : ?>
+        <?php if($objPerson->meta_data->phone != '') : ?>
             <li class="phone"><?php echo $objPerson->meta_data->phone; ?></li>
         <?php endif; ?>
-        <?php if(isset($objPerson->meta_data->fax)) : ?>
+        <?php if($objPerson->meta_data->fax != '') : ?>
             <li class="fax">
                 <span class="uncolor">Fax: <?php echo $objPerson->meta_data->fax; ?></span>
             </li>
         <?php endif; ?>
-        <?php if(isset($objPerson->meta_data->email)) : ?>
+        <?php if($objPerson->meta_data->email != '') : ?>
             <li class="email break">
                 <a href="mailto:<?php echo $objPerson->meta_data->email; ?>"><?php echo $objPerson->meta_data->email; ?></a>
             </li>
         <?php endif; ?>
 
-        <?php if(isset($objPerson->meta_data->address1)) : ?>
+        <?php if($objPerson->meta_data->address1 != '') : ?>
             <li class="office-label">
                 <strong>Office</strong>
             </li>
@@ -69,7 +69,7 @@ global $objPerson;
            <?php endforeach; ?>
        <?php endif; ?>
 
-       <?php if(isset($objPerson->meta_data->curriculumVitaeURL)) : ?>
+       <?php if(isset($objPerson->meta_data->curriculumVitaeURL) && $objPerson->meta_data->curriculumVitaeURL != '') : ?>
             <li>
                 <a href="<?php echo $objPerson->meta_data->curriculumVitaeURL; ?>">Curriculum Vitae</a>
             </li>
