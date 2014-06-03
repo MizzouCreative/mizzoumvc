@@ -5,14 +5,18 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
 
 global $wp_query,$post;
+
+/**
+ * Why are we using base instead of the Publications object?
+ */
 $objWpBase = new WpBase();
 
 $aryData['objMainPost'] = new MizzouPost($post);
-$aryData['aryPublications'] = $objWpBase->convertPosts($wp_query->posts);
+$aryData['aryPublications'] = $objWpBase->convertPosts($wp_query->posts,array('resort'=>array('key'=>'type')));
 
 /*
-echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;
-echo '<xmp>',var_export($aryData,true),'</xmp>';
-*/
-mizzouOutPutView('archive-publication',$aryData);
-echo '<!--  CONTROLLER FILE : ', __FILE__, ' -->';
+echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/
+
+echo '<xmp>',var_export($aryData['aryPublications'],true),'</xmp>';
+
+//mizzouOutPutView('archive-publication',$aryData);
