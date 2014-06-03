@@ -12,7 +12,7 @@
 
 $strFirstColumnClass = 'alpha';
 $strLastColumnClass = 'omega';
-$intDesiredColumns = 4;
+$intDesiredColumns = 3;
 $intLastColumn = $intDesiredColumns - 1;
 ?>
 
