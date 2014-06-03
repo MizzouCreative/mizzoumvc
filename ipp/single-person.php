@@ -31,5 +31,4 @@ $aryPublications = $objPublicationModel->getPublicationsByStaff($objPerson->ID);
 $aryData['objPerson'] = $objPerson;
 $aryData['aryPublications'] = $aryPublications;
 mizzouOutPutView('single-person',$aryData);
-_mizzou_log(get_post_type_archive_link('post'),'post archive link');
-_mizzou_log(get_post_type_archive_link('posts'),'posts archive link');
+_mizzou_log(get_post_type_object('post'),'post type object');
