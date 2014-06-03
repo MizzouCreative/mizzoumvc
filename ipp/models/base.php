@@ -226,13 +226,19 @@ class WpBase
                 }
             }
 
-            if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key']) && isset($objMizzouPost->meta_data->{$aryOptions['resort']['key']})){
-                if(!isset($aryReturn[$objMizzouPost->meta_data->{$aryOptions['resort']['key']}])){
-                    $aryReturn[$objMizzouPost->meta_data->{$aryOptions['resort']['key']}] = array();
+            if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key'])){
+                if(isset($objMizzouPost->meta_data->{$aryOptions['resort']['key']})){
+                    $strNewKey =  $objMizzouPost->meta_data->{$aryOptions['resort']['key']};
+                } else {
+                    $strNewKey = 'Other';
+                }
+
+                if(!isset($aryReturn[$strNewKey])){
+                    $aryReturn[$strNewKey] = array();
 
                 }
 
-                $aryReturn[$objMizzouPost->meta_data->{$aryOptions['resort']['key']}][] = $objMizzouPost;
+                $aryReturn[$strNewKey][] = $objMizzouPost;
 
             } else {
                 $aryReturn[] = $objMizzouPost;
