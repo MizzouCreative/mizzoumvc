@@ -16,6 +16,7 @@
  * @uses breadcrumbs() from Mizzou Breadcrumbs plugin
  * @uses get_template_directory() from Wordpress core
  * @uses mizzouDeterminePathToTheme() from helpers\paths.php
+ * @todo this seriously needs refactoring
  */
 function mizzouOutPutView($strInnerViewFileName,$aryData)
 {
@@ -93,4 +94,14 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     require_once $strViewsPath . 'outerView.php';
     get_footer();
+}
+
+function mizzouIncludeView($strViewName)
+{
+    $strFile = mizzouDeterminePathToTheme().'views'.DIRECTORY_SEPARATOR.$strViewName;
+    if(file_exists($strFile)){
+        require $strFile;
+    } else {
+        _mizzou_log($strFile,'this template file was requested but I couldnt find it');
+    }
 }
