@@ -123,3 +123,9 @@
 <?php wp_footer(); ?>
 
 </body>
+<!--
+BACKTRACE:
+<?php
+var_dump(debug_backtrace());
+?>
+-->
