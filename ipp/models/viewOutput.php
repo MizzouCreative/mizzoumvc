@@ -98,7 +98,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
 function mizzouIncludeView($strViewName)
 {
-    $strFile = mizzouDeterminePathToTheme().'views'.DIRECTORY_SEPARATOR.$strViewName;
+    $strFile = mizzouDeterminePathToTheme().'views'.DIRECTORY_SEPARATOR.$strViewName.'.php';
     if(file_exists($strFile)){
         require $strFile;
     } else {
