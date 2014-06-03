@@ -174,7 +174,7 @@ global $objPerson;
         <?php endforeach; ?>
     </div>
     <p>
-        <a href="">Complete publications list</a>
+        <a href="<?php echo $strPublicationArchiveURL ?>">Complete publications list</a>
     </p>
 
     <?php else : ?>
