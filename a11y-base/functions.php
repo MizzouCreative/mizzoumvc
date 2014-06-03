@@ -275,7 +275,7 @@ if(!function_exists('_mizzou_log')){
   function _mizzou_log( $mxdVariable, $strPrependMessage = null, $boolBackTraced = false, $aryDetails = array() ) {
     $boolBackTrace = true;
     if( WP_DEBUG === true ){
-      $strMessage = 'EXPERTS: ';
+      $strMessage = 'MIZZOU_LOG: ';
       
       if(count($aryDetails) > 0){
           if(isset($aryDetails['line'])){
@@ -293,7 +293,7 @@ if(!function_exists('_mizzou_log')){
           $strMessage .= PHP_EOL;
       }
       
-      if(!is_null($strPrependMessage)) $strMessage .= $strPrependMessage.' ';
+      if(!is_null($strPrependMessage)) $strMessage .= $strPrependMessage.PHP_EOL;
       
       if( is_array( $mxdVariable ) || is_object( $mxdVariable ) ){
          $strMessage .= PHP_EOL . var_export($mxdVariable,true);
@@ -308,7 +308,8 @@ if(!function_exists('_mizzou_log')){
           
           $strMessage .= PHP_EOL.'Contents of backtrace:'.PHP_EOL.var_export($aryBackTrace,true).PHP_EOL;          
       }
-      
+
+      $strMessage .= PHP_EOL;
       error_log($strMessage);
     }
   }
