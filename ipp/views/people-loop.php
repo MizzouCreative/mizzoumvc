@@ -62,5 +62,8 @@
             </ol>
         </div>
     </div>
-    <?php $intColPlace = ($intColPlace == 1) ? $intColPlace = 0 : ++$intColPlace; ?>
+    <?php if($intColPlace == 1): $intColPlace = 0; ?>
+        <div class="clear row"></div>
+    <?php else : ++$intColPlace; ?>
+    <?php endif;?>
 <?php endforeach; ?>
