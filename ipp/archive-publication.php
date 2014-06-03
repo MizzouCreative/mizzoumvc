@@ -23,6 +23,6 @@ $aryData['aryPublicationsGroup'] = $objWpBase->convertPosts($wp_query->posts,$ar
 /*
 echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/
 
-echo '<xmp>',var_export($aryData['aryPublicationsGroup'],true),'</xmp>';
+//echo '<xmp>',var_export($aryData['aryPublicationsGroup'],true),'</xmp>';
 
-//mizzouOutPutView('archive-publication',$aryData);
+mizzouOutPutView('archive-publication',$aryData);
