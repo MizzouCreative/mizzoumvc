@@ -25,6 +25,7 @@
  * @copyright 2014 Curators of the University of Missouri
  *
  * @todo rename $aryStaff to $aryPeople to be more accurate?
+ * @todo remove the static value at line 66 into config file/theme option so we can dynamically change the number of columns?
  *
  */
 ?>
