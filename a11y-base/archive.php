@@ -123,3 +123,6 @@
 </main>
 
 <?php get_footer(); ?>
+<!--
+RENDERING FILE: <?php var_export(__FILE__); ?>
+-->
