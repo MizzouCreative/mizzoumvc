@@ -18,7 +18,7 @@ $aryOptions = array(
     'meta_prefix'   => 'publication_'
 );
 
-$aryData['aryPublications'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
+$aryData['aryPublicationsGroup'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
 
 /*
 echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/
