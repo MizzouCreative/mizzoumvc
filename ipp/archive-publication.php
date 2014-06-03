@@ -14,7 +14,8 @@ $objWpBase = new WpBase();
 $aryData['objMainPost'] = new MizzouPost($post);
 $aryOptions = array(
     'resort'        => array('key'=>'type'),
-    'include_meta'  => true
+    'include_meta'  => true,
+    'meta_prefix'   => 'publication_'
 );
 
 $aryData['aryPublications'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
