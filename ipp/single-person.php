@@ -30,5 +30,9 @@ $aryPublications = $objPublicationModel->getPublicationsByStaff($objPerson->ID);
 
 $aryData['objPerson'] = $objPerson;
 $aryData['aryPublications'] = $aryPublications;
+/**
+ * @todo no no no. This needs to be dynamically generated.
+ */
+$aryData['strPublicationArchiveURL'] = '/publications/?author_archive='.$objPerson->ID;
 mizzouOutPutView('single-person',$aryData);
 _mizzou_log(get_post_type_object('post'),'post type object');
