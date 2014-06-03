@@ -18,15 +18,18 @@ $aryColClasses = array(
 ?>
 
 <section aria-label="content" role="region">
-    <?php if(count($aryPosts) > 0) : $intCounter = 1; ?>
+    <?php if(count($aryPosts) > 0) : $intCounter = 0; ?>
         <?php foreach($aryPosts as $objPost) : ?>
-            <div class="span3<?php echo $aryColClasses[$intCounter]; ?>">
+            <div class="span3 <?php echo $aryColClasses[$intCounter]; ?>">
                 <div class="post-item">
                     <a class="clearfix post-linkl" href="<?php $objPost->permalink; ?>">
                         <h3 class="post-title"><?php echo $objPost->title; ?></h3>
                     </a>
                 </div>
             </div>
+            <!--
+            <?php var_export($objPost);?>
+            -->
             <?php if(2 == $intCounter ) : $intCounter = 0;?>
                 <div class="clear"></div>
             <?php else : ++$intCounter; ?>
