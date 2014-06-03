@@ -36,6 +36,7 @@ class WpBase
         'suppress_empty_meta'=> false,
         'passthru'          => null,
         'format_date'       => false,
+        'resort'            => false,
     );
 
     protected $strArchivePermalink  = '';
@@ -225,7 +226,18 @@ class WpBase
                 }
             }
 
-            $aryReturn[] = $objMizzouPost;
+            if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key']) && isset($objMizzouPost->meta_data->{$aryOptions['resort']['key']})){
+                if(!isset($aryReturn[$objMizzouPost->meta_data->{$aryOptions['resort']['key']}])){
+                    $aryReturn[$objMizzouPost->meta_data->{$aryOptions['resort']['key']}] = array();
+
+                }
+
+                $aryReturn[$objMizzouPost->meta_data->{$aryOptions['resort']['key']}][] = $objMizzouPost;
+
+            } else {
+                $aryReturn[] = $objMizzouPost;
+            }
+
         }
 
         return $aryReturn;
