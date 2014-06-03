@@ -4,10 +4,9 @@
  * User: gilzow
  * Date: 6/3/14
  * Time: 12:13 PM
- * @todo we should be able to take the hard-coded value (2) at line 34 and move it into a config/theme option area. Then
- * define two column classes: first (alpha) and last (omega).  Set the default column class to empty. If the counter is
- * on 0, reset the column class to first. If we are one less than the number of desired columns (e.g. desired columns is
- * 3, so when the counter hits 2), reset the column class to last.
+ * @todo $intDesiredColumns and $intLastColumn need to be moved up into the config/theme options. We could also move
+ * $strFirstColumnClass and $strLastColumnClass up but I'm inclined to leave them here since they are soley the domain
+ * of the designer.
  */
 
 $strFirstColumnClass = 'alpha';
