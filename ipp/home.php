@@ -13,6 +13,6 @@ global $wp_query;
 
 $aryData = array();
 $objWpBase = new WpBase('post_');
-$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts,array('include_meta'=>true));
+$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
 
 mizzouOutPutView('blog',$aryData);
