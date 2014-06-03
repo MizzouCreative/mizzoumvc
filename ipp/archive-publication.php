@@ -12,7 +12,12 @@ global $wp_query,$post;
 $objWpBase = new WpBase();
 
 $aryData['objMainPost'] = new MizzouPost($post);
-$aryData['aryPublications'] = $objWpBase->convertPosts($wp_query->posts,array('resort'=>array('key'=>'type')));
+$aryOptions = array(
+    'resort'        => array('key'=>'type'),
+    'include_meta'  => true
+);
+
+$aryData['aryPublications'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
 
 /*
 echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/
