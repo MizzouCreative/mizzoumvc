@@ -298,7 +298,7 @@ if(!function_exists('_mizzou_log')){
       if( is_array( $mxdVariable ) || is_object( $mxdVariable ) ){
          $strMessage .= PHP_EOL . var_export($mxdVariable,true);
       } elseif(is_bool($mxdVariable)) {
-        $strMessage .= 'Boolean: ' . ($mxdVariable) ? 'true' : 'false';
+        $strMessage .= 'Boolean: ' . (true === $mxdVariable) ? 'true' : 'false';
       } else {
           $strMessage .= $mxdVariable;
       }
