@@ -1,9 +1,16 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 6/3/14
- * Time: 12:13 PM
+ * View file used to render the list of blog posts
+ *
+ * Has access to the following variables
+ *  - aryPosts array of Mizzou post objects
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  * @todo $intDesiredColumns and $intLastColumn need to be moved up into the config/theme options. We could also move
  * $strFirstColumnClass and $strLastColumnClass up but I'm inclined to leave them here since they are soley the domain
  * of the designer.
@@ -27,7 +34,7 @@ $intLastColumn = $intDesiredColumns - 1;
             ?>
             <div class="span3 <?php echo $strColumnClass; ?>">
                 <div class="post-item">
-                    <a class="clearfix post-linkl" href="<?php echo $objPost->permalink; ?>">
+                    <a class="clearfix post-link" href="<?php echo $objPost->permalink; ?>">
                         <h3 class="post-title"><?php echo $objPost->title; ?></h3>
                     </a>
                 </div>
