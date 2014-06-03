@@ -39,9 +39,6 @@ $intLastColumn = $intDesiredColumns - 1;
                     </a>
                 </div>
             </div>
-            <!--
-            <?php var_export($objPost);?>
-            -->
             <?php if($intCounter == $intLastColumn ) : $intCounter = 0;?>
                 <div class="clear"></div>
             <?php else : ++$intCounter; ?>
