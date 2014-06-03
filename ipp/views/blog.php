@@ -12,7 +12,7 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  * @todo $intDesiredColumns and $intLastColumn need to be moved up into the config/theme options. We could also move
- * $strFirstColumnClass and $strLastColumnClass up but I'm inclined to leave them here since they are soley the domain
+ * $strFirstColumnClass and $strLastColumnClass up but I'm inclined to leave them here since they are solely the domain
  * of the designer.
  */
 
