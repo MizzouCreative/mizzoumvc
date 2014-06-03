@@ -15,3 +15,4 @@ echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;
 echo '<xmp>',var_export($aryData,true),'</xmp>';
 */
 mizzouOutPutView('archive-publication',$aryData);
+echo '<!--  CONTROLLER FILE : ', __FILE__, ' -->';
