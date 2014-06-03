@@ -19,12 +19,12 @@
  * @category view
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
+ * @uses mizzouIncludeView()
  */
 ?>
 <section aria-label="content" role="region">
-    <ul>
-        <?php foreach($aryPublications as $objPublication) : ?>
-        <li><a href="<?php echo $objPublication->permalink; ?>" title="Permanent link for <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
-        <?php endforeach; ?>
-    </ul>
+    <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
+        <h2><?php echo $strPublicationType; ?>s</h2>
+        <?php mizzouIncludeView('publication-loop'); ?>
+    <?php endforeach; ?>
 </section>
