@@ -105,12 +105,3 @@ function mizzouIncludeView($strViewName)
         _mizzou_log($strFile,'this template file was requested but I couldnt find it');
     }
 }
-
-$mizzouIncludeView = function(){
-    $strFile = mizzouDeterminePathToTheme().'views'.DIRECTORY_SEPARATOR.func_get_arg(0).'.php';
-    if(file_exists($strFile)){
-        require $strFile;
-    } else {
-        _mizzou_log($strFile,'this template file was requested but I couldnt find it');
-    }
-};
