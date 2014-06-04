@@ -106,7 +106,7 @@ function mizzouIncludeView($strViewName)
     }
 }
 
-$mizzouIncludeViews = function(){
+$mizzouIncludeView = function(){
     $strFile = mizzouDeterminePathToTheme().'views'.DIRECTORY_SEPARATOR.func_get_arg(0).'.php';
     if(file_exists($strFile)){
         require $strFile;
