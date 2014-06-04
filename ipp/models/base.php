@@ -5,12 +5,7 @@
 
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
 
-/**
- * Require once the PostMetaData class
- * @todo PostMetaData class should be integrated into the MVC structure
- */
-locate_template('class-PostMetaData.php',true,true);
-locate_template('class-MizzouPost.php',true,true);
+
 
 /**
  * Class WpBase
