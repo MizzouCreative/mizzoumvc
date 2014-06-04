@@ -16,7 +16,7 @@
 
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'class-PostMetaData.php';
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'class-MizzouPost.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'MizzouPost.php';
 
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'settings.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'post-types.php';
