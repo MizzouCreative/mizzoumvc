@@ -21,33 +21,59 @@ class PostBase
      */
     protected  $aryOriginalCustomData   = array();
 
+    protected $objOriginalPost = null;
+
     protected $aryBaseKeys              = array();
     /**
      * Default message to be displayed if a field of data is requested but isnt set/found
      *
      * @var string
      */
-    var $strDataNotFoundMessage = 'Cant find what you asked for';
+    public  $strDataNotFoundMessage = 'Cant find what you asked for';
     /**
      * The message to prepend to any logging output
      *
      * @var string
      */
-    var $strDebugMessagePrefix  = '';
+    public  $strDebugMessagePrefix  = '';
     /**
      * contains a list of any errors that were encountered
      *
      * @var array
      */
-    var $error_messages = array();
+    public  $error_messages = array();
 
     /**
      * Just a shortcut to see if the error_messages contains entries.
      *
      * @var boolean
      */
-    var $boolError = false;
+    public  $boolError = false;
 
+
+    public function __construct($mxdPost)
+    {
+        if(is_object($mxdPost) && $mxdPost instanceof WP_Post){
+            $objPost = $mxdPost;
+        } elseif(is_numeric($mxdPost)){
+            if(null !== $objPost = get_post($mxdPost)){
+                $objPost = get_post($mxdPost);
+            } else {
+                $strLogMsg = 'we were given a post id, but wordpress returned a null.';
+                _mizzou_log($mxdPost,$strLogMsg,false,array('func'=>__FUNCTION__));
+            }
+        } else {
+            /**
+             * It's not an instance of the WP_Post class, and it isnt a post id so...
+             * @todo throw an exception here?
+             */
+            $strLogMsg = 'We werent given a post id, or an instance of WP_Post. Not sure what to do';
+            _mizzou_log($mxdPost,$strLogMsg,false,array('func'=>__FUNCTION__));
+            $objPost = new stdClass();
+        }
+
+        $this->objOriginalPost = $objPost;
+    }
 
     /**
      * Magic get so lower classes can access inaccessible properties

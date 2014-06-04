@@ -11,7 +11,9 @@
 * @uses $_wp_additional_image_sizes
 * @version 201212211512 
 */
-class ImageData extends CustomPostType {
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'PostBase.php';
+class ImageData extends PostBase
+{
     /**
     * Default wordpress image sizes
     * 
@@ -27,20 +29,10 @@ class ImageData extends CustomPostType {
     var $objOriginalPost = null;
     
     function __construct($mxdPostData,$boolIncludeCaption = false){
-        if(!is_numeric($mxdPostData) && !is_object($mxdPostData)){
-            $this->add_error('first argument must be a post id or post object');    
-        } else {
-            if(is_object($mxdPostData)){
-                $this->intPostID = $mxdPostData->ID;
-                $this->objOriginalPost = $mxdPostData;
-            } else {
-                $this->intPostID = $mxdPostData;
-                $this->objOriginalPost = get_post($this->intPostID);
-            }   
-            
+            parent::__construct($mxdPostData);
             $this->_retrieve_wp_data();
             if($boolIncludeCaption) $this->get_caption();
-        }
+            $this->aryData['ID'] = $this->objOriginalPost->post_id;
     }
     
     function _retrieve_wp_data(){
@@ -48,7 +40,7 @@ class ImageData extends CustomPostType {
         * Get the alt data for the image
         */
         
-        $strAltText =  get_post_meta($this->intPostID,'_wp_attachment_image_alt',true);
+        $strAltText =  get_post_meta($this->aryData['ID'],'_wp_attachment_image_alt',true);
         $strAltText = ($strAltText != '') ? $strAltText : $this->objOriginalPost->post_title;
         //$this->_log($this->objOriginalPost,'image object data',false,array('line'=>__LINE__,'func'=>__FUNCTION__));
         $this->add_data('alt',$strAltText);

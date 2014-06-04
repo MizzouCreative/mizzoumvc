@@ -47,13 +47,19 @@ class MizzouPost extends PostBase
      */
     private $strMetaGroupPattern = '([a-zA-Z]*)\d';
 
-    public function __construct(WP_Post $objPost, $aryOptions = array())
+    public function __construct($mxdPost, $aryOptions = array())
     {
+        parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
-        $this->_setMembers($objPost);
+
+        $this->_setMembers($this->objOriginalPost);
+
         if(FALSE !== $this->aryOptions['include_meta']){
             $this->_handleMetaData();
         }
+
+        //now that we're done we no longer need the original post
+        unset($this->objOriginalPost);
     }
 
     public function retrieveParentName()
