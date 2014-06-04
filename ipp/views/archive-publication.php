@@ -25,6 +25,6 @@
 <section aria-label="content" role="region">
     <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
         <h2><?php echo $strPublicationType; ?>s</h2>
-        <?php mizzouIncludeView('publication-loop'); ?>
+        <?php $mizzouIncludeView('publication-loop'); ?>
     <?php endforeach; ?>
 </section>
