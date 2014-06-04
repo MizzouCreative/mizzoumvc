@@ -122,7 +122,7 @@ class PostBase
      * @param array $aryGroupMembers
      * @return bool
      */
-    public function member_of_group_set(array $aryGroupMembers){
+    public function memberOfGroupSet(array $aryGroupMembers){
         $i = count($aryGroupMembers);
         $boolMemberFound = false;
         $j = 0;
