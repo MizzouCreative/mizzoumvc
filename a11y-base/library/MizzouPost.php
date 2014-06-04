@@ -56,6 +56,91 @@ class MizzouPost extends PostBase
         }
     }
 
+    public function retrieveParentName()
+    {
+        if(!$this->is_set('parent_name')){
+            $strParent = '';
+
+            if(is_integer($this->aryData['parent']) && $this->aryData['parent'] != 0){
+                $objPostParent = get_post($this->aryData['parent']);
+                $strParent = $objPostParent->post_name;
+            }
+
+            $this->add_data('parent_name', $strParent);
+        }
+
+        return $this->get('parent_name');
+    }
+
+    protected function _consolidateMetaGroups($aryOptions)
+    {
+        //we need the full pattern to use including the prefix, if applicable
+        $strFullPattern = $this->_buildFullMetaGroupPattern($aryOptions['meta_prefix']);
+        //find all of the field keys that match our pattern
+        $aryMetaGroupKeys = preg_grep($strFullPattern,array_keys($this->aryOriginalCustomData));
+        //loop through each match, pull out the group component and add it the group array
+        foreach($aryMetaGroupKeys as $strKeyInGroup){
+            if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
+                $strNewKey = $aryMatch[1];
+                if(!isset($this->aryData[$strNewKey])){
+                    $this->aryData[$strNewKey] = array();
+                } elseif (!is_array($this->aryData[$strNewKey])){
+                    if(in_array($strNewKey,$this->aryBaseKeys)){
+                        /**
+                         * we've got a situation where our group of fields happens to match one of the default post
+                         * members that we already have set up. Let's log a message and append an 's' to the field
+                         * group name.
+                         *
+                         * Defaults where we might have a name collision include:
+                         *  - author
+                         *  - title
+                         *  - date
+                         *  - content
+                         *  - excerpt
+                         *  - status
+                         *  - parent
+                         *
+                         * @see http://codex.wordpress.org/Class_Reference/WP_Post
+                         *
+                         */
+                        $strLogMsg = 'You have a group of custom meta fields that just happen to have the same name '
+                            . "as a default member of the post. I'm going to add an 's' to the group key name";
+                        _mizzou_log($strNewKey,$strLogMsg,false,array('func'=>__FUNCTION__));
+                        $this->aryData[$strNewKey.'s'] = array();
+                    } else {
+                        /**
+                         * ok we have a situation where there is already a key set up for the group name, but it isnt an
+                         * array. Most likely we have something like "address" and then "address2". so, let's take the data
+                         * that is currently there and store it, create a new array, and then add that data back in
+                         */
+                        $strLogMsg = "looks like you have a meta field group but the first item is named what the group "
+                            . "name needs to become. Fixing it for you, but you should really go back and rename the key.";
+                        _mizzou_log($strNewKey,$strLogMsg,false,array('func'=>__FUNCTION__));
+                        $strTempData = $this->aryData[$strNewKey];
+                        $this->aryData[$strNewKey] = array($strTempData);
+                    }
+                }
+
+
+                if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty'] && trim($this->aryOriginalCustomData[$strKeyInGroup][0]) != '')){
+                    $this->aryData[$strNewKey][] = $this->aryOriginalData[$strKeyInGroup][0];
+                }
+            }
+        }
+    }
+
+    protected function _buildFullMetaGroupPattern($strPrefix=null)
+    {
+        $strPattern = '';
+        if(!is_null($strPrefix)){
+            $strPattern = $strPrefix;
+        }
+
+        $strPattern = '/^'.$strPattern.$this->strMetaGroupPattern.'$/';
+
+        return $strPattern;
+    }
+
     private function _setMembers(WP_Post $objPost)
     {
         $aryPostMembers = get_object_vars($objPost);
@@ -160,6 +245,7 @@ class MizzouPost extends PostBase
 
         $this->aryOriginalCustomData = get_post_custom($this->aryData['ID']);
         $this->_reformatMetaData($aryOptions);
+        $this->_consolidateMetaGroups($aryOptions);
 
     }
 } 
