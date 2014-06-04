@@ -35,4 +35,4 @@ $aryData['aryPublications'] = $aryPublications;
  */
 $aryData['strPublicationArchiveURL'] = '/publications/?author_archive='.$objPerson->ID;
 mizzouOutPutView('single-person',$aryData);
-_mizzou_log(get_post_type_object('post'),'post type object');
+_mizzou_log(get_object_vars($objPerson->meta_data),'object vars for our custom meta object');
