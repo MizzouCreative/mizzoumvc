@@ -111,7 +111,6 @@ class MizzouPost extends PostBase
         //find all of the field keys that match our pattern
         $aryMetaGroupKeys = preg_grep($strFullPattern,array_keys($this->aryOriginalCustomData));
         //loop through each match, pull out the group component and add it the group array
-        _mizzou_log($aryMetaGroupKeys,'full list of metagroupkeys',false,array('line'=>__LINE__));
         foreach($aryMetaGroupKeys as $strKeyInGroup){
             if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
                 $strNewKey = $aryMatch[1];
@@ -159,11 +158,6 @@ class MizzouPost extends PostBase
 
 
                 if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty'] && trim($this->aryOriginalCustomData[$strKeyInGroup][0]) != '')){
-
-                    _mizzou_log($strNewKey,'the group member key im going to add to ');
-                    _mizzou_log($this->aryData[$strNewKey],'current values of the group');
-                    _mizzou_log($this->aryOriginalCustomData[$strKeyInGroup],'value Im getting ready to add to the group');
-
                     $this->aryData[$strNewKey][] = $this->aryOriginalCustomData[$strKeyInGroup][0];
                 }
             }
