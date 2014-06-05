@@ -226,7 +226,7 @@ class MizzouPost extends PostBase
      */
     private function _reformatMetaData($aryOptions)
     {
-        $intPrefixLen = strlen($this->strPrefix);
+        $intPrefixLen = strlen($aryOptions['meta_prefix']);
         foreach($this->aryOriginalCustomData as $strKey=>$mxdVal){
             if(0 !== strpos($strKey,'_')){ //we dont need the interal custom data keys=>vals
                 if(0 === strpos($strKey,$aryOptions['meta_prefix'])){
