@@ -8,7 +8,7 @@
 
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
 
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'WpBase.php';
 
 /**
  * Class People
