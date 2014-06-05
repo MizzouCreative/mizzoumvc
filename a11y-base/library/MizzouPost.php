@@ -10,6 +10,7 @@
  * This assumes that both files are in the same directory
  */
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'PostBase.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'ImageData.php';
 
 class MizzouPost extends PostBase
 {
@@ -160,7 +161,7 @@ class MizzouPost extends PostBase
 
                     _mizzou_log($strNewKey,'the group member key im going to add to ');
                     _mizzou_log($this->aryData[$strNewKey],'current values of the group');
-                    _mizzou_log($this->aryOriginalData[$strKeyInGroup],'value Im getting ready to add to the group');
+                    _mizzou_log($this->aryOriginalCustomData[$strKeyInGroup],'value Im getting ready to add to the group');
 
                     $this->aryData[$strNewKey][] = $this->aryOriginalCustomData[$strKeyInGroup][0];
                 }
