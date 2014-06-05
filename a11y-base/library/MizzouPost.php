@@ -159,7 +159,7 @@ class MizzouPost extends PostBase
 
                     _mizzou_log($strNewKey,'the group member key im going to add to ');
                     _mizzou_log($this->aryData[$strNewKey],'current values of the group');
-                    _mizzou_log($this->aryOriginalData[$strKeyInGroup][0],'value Im getting ready to add to the group');
+                    _mizzou_log($this->aryOriginalData[$strKeyInGroup],'value Im getting ready to add to the group');
 
                     $this->aryData[$strNewKey][] = $this->aryOriginalData[$strKeyInGroup][0];
                 }
