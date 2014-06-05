@@ -10,8 +10,8 @@
     <div class="publication-item">
         <h4>
             <a title="<?php echo $objPublication->title; ?>" rel="bookmark" href="<?php echo $objPublication->permalink; ?>"><?php echo $objPublication->title; ?></a>
-            <?php if('' != $objPublication->meta_data->authors) : ?>
-                <p><?php echo $objPublication->meta_data->authors; ?></p>
+            <?php if('' != $objPublication->authors) : ?>
+                <p><?php echo $objPublication->authors; ?></p>
             <?php endif; ?>
             <p><?php echo $objPublication->formatted_date; ?></p>
             <?php if('' != $objPublication->content) : ?>

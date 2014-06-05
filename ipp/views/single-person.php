@@ -37,8 +37,8 @@ global $objPerson;
 
 <div class="span3 one-third" id="portrait-container">
     <section aria-labelledby="portait" role="img">
-        <a href="<?php echo $objPerson->meta_data->image->src_full; ?>" title="<?php echo $objPerson->meta_data->image->alt; ?>">
-            <span id="portrait-label" class="hidden"><?php echo $objPerson->meta_data->image->alt; ?></span>
+        <a href="<?php echo $objPerson->image->src_full; ?>" title="<?php echo $objPerson->image->alt; ?>">
+            <span id="portrait-label" class="hidden"><?php echo $objPerson->image->alt; ?></span>
             <?php
             /**
              * 20140530 PFG:
@@ -50,7 +50,7 @@ global $objPerson;
              * @todo change width height, and/or alter settings in IPP
              */
             ?>
-            <img src="<?php echo $objPerson->meta_data->image->src_medium; ?>" alt="<?php echo $objPerson->meta_data->image->alt; ?>" class="attachment-medium wp-post-image" width="200" height="300">
+            <img src="<?php echo $objPerson->image->src_medium; ?>" alt="<?php echo $objPerson->image->alt; ?>" class="attachment-medium wp-post-image" width="200" height="300">
         </a>
     </section>
 </div>
@@ -58,37 +58,37 @@ global $objPerson;
 <div class="span4 two-thirds">
     <section aria-label="contact information" role="region">
         <ol class="contact single-person nobullet">
-        <?php if(count($objPerson->meta_data->title) > 0): ?>
-            <?php foreach($objPerson->meta_data->title as $strTitle) : ?>
+        <?php if(count($objPerson->titles) > 0): ?>
+            <?php foreach($objPerson->titles as $strTitle) : ?>
             <li class="job-title"><?php echo $strTitle; ?></li>
             <?php endforeach; ?>
         <?php endif; ?>
-        <?php if('' != $objPerson->meta_data->phone) : ?>
-            <li class="phone"><?php echo $objPerson->meta_data->phone; ?></li>
+        <?php if('' != $objPerson->phone) : ?>
+            <li class="phone"><?php echo $objPerson->phone; ?></li>
         <?php endif; ?>
-        <?php if('' != $objPerson->meta_data->fax) : ?>
+        <?php if('' != $objPerson->fax) : ?>
             <li class="fax">
-                <span class="uncolor">Fax: <?php echo $objPerson->meta_data->fax; ?></span>
+                <span class="uncolor">Fax: <?php echo $objPerson->fax; ?></span>
             </li>
         <?php endif; ?>
-        <?php if('' != $objPerson->meta_data->email) : ?>
+        <?php if('' != $objPerson->email) : ?>
             <li class="email break">
-                <a href="mailto:<?php echo $objPerson->meta_data->email; ?>"><?php echo $objPerson->meta_data->email; ?></a>
+                <a href="mailto:<?php echo $objPerson->email; ?>"><?php echo $objPerson->email; ?></a>
             </li>
         <?php endif; ?>
 
-        <?php if('' != $objPerson->meta_data->address1) : ?>
+        <?php if('' != $objPerson->address1) : ?>
             <li class="office-label">
                 <strong>Office</strong>
             </li>
-            <li class="address_1"><?php echo $objPerson->meta_data->address1; ?></li>
-            <?php if('' != $objPerson->meta_data->address2) : ?>
-            <li class="address_2"><?php echo $objPerson->meta_data->address2; ?></li>
+            <li class="address_1"><?php echo $objPerson->address1; ?></li>
+            <?php if('' != $objPerson->address2) : ?>
+            <li class="address_2"><?php echo $objPerson->address2; ?></li>
             <?php endif; ?>
             <li class="address_2">Columbia, MO 65211</li><?php // 20140528 PFG: is this always hard-coded? ?>
        <?php endif; ?>
 
-       <?php if(count($objPerson->meta_data->website) > 0) : ?>
+       <?php if(count($objPerson->website) > 0) : ?>
            <?php foreach($objPerson->meta_date->website as $strWebsite) : ?>
            <li class="website break">
                 <a href="<?php echo $strWebsite; ?>"><?php echo $strWebsite; ?></a>
@@ -96,9 +96,9 @@ global $objPerson;
            <?php endforeach; ?>
        <?php endif; ?>
 
-       <?php if(isset($objPerson->meta_data->curriculumVitaeURL) && '' != $objPerson->meta_data->curriculumVitaeURL) : ?>
+       <?php if(isset($objPerson->curriculumVitaeURL) && '' != $objPerson->curriculumVitaeURL) : ?>
             <li>
-                <a href="<?php echo $objPerson->meta_data->curriculumVitaeURL; ?>">Curriculum Vitae</a>
+                <a href="<?php echo $objPerson->curriculumVitaeURL; ?>">Curriculum Vitae</a>
             </li>
        <?php endif; ?>
         </ol>
@@ -113,11 +113,11 @@ global $objPerson;
  */
 ?>
 <div class="span4">
-<?php if(isset($objPerson->meta_data->focus) && count($objPerson->meta_data->focus) > 0) : ?>
+<?php if(isset($objPerson->focus) && count($objPerson->focus) > 0) : ?>
      <div class="clear"></div>
     <h2>Research Interests</h2>
     <ul>
-    <?php foreach($objPerson->meta_data->focus as $strFocus) : ?>
+    <?php foreach($objPerson->focus as $strFocus) : ?>
         <li><?php echo $strFocus; ?></li>
     <?php endforeach; ?>
     </ul>
@@ -132,10 +132,10 @@ global $objPerson;
         <h2 class="hidden">Biography</h2>
         <?php echo $objPerson->content; ?>
     <?php endif; ?>
-   <?php if(count($objPerson->meta_data->education) > 0) : ?>
+   <?php if(count($objPerson->education) > 0) : ?>
     <h2>Education</h2>
        <ul>
-           <?php foreach($objPerson->meta_data->education as $strEducation) : ?>
+           <?php foreach($objPerson->education as $strEducation) : ?>
            <li><?php echo $strEducation; ?></li>
            <?php endforeach; ?>
        </ul>
@@ -156,8 +156,8 @@ global $objPerson;
             <div class="publication-item">
                 <h4>
                     <a title="<?php echo $objPublication->title; ?>" rel="bookmark" href="<?php echo $objPublication->permalink; ?>"><?php echo $objPublication->title; ?></a>
-                    <?php if('' != $objPublication->meta_data->authors) : ?>
-                    <p><?php echo $objPublication->meta_data->authors; ?></p>
+                    <?php if('' != $objPublication->authors) : ?>
+                    <p><?php echo $objPublication->authors; ?></p>
                     <?php endif; ?>
                     <p><?php echo $objPublication->formatted_date; ?></p>
                     <?php if('' != $objPublication->content) : ?>
