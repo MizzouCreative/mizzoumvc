@@ -156,6 +156,11 @@ class MizzouPost extends PostBase
 
 
                 if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty'] && trim($this->aryOriginalCustomData[$strKeyInGroup][0]) != '')){
+                    if(is_string($this->aryData[$strNewKey])){
+                        _mizzou_log($strNewKey,'the member set for this key is a string instead of an array');
+                        _mizzou_log($this->aryData[$strNewKey],'current value of the member that is a string instead of an array');
+                        die('string detected where there should have been an array');
+                    }
                     $this->aryData[$strNewKey][] = $this->aryOriginalData[$strKeyInGroup][0];
                 }
             }
