@@ -12,4 +12,4 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  */
-require_once(basename(__FILE__).'archive-publication.php');
+require_once(basename(__FILE__).DIRECTORY_SEPARATOR.'archive-publication.php');
