@@ -203,6 +203,7 @@ class MizzouPost extends PostBase
         $this->_setPostFormat();
         $this->_setContent();
         $this->_setTitle();
+        $this->_processExcerpt();
         /**
          * @todo maybe we should just always create a formatted date and simply allow the calling script to override
          * the format?
@@ -282,5 +283,12 @@ class MizzouPost extends PostBase
         $this->_reformatMetaData($aryOptions);
         $this->_consolidateMetaGroups($aryOptions);
 
+    }
+
+    private function _processExcerpt()
+    {
+        if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
+            $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw']);
+        }
     }
 } 
