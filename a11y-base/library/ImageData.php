@@ -12,30 +12,47 @@
 * @version 201212211512 
 */
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'PostBase.php';
+
+/**
+ * Class ImageData
+ */
 class ImageData extends PostBase
 {
     /**
-    * Default wordpress image sizes
+    * Default wordpress image sizes.
+    *
+    * I thought perhaps we could putt the default sizes directly from wordpress, instead of hardcoding them here, but it
+    * appears that they are hard-coded into wordpress as well...
+     * @see line 630 https://core.trac.wordpress.org/browser/tags/3.9.1/src/wp-includes/media.php#L0
     * 
     * @var array
     */
-    var $aryImageSizes = array(
+    protected $aryImageSizes = array(
         'thumbnail',
         'medium',
         'large',
         'full'
     );
-    
-    var $objOriginalPost = null;
-    
-    function __construct($mxdPostData,$boolIncludeCaption = false){
-            parent::__construct($mxdPostData);
-            $this->_retrieve_wp_data();
-            if($boolIncludeCaption) $this->get_caption();
-            $this->aryData['ID'] = $this->objOriginalPost->post_id;
+
+    /**
+     *
+     * @param $mxdPostData
+     * @param bool $boolIncludeCaption deprecated. included for backwards compatibility
+     */
+    public function __construct($mxdPostData,$boolIncludeCaption = false){
+        parent::__construct($mxdPostData);
+        $this->aryData['ID'] = $this->objOriginalPost->post_id;
+
+        $this->_retrieve_wp_data();
+
+        unset($this->objOriginalPost);
+
     }
-    
-    function _retrieve_wp_data(){
+
+    /**
+     *
+     */
+    protected function _retrieve_wp_data(){
         /**
         * Get the alt data for the image
         */
@@ -58,18 +75,18 @@ class ImageData extends PostBase
         foreach($arySizes as $strSize){
             $arySizeSrc = wp_get_attachment_image_src($this->intPostID,$strSize);
             $this->add_data('src_'.$strSize,$arySizeSrc[0]);
-        }    
-    }
-    
-    function get_caption(){
-        /** @deprecated going to go ahead and always get the whole object
-        if(is_null($this->objOriginalPost) || !is_object($this->objOriginalPost)){
-             $this->objOriginalPost = get_post($this->intPostID); 
         }
-        */
-        
-        //$this->_log($this->objOriginalPost,'trying to find caption for this image');
+
+        //set the caption
         $this->add_data('caption',$this->objOriginalPost->post_excerpt);
+    }
+
+    /**
+     * @deprecated
+     * @return null
+     */
+    public function get_caption(){
+        return null;
     }
 }
 ?>
