@@ -41,7 +41,7 @@ class ImageData extends PostBase
      */
     public function __construct($mxdPostData,$boolIncludeCaption = false){
         parent::__construct($mxdPostData);
-        $this->aryData['ID'] = $this->objOriginalPost->post_id;
+        $this->aryData['ID'] = $this->objOriginalPost->ID;
 
         $this->_retrieve_wp_data();
 
