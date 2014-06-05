@@ -5,7 +5,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
 
 global $wp_query,$post;
-
+_mizzou_log($wp_query,'wp_query object. are we asking for a specific author?');
 /**
  * Why are we using base instead of the Publications object?
  */
