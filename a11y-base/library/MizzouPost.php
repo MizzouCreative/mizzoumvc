@@ -88,8 +88,9 @@ class MizzouPost extends PostBase
         if(!isset($this->aryData['image']) && !isset($this->aryData['hasFeaturedImage'])){
             $this->add_data('hasFeaturedImage',has_post_thumbnail($this->aryData['ID']));
             if($this->aryData['hasFeaturedImage']){
-
-                $this->add_data('image',new ImageData(get_post_thumbnail_id($this->aryData['ID'])));
+                $intImageID = get_post_thumbnail_id($this->aryData['ID']);
+                _mizzou_log($intImageID,'the post has a featured image. this is its id');
+                $this->add_data('image',new ImageData($intImageID));
             }
         }
 
