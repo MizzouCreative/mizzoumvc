@@ -16,12 +16,11 @@ function mizzouIppInit()
 
     add_action('pre_get_posts','mizzouRemoveRestrictionOnArchives');
 
-
-    add_rewrite_endpoint('author_archive', EP_PERMALINK | EP_PAGES);
     /**
-     * @todo dont leave this here! testing only!
+     * @todo come back to this one. removed for now
      */
-    flush_rewrite_rules();
+    //add_rewrite_endpoint('author_archive', EP_PERMALINK | EP_PAGES);
+
 }
 //handle to add custom post type 
 
