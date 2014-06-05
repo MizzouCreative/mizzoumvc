@@ -30,7 +30,7 @@ class MizzouPost extends PostBase
         'date_format'   => 'F, j Y',
         'suppress_empty'=> false,
         'include_meta'  => false,
-        'meta_prefix'   => null
+        'include_image' => false,
     );
 
     /**
@@ -60,6 +60,10 @@ class MizzouPost extends PostBase
 
         //now that we're done we no longer need the original post
         unset($this->objOriginalPost);
+
+        if($aryOptions['include_image']){
+            $this->getFeaturedImage();
+        }
     }
 
     public function retrieveParentName()
@@ -76,6 +80,26 @@ class MizzouPost extends PostBase
         }
 
         return $this->get('parent_name');
+    }
+
+    public function getFeaturedImage($boolReturn = false)
+    {
+        if(!isset($this->aryData['image']) && !isset($this->aryData['hasFeaturedImage'])){
+            $this->add_data('hasFeaturedImage',has_post_thumbnail($this->aryData['ID']));
+            if($this->aryData['hasFeaturedImage']){
+
+                $this->add_data('image',new ImageData(get_post_thumbnail_id($this->aryData['ID'])));
+            }
+        }
+
+        if($boolReturn){
+            if($this->aryData['hasFeaturedImage']){
+                return $this->aryData['image'];
+            } else {
+                return false;
+            }
+
+        }
     }
 
     protected function _consolidateMetaGroups($aryOptions)
