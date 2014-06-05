@@ -11,6 +11,11 @@ _mizzou_log($wp_query,'wp_query object. are we asking for a specific author?');
  */
 $objWpBase = new WpBase();
 
+if('' != $intAuthorID = get_query_var('author_archive')){
+    $objAuthor = new MizzouPost($intAuthorID);
+    $aryData['strPageTitle'] = 'Publications for ' . $objAuthor->name;
+}
+
 $aryData['objMainPost'] = new MizzouPost($post);
 $aryOptions = array(
     'resort'        => array('key'=>'type'),
