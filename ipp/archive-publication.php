@@ -14,8 +14,12 @@ $objWpBase = new WpBase();
 
 if('' != $intAuthorID = get_query_var('author_archive')){
     $objAuthor = new MizzouPost($intAuthorID);
-    //_mizzou_log($objAuthor,'Our Pubs author');
-    $aryData['strPageTitle'] = 'Publications for ' . $objAuthor->title;
+    /**
+     * No no no. We've got html in our controller. Get it out of here.
+     * @todo move html into a view.
+     */
+    $strAuthorLinkPattern = '<a href="%s" title="Link to $s\'s Profile">%s</a>';
+    $aryData['strPageTitle'] = 'Publications for ' . sprintf($strAuthorLinkPattern,$objAuthor->permalink,$objAuthor->title,$objAuthor->title);
 }
 
 $aryData['objMainPost'] = new MizzouPost($post);
