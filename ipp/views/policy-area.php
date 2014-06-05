@@ -63,20 +63,20 @@
                         <p>
                             Name: <?php echo $objMainContact->title; ?><br>
 
-                            <?php if('' != $objMainContact->meta_data->title1): ?>
-                                Title: <?php echo $objMainContact->meta_data->title1; ?><br>
+                            <?php if('' != $objMainContact->title1): ?>
+                                Title: <?php echo $objMainContact->title1; ?><br>
                             <?php endif; ?>
 
-                            <?php if('' != $objMainContact->meta_data->address1): ?>
-                                Address: <?php echo $objMainContact->meta_data->address1; ?><br>
+                            <?php if('' != $objMainContact->address1): ?>
+                                Address: <?php echo $objMainContact->address1; ?><br>
                             <?php endif; ?>
 
-                            <?php if('' != $objMainContact->meta_data->email): ?>
-                                Email: <a href="mailto:<?php echo $objMainContact->meta_data->email; ?>"><?php echo $objMainContact->meta_data->email; ?></a><br>
+                            <?php if('' != $objMainContact->email): ?>
+                                Email: <a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a><br>
                             <?php endif; ?>
 
-                            <?php if('' != $objMainContact->meta_data->phone): ?>
-                                Phone: <?php echo $objMainContact->meta_data->phone;?>
+                            <?php if('' != $objMainContact->phone): ?>
+                                Phone: <?php echo $objMainContact->phone;?>
                             <?php endif; ?>
 
                         </p>
