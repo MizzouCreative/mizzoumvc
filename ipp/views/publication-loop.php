@@ -15,7 +15,7 @@
             <?php endif; ?>
             <p><?php echo $objPublication->formatted_date; ?></p>
             <?php if('' != $objPublication->excerpt) : ?>
-                <p></p><?php echo $objPublication->content; ?></p>
+                <p></p><?php echo $objPublication->excerpt; ?></p>
             <?php endif; ?>
         </h4>
     </div>
