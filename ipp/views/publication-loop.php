@@ -14,14 +14,8 @@
                 <p><?php echo $objPublication->authors; ?></p>
             <?php endif; ?>
             <p><?php echo $objPublication->formatted_date; ?></p>
-            <?php if('' != $objPublication->content) : ?>
-                <?php
-                /**
-                 * 20140530 PFG:
-                 * Do we want content_raw here? using content brings in the formatted version with <p> included.
-                 * Removed the <p></p> surrounding content for now
-                 */
-                echo $objPublication->content; ?>
+            <?php if('' != $objPublication->excerpt) : ?>
+                <p></p><?php echo $objPublication->content; ?></p>
             <?php endif; ?>
         </h4>
     </div>
