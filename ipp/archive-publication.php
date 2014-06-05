@@ -4,8 +4,9 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.
 //@todo move this up higher as well
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
 
+//do we still need wp_query here?
 global $wp_query,$post;
-_mizzou_log($wp_query,'wp_query object. are we asking for a specific author?');
+
 /**
  * Why are we using base instead of the Publications object?
  */
@@ -13,6 +14,7 @@ $objWpBase = new WpBase();
 
 if('' != $intAuthorID = get_query_var('author_archive')){
     $objAuthor = new MizzouPost($intAuthorID);
+    _mizzou_log($objAuthor,'Our Pubs author');
     $aryData['strPageTitle'] = 'Publications for ' . $objAuthor->name;
 }
 
