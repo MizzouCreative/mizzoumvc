@@ -14,8 +14,8 @@ $objWpBase = new WpBase();
 
 if('' != $intAuthorID = get_query_var('author_archive')){
     $objAuthor = new MizzouPost($intAuthorID);
-    _mizzou_log($objAuthor,'Our Pubs author');
-    $aryData['strPageTitle'] = 'Publications for ' . $objAuthor->name;
+    //_mizzou_log($objAuthor,'Our Pubs author');
+    $aryData['strPageTitle'] = 'Publications for ' . $objAuthor->title;
 }
 
 $aryData['objMainPost'] = new MizzouPost($post);
