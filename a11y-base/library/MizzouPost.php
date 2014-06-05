@@ -109,6 +109,7 @@ class MizzouPost extends PostBase
         //find all of the field keys that match our pattern
         $aryMetaGroupKeys = preg_grep($strFullPattern,array_keys($this->aryOriginalCustomData));
         //loop through each match, pull out the group component and add it the group array
+        _mizzou_log($aryMetaGroupKeys,'full list of metagroupkeys',false,array('line'=>__LINE__));
         foreach($aryMetaGroupKeys as $strKeyInGroup){
             if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
                 $strNewKey = $aryMatch[1];
