@@ -13,7 +13,7 @@
 * 
 */
 require_once(dirname(__FILE__).'/class-CustomPostTypeAbstract.php');
-require_once(dirname(__FILE__).'/class-ImageData.php');
+require_once(dirname(__FILE__) . '/ImageData.php');
 
 class PostMetaData extends CustomPostType{
     /**
