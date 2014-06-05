@@ -136,7 +136,8 @@ class PostBase
         if($this->is_set($mxdProperty)){
             return $this->aryData[$mxdProperty];
         } else {
-            return $this->strDataNotFoundMessage;
+            //return $this->strDataNotFoundMessage;
+            return '';
         }
     }
 
