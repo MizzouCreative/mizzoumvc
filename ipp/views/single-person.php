@@ -181,3 +181,7 @@ global $objPerson;
         <?php // 20140528 PFG :should anything go here if they dont have publications? ?>
     <?php endif; ?>
 </div>
+<!--
+Complete ObjPerson
+<?php var_export($objPerson); ?>
+-->
