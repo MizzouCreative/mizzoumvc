@@ -1,6 +1,16 @@
 <?php
-/*
+/**
+ * Base Model class for other models to extend
  *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ * @uses is_user_logged_in()
+ * @uses comments_template()
+ * @todo move function calls out of this view
  */
 
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
