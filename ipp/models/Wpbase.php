@@ -142,32 +142,44 @@ class WpBase
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
 
         $aryReturn = array();
+
         /**
-         * If they've set format_date to true, then what we want is a new array that contains the keys format_date
-         * and date_format with their respective values. We should already have them in the larger aryOptions, but
-         * we need an array with just those two keys.
+         * We need a new array of options to give to the MizzouPost object that contains include_meta, and include_image
+         * which are available
          */
-        $aryMizzouPostOptions = ($aryOptions['format_date']) ? array_intersect_key($aryOptions,array_flip(array('format_date','date_format'))) : array();
+        $aryMizzouPostOptions = array();
+        $aryMizzouPostOptions['include_image'] = $aryOptions['include_image'];
+
+        if($aryOptions['include_meta']){
+            $aryMizzouPostOptions['include_meta'] = array(
+                'meta_prefix'   => $aryOptions['meta_prefix'],
+                'suppress_empty' => $aryOptions['suppress_empty_meta']
+            );
+        }
+
+        /**
+         * If they've set format_date to true, then what we want is to merge the keys format_date and date_format with
+         * their respective values into our MizzouPostOptions arreay. We should already have them in the larger aryOptions, but
+         * we want just those two keys.
+         */
+        if($aryOptions['format_date']){
+            $aryMizzouPostOptions = array_merge($aryMizzouPostOptions,array_intersect_key($aryOptions,array_flip(array('format_date','date_format'))));
+        }
+
         foreach($aryPosts as $objPost){
             $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
-            if($aryOptions['include_meta']){
-                $objMizzouPost->meta_data = new PostMetaData($objPost->ID,$aryOptions['meta_prefix'],$aryOptions['suppress_empty_meta']);
-                if($aryOptions['include_image']){
-                    $objMizzouPost->meta_data->add_data('image',$objMizzouPost->meta_data->retrieve_feature_image_data());
-                }
-            }
 
             /**
              * Do we need to include an attachment URL?
              */
             if(isset($aryOptions['include_attachment_link'])){
                 if(isset($aryOptions['include_attachment_link']['pullfrom'])
-                    && isset($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
-                    && is_numeric($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']})
+                    && isset($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']})
+                    && is_numeric($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']})
                     && isset($aryOptions['include_attachment_link']['newkey'])
-                    && !isset($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['newkey']})
+                    && !isset($objMizzouPost->{$aryOptions['include_attachment_link']['newkey']})
                 ){
-                    $objMizzouPost->meta_data->add_data($aryOptions['include_attachment_link']['newkey'],wp_get_attachment_url($objMizzouPost->meta_data->{$aryOptions['include_attachment_link']['pullfrom']}));
+                    $objMizzouPost->add_data($aryOptions['include_attachment_link']['newkey'],wp_get_attachment_url($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']}));
                 } else {
                     /**
                      * @todo something happened. what do we do?
@@ -186,11 +198,11 @@ class WpBase
             if(isset($aryOptions['include_object']) && is_array($aryOptions['include_object'])){
                 if(isset($aryOptions['include_object']['newkey'])
                     && isset($aryOptions['include_object']['pullfrom'])
-                    && isset($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
-                    && is_numeric($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']})
-                    && !isset($objMizzouPost->meta_data->{$aryOptions['include_object']['newkey']})
+                    && isset($objMizzouPost->{$aryOptions['include_object']['pullfrom']})
+                    && is_numeric($objMizzouPost->{$aryOptions['include_object']['pullfrom']})
+                    && !isset($objMizzouPost->{$aryOptions['include_object']['newkey']})
             ){
-                    $objNew = get_post($objMizzouPost->meta_data->{$aryOptions['include_object']['pullfrom']});
+                    $objNew = get_post($objMizzouPost->{$aryOptions['include_object']['pullfrom']});
                     if(!is_null($objNew)){
                         $arySubOptions = array();
                         if(isset($aryOptions['include_object']['include_meta']) && $aryOptions['include_object']['include_meta']){
@@ -222,8 +234,8 @@ class WpBase
             }
 
             if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key'])){
-                if(isset($objMizzouPost->meta_data->{$aryOptions['resort']['key']})){
-                    $strNewKey =  $objMizzouPost->meta_data->{$aryOptions['resort']['key']};
+                if(isset($objMizzouPost->{$aryOptions['resort']['key']})){
+                    $strNewKey =  $objMizzouPost->{$aryOptions['resort']['key']};
                 } else {
                     $strNewKey = 'Other';
                 }
@@ -272,5 +284,4 @@ class WpBase
 
 
 }
-
 ?>
