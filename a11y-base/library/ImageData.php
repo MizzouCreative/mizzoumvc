@@ -73,7 +73,7 @@ class ImageData extends PostBase
         $arySizes = array_merge($arySizes,$this->aryImageSizes);
         //$this->_log($arySizes, 'array of image sizes', false, array());
         foreach($arySizes as $strSize){
-            $arySizeSrc = wp_get_attachment_image_src($this->intPostID,$strSize);
+            $arySizeSrc = wp_get_attachment_image_src($this->aryData['ID'],$strSize);
             $this->add_data('src_'.$strSize,$arySizeSrc[0]);
         }
 
