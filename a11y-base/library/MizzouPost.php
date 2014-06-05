@@ -112,7 +112,10 @@ class MizzouPost extends PostBase
                         $strLogMsg = 'You have a group of custom meta fields that just happen to have the same name '
                             . "as a default member of the post. I'm going to add an 's' to the group key name";
                         _mizzou_log($strNewKey,$strLogMsg,false,array('func'=>__FUNCTION__));
-                        $this->aryData[$strNewKey.'s'] = array();
+                        //add an s to the key
+                        $strNewKey .= 's';
+                        //now check to see if the altered key hasnt been set up.
+                        if(!isset($this->aryData[$strNewKey])) $this->aryData[$strNewKey] = array();
                     } else {
                         /**
                          * ok we have a situation where there is already a key set up for the group name, but it isnt an
