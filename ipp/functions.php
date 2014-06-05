@@ -63,4 +63,8 @@ function mizzouRemoveRestrictionOnArchives($objQuery)
 add_action('init', 'mizzouIppInit');
 
 add_rewrite_endpoint('author_archive', EP_PERMALINK | EP_PAGES);
+/**
+ * @todo dont leave this here! testing only!
+ */
+flush_rewrite_rules();
 ?>
