@@ -51,7 +51,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     $boolIncludeSidebar = false;
 
-    if(is_page() && in_array($objMainPost->name,$aryIncludeSidebarPages)){
+    if(is_page() && in_array($objMainPost->slug,$aryIncludeSidebarPages)){
         $boolIncludeSidebar = true;
     }
 
