@@ -1,6 +1,6 @@
 <?php
 /**
- * Loop file for projects
+ * View file for looping through project listings
  *
  * From the IA, this view needs to display the following data:
  *  - Project name (post title)
@@ -20,6 +20,8 @@
  * @category view
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
+ *
+ * @todo include a list of upper views that use this file
  *
  */
 

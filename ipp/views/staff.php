@@ -24,13 +24,15 @@
  * @copyright 2014 Curators of the University of Missouri
  *
  * @todo as of 201400601 the only difference between this page, and the contact page is that in the contact page we
- * include the post contents before the staff loop.  However, it's entirely reasonable to think that we might to at some
- * point include the contents from the page entry in this page as well, at which point, there really is no difference
- * between these page and the contact page and at that point, they should be merged into one file
+ * include the post contents before the staff loop (which will be changed to a require).  However, it's entirely
+ * reasonable to think that we might to at some point include the contents from the page entry in this page as well,
+ * at which point, there really is no difference between these page and the contact page and at that point, they should
+ * be merged into one file.  Wow, I really like to say "at ___ point".... And, run-on sentence much?
  *
  * @todo rename this file to better match its purpose?
  */
 ?>
 <section aria-label="content" role="region">
+    <?php //change to require ?>
     <?php echo $strStaffLoop; ?>
 </section>

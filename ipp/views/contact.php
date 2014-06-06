@@ -34,5 +34,6 @@
 ?>
 <section aria-label="content" role="region">
     <?php echo $objMainPost->content; ?>
+    <?php //replace $strStaffLoop with require to view file ?>
     <?php echo $strStaffLoop; ?>
 </section>

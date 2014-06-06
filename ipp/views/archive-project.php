@@ -20,6 +20,7 @@
  */
 ?>
             <section aria-label="content" role="region">
+                <?php //replace $strLoopContent with a require to the correct view file ?>
                 <?php echo $strLoopContent; ?>
             </section>
 

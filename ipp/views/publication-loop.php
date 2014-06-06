@@ -1,9 +1,27 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 6/3/14
- * Time: 4:16 PM
+ * View file for looping through publication listings
+ *
+ * From the IA, this view needs to display the following data:
+ *  - Publication name (post title)
+ *  - Permalink to project profile page
+ *  - Authors
+ *  - Publication excerpt
+ *
+ * This view has access to AND REQUIRES the following variable be passed to it:
+ *  - $aryProjects array of Project post objects
+ *
+ * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
+ * functions.
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ *
+ * @todo include a list of upper views that use this file
  */
 ?>
 <?php foreach($aryPublications as $objPublication) : ?>
