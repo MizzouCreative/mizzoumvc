@@ -13,7 +13,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 $aryData = array();
 $aryData['objMainPost'] = new MizzouPost($post);
 
-switch($aryData['objMainPost']->name){
+switch($aryData['objMainPost']->slug){
     case 'contact':
         //@todo move up higher
         require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'people.php';
