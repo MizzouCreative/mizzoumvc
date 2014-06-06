@@ -42,7 +42,7 @@
             <ol class="contact nobullet">
                 <li class="name">
                     <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>"><?php echo $objStaff->title; ?></a>
-                    <?php if($objStaff->member_of_group_set(array('title1','phone','email'))) : //is there at least one item from the list that is available> ?>
+                    <?php if($objStaff->memberOfGroupSet(array('title1','phone','email'))) : //is there at least one item from the list that is available> ?>
                         <ol>
                             <?php if($objStaff->title1 != '') : ?>
                                 <li class="job-title"><?php echo $objStaff->title1; ?></li>
