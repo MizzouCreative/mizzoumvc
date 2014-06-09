@@ -24,19 +24,21 @@ $aryOptions = array(
     'date_format'=>'l, F jS, Y'
 );
 
-$objMainPost = new MizzouPost($post,$aryOptions);
+$aryData = array();
+
+$aryData['objMainPost'] = new MizzouPost($post,$aryOptions);
 
 /**
  * 20140609 PFG: @wp-hack.  Ability to retrieve associated taxonomies is partially implemented, but not complete. Fake it
  * until after the 20140610 meeting. Definitely needs to be moved into a
  */
 $aryData['aryRelatedPosts'] = array();
-$aryCategories = wp_get_post_categories($post->ID);
+$aryCategories = wp_get_post_categories($aryData['objMainPost']->ID);
 if (count($aryCategories) > 0) {
     //Assume that we always want the first category
     $aryArgs = array(
         'cat' => $aryCategories[0],
-        'post__not_in'=> array($objMainPost->ID),
+        'post__not_in'=> array($aryData['objMainPost']->ID),
         'posts_per_page'=>5,
         'ignore_sticky_posts'=>true
     );
