@@ -30,6 +30,7 @@ $objMainPost = new MizzouPost($post,$aryOptions);
  * 20140609 PFG: @wp-hack.  Ability to retrieve associated taxonomies is partially implemented, but not complete. Fake it
  * until after the 20140610 meeting. Definitely needs to be moved into a
  */
+$aryData['aryRelatedPosts'] = array();
 $aryCategories = wp_get_post_categories($post->ID);
 if (count($aryCategories) > 0) {
     //Assume that we always want the first category
@@ -40,13 +41,14 @@ if (count($aryCategories) > 0) {
         'ignore_sticky_posts'=>true
     );
 
-    $aryRelatedPosts = new WP_Query($aryArgs);
-    _mizzou_log($aryRelatedPosts,'ary of Related Posts');
-    _mizzou_log($aryArgs,'arguments for the query results above');
-    $objPostModel = new WpBase();
-    $aryData['aryRelatedPosts'] = $objPostModel->convertPosts($aryRelatedPosts);
-} else {
-    $aryData['aryRelatedPosts'] = array();
+    $objWPQuery = new WP_Query($aryArgs);
+    //_mizzou_log($aryRelatedPosts,'ary of Related Posts');
+    //_mizzou_log($aryArgs,'arguments for the query results above');
+
+    if(count($objWPQuery->posts) > 0){
+        $objPostModel = new WpBase();
+        $aryData['aryRelatedPosts'] = $objPostModel->convertPosts($aryRelatedPosts);
+    }
 }
 
 mizzouOutPutView('single',$aryData);
