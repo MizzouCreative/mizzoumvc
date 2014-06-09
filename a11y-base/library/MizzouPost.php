@@ -204,6 +204,8 @@ class MizzouPost extends PostBase
         $this->_setContent();
         $this->_setTitle();
         $this->_processExcerpt();
+
+        $this->aryData['timestamp'] = strtotime($this->aryData['date']);
         /**
          * @todo maybe we should just always create a formatted date and simply allow the calling script to override
          * the format?
