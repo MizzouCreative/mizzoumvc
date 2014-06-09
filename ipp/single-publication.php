@@ -12,5 +12,5 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 $objPublicationModel = new Publication();
 $aryData = array();
 
-$aryData['objMainPost'] = $objPublicationModel->convertPosts(array($post),array('include_neta'=>true, 'format_date'=>true,'date_format'=>'F Y'));
+$aryData['objMainPost'] = $objPublicationModel->convertPosts(array($post),array('include_meta'=>true, 'format_date'=>true,'date_format'=>'F Y'));
 mizzouOutPutView('single-publication',$aryData);
