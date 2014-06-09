@@ -14,8 +14,18 @@ $aryData = array();
 $aryPosts = $objPublicationModel->convertPosts(array($post),array('include_meta'=>true, 'format_date'=>true,'date_format'=>'F Y'));
 $aryData['objMainPost'] = $aryPosts[0];
 
+/**
+ * @todo move ALL of this into the model
+ */
 $aryPubTerms = get_the_terms($aryData['objMainPost']->ID,'author_archive');
+$aryAuthors = array();
+$strAuthorPattern = '<a href="/publications/?author_archive=%s">%s</a>';
+foreach($aryPubTerms as $objAuthor){
+    $aryAuthors[] = sprintf($strAuthorPattern,$objAuthor->slug,$objAuthor->name);
+}
 
-_mizzou_log($aryPubTerms,'author links');
+$aryData['strMorePublications'] = implode(', ',$aryAuthors);
+
+//_mizzou_log($aryPubTerms,'author links');
 
 mizzouOutPutView('single-publication',$aryData);
