@@ -1,6 +1,20 @@
 <?php
 /**
+ * View file used to render a single blog post
  *
+ * Has access to the following variables
+ *  - objMainPost Mizzou post object for main post
+ *  - aryRelatedPosts array of related Mizzou post objects
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ * @todo $intDesiredColumns and $intLastColumn need to be moved up into the config/theme options. We could also move
+ * $strFirstColumnClass and $strLastColumnClass up but I'm inclined to leave them here since they are solely the domain
+ * of the designer.
  */
 ?>
 <section>
@@ -13,32 +27,15 @@
 
 <footer>
     <p class="postmetadata">Published
-        <time datetime="<?php the_time('c'); // ISO 8601 ?>" pubdate>
-            <?php the_time('l, F jS	, Y'); ?>
+        <time datetime="<?php echo date('c',$objMainPost->timestamp); // ISO 8601 ?>" pubdate>
+            <?php echo $objMainPost->formatted_date; ?>
         </time>
     </p>
 </footer>
 
-<?php endwhile; endif;?>
-
 </article>
 
-<?php
-$categories = wp_get_post_categories($post->ID);
-if ($categories) {
-
-    $first_category = $categories[0];
-
-    $related_post_args=array(
-        'cat' => $first_category, //cat__not_in wouldn't work
-        'post__not_in' => array($post->ID),
-        'showposts'=>5,
-        'caller_get_posts'=>1
-    );
-
-    $related_posts = new WP_Query($related_post_args);
-
-    if( $related_posts->have_posts() ) { ?>
+<?php if(count($aryRelatedPosts) > 0) : ?>
 
         <ol class="skip-links">
             <li><a class="hidden skip-to-content" href="#main"><span class="text">Skip to content</span></a></li>
@@ -46,11 +43,8 @@ if ($categories) {
 
         <h3>Related News</h3>
         <ul>
-            <? while ($related_posts->have_posts()) : $related_posts->the_post(); ?>
-                <li><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></li>
-            <?php endwhile; ?>
+            <?php foreach($aryRelatedPosts as $objRelatedPost) : ?>
+            <li><a href="<?php echo $objRelatedPost->permalink; ?>"><?php echo $objRelatedPost->title; ?></a></li>
+            <?php endforeach; ?>
         </ul>
-    <?php } //if ($my_query)
-} //if ($categories)
-wp_reset_query();  // Restore global post data stomped by the_post().
-?>
+    <?php endif;
