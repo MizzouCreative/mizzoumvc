@@ -19,8 +19,4 @@
 
 <?php if($strMorePublications != '') : ?>
 <p>More publications from <?php echo $strMorePublcations; ?></p>
-<?php endif; ?>
-<!--
-objMainPost
-<?php var_export($objMainPost); ?>
--->
+<?php endif;
