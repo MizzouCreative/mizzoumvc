@@ -12,6 +12,14 @@
 <?php endif; ?>
 <p class="date"><?php echo $objMainPost->formatted_date; ?></p>
 <?php echo $objMainPost->content; ?>
+
+<?php if($objMainPost->link != '') : ?>
+<p><a href="<?php echo $objMainPost->link; ?>">View this publication at <?php echo $objMainPost->link; ?></a></p>
+<?php endif; ?>
+
+<?php if($strMorePublicationsURL != '') : ?>
+<p>More publications from </p>
+<?php endif; ?>
 <!--
 objMainPost
 <?php var_export($objMainPost); ?>
