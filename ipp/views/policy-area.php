@@ -29,34 +29,12 @@
  * @copyright 2014 Curators of the University of Missouri
  */
 ?>
+
+<div class="span6 alpha">
                 <section aria-label="content" role="region">
                     <?php echo $objMainPost->content; ?>
                 </section>
-
-                <?php if (count($aryRelatedPublications) > 0) : ?>
-                    <section>
-                        <h3>Related Publications:</h3>
-                        <ul>
-                            <?php foreach ($aryRelatedPublications as $objPublication) : ?>
-                                <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
-                            <?php endforeach;?>
-                        </ul>
-                        <p><a href="<?php echo $strPublicationArchiveURL; ?>" title="Link to all Publications">All Publications</a> </p>
-                    </section>
-                <?php endif; ?>
-
-                <?php if (count($aryRelatedProjects) > 0) : ?>
-                    <section>
-                        <h3>Related Projects:</h3>
-                        <ul>
-                            <?php foreach ($aryRelatedProjects as $objProject) : ?>
-                                <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
-                            <?php endforeach;?>
-                        </ul>
-                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all Projects">All Projects</a> </p>
-                    </section>
-                <?php endif; ?>
-
+                
                 <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
                     <section>
                         <h3>Contact:</h3>
@@ -82,6 +60,36 @@
                         </p>
                     </section>
                 <?php endif; ?>
+</div>
+
+<div class="span3">
+
+                <?php if (count($aryRelatedPublications) > 0) : ?>
+                    <section>
+                        <h3>Related Publications:</h3>
+                        <ul>
+                            <?php foreach ($aryRelatedPublications as $objPublication) : ?>
+                                <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
+                            <?php endforeach;?>
+                        </ul>
+                        <p><a href="<?php echo $strPublicationArchiveURL; ?>" title="Link to all Publications">All Publications</a> </p>
+                    </section>
+                <?php endif; ?>
+
+                <?php if (count($aryRelatedProjects) > 0) : ?>
+                    <section>
+                        <h3>Related Projects:</h3>
+                        <ul>
+                            <?php foreach ($aryRelatedProjects as $objProject) : ?>
+                                <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
+                            <?php endforeach;?>
+                        </ul>
+                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all Projects">All Projects</a> </p>
+                    </section>
+                <?php endif; ?>
+</div>
+
+<div class="span3 omega">
 
                 <?php if(isset($aryPolicyScholars) && count($aryPolicyScholars) > 0): ?>
                 <section>
@@ -93,3 +101,4 @@
                     </ul>
                 </section>
                 <?php endif;?>
+</span>

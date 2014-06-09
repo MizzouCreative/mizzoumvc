@@ -22,9 +22,11 @@
  * @uses mizzouIncludeView()
  */
 ?>
-<section aria-label="content" role="region">
-    <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
-        <h2><?php echo $strPublicationType; ?>s</h2>
-        <?php require 'publication-loop.php'; ?>
-    <?php endforeach; ?>
-</section>
+<div class="span8 alpha">
+    <section aria-label="content" role="region">
+        <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
+            <h2><?php echo $strPublicationType; ?>s</h2>
+            <?php require 'publication-loop.php'; ?>
+        <?php endforeach; ?>
+    </section>
+</div>
