@@ -727,7 +727,14 @@ div.aligncenter {
   line-height: 1.75rem;
   font-weight: 300;
   text-decoration: none;
-  margin: 0 0 0 0 !important;
+  margin-top: 0px !important;
+  margin-right: 0px !important;
+  margin-bottom: 13.5px !important;
+  margin-left: 0px !important;
+  margin-top: 0rem !important;
+  margin-right: 0rem !important;
+  margin-bottom: 0.75rem !important;
+  margin-left: 0rem !important;
   padding: 0 !important;
 }
 .post-item h4.post-title {
@@ -2072,6 +2079,18 @@ Interface Elements
 /* Sidebar & Widgets */
 .widget_recent_entries {
   background: #f4f4f4;
+  border: 1px solid #dddddd;
+  padding-top: 0px;
+  padding-right: 18px;
+  padding-bottom: 36px;
+  padding-left: 18px;
+  padding-top: 0rem;
+  padding-right: 1rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+  border-radius: 18px 18px 0px 36px;
+  border-radius: 1rem 1rem 0rem 2rem;
+  background-clip: padding-box;
 }
 .widget_recent_entries li,
 #content .widget_recent_entries li {
