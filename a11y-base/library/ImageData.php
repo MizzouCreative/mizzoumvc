@@ -11,44 +11,53 @@
 * @uses $_wp_additional_image_sizes
 * @version 201212211512 
 */
-class ImageData extends CustomPostType {
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'PostBase.php';
+
+/**
+ * Class ImageData
+ */
+class ImageData extends PostBase
+{
     /**
-    * Default wordpress image sizes
+    * Default wordpress image sizes.
+    *
+    * I thought perhaps we could putt the default sizes directly from wordpress, instead of hardcoding them here, but it
+    * appears that they are hard-coded into wordpress as well...
+     * @see line 630 https://core.trac.wordpress.org/browser/tags/3.9.1/src/wp-includes/media.php#L0
     * 
     * @var array
     */
-    var $aryImageSizes = array(
+    protected $aryImageSizes = array(
         'thumbnail',
         'medium',
         'large',
         'full'
     );
-    
-    var $objOriginalPost = null;
-    
-    function __construct($mxdPostData,$boolIncludeCaption = false){
-        if(!is_numeric($mxdPostData) && !is_object($mxdPostData)){
-            $this->add_error('first argument must be a post id or post object');    
-        } else {
-            if(is_object($mxdPostData)){
-                $this->intPostID = $mxdPostData->ID;
-                $this->objOriginalPost = $mxdPostData;
-            } else {
-                $this->intPostID = $mxdPostData;
-                $this->objOriginalPost = get_post($this->intPostID);
-            }   
-            
-            $this->_retrieve_wp_data();
-            if($boolIncludeCaption) $this->get_caption();
-        }
+
+    /**
+     *
+     * @param $mxdPostData
+     * @param bool $boolIncludeCaption deprecated. included for backwards compatibility
+     */
+    public function __construct($mxdPostData,$boolIncludeCaption = false){
+        parent::__construct($mxdPostData);
+        $this->aryData['ID'] = $this->objOriginalPost->ID;
+
+        $this->_retrieve_wp_data();
+
+        unset($this->objOriginalPost);
+
     }
-    
-    function _retrieve_wp_data(){
+
+    /**
+     *
+     */
+    protected function _retrieve_wp_data(){
         /**
         * Get the alt data for the image
         */
         
-        $strAltText =  get_post_meta($this->intPostID,'_wp_attachment_image_alt',true);
+        $strAltText =  get_post_meta($this->aryData['ID'],'_wp_attachment_image_alt',true);
         $strAltText = ($strAltText != '') ? $strAltText : $this->objOriginalPost->post_title;
         //$this->_log($this->objOriginalPost,'image object data',false,array('line'=>__LINE__,'func'=>__FUNCTION__));
         $this->add_data('alt',$strAltText);
@@ -64,20 +73,20 @@ class ImageData extends CustomPostType {
         $arySizes = array_merge($arySizes,$this->aryImageSizes);
         //$this->_log($arySizes, 'array of image sizes', false, array());
         foreach($arySizes as $strSize){
-            $arySizeSrc = wp_get_attachment_image_src($this->intPostID,$strSize);
+            $arySizeSrc = wp_get_attachment_image_src($this->aryData['ID'],$strSize);
             $this->add_data('src_'.$strSize,$arySizeSrc[0]);
-        }    
-    }
-    
-    function get_caption(){
-        /** @deprecated going to go ahead and always get the whole object
-        if(is_null($this->objOriginalPost) || !is_object($this->objOriginalPost)){
-             $this->objOriginalPost = get_post($this->intPostID); 
         }
-        */
-        
-        //$this->_log($this->objOriginalPost,'trying to find caption for this image');
+
+        //set the caption
         $this->add_data('caption',$this->objOriginalPost->post_excerpt);
+    }
+
+    /**
+     * @deprecated
+     * @return null
+     */
+    public function get_caption(){
+        return null;
     }
 }
 ?>

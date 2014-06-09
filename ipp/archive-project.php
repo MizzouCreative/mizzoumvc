@@ -17,12 +17,17 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'project.php';
 //@todo move this up higher as well
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
-$aryData = array();
+
 global $wp_query;
-$aryProjects = mizzouConvertPosts($wp_query->posts);
+$aryData = array();
+$objWpBase = new WpBase();
+
+$aryProjects = $objWpBase->convertPosts($wp_query->posts);
+
 //we need to get the contents from the loop view
 ob_start();
 require_once 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
 $aryData['strLoopContent'] = ob_get_clean();
+
 $aryData['strPageTitle'] = post_type_archive_title('',false);
 mizzouOutPutView('archive-project',$aryData);

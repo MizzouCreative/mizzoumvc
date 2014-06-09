@@ -1,9 +1,28 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Frank
- * Date: 5/16/14
- * Time: 2:16 PM
+ * View file for looping through project listings
+ *
+ * From the IA, this view needs to display the following data:
+ *  - Project name (post title)
+ *  - Permalink to project profile page
+ *
+ * This view has access to the following variables:
+ *  - $aryProjects array of Project post objects
+ *  - $strTitle (if applicable) the type of projects that will be listed
+ *  - $strProjectArchiveURL (if applicable) permalink to the archive page for projects of a specific type
+ *
+ * You do not need to call get_header(), get_footer, get_sidebar() or breadcrumbs() as those are handled by outer
+ * functions.
+ *
+ * @package WordPress
+ * @subpackage IPP
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ *
+ * @todo include a list of upper views that use this file
+ *
  */
 
 ?>

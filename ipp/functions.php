@@ -13,6 +13,14 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR
 function mizzouIppInit()
 {
     quote_init(); //is this still needed
+
+    add_action('pre_get_posts','mizzouRemoveRestrictionOnArchives');
+
+    /**
+     * @todo come back to this one. removed for now
+     */
+    //add_rewrite_endpoint('author_archive', EP_PERMALINK | EP_PAGES);
+
 }
 //handle to add custom post type 
 
@@ -52,5 +60,13 @@ function quote_init()
   register_post_type('quote',$args);
 }
 
+function mizzouRemoveRestrictionOnArchives($objQuery)
+{
+    if($objQuery->is_archive() && $objQuery->is_main_query()){
+        $objQuery->set('posts_per_page',-1);
+    }
+}
+
 add_action('init', 'mizzouIppInit');
+
 ?>

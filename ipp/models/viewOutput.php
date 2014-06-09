@@ -16,6 +16,7 @@
  * @uses breadcrumbs() from Mizzou Breadcrumbs plugin
  * @uses get_template_directory() from Wordpress core
  * @uses mizzouDeterminePathToTheme() from helpers\paths.php
+ * @todo this seriously needs refactoring
  */
 function mizzouOutPutView($strInnerViewFileName,$aryData)
 {
@@ -32,14 +33,14 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //convert all the data for the inner view into variables
     extract($aryData);
 
-    if(!isset($strTitle) || $strTitle == ''){
-        $strTitle = wp_title('',false);
+    if(!isset($strPageTitle) || $strPageTitle == ''){
+        $strPageTitle = wp_title('',false);
     }
 
 
     $strEditPostLink = '';
-    if(is_single() || is_page()){
-        $strEditPostLink = ' '.get_edit_post_link();
+    if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
+        $strEditPostLink = ' '. $strPostLink;
     }
 
     /**
@@ -77,7 +78,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //get contents from the inner view
     if(file_exists($strInnerView)){
         require_once $strInnerView;
-        $strInnerViewContent = ob_get_clean();
+        $strInnerViewContent = ob_get_contents();
+        ob_clean();
     } else {
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
@@ -92,4 +94,14 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     require_once $strViewsPath . 'outerView.php';
     get_footer();
+}
+
+function mizzouIncludeView($strViewName)
+{
+    $strFile = mizzouDeterminePathToTheme().'views'.DIRECTORY_SEPARATOR.$strViewName.'.php';
+    if(file_exists($strFile)){
+        require $strFile;
+    } else {
+        _mizzou_log($strFile,'this template file was requested but I couldnt find it');
+    }
 }

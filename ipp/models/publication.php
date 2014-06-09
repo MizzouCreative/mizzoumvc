@@ -6,7 +6,7 @@
  * Time: 3:10 PM
  */
 
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'WpBase.php';
 
 class Publication extends WpBase
 {
@@ -22,7 +22,9 @@ class Publication extends WpBase
             'taxonomy'      => 'author_archive',
             'tax_term'      => $intStaffID,
             'count'         => 4, //@todo move this somewhere higher
-            'include_meta'  => true
+            'include_meta'  => true,
+            'format_date'   => true,
+            'date_format'   => 'F y'
         );
 
         return $this->retrieveContent($aryArgs);

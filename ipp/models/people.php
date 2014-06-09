@@ -8,7 +8,7 @@
 
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
 
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'base.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'WpBase.php';
 
 /**
  * Class People
@@ -30,12 +30,27 @@ class People extends WpBase
 
     protected $aryPeopleDefaults = array(
         'include_meta'  => true,
-        'include_image' => true
+        'include_image' => true,
+
     );
 
     protected $aryStaffDefaults = array(
         'taxonomy'      => 'person_type',
         'tax_term'      => 'staff',
+    );
+
+    /**
+     * @var array
+     * @todo should these be contained within the calling method?
+     */
+    protected $aryPRSDefaults = array(
+        'taxonomy'  => 'person_type',
+        'tax_term'  => 'policy-research-scholars'
+    );
+
+    protected $aryGRADefaults = array(
+        'taxonomy'  => 'person_type',
+        'tax_term'  => 'graduate-research-assistants'
     );
     /**
      * overload parent member
@@ -71,8 +86,23 @@ class People extends WpBase
 
     }
 
-    public function retrieveStaff($mxdPost)
+    public function convertStaff($mxdPost,$aryOptions = array())
     {
+
+        $aryDefaults = array(
+            'include_cv'            => false,
+            'suppress_empty_meta'   => true
+        );
+
+        $aryOptions = array_merge($aryDefaults,$aryOptions);
+
+        if($aryOptions['include_cv']){
+            $aryOptions['include_attachment_link'] = array(
+                'newkey'        =>'curriculumVitaeURL',
+                'pullfrom'      =>'curriculumVitae',
+            );
+        }
+
         $boolReturnSingle = false;
 
         if(!is_array($mxdPost) && is_object($mxdPost)){
@@ -81,8 +111,8 @@ class People extends WpBase
         } else {
             $aryRetrieve = $mxdPost;
         }
-
-        $aryStaff = $this->convertPosts($aryRetrieve,array('suppress_empty_meta'=> true));
+        _mizzou_log($aryOptions,'our options before converting staff members',false,array('func'=>__FUNCTION__));
+        $aryStaff = $this->convertPosts($aryRetrieve,$aryOptions);
 
         if(count($aryStaff) > 0){
             if($boolReturnSingle && count($aryStaff) == 1){
@@ -120,6 +150,22 @@ class People extends WpBase
 
         return $aryReturn;
 
+    }
+
+    public function retrievePolicyScholars()
+    {
+        $aryOptions = array_merge($this->aryDefaults,$this->aryPRSDefaults);
+        return $this->retrieveContent($aryOptions);
+    }
+
+    /**
+     * @return array
+     * @todo with the exception of merging the GRAdefaults, this is identical to self::retrievePolicyScholars. Refactor
+     */
+    public function retrieveGRAs()
+    {
+        $aryOptions = array_merge($this->aryDefaults,$this->aryGRADefaults);
+        return $this->retrieveContent($aryOptions);
     }
 
     /**

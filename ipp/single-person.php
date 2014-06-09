@@ -25,19 +25,14 @@ $aryData = array();
 $objStaffModel = new People();
 $objPublicationModel = new Publication();
 
-$objPerson = $objStaffModel->retrieveStaff($post);
+$objPerson = $objStaffModel->convertStaff($post,array('include_cv'=>true));
 $aryPublications = $objPublicationModel->getPublicationsByStaff($objPerson->ID);
 
 $aryData['objPerson'] = $objPerson;
-
-?>
-<p>Single Person:</p>
-
-<xmp>
-    <?php var_export($objPerson); ?>
-</xmp>
-
-<p>Related Publications:</p>
-<xmp>
-    <?php var_export($aryPublications); ?>
-</xmp>
+$aryData['aryPublications'] = $aryPublications;
+/**
+ * @todo no no no. This needs to be dynamically generated.
+ */
+$aryData['strPublicationArchiveURL'] = '/publications/?author_archive='.$objPerson->ID;
+mizzouOutPutView('single-person',$aryData);
+_mizzou_log(get_object_vars($objPerson->meta_data),'object vars for our custom meta object');
