@@ -1,12 +1,15 @@
 <?php
 //@todo move up higher
+/**
+ * Why are we using the base model here instead of the publication model?
+ */
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'WpBase.php';
 //@todo move this up higher as well
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARATOR.'viewOutput.php';
 
 //do we still need wp_query here?
 global $wp_query,$post;
-_mizzou_log($wp_query,'WP_Query',false,array('file'=>__FILE__));
+//_mizzou_log($wp_query,'WP_Query',false,array('file'=>__FILE__));
 /**
  * Why are we using base instead of the Publications object?
  */
