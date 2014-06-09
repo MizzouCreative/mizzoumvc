@@ -13,4 +13,9 @@ $objPublicationModel = new Publication();
 $aryData = array();
 $aryPosts = $objPublicationModel->convertPosts(array($post),array('include_meta'=>true, 'format_date'=>true,'date_format'=>'F Y'));
 $aryData['objMainPost'] = $aryPosts[0];
+
+$aryPubTerms = get_the_terms($aryData['objMainPost']->ID,'author_archive');
+
+_mizzou_log($aryPubTerms,'author links');
+
 mizzouOutPutView('single-publication',$aryData);
