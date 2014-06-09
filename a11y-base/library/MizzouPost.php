@@ -262,8 +262,8 @@ class MizzouPost extends PostBase
 
     private function _setFormattedDate()
     {
-        $this->aryData['formatted_date'] = date($this->aryOptions['date_format'],strtotime($this->aryData['date']));
-        $this->formatted_date = date($this->aryOptions['date_format'],strtotime($this->date));
+        $this->aryData['formatted_date'] = date($this->aryOptions['date_format'],$this->aryData['timestamp']);
+
     }
 
     private function _handleMetaData()
