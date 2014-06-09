@@ -41,6 +41,8 @@ if (count($aryCategories) > 0) {
     );
 
     $aryRelatedPosts = new WP_Query($aryArgs);
+    _mizzou_log($aryRelatedPosts,'ary of Related Posts');
+    _mizzou_log($aryArgs,'arguments for the query results above');
     $objPostModel = new WpBase();
     $aryData['aryRelatedPosts'] = $objPostModel->convertPosts($aryRelatedPosts);
 } else {
