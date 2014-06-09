@@ -32,11 +32,13 @@ $intLastColumn = $intDesiredColumns - 1;
                     $strColumnClass = $strLastColumnClass;
                 }
             ?>
-            <div class="span3 <?php echo $strColumnClass; ?>">
+            <div class="span4 <?php echo $strColumnClass; ?>">
                 <div class="post-item">
                     <a class="clearfix post-link" href="<?php echo $objPost->permalink; ?>">
                         <h3 class="post-title"><?php echo $objPost->title; ?></h3>
+                        <p class="post-excerpt"><?php echo $objPost->excerpt; ?></p>
                     </a>
+
                 </div>
             </div>
             <?php if($intCounter == $intLastColumn ) : $intCounter = 0;?>

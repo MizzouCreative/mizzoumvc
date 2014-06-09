@@ -85,19 +85,22 @@
 			
 				<div class="span6">
 					<?php get_search_form(); ?>
-
-            <?php wp_nav_menu( array(
-                'theme_location' => 'audience',
-                'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
-            ) ); ?>
+                    
+                    <div class="mobile-hide">
+                        <?php wp_nav_menu( array(
+                            'theme_location' => 'audience',
+                            'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
+                        ) ); ?>
+                    </div>
 
 				</div> <!-- end span6 -->
 
 	</div> <!-- end .container #header -->
 
 </div> <!-- end header-wrapper -->
-			
-<nav id="navigation" role="navigation">
+
+
+<nav id="navigation" role="navigation" class="mobile-hide">
 	
 	<div class="menu-wrapper">
 		
@@ -115,8 +118,8 @@
 	</div> <!-- end .menu-wrapper -->
 
 </nav>
-				<div class="clear"></div>
 
+<div class="clear"></div>
 
 <div class="content-wrapper">
 
