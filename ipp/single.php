@@ -9,7 +9,7 @@
 $aryOptions = array(
     'include_meta'=>true,
     'format_date'=>true,
-    'date_format'=>'l, F jS	, Y'
+    'date_format'=>'l, F jS, Y'
 );
 
 $objMainPost = new MizzouPost($post,$aryOptions);
