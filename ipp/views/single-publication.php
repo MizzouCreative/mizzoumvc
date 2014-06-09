@@ -18,5 +18,5 @@
 <?php endif; ?>
 
 <?php if($strMorePublications != '') : ?>
-<p>More publications from <?php echo $strMorePublcations; ?></p>
+<p>More publications from <?php echo $strMorePublications; ?></p>
 <?php endif;
