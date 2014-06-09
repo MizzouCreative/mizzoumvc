@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 
 //do we still need wp_query here?
 global $wp_query,$post;
-
+_mizzou_log($wp_query,'WP_Query',false,array('file'=>__FILE__));
 /**
  * Why are we using base instead of the Publications object?
  */

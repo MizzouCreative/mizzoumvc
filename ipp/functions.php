@@ -20,6 +20,8 @@ function mizzouIppInit()
      * @todo come back to this one. removed for now
      */
     //add_rewrite_endpoint('author_archive', EP_PERMALINK | EP_PAGES);
+    //add rewrite tag so that we can use it when we register our taxonomies
+    //add_rewrite_tag('%post_type%','([^/]+)');
 
 }
 //handle to add custom post type 
