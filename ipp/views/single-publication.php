@@ -6,7 +6,7 @@
  * Time: 3:03 PM
  */
 ?>
-
+<div class="span8 alpha">
 <?php if($objMainPost->authors != '') : ?>
 <p class="authors"><?php echo $objMainPost->authors; ?></p>
 <?php endif; ?>
@@ -19,4 +19,5 @@
 
 <?php if($strMorePublications != '') : ?>
 <p>More publications from <?php echo $strMorePublications; ?></p>
-<?php endif;
+<?php endif; ?>
+</div>

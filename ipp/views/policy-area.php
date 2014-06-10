@@ -29,68 +29,76 @@
  * @copyright 2014 Curators of the University of Missouri
  */
 ?>
+<div class="span12 alpha">
 
-<div class="span6 alpha">
+    <div class="span8 alpha">
+
                 <section aria-label="content" role="region">
                     <?php echo $objMainPost->content; ?>
                 </section>
-                
-                <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
-                    <section>
-                        <h3>Contact:</h3>
-                        <p>
-                            <a href="<?php echo $objMainContact->permalink; ?>"><?php echo $objMainContact->title; ?></a> <br>
+    </div>
+    <div class="span3 left-offset1 omega">
+                    
+                    <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
+                        <section>
+                            <h3>Contact:</h3>
+                            <p>
+                                <a href="<?php echo $objMainContact->permalink; ?>"><?php echo $objMainContact->title; ?></a> <br>
+    
+                                <?php if('' != $objMainContact->title1): ?>
+                                    <?php echo $objMainContact->title1; ?><br>
+                                <?php endif; ?>
+    
+                                <?php if('' != $objMainContact->address1): ?>
+                                    <?php echo $objMainContact->address1; ?><br>
+                                <?php endif; ?>
+    
+                                <?php if('' != $objMainContact->email): ?>
+                                    <a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a><br>
+                                <?php endif; ?>
+    
+                                <?php if('' != $objMainContact->phone): ?>
+                                    <?php echo $objMainContact->phone;?>
+                                <?php endif; ?>
+    
+                            </p>
+                        </section>
+                    <?php endif; ?>
+    </div><!-- end span3 -->
+</div> <!-- end span12 -->
 
-                            <?php if('' != $objMainContact->title1): ?>
-                                <?php echo $objMainContact->title1; ?><br>
-                            <?php endif; ?>
+<div class="span12 alpha">
+    <div class="span4 alpha">
+                    <?php if (count($aryRelatedProjects) > 0) : ?>
+                        <section>
+                            <h3>Related Projects:</h3>
+                            <ul>
+                                <?php foreach ($aryRelatedProjects as $objProject) : ?>
+                                    <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
+                                <?php endforeach;?>
+                            </ul>
+                            <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Projects">All <?php echo $objMainPost->title; ?> Projects</a> </p>
+                        </section>
+                    <?php endif; ?>
+    </div><!-- end span4 -->
+    
+    <div class="span4 omega">
+                    <?php if (count($aryRelatedPublications) > 0) : ?>
+                        <section>
+                            <h3>Related Publications:</h3>
+                            <ul>
+                                <?php foreach ($aryRelatedPublications as $objPublication) : ?>
+                                    <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
+                                <?php endforeach;?>
+                            </ul>
+                            <p><a href="<?php echo $strPublicationArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Publications">All <?php echo $objMainPost->title; ?> Publications</a> </p>
+                        </section>
+                    <?php endif; ?>
+    
+    </div> <!-- end span4 -->
 
-                            <?php if('' != $objMainContact->address1): ?>
-                                <?php echo $objMainContact->address1; ?><br>
-                            <?php endif; ?>
 
-                            <?php if('' != $objMainContact->email): ?>
-                                <a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a><br>
-                            <?php endif; ?>
-
-                            <?php if('' != $objMainContact->phone): ?>
-                                <?php echo $objMainContact->phone;?>
-                            <?php endif; ?>
-
-                        </p>
-                    </section>
-                <?php endif; ?>
-</div>
-
-<div class="span3">
-                <?php if (count($aryRelatedProjects) > 0) : ?>
-                    <section>
-                        <h3>Related Projects:</h3>
-                        <ul>
-                            <?php foreach ($aryRelatedProjects as $objProject) : ?>
-                                <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
-                            <?php endforeach;?>
-                        </ul>
-                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Projects">All <?php echo $objMainPost->title; ?> Projects</a> </p>
-                    </section>
-                <?php endif; ?>
-
-                <?php if (count($aryRelatedPublications) > 0) : ?>
-                    <section>
-                        <h3>Related Publications:</h3>
-                        <ul>
-                            <?php foreach ($aryRelatedPublications as $objPublication) : ?>
-                                <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
-                            <?php endforeach;?>
-                        </ul>
-                        <p><a href="<?php echo $strPublicationArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Publications">All <?php echo $objMainPost->title; ?> Publications</a> </p>
-                    </section>
-                <?php endif; ?>
-
-</div>
-
-<div class="span3 omega">
-
+    <div class="span3 left-offset1 omega">
                 <?php if(isset($aryPolicyScholars) && count($aryPolicyScholars) > 0): ?>
                 <section>
                     <h3><?php echo $objMainPost->title; ?> Policy Research Scholars</h3>
@@ -101,4 +109,5 @@
                     </ul>
                 </section>
                 <?php endif;?>
-</div>
+    </div> <!-- end span3 -->
+</div> <!-- end span12 -->
