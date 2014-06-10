@@ -32,9 +32,13 @@ $aryOptions = array(
     'meta_prefix'   => 'publication_'
 );
 
+$aryTermOptions = array(
+    'orderby'=>'id',
+
+);
 $aryData['aryPublicationsGroup'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
 
-_mizzou_log(get_terms('policy_area'),'our list of terms from policy area');
+_mizzou_log(get_terms('policy_area',$aryTermOptions),'our list of terms from policy area');
 
 /*
 echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/
