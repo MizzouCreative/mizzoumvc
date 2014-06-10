@@ -24,7 +24,7 @@
  */
 define('GSA_SEARCH_PARAMS',  serialize(array(
     'site'            => 'default_collection',
-    'proxystylesheet' => 'wc_standard',
+    'proxystylesheet' => 'wc_basic',
     'client'          => 'wc_standard',
     'output'          => 'xml_no_dtd',
     'sitesearch'      => 'ipp.missouri.edu'
