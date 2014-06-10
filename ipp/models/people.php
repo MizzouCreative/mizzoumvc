@@ -154,6 +154,10 @@ class People extends WpBase
 
     public function retrievePolicyScholars()
     {
+        /**
+         * @todo it appears that EVERYONE needs to be sorted in the same manner. this should be moved into the people
+         * defaults, and possibly into the root People model if we are going to standardize on the field names
+         */
         $aryArgs = array(
             'order_by'          =>'meta_value',
             'order_direction'   => 'ASC',
