@@ -99,7 +99,9 @@
 					    	<a href="http://diversity.missouri.edu/communities/disabilities.php">Disability Resources</a>
 					    </div>  <!-- accessibility -->
 					    <div class="accessibility">
-					    	<a href="<?php echo home_url(); ?>/a-z/">A-Z Index</a>
+					    	<!-- removed temporarily 20140610 PFG
+                            <a href="<?php echo home_url(); ?>/a-z/">A-Z Index</a>
+                            -->
 					    </div>  <!-- accessibility -->
 					</div> <!-- span2 -->
 
