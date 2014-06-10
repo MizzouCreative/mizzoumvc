@@ -448,37 +448,39 @@ div.aligncenter {
   display: inline-block;
   padding-top: 18px;
   padding-right: 27px;
-  padding-bottom: 0px;
-  padding-left: 0px;
+  padding-bottom: 18px;
+  padding-left: 18px;
   padding-top: 1rem;
   padding-right: 1.5rem;
-  padding-bottom: 0rem;
-  padding-left: 0rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   margin: 0 !important;
   height: auto;
-  color: #333333;
-  background: #ffffff;
-  border-radius: 0px 18px 0px 0px;
-  border-radius: 0rem 1rem 0rem 0rem;
+  color: #fff;
+  text-shadow: 0px 1px 5px #000;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0px 0px 18px 0px;
+  border-radius: 0rem 0rem 1rem 0rem;
   background-clip: padding-box;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
 }
 .slide .slide-text p {
-  color: #555555;
+  color: #fff;
+  text-shadow: 0px 1px 2px #5885AE;
   margin: 0 !important;
   padding-top: 18px;
   padding-right: 18px;
   padding-bottom: 0px;
-  padding-left: 0px;
+  padding-left: 18px;
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 0rem;
-  padding-left: 0rem;
-  font-size: 54px;
-  font-size: 3rem;
-  line-height: 58.5px;
-  line-height: 3.25rem;
+  padding-left: 1rem;
+  font-size: 63px;
+  font-size: 3.5rem;
+  line-height: 72px;
+  line-height: 4rem;
   font-weight: 300;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
@@ -486,11 +488,24 @@ div.aligncenter {
 .slide .slide-text h2 {
   margin-bottom: 18px;
 }
-.slide a.clearfix:hover .slide-text p,
-.slide a.clearfix:focus .slide-text p,
-.slide a.clearfix:hover .slide-text h2,
-.slide a.clearfix:focus .slide-text h2 {
-  background: #ffffff;
+.slide .slide-text .slide-content a {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 9px 9px 9px 9px;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background-clip: padding-box;
+  padding-top: 0px;
+  padding-right: 9px;
+  padding-bottom: 0px;
+  padding-left: 9px;
+  padding-top: 0rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0rem;
+  padding-left: 0.5rem;
+}
+.slide .slide-text .slide-content a:hover,
+.slide .slide-text .slide-content a:focus {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
 }
 .slide .slide-text.left {
   left: 0;
@@ -784,13 +799,6 @@ div.aligncenter {
   border-left: 7px solid #f1b82d;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
-}
-.post-item.institute-of-public-policy a.post-link {
-  border: 1px solid #f1b82d;
-}
-.post-item .post-item-category.institute-of-public-policy a {
-  border-top: 1px solid #f1b82d;
-  border-left: 1px solid #f1b82d;
 }
 @media screen and (max-width: 740px) {
   .post-wrapper.span3 {

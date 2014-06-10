@@ -45,7 +45,7 @@
 
                         <div class="slide clearfix" style="background-image: url('<?php $thumbnail_id=get_the_post_thumbnail($post->ID, 'large'); preg_match ('/src="(.*)" class/',$thumbnail_id,$link); echo $link[1]; ?>')">
 
-                            <?php if ($themeta['link'][0] != '') { ?>
+                            <?php if ($themeta['slide_link'][0] != '') { ?>
                             <a class="clearfix" href="<? echo $themeta['link'][0]; ?>">
                                 <?php } ?>
 
@@ -55,7 +55,7 @@
                                         <?php the_content(); ?>
                                     </div>
                                 </div>
-                                <?php if ($themeta['link'][0]) { ?>
+                                <?php if ($themeta['slide_link'][0]) { ?>
                             </a>
                         <?php } ?>
                         </div> <!-- end slide -->

@@ -28,6 +28,7 @@
 	-o-background-size: cover;
 	background-repeat: no-repeat;	
 	.radius (.5,.5,.5,.5);
+	
 
 	h2 {
 		color: #fff;
@@ -70,23 +71,25 @@
 
 	.slide-text h2 {
 		display: inline-block;
-		.space (padding, 1, 1.5, 0, 0);
+		.space (padding, 1, 1.5, 1, 1);
 
 		margin: 0 !important;
 		height: auto;
-		color: @charcoal;
-		background: rgba(255,255,255,1);
-		.radius (0,1,0,0);
+		color: #fff;
+		text-shadow: 0px 1px 5px #000;
+		background: rgba(0,0,0,.5);
+		.radius (0,0,1,0);
 		.transition3;
 	}
 
 
 	.slide-text p {
-		color: @gray;
+		color: #fff;
+		text-shadow: 0px 1px 2px #5885AE;
 		margin: 0 !important;
-		.space(padding,1,1,0,0);
-		.rem (font-size,3);
-		.rem (line-height, 3.25);
+		.space(padding,1,1,0,1);
+		.rem (font-size,3.5);
+		.rem (line-height, 4);
 		font-weight: @light;
 		.transition3;
 	}
@@ -97,14 +100,26 @@
 
 	
 	.slide-text .slide-content a {
+		background: rgba(0,0,0,.5);
+		.radius (.5,.5,.5,.5);
+		.space(padding,0,.5,0,.5);
+
 	}
+
+    	.slide-text .slide-content a:hover,
+    	.slide-text .slide-content a:focus
+    	 {
+    	    color: #fff;
+    		background: rgba(0,0,0,.7);
+    	}
+
 
 	a.clearfix:hover .slide-text p,
 	a.clearfix:focus .slide-text p,
 	a.clearfix:hover .slide-text h2,
 	a.clearfix:focus .slide-text h2
 	 {
-		background: rgba(255,255,255,1);
+		// background: rgba(255,255,255,1);
 	}
 
 	.slide-text.left {
@@ -329,15 +344,6 @@
 		border-top: 7px solid @mu-gold;
 		border-left: 7px solid @mu-gold;
 		.transition3;
-	}
-
-	&.institute-of-public-policy a.post-link {
-		border: 1px solid @mu-gold;
-	}
-
-	.post-item-category.institute-of-public-policy a {
-		border-top: 1px solid @mu-gold;
-		border-left: 1px solid @mu-gold
 	}
 
 } // end .post-item
