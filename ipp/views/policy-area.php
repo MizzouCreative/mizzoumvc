@@ -63,6 +63,17 @@
 </div>
 
 <div class="span3">
+                <?php if (count($aryRelatedProjects) > 0) : ?>
+                    <section>
+                        <h3>Related Projects:</h3>
+                        <ul>
+                            <?php foreach ($aryRelatedProjects as $objProject) : ?>
+                                <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
+                            <?php endforeach;?>
+                        </ul>
+                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Projects">All <?php echo $objMainPost->title; ?> Projects</a> </p>
+                    </section>
+                <?php endif; ?>
 
                 <?php if (count($aryRelatedPublications) > 0) : ?>
                     <section>
@@ -76,17 +87,6 @@
                     </section>
                 <?php endif; ?>
 
-                <?php if (count($aryRelatedProjects) > 0) : ?>
-                    <section>
-                        <h3>Related Projects:</h3>
-                        <ul>
-                            <?php foreach ($aryRelatedProjects as $objProject) : ?>
-                                <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
-                            <?php endforeach;?>
-                        </ul>
-                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Projects">All <?php echo $objMainPost->title; ?> Projects</a> </p>
-                    </section>
-                <?php endif; ?>
 </div>
 
 <div class="span3 omega">
