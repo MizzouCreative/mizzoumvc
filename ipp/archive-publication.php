@@ -32,7 +32,25 @@ $aryOptions = array(
     'meta_prefix'   => 'publication_'
 );
 
+$aryTermOptions = array(
+    'orderby'=>'id',
+
+);
 $aryData['aryPublicationsGroup'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
+
+
+$aryPolicyTaxTerms = get_terms('policy_area',$aryTermOptions);
+
+/**
+ * @todo This needs to be moved into a taxonomy model
+ */
+$aryData['aryPolicyAreas'] = array();
+foreach($aryPolicyTaxTerms as $objTaxTerm){
+    $aryData['aryPolicyAreas'][$objTaxTerm->slug] = $objTaxTerm->name;
+}
+
+
+//_mizzou_log(get_terms('policy_area',$aryTermOptions),'our list of terms from policy area');
 
 /*
 echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/

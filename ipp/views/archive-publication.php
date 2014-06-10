@@ -23,6 +23,16 @@
  */
 ?>
 <div class="span8 alpha">
+    <?php
+    /**
+     * 20140610 PFG: hardcoded temporarily for today's meeting.
+     */
+    ?>
+    <ul>
+        <?php foreach($aryPolicyAreas as $strPolicySlug => $strPolicyName) : ?>
+        <li><a href="/publications/?policy_area=<?php echo $strPolicySlug; ?>"><?php echo $strPolicyName; ?></a></li>
+        <?php endforeach; ?>
+    </ul>
     <section aria-label="content" role="region">
         <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
             <h2><?php echo $strPublicationType; ?>s</h2>
