@@ -39,22 +39,22 @@
                     <section>
                         <h3>Contact:</h3>
                         <p>
-                            Name: <?php echo $objMainContact->title; ?><br>
+                            <a href="<?php echo $objMainContact->permalink; ?>"><?php echo $objMainContact->title; ?></a> <br>
 
                             <?php if('' != $objMainContact->title1): ?>
-                                Title: <?php echo $objMainContact->title1; ?><br>
+                                <?php echo $objMainContact->title1; ?><br>
                             <?php endif; ?>
 
                             <?php if('' != $objMainContact->address1): ?>
-                                Address: <?php echo $objMainContact->address1; ?><br>
+                                <?php echo $objMainContact->address1; ?><br>
                             <?php endif; ?>
 
                             <?php if('' != $objMainContact->email): ?>
-                                Email: <a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a><br>
+                                <a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a><br>
                             <?php endif; ?>
 
                             <?php if('' != $objMainContact->phone): ?>
-                                Phone: <?php echo $objMainContact->phone;?>
+                                <?php echo $objMainContact->phone;?>
                             <?php endif; ?>
 
                         </p>
@@ -72,7 +72,7 @@
                                 <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
                             <?php endforeach;?>
                         </ul>
-                        <p><a href="<?php echo $strPublicationArchiveURL; ?>" title="Link to all Publications">All Publications</a> </p>
+                        <p><a href="<?php echo $strPublicationArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Publications">All <?php echo $objMainPost->title; ?> Publications</a> </p>
                     </section>
                 <?php endif; ?>
 
@@ -84,7 +84,7 @@
                                 <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
                             <?php endforeach;?>
                         </ul>
-                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all Projects">All Projects</a> </p>
+                        <p><a href="<?php echo $strProjectArchiveURL; ?>" title="Link to all <?php echo $objMainPost->title; ?> Projects">All <?php echo $objMainPost->title; ?> Projects</a> </p>
                     </section>
                 <?php endif; ?>
 </div>
@@ -101,4 +101,4 @@
                     </ul>
                 </section>
                 <?php endif;?>
-</span>
+</div>
