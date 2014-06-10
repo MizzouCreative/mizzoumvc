@@ -34,6 +34,8 @@ $aryOptions = array(
 
 $aryData['aryPublicationsGroup'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
 
+_mizzou_log(get_terms('policy_area'),'our list of terms from policy area');
+
 /*
 echo '<xmp>',var_export($wp_query,true),'</xmp>',PHP_EOL,PHP_EOL;*/
 
