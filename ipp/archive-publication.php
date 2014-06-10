@@ -32,14 +32,11 @@ $aryOptions = array(
     'meta_prefix'   => 'publication_'
 );
 
-$aryTermOptions = array(
-    'orderby'=>'id',
 
-);
 $aryData['aryPublicationsGroup'] = $objWpBase->convertPosts($wp_query->posts,$aryOptions);
 
 
-$aryPolicyTaxTerms = get_terms('policy_area',$aryTermOptions);
+$aryPolicyTaxTerms = get_terms('policy_area');
 
 /**
  * @todo This needs to be moved into a taxonomy model
