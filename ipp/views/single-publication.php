@@ -17,10 +17,6 @@
 <p><a href="<?php echo $objMainPost->link; ?>">View this publication at <?php echo $objMainPost->link; ?></a></p>
 <?php endif; ?>
 
-<?php if($strMorePublicationsURL != '') : ?>
-<p>More publications from </p>
-<?php endif; ?>
-<!--
-objMainPost
-<?php var_export($objMainPost); ?>
--->
+<?php if($strMorePublications != '') : ?>
+<p>More publications from <?php echo $strMorePublications; ?></p>
+<?php endif;

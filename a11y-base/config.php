@@ -24,10 +24,10 @@
  */
 define('GSA_SEARCH_PARAMS',  serialize(array(
     'site'            => 'default_collection',
-    'proxystylesheet' => 'wc_standard',
+    'proxystylesheet' => 'wc_basic',
     'client'          => 'wc_standard',
     'output'          => 'xml_no_dtd',
-    'sitesearch'      => 'truman.missouri.edu'
+    'sitesearch'      => 'ipp.missouri.edu'
 )));
 
 /**

@@ -15,7 +15,7 @@
     $arySearchParams = unserialize(GSA_SEARCH_PARAMS);
 ?>
 
-<div class="search-container clearfix">
+<div class="search-container clearfix"<?php if(is_page('search')) echo ' style="float:none; margin-top:0px; "'; ?>>
 	
 	<form id="search-form" action="/search/" method="get" role="search">
 	
