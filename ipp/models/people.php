@@ -154,7 +154,14 @@ class People extends WpBase
 
     public function retrievePolicyScholars()
     {
-        $aryOptions = array_merge($this->aryDefaults,$this->aryPRSDefaults);
+        $aryArgs = array(
+            'order_by'          =>'meta_value',
+            'order_direction'   => 'ASC',
+            'passthru'=>array(
+                'meta_key'=>$this->strPostPrefix.'lastName'
+            )
+        );
+        $aryOptions = array_merge($this->aryDefaults,$aryArgs,$this->aryPRSDefaults);
         return $this->retrieveContent($aryOptions);
     }
 
@@ -164,7 +171,14 @@ class People extends WpBase
      */
     public function retrieveGRAs()
     {
-        $aryOptions = array_merge($this->aryDefaults,$this->aryGRADefaults);
+        $aryArgs = array(
+            'order_by'          =>'meta_value',
+            'order_direction'   => 'ASC',
+            'passthru'=>array(
+                'meta_key'=>$this->strPostPrefix.'lastName'
+            )
+        );
+        $aryOptions = array_merge($this->aryDefaults,$aryArgs,$this->aryGRADefaults);
         return $this->retrieveContent($aryOptions);
     }
 
