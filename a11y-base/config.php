@@ -27,7 +27,7 @@ define('GSA_SEARCH_PARAMS',  serialize(array(
     'proxystylesheet' => 'wc_standard',
     'client'          => 'wc_standard',
     'output'          => 'xml_no_dtd',
-    'sitesearch'      => 'truman.missouri.edu'
+    'sitesearch'      => 'ipp.missouri.edu'
 )));
 
 /**
