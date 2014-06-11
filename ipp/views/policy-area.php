@@ -29,7 +29,7 @@
  * @copyright 2014 Curators of the University of Missouri
  */
 ?>
-<div class="span12 alpha">
+<div class="span12 alpha clearfix">
 
     <div class="span8 alpha">
 
@@ -37,6 +37,7 @@
                     <?php echo $objMainPost->content; ?>
                 </section>
     </div>
+    
     <div class="span3 left-offset1 omega">
                     
                     <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
@@ -67,7 +68,8 @@
     </div><!-- end span3 -->
 </div> <!-- end span12 -->
 
-<div class="span12 alpha">
+
+<div class="span12 alpha clearfix">
     <div class="span4 alpha">
                     <?php if (count($aryRelatedProjects) > 0) : ?>
                         <section>
