@@ -50,7 +50,7 @@ global $objPerson;
              * @todo change width height, and/or alter settings in IPP
              */
             ?>
-            <img src="<?php echo $objPerson->image->src_medium; ?>" alt="<?php echo $objPerson->image->alt; ?>" class="attachment-medium wp-post-image" width="200" height="300">
+            <img src="<?php echo $objPerson->image->src_medium; ?>" alt="<?php echo $objPerson->image->alt; ?>" class="attachment-medium wp-post-image">
         </a>
     </section>
 </div>
