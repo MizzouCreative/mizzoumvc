@@ -291,7 +291,7 @@ class MizzouPost extends PostBase
     private function _processExcerpt()
     {
         if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
-            $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryData['excerpt_length']);
+            $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryOptions['excerpt_length']);
         }
     }
 } 
