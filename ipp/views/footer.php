@@ -9,6 +9,7 @@
  *  - $strParentThemeURL - Parent Theme's root URL
  *  - $strChildThemeURL - Child Theme's root URL
  *  - $strModifiedDate - last modified date of either the page/post/CPT or the last update made to the site in general
+ *  - $intCopyrightYear - year to be used for copyright purposes
  *  - $strWpFooterContents - contents as returned by wp_footer()
  *
  * @package WordPress
@@ -103,7 +104,7 @@
     <div class="clear"></div>
 
     <div class="legal span12">
-        Copyright &#169; <time datetime="<?php echo date('Y'); ?>"><?php echo date('Y'); ?></time> &#8212; Curators of
+        Copyright &#169; <time datetime="<?php echo $intCopyrightYear; ?>"><?php echo $intCopyrightYear; ?></time> &#8212; Curators of
         the University of Missouri. All rights reserved. <a href="http://www.missouri.edu/dmca/">DMCA</a> and
         <a href="http://missouri.edu/copyright/">other copyright information</a>. An
         <a href="http://missouri.edu/eeo-aa/">equal opportunity/affirmative action</a> institution. Published by
@@ -118,7 +119,6 @@
 </div> <!--   #footer  container -->
 
 </div> <!-- footer-wrapper -->
-
 
 <?php echo $strWpFooterContents; ?>
 
