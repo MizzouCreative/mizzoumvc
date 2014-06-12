@@ -149,6 +149,7 @@ class WpBase
      */
     public function convertPosts($aryPosts,$aryOptions = array())
     {
+        _mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
 
         $aryReturn = array();
@@ -156,9 +157,14 @@ class WpBase
         /**
          * We need a new array of options to give to the MizzouPost object that contains include_meta, and include_image
          * which are available
+         * @todo the possible options for MizzouPost is growing, so how do we allow those options to expand without
+         * having to manually match them here?
          */
         $aryMizzouPostOptions = array();
         $aryMizzouPostOptions['include_image'] = $aryOptions['include_image'];
+        if(isset($aryOptions['excerpt_length'])){
+            $aryMizzouPostOptions['excerpt_length'] = $aryOptions['excerpt_length'];
+        }
 
         if($aryOptions['include_meta']){
             $aryMizzouPostOptions['include_meta'] = array(
