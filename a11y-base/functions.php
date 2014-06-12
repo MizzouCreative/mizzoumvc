@@ -16,6 +16,7 @@
 
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'config.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'MizzouPost.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'A11yPageWalker.php';
 
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'settings.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'post-types.php';
@@ -99,7 +100,10 @@ function mizzou_gather_404_search_terms($aryIgnoreWords=null){
             '-',
             '.php',
             '.html',
-            '.aspx'
+            '.aspx',
+            '.htm',
+            '.cfm',
+            '.asp',
      );
     
     if(!is_null($aryIgnoreWords) && is_array($aryIgnoreWords)){
@@ -184,17 +188,13 @@ function mizzou_no_top_float( $args, $post_id ) {
 
 
 /**
- * Change the opening ul to an ol for a11y for wp_list_pages (learned from NewsA11y)
- * @todo please complete documentation
+ * Solely here for backwards compatibility and to catch instances when it is still being used
  */
-class a11y_walker extends Walker_Page {
-    function start_lvl(&$output, $depth) {
-        $indent = str_repeat("\t", $depth);
-        $output .= "\n$indent<ol class='children'>\n";
-    }
-    function end_lvl(&$output, $depth) {
-        $indent = str_repeat("\t", $depth);
-        $output .= "$indent</ol>\n";
+class a11y_walker extends A11yPageWalker {
+    public function __construct()
+    {
+        _mizzou_log(self,'old a11y_walker being called. see backtrace',true);
+        parent::__construct();
     }
 }
 
