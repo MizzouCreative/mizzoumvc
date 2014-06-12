@@ -19,8 +19,15 @@
  * @todo move function calls out of this view
  */
 ?>
-<div class="flex span<?php echo $intSpanWidth; ?>">
-<?php echo $strBreadCrumbs; ?>
+<?php if($boolIncludeSidebar) : ?>
+<div class="flex span7">
+<?php else: ?>
+    <div class="span12">
+<?php endif; ?>
+    <?php echo $strBreadCrumbs; ?>
+<?php if(!$boolIncludeSidebar) : ?>
+    </div> <!-- end span12 -->
+<?php endif; ?>
     <main id="main" role="main">
         <div id="content">
             <article role="article">
@@ -38,4 +45,6 @@
             comments_template();
         }
     ?>
+<?php if($boolIncludeSidebar) : ?>
 </div> <!-- end flex span7 -->
+<?php endif; ?>
