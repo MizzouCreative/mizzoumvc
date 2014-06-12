@@ -58,7 +58,7 @@
             <a href="http://missouri.edu/" title="University of Missouri home">
                 <span class="shield">
                     <svg width="86px" height="50px">
-                        <image xlink:href="<?php echo $strParentThemeURL; ?>/images/mu-mark.svg" alt="MU Logo" src="<?php echo $strParentThemeURL; ?>/images/mu-mark.png" width="86px" height="50px"/>
+                        <image xlink:href="<?php echo $strChildThemeURL; ?>/images/mu-mark.svg" alt="MU Logo" src="<?php echo $strChildThemeURL; ?>/images/mu-mark.png" width="86px" height="50px"/>
                     </svg>
                 </span>
                 <span class="text">
