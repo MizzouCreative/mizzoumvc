@@ -222,12 +222,19 @@ function edit_tag_link_new_window($content) {
 /**
  * Last update of anything on the site
  * @todo documentation
+ * @param boolean $boolReturn, default is false
  * @global type $wpdb
  */
-function site_modified_date() {
+function site_modified_date($boolReturn=false) {
 	global $wpdb;
 	$last_site_update =  $wpdb->get_var( "SELECT post_modified FROM $wpdb->posts WHERE post_status = 'publish' ORDER BY post_modified DESC LIMIT 1" );
-	echo date('M j, Y', strtotime($last_site_update));
+	$strLastUpdate = date('M j, Y', strtotime($last_site_update));
+
+    if($boolReturn){
+        return $strLastUpdate;
+    } else {
+        echo $strLastUpdate;
+    }
 }
 
 /**
