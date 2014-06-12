@@ -13,6 +13,6 @@ global $wp_query;
 
 $aryData = array();
 $objWpBase = new WpBase('post_');
-$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
+$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts,array('excerpt_length'=>50));
 
 mizzouOutPutView('blog',$aryData);
