@@ -154,6 +154,37 @@ class WpBase
 
         $aryReturn = array();
 
+        foreach($aryPosts as $objPost){
+            $objMizzouPost = $this->convertPost($objPost,$aryOptions);
+
+            if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key'])){
+                if(isset($objMizzouPost->{$aryOptions['resort']['key']})){
+                    $strNewKey =  $objMizzouPost->{$aryOptions['resort']['key']};
+                } else {
+                    $strNewKey = 'Other';
+                }
+
+                if(!isset($aryReturn[$strNewKey])){
+                    $aryReturn[$strNewKey] = array();
+
+                }
+
+                $aryReturn[$strNewKey][] = $objMizzouPost;
+
+            } else {
+                $aryReturn[] = $objMizzouPost;
+            }
+
+        }
+
+        return $aryReturn;
+    }
+
+    public function convertPost($objPost,$aryOptions = array())
+    {
+        _mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
+        $aryOptions = array_merge($this->aryDefaults,$aryOptions);
+
         /**
          * We need a new array of options to give to the MizzouPost object that contains include_meta, and include_image
          * which are available
@@ -182,94 +213,65 @@ class WpBase
             $aryMizzouPostOptions = array_merge($aryMizzouPostOptions,array_intersect_key($aryOptions,array_flip(array('format_date','date_format'))));
         }
 
-        foreach($aryPosts as $objPost){
-            $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
+        $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
 
-            /**
-             * Do we need to include an attachment URL?
-             */
-            if(isset($aryOptions['include_attachment_link'])){
-                if(isset($aryOptions['include_attachment_link']['pullfrom'])
-                    && isset($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']})
-                    && is_numeric($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']})
-                    && isset($aryOptions['include_attachment_link']['newkey'])
-                    && !isset($objMizzouPost->{$aryOptions['include_attachment_link']['newkey']})
-                ){
-                    $objMizzouPost->add_data($aryOptions['include_attachment_link']['newkey'],wp_get_attachment_url($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']}));
-                } else {
-                    /**
-                     * @todo something happened. what do we do?
-                     */
-                }
-            }
-
-            /**
-             * Do we need to include a subobject?
-             *
-             * @todo Do/will we ever need the ability to include related objects outside this method?
-             * @todo I dont like relying on get_post here...
-             * @todo we are also having to assume that the pullfrom value is a member in the meta_data object, and not
-             * contained somewhere else.
-             */
-            if(isset($aryOptions['include_object']) && is_array($aryOptions['include_object'])){
-                if(isset($aryOptions['include_object']['newkey'])
-                    && isset($aryOptions['include_object']['pullfrom'])
-                    && isset($objMizzouPost->{$aryOptions['include_object']['pullfrom']})
-                    && is_numeric($objMizzouPost->{$aryOptions['include_object']['pullfrom']})
-                    && !isset($objMizzouPost->{$aryOptions['include_object']['newkey']})
+        /**
+         * Do we need to include an attachment URL?
+         */
+        if(isset($aryOptions['include_attachment_link'])){
+            if(isset($aryOptions['include_attachment_link']['pullfrom'])
+                && isset($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']})
+                && is_numeric($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']})
+                && isset($aryOptions['include_attachment_link']['newkey'])
+                && !isset($objMizzouPost->{$aryOptions['include_attachment_link']['newkey']})
             ){
-                    $objNew = get_post($objMizzouPost->{$aryOptions['include_object']['pullfrom']});
-                    if(!is_null($objNew)){
-                        $arySubOptions = array();
-                        if(isset($aryOptions['include_object']['include_meta']) && $aryOptions['include_object']['include_meta']){
-                            $arySubOptions['include_meta'] = true;
-                        }
-
-                        //yes, we're calling ourself to help ourself convert ourself
-                        $aryNewObjects = $this->convertPosts(array($objNew),$arySubOptions);
-
-                        if(count($aryNewObjects) == 1){
-                            $objMizzouPost->{$aryOptions['include_object']['newkey']} = $aryNewObjects[0];
-                        } else {
-                            /**
-                             * @todo technically this should never happen. throw an exception?
-                             */
-                        }
-                    } else {
-                        /**
-                         * @todo something went wrong trying to get the post. What do we do here?
-                         */
-                        _mizzou_log($aryOptions,'we were unable to get a post. Here are the options we were working with.',false, array('func'=>__FUNCTION__));
-                    }
-                } else {
-                    /**
-                     * @todo Something went wrong while
-                     */
-                    _mizzou_log($aryOptions,'well something went wrong in our checks. Here are the options we were working with',false,array('func'=>__FUNCTION__));
-                }
-            }
-
-            if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key'])){
-                if(isset($objMizzouPost->{$aryOptions['resort']['key']})){
-                    $strNewKey =  $objMizzouPost->{$aryOptions['resort']['key']};
-                } else {
-                    $strNewKey = 'Other';
-                }
-
-                if(!isset($aryReturn[$strNewKey])){
-                    $aryReturn[$strNewKey] = array();
-
-                }
-
-                $aryReturn[$strNewKey][] = $objMizzouPost;
-
+                $objMizzouPost->add_data($aryOptions['include_attachment_link']['newkey'],wp_get_attachment_url($objMizzouPost->{$aryOptions['include_attachment_link']['pullfrom']}));
             } else {
-                $aryReturn[] = $objMizzouPost;
+                /**
+                 * @todo something happened. what do we do?
+                 */
             }
-
         }
 
-        return $aryReturn;
+        /**
+         * Do we need to include a subobject?
+         *
+         * @todo Do/will we ever need the ability to include related objects outside this method?
+         * @todo I dont like relying on get_post here...
+         * @todo we are also having to assume that the pullfrom value is a member in the meta_data object, and not
+         * contained somewhere else.
+         */
+        if(isset($aryOptions['include_object']) && is_array($aryOptions['include_object'])){
+            if(isset($aryOptions['include_object']['newkey'])
+                && isset($aryOptions['include_object']['pullfrom'])
+                && isset($objMizzouPost->{$aryOptions['include_object']['pullfrom']})
+                && is_numeric($objMizzouPost->{$aryOptions['include_object']['pullfrom']})
+                && !isset($objMizzouPost->{$aryOptions['include_object']['newkey']})
+            ){
+                $objNew = get_post($objMizzouPost->{$aryOptions['include_object']['pullfrom']});
+                if(!is_null($objNew)){
+                    $arySubOptions = array();
+                    if(isset($aryOptions['include_object']['include_meta']) && $aryOptions['include_object']['include_meta']){
+                        $arySubOptions['include_meta'] = true;
+                    }
+
+                    //yes, we're calling ourself to help ourself convert ourself
+                    $objMizzouPost->{$aryOptions['include_object']['newkey']} = $this->convertPost($objNew,$arySubOptions);
+                } else {
+                    /**
+                     * @todo something went wrong trying to get the post. What do we do here?
+                     */
+                    _mizzou_log($aryOptions,'we were unable to get a post. Here are the options we were working with.',false, array('func'=>__FUNCTION__));
+                }
+            } else {
+                /**
+                 * @todo Something went wrong while
+                 */
+                _mizzou_log($aryOptions,'well something went wrong in our checks. Here are the options we were working with',false,array('func'=>__FUNCTION__));
+            }
+        }
+
+        return $objMizzouPost;
     }
 
     public function setPostPrefix($strPostPrefix=null)
