@@ -32,6 +32,7 @@ class MizzouPost extends PostBase
         'suppress_empty'=> false,
         'include_meta'  => false,
         'include_image' => false,
+        'excerpt_length'=> 55, //same as wordpress' default
     );
 
     /**
@@ -290,7 +291,7 @@ class MizzouPost extends PostBase
     private function _processExcerpt()
     {
         if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
-            $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw']);
+            $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryData['excerpt_length']);
         }
     }
 } 
