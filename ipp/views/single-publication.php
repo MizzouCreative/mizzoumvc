@@ -6,7 +6,7 @@
  * Time: 3:03 PM
  */
 ?>
-<div class="span8 alpha">
+<div class="span8">
 <?php if($objMainPost->authors != '') : ?>
 <p class="authors"><?php echo $objMainPost->authors; ?></p>
 <?php endif; ?>

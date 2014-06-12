@@ -29,16 +29,15 @@
  * @copyright 2014 Curators of the University of Missouri
  */
 ?>
-<div class="span12 alpha clearfix">
 
-    <div class="span8 alpha">
+    <div class="span8">
 
                 <section aria-label="content" role="region">
                     <?php echo $objMainPost->content; ?>
                 </section>
     </div>
     
-    <div class="span3 left-offset1 omega">
+    <div class="span3 left-offset1 ">
                     
                     <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
                         <section>
@@ -66,11 +65,10 @@
                         </section>
                     <?php endif; ?>
     </div><!-- end span3 -->
-</div> <!-- end span12 -->
+    
+    <div class="clear"></div>
 
-
-<div class="span12 alpha clearfix">
-    <div class="span4 alpha">
+    <div class="span4">
                     <?php if (count($aryRelatedProjects) > 0) : ?>
                         <section>
                             <h3>Related Projects:</h3>
@@ -84,7 +82,7 @@
                     <?php endif; ?>
     </div><!-- end span4 -->
     
-    <div class="span4 omega">
+    <div class="span4">
                     <?php if (count($aryRelatedPublications) > 0) : ?>
                         <section>
                             <h3>Related Publications:</h3>
@@ -100,7 +98,7 @@
     </div> <!-- end span4 -->
 
 
-    <div class="span3 left-offset1 omega">
+    <div class="span3 left-offset1">
                 <?php if(isset($aryPolicyScholars) && count($aryPolicyScholars) > 0): ?>
                 <section>
                     <h3><?php echo $objMainPost->title; ?> Policy Research Scholars</h3>
@@ -112,4 +110,3 @@
                 </section>
                 <?php endif;?>
     </div> <!-- end span3 -->
-</div> <!-- end span12 -->
