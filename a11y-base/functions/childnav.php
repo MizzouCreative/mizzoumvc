@@ -2,7 +2,7 @@
 	// child page navigation
 	global $post;
 	
-	$walker = new a11y_walker();
+	$walker = new A11yPageWalker();
 
 	$ancestors = get_ancestors( $post->ID, 'page' );
 	$parent_id = $post->post_parent;

@@ -28,7 +28,7 @@
 			<h3>Pages in this section</h3>
 			<nav role="navigation">
 				<?
-				$walker = new a11y_walker();
+				$walker = new A11yPageWalker();
 				$child_args = array(
 					'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
 					'post_type'    	=> 'page',
