@@ -18,14 +18,13 @@
  * @uses comments_template()
  * @todo move function calls out of this view
  */
+
+$strPreBreadcrumbDivContents = ($boolIncludeSidebar) ? 'flex span7' : 'span12';
 ?>
-<?php if($boolIncludeSidebar) : ?>
-<div class="flex span7">
-<?php else: ?>
-    <div class="span12">
-<?php endif; ?>
+
+<div class="<?php echo $strPreBreadcrumbDivContents; ?>">
     <?php echo $strBreadCrumbs; ?>
-<?php if(!$boolIncludeSidebar) : ?>
+<?php if(!$boolIncludeSidebar) : // we need to end the div if we didnt have a sidebar ?>
     </div> <!-- end span12 -->
 <?php endif; ?>
     <main id="main" role="main">
@@ -45,6 +44,6 @@
             comments_template();
         }
     ?>
-<?php if($boolIncludeSidebar) : ?>
+<?php if($boolIncludeSidebar) : // if we did have a sidebar, the breadcrumbs are contained within the same div as the main content ?>
 </div> <!-- end flex span7 -->
 <?php endif; ?>
