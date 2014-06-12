@@ -31,19 +31,19 @@
 	
 					<nav role="navigation">
 						<?
-						$walker = new a11y_walker();
-						$child_args = array(
+						$objWalker = new A11yPageWalker();
+						$aryChildArgs = array(
 							'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
 							'post_type'    	=> 'page',
 							'post_status'  	=> 'publish',
 							'sort_column'  	=> 'menu_order, post_title',
 							'title_li'		=> '', 
-							'walker' 		=> $walker,
+							'walker' 		=> $objWalker,
 						);?>
 							
 						<ol class="mobilenav menu">
 							<li class="home"><a href=" <?php bloginfo( 'url' ); ?> "><?php bloginfo( 'name' ); ?></a></li>
-							<?php  $children = wp_list_pages($child_args); // use if alternate URLs aren't needed ?>
+							<?php  $children = wp_list_pages($aryChildArgs); // use if alternate URLs aren't needed ?>
 						</ol>
 					
 					</nav>
