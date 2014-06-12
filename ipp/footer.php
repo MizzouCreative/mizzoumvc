@@ -11,37 +11,18 @@
  * @author Paul Gilzow, Charlie Tripplet, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  *
- * @todo most of the stuff in here should be moved into a SiteModel object
+ *
  */
 
-$aryPageListArgs = array(
-    'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
-    /**
-     * These arent needed as they are the defaults for the function call
-     *
-    'post_type'    	=> 'page',
-    'post_status'  	=> 'publish',
-    'sort_column'  	=> 'menu_order, post_title',
-     */
-    'title_li'		=> '',
-    'exclude'      	=> 2129, //why are excluding this item?
-    'walker' 		=> new A11yPageWalker(),
-    'echo'          => false,
-);
-$strPageList = wp_list_pages($aryPageListArgs);
+$objSite = new Site();
 
-$strSiteURL = home_url();
-$strSiteName = get_bloginfo('name');
-
-/**
- * @todo once we convert this fully, we'll have access to objMainPost and wont need to call get_the_modified_time
- */
-$strModifiedDate = (is_single() || is_page()) ? get_the_modified_time('M j, Y') : site_modified_date(true);
-
-$strParentThemeURL = get_template_directory_uri();
-$strChildThemeURL = get_stylesheet_directory_uri();
-
-$intCopyrightYear = date('Y');
+$strSiteName = $objSite->Name;
+$strSiteURL = $objSite->URL;
+$strParentThemeURL = $objSite->ParentThemeURL;
+$strChildThemeURL = $objSite->ChildThemeURL;
+$strModifiedDate = $objSite->getLastModifiedDate();
+$strPageList = $objSite->getPageList();
+$intCopyrightYear = $objSite->CopyrightYear;
 
 ob_start();
 wp_footer();
