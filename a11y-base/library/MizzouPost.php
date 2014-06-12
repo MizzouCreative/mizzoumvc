@@ -51,9 +51,10 @@ class MizzouPost extends PostBase
 
     public function __construct($mxdPost, $aryOptions = array())
     {
+        _mizzou_log($aryOptions,'aryOptions as passed into MizzouPost');
         parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
-
+        _mizzou_log($this->aryOptions,'our options after merging in MizzouPost');
         $this->_setMembers($this->objOriginalPost);
 
         if(FALSE !== $this->aryOptions['include_meta']){
@@ -290,6 +291,7 @@ class MizzouPost extends PostBase
 
     private function _processExcerpt()
     {
+        _mizzou_log($this->aryOptions['excerpt_length'],'excerpt length in the options',false,array('func'=>__FUNCTION__));
         if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
             $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryOptions['excerpt_length']);
         }
