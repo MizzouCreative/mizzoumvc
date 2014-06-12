@@ -41,6 +41,8 @@ $strModifiedDate = (is_single() || is_page()) ? get_the_modified_time('M j, Y') 
 $strParentThemeURL = get_template_directory_uri();
 $strChildThemeURL = get_stylesheet_directory_uri();
 
+$intCopyrightYear = date('Y');
+
 ob_start();
 wp_footer();
 $strWpFooterContents = ob_get_contents();
