@@ -19,7 +19,7 @@
  * @todo move function calls out of this view
  */
 
-$strPreBreadcrumbDivContents = ($boolIncludeSidebar) ? 'flex span7' : 'span12';
+$strPreBreadcrumbDivContents = ($boolIncludeSidebar) ? 'flex span8' : 'span12';
 ?>
 
 <div class="<?php echo $strPreBreadcrumbDivContents; ?>">
