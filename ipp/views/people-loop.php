@@ -33,12 +33,17 @@
 <?php foreach($aryStaff as $objStaff): ?>
     <?php $strFirstColClass = ($intColPlace == 0) ? 'alpha' : '';  ?>
     <div class="column-archive">
-        <div class="span1 one-third portrait<?php echo ' ',$strFirstColClass; ?>">
-            <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>">
-                <img src="<?php echo $objStaff->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->image->alt; ?>">
-            </a>
-        </div>
-        <div class="span3 two-thirds omega">
+        <?php if($objPerson->image != '') { ?>
+            <div class="span1 one-third portrait<?php echo ' ',$strFirstColClass; ?>">
+                <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>">
+                    <img src="<?php echo $objStaff->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->image->alt; ?>">
+                </a>
+            </div>
+            <div class="span3 two-thirds omega">
+        <?php } else { ?>
+            <div>
+        <?php } ?>
+      
             <ol class="contact nobullet">
                 <li class="name">
                     <a href="<?php echo $objStaff->permalink; ?>" rel="bookmark" title="<?php echo $objStaff->title; ?>"><?php echo $objStaff->title; ?></a>

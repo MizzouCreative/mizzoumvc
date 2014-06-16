@@ -36,6 +36,8 @@ $intLastColumn = $intDesiredColumns - 1;
                 <div class="post-item">
                     <a class="clearfix post-link" href="<?php echo $objPost->permalink; ?>">
                         <h3 class="post-title"><?php echo $objPost->title; ?></h3>
+                        <img src="<?php echo $objStaff->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->image->alt; ?>">
+
                         <p class="post-excerpt"><?php echo $objPost->excerpt; ?></p>
                     </a>
 
