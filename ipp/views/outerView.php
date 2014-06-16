@@ -19,6 +19,12 @@
  * @todo move function calls out of this view
  */
 
+/**
+ * Does the page contain a sidebar? If so, what class(es) should the content well contain? Otherwise, what class should
+ * it contain?
+ *
+ * @var  $strPreBreadcrumbDivContents
+ */
 $strPreBreadcrumbDivContents = ($boolIncludeSidebar) ? 'flex span7' : 'span12';
 ?>
 
