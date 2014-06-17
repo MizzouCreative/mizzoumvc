@@ -22,7 +22,7 @@
  * @uses mizzouIncludeView()
  */
 ?>
-<div class="span8 alpha">
+<div class="span8">
     <?php
     /**
      * 20140610 PFG: hardcoded temporarily for today's meeting.
