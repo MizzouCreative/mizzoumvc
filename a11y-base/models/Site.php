@@ -29,10 +29,10 @@ class Site extends Base {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
         $this->add_data('CopyrightYear',date('Y'));
-        $this->add_data('Name',get_bloginfo('name'));
-        $this->add_data('URL',home_url());
-        $this->add_data('ParentThemeURL',get_template_directory_uri());
-        $this->add_data('ChildThemeURL',get_stylesheet_directory_uri());
+        $this->add_data('Name',$this->_getSiteName());
+        $this->add_data('URL',$this->_getSiteHomeURL());
+        $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
+        $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
     }
 
     public function  getLastModifiedDate($strDateFormat=null)
@@ -82,5 +82,25 @@ class Site extends Base {
         }
 
         return $this->PageList;
+    }
+
+    private function _getSiteName()
+    {
+        return get_bloginfo('name');
+    }
+
+    private function _getSiteHomeURL()
+    {
+        return home_url();
+    }
+
+    private function _getParentThemeURL()
+    {
+        return get_template_directory_uri();
+    }
+
+    private function _getChildThemeURL()
+    {
+        return get_stylesheet_directory_uri();
     }
 } 
