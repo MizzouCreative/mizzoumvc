@@ -103,4 +103,19 @@ class Site extends Base {
     {
         return get_stylesheet_directory_uri();
     }
+
+    protected function _setHeaderTitle($strPageTitle=null)
+    {
+        if(is_null($strPageTitle)){
+            $strPageTitle = wp_title('',false);
+        } else {
+            $strPageTitle = strip_tags($strPageTitle);
+        }
+    }
+
+    protected function _setSiteOptions()
+    {
+        $aryOptions = wp_load_alloptions();
+        _mizzou_log($aryOptions,'should be a list of all wp site options');
+    }
 } 
