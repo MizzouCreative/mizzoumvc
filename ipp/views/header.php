@@ -8,10 +8,10 @@
  * Will need
  *  - objMainPost w/ custom meta data
  *  - strPageTitle
- *  - template location
+ *  - template location: in site model
  *  - site option for tracking code
- *  - blog url
- *  - blog name
+ *  - blog url: in site model
+ *  - blog name in site model
  *  - navigation menus: audience and primary
  *  - search form
  *  - contents of wp_head
