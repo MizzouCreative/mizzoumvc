@@ -33,7 +33,8 @@ class Site extends Base {
         $this->add_data('URL',$this->_getSiteHomeURL());
         $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
-        $this->_setSiteOptions();
+        $this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
+        $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
     }
 
     public function  getLastModifiedDate($strDateFormat=null)
@@ -87,12 +88,14 @@ class Site extends Base {
 
     private function _getSiteName()
     {
-        return get_bloginfo('name');
+        //return get_bloginfo('name');
+        return $this->_getSiteOption('name');
     }
 
     private function _getSiteHomeURL()
     {
-        return home_url();
+        //return home_url();
+        return $this->_getSiteOption('home');
     }
 
     private function _getParentThemeURL()
@@ -102,7 +105,15 @@ class Site extends Base {
 
     private function _getChildThemeURL()
     {
+        /**
+         * get_stylesheet_directory_uri will return the URL of the active theme or child theme
+         */
         return get_stylesheet_directory_uri();
+    }
+
+    private function _getActiveStylesheet()
+    {
+        return get_stylesheet_uri();
     }
 
     protected function _setHeaderTitle($strPageTitle=null)
@@ -114,9 +125,19 @@ class Site extends Base {
         }
     }
 
-    protected function _setSiteOptions()
+    protected function _getSiteOption($strOption)
     {
-        $aryOptions = wp_load_alloptions();
-        _mizzou_log($aryOptions,'should be a list of all wp site options');
+        /**
+         * Leaving this here for possible use, but retrieving and setting all options seems to be a bit of overkill
+         * $aryOptions = wp_load_alloptions();
+         */
+
+        return get_option($strOption);
+    }
+
+    protected function _getActiveThemeURL()
+    {
+
+        return ($this->ParentThemeURL == $this->ChildThemeURL) ? $this->ParentThemeURL : $this->ChildThemeURL;
     }
 } 
