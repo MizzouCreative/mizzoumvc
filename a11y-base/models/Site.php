@@ -33,6 +33,7 @@ class Site extends Base {
         $this->add_data('URL',$this->_getSiteHomeURL());
         $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
+        $this->_setSiteOptions();
     }
 
     public function  getLastModifiedDate($strDateFormat=null)
