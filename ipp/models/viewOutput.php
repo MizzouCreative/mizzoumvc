@@ -37,6 +37,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $objSite = new Site();
     }
 
+    _mizzou_log($objSite,'our site object');
     /**
      * If the page title has not been overridden, get the default title and add our prepend
      */
