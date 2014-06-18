@@ -39,9 +39,19 @@
         <?php endforeach; ?>
     </ul>
     <section aria-label="content" role="region">
-        <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
-            <h2><?php echo $strPublicationType; ?>s</h2>
-            <?php require 'publication-loop.php'; ?>
-        <?php endforeach; ?>
+        <?php if(count($aryPublicationsGroup) > 0) : ?>
+            <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
+                <h2><?php echo $strPublicationType; ?>s</h2>
+                <?php require 'publication-loop.php'; ?>
+            <?php endforeach; ?>
+        <?php else : ?>
+            <?php
+            /**
+             * what should we say here?
+             *
+             */
+            ?>
+            <p>There are no publications in this policy area.</p>
+        <?php endif; ?>
     </section>
 </div>
