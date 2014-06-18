@@ -149,7 +149,7 @@ class WpBase
      */
     public function convertPosts($aryPosts,$aryOptions = array())
     {
-        _mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
+        //_mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
 
         $aryReturn = array();
@@ -182,7 +182,7 @@ class WpBase
 
     public function convertPost($objPost,$aryOptions = array())
     {
-        _mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
+        //_mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
 
         /**
