@@ -146,4 +146,6 @@ function appendTitle($strPageTitle)
         $objQueried = get_queried_object();
         $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
     }
+
+    return $strPageTitle;
 }
