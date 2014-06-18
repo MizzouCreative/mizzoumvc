@@ -37,6 +37,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $strPageTitle = wp_title('',false);
     }
 
+    $strPageTitle = appendTitle($strPageTitle);
+
     global $wp_query;
     _mizzou_log($wp_query,'wp_query');
 
@@ -138,7 +140,10 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
 
 }
 
-function appendTitle()
+function appendTitle($strPageTitle)
 {
-
+    if(is_archive()){
+        $objQueried = get_queried_object();
+        $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
+    }
 }
