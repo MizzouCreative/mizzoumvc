@@ -35,9 +35,11 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     if(!isset($strPageTitle) || $strPageTitle == ''){
         $strPageTitle = wp_title('',false);
+    } else {
+        $strPageTitle = appendTitle($strPageTitle);
     }
 
-    $strPageTitle = appendTitle($strPageTitle);
+
 
     global $wp_query;
     _mizzou_log($wp_query,'wp_query');
@@ -144,7 +146,9 @@ function appendTitle($strPageTitle)
 {
     if(is_archive()){
         $objQueried = get_queried_object();
-        $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
+        if(is_object($objQueried)){
+            $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
+        }
     }
 
     return $strPageTitle;
