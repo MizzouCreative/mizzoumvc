@@ -116,15 +116,6 @@ class Site extends Base {
         return get_stylesheet_uri();
     }
 
-    protected function _setHeaderTitle($strPageTitle=null)
-    {
-        if(is_null($strPageTitle)){
-            $strPageTitle = wp_title('',false);
-        } else {
-            $strPageTitle = strip_tags($strPageTitle);
-        }
-    }
-
     protected function _getSiteOption($strOption)
     {
         /**
