@@ -33,11 +33,12 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //convert all the data for the inner view into variables
     extract($aryData);
 
+    /**
+     * If the page title has not been overridden, get the default title and add our prepend
+     */
     if(!isset($strPageTitle) || $strPageTitle == ''){
-        $strPageTitle = wp_title('',false);
+        $strPageTitle = prependTitle(wp_title('',false));
     }
-
-    $strPageTitle = appendTitle($strPageTitle);
 
 
     global $wp_query;
@@ -141,7 +142,7 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
 
 }
 
-function appendTitle($strPageTitle)
+function prependTitle($strPageTitle)
 {
     if(is_archive()){
         global $wp_query;
