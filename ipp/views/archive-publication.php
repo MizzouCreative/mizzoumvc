@@ -26,18 +26,21 @@
     <?php
     /**
      * 20140610 PFG: hardcoded temporarily for today's meeting.
+     * 20140618 PFG: Spoke with genevieve, we dont want to show the policy area links if we are viewing publications
+     * by author
      */
-    $strByAuthor = ($intAuthorID != '') ? '&author_archive='.$intAuthorID : '';
     ?>
+    <?php if($intAuthorID == '') : ?>
     <ul>
         <?php foreach($aryPolicyAreas as $strPolicySlug => $strPolicyName) : ?>
         <li>
-            <a href="/publications/?policy_area=<?php echo $strPolicySlug,$strByAuthor; ?>">
+            <a href="/publications/?policy_area=<?php echo $strPolicySlug; ?>">
                 <?php echo $strPolicyName; ?>
             </a>
         </li>
         <?php endforeach; ?>
     </ul>
+    <?php endif;?>
     <section aria-label="content" role="region">
         <?php if(count($aryPublicationsGroup) > 0) : ?>
             <?php foreach($aryPublicationsGroup as $strPublicationType => $aryPublications) : ?>
