@@ -42,26 +42,38 @@
                     <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
                         <section>
                             <h3>Contact:</h3>
-                            <p>
-                                <a href="<?php echo $objMainContact->permalink; ?>"><?php echo $objMainContact->title; ?></a> <br>
-    
-                                <?php if('' != $objMainContact->title1): ?>
-                                    <?php echo $objMainContact->title1; ?><br>
-                                <?php endif; ?>
-    
-                                <?php if('' != $objMainContact->address1): ?>
-                                    <?php echo $objMainContact->address1; ?><br>
-                                <?php endif; ?>
-    
-                                <?php if('' != $objMainContact->email): ?>
-                                    <a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a><br>
-                                <?php endif; ?>
-    
-                                <?php if('' != $objMainContact->phone): ?>
-                                    <?php echo $objMainContact->phone;?>
-                                <?php endif; ?>
-    
-                            </p>
+                            <?php if($objMainContact->image != '') { ?>
+                                <div class="span1 alpha one-third portrait<?php echo ' ',$strFirstColClass; ?>">
+                                    <a href="<?php echo $objMainContact->permalink; ?>" rel="bookmark" title="<?php echo $objMainContact->title; ?>">
+                                        <img src="<?php echo $objMainContact->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objMainContact->image->alt; ?>">
+                                    </a>
+                                </div>
+                                <div class="span2 two-thirds omega">
+                            <?php } else { ?>
+                                <div class="span3 alpha">
+                            <?php } ?>
+                    
+                                <ol class="contact nobullet">
+                                    <li class="name"><a href="<?php echo $objMainContact->permalink; ?>"><?php echo $objMainContact->title; ?></a></li>
+        
+                                    <?php if('' != $objMainContact->title1): ?>
+                                        <li class="job-title"><?php echo $objMainContact->title1; ?></li>
+                                    <?php endif; ?>
+        
+                                    <?php if('' != $objMainContact->address1): ?>
+                                        <li class="address"><?php echo $objMainContact->address1; ?></li>
+                                    <?php endif; ?>
+        
+                                    <?php if('' != $objMainContact->email): ?>
+                                        <li class="email"><a href="mailto:<?php echo $objMainContact->email; ?>"><?php echo $objMainContact->email; ?></a></li>
+                                    <?php endif; ?>
+        
+                                    <?php if('' != $objMainContact->phone): ?>
+                                        <li class="phone"><?php echo $objMainContact->phone;?></li>
+                                    <?php endif; ?>
+        
+                                </ol>
+                            </div>
                         </section>
                     <?php endif; ?>
     </div><!-- end span3 -->
