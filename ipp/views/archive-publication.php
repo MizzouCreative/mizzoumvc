@@ -27,10 +27,15 @@
     /**
      * 20140610 PFG: hardcoded temporarily for today's meeting.
      */
+    $strByAuthor = ($intAuthorID != '') ? '&author_archive='.$intAuthorID : '';
     ?>
     <ul>
         <?php foreach($aryPolicyAreas as $strPolicySlug => $strPolicyName) : ?>
-        <li><a href="/publications/?policy_area=<?php echo $strPolicySlug; ?>"><?php echo $strPolicyName; ?></a></li>
+        <li>
+            <a href="/publications/?policy_area=<?php echo $strPolicySlug,$strByAuthor; ?>">
+                <?php echo $strPolicyName; ?>
+            </a>
+        </li>
         <?php endforeach; ?>
     </ul>
     <section aria-label="content" role="region">
