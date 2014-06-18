@@ -33,6 +33,10 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //convert all the data for the inner view into variables
     extract($aryData);
 
+    if(!isset($objSite) || !is_object($objSite)){
+        $objSite = new Site();
+    }
+
     /**
      * If the page title has not been overridden, get the default title and add our prepend
      */
