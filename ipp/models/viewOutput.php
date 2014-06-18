@@ -144,8 +144,9 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
 function appendTitle($strPageTitle)
 {
     if(is_archive()){
+        global $wp_query;
         $objQueried = get_queried_object();
-        if(is_object($objQueried)){
+        if(is_object($objQueried) && count($wp_query->meta_query->queries) > 0 ){
             $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
         }
     }
