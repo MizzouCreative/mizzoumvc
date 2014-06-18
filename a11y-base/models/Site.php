@@ -89,7 +89,7 @@ class Site extends Base {
     private function _getSiteName()
     {
         //return get_bloginfo('name');
-        return $this->_getSiteOption('name');
+        return $this->_getSiteOption('blogname');
     }
 
     private function _getSiteHomeURL()
