@@ -37,6 +37,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $strPageTitle = wp_title('',false);
     }
 
+    global $wp_query;
+    _mizzou_log($wp_query,'wp_query');
 
     $strEditPostLink = '';
     if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
@@ -104,4 +106,39 @@ function mizzouIncludeView($strViewName)
     } else {
         _mizzou_log($strFile,'this template file was requested but I couldnt find it');
     }
+}
+
+function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
+{
+    $aryTitle = array();
+
+    if(is_null($strPageTitle)){
+        $strPageTitle = wp_title('',false);
+    } else {
+        /**
+         * since we need this in the header, and its possible for the controller to manually set the page title, we
+         * need to make sure there isn't any html in the page title
+         */
+        $strPageTitle = strip_tags($strPageTitle);
+    }
+
+    $aryTitle[] = $strPageTitle;
+
+    if(is_archive() || is_single()){
+        //ok, we have a lot of different archives to deal with. let's separate out the single
+        if(is_single()){
+
+        } else {
+
+        }
+    } else {
+        //it's not an archive or a single. what do we have left? Just pages, right?
+    }
+
+
+}
+
+function appendTitle()
+{
+
 }
