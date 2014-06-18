@@ -49,7 +49,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //global $wp_query;
     //_mizzou_log($wp_query,'wp_query');
 
-    $strHeaderTitle = determineHeaderTitle($strPageTitle,$objSite->name);
+    $strHeaderTitle = determineHeaderTitle($strPageTitle,$objSite->Name);
     _mizzou_log($strHeaderTitle,'our header title as returned');
 
     $strEditPostLink = '';
