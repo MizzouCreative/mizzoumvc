@@ -41,8 +41,11 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     }
 
 
-    global $wp_query;
-    _mizzou_log($wp_query,'wp_query');
+    //global $wp_query;
+    //_mizzou_log($wp_query,'wp_query');
+
+    $strHeaderTitle = determineHeaderTitle($strPageTitle,$objSite->name);
+    _mizzou_log($strHeaderTitle,'our header title as returned');
 
     $strEditPostLink = '';
     if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
@@ -131,7 +134,9 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
     if(is_archive() || is_single()){
         //ok, we have a lot of different archives to deal with. let's separate out the single
         if(is_single()){
-
+            //we need to figure out what post type it is
+            global $wp_query;
+            _mizzou_log($wp_query,'trying to figure out proper CPT name for a single post',false,array('func'=>__FUNCTION__));
         } else {
 
         }
@@ -139,6 +144,17 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
         //it's not an archive or a single. what do we have left? Just pages, right?
     }
 
+    if($strSiteName != ''){
+        $aryTitle[] = $strSiteName;
+    }
+
+    $aryTitle[] = 'University of Missouri';
+
+    _mizzou_log(implode(' // ',$aryTitle),'the header title');
+    /**
+     * @todo make the glue a configurable option
+     */
+    return implode(' // ',$aryTitle);
 
 }
 
