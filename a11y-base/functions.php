@@ -302,6 +302,8 @@ if(!function_exists('_mizzou_log')){
       }
       
       if(!is_null($strPrependMessage)) $strMessage .= $strPrependMessage.PHP_EOL;
+
+      $strMessage .= 'The variable is a ' . gettype($mxdVariable);
       
       if( is_array( $mxdVariable ) || is_object( $mxdVariable ) ){
          $strMessage .= PHP_EOL . var_export($mxdVariable,true);
