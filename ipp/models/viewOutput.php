@@ -34,9 +34,10 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     extract($aryData);
 
     if(!isset($strPageTitle) || $strPageTitle == ''){
-        $strPageTitle = appendTitle(wp_title('',false));
+        $strPageTitle = wp_title('',false);
     }
 
+    $strPageTitle = appendTitle($strPageTitle);
 
 
     global $wp_query;
