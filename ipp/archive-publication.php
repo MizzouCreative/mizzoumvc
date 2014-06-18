@@ -26,7 +26,8 @@ if('' != $intAuthorID = get_query_var('author_archive')){
     $aryData['strPageTitle'] = 'Publications for ' . sprintf($strAuthorLinkPattern,$objAuthor->permalink,$objAuthor->title,$objAuthor->title);
 }
 
-$aryData['objMainPost'] = new MizzouPost($post);
+//why do we need objMainPost here?
+//$aryData['objMainPost'] = new MizzouPost($post);
 $aryOptions = array(
     'resort'        => array('key'=>'type'),
     'include_meta'  => true,
