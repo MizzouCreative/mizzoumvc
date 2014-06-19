@@ -131,7 +131,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     $strSearchFormContents = mizzouCaptureOutput('get_search_form');
     $strWpFooterContents = mizzouCaptureOutput('wp_footer');
     //start actual output
-    require_once $strViewsPath.'header.php';
+    //require_once $strViewsPath.'header.php';
+    get_header();
 
     /**
      * @todo replace with a require to the sidebar view
