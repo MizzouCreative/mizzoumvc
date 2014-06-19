@@ -129,13 +129,12 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     $strWpHeaderContents = mizzouCaptureOutput('wp_head');
     $strSearchFormContents = mizzouCaptureOutput('get_search_form');
+    $strWpFooterContents = mizzouCaptureOutput('wp_footer');
 
-    //_mizzou_log($objSite,'our site object');
     //start actual output
 
+    // replaces get_header();
     require_once $strViewsPath.'header.php';
-    //get_header();
-
     /**
      * @todo replace with a require to the sidebar view
      */
@@ -145,10 +144,9 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     require_once $strViewsPath . 'outerView.php';
 
-    $strWpFooterContents = mizzouCaptureOutput('wp_footer');
-
+    // replaces get_footer();
     require_once $strViewsPath . 'footer.php';
-    //get_footer();
+
 }
 
 function mizzouIncludeView($strViewName)
