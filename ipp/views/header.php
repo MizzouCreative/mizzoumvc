@@ -111,7 +111,7 @@
 
 
         <div class="span6">
-            <?php $strSearchFormContents; ?>
+            <?php echo $strSearchFormContents; ?>
 
             <div class="mobile-hide">
                 <?php echo $objSite->AudienceMenu; // $strAudienceMenu; ?>
