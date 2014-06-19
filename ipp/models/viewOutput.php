@@ -130,7 +130,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     $strWpHeaderContents = mizzouCaptureOutput('wp_head');
     $strSearchFormContents = mizzouCaptureOutput('get_search_form');
 
-    _mizzou_log($strWpHeaderContents,'contents of our header capture');
+    _mizzou_log($strSearchFormContents,'contents of our search form capture');
+    _mizzou_log($objSite,'our site object');
     //start actual output
 
     require_once $strViewsPath.'header.php';
