@@ -127,9 +127,9 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
 
-    $strWpHeaderContents = mizzouCaptureOutput('wp_head');
+    //$strWpHeaderContents = mizzouCaptureOutput('wp_head');
     $strSearchFormContents = mizzouCaptureOutput('get_search_form');
-    $strWpFooterContents = mizzouCaptureOutput('wp_footer');
+    //$strWpFooterContents = mizzouCaptureOutput('wp_footer');
     //start actual output
     //require_once $strViewsPath.'header.php';
     get_header();
