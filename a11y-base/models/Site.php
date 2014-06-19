@@ -21,7 +21,8 @@
  */
 class Site extends Base {
     protected  $aryOptions = array(
-        'date_format'   => 'M j, Y'
+        'date_format'   => 'M j, Y',
+        'menu_format'   => '<ol class="%1$s %2$s">%3$s</ol>'
     );
 
     public function __construct($aryOptions = array())
@@ -36,6 +37,8 @@ class Site extends Base {
         $this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
+        $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
+        $this->add_data('AudienceMenu',$this->_getAudienceMenu());
     }
 
     public function  getLastModifiedDate($strDateFormat=null)
@@ -136,5 +139,49 @@ class Site extends Base {
     protected function _getTrackingCode()
     {
         return $this->_getSiteOption('tracking_input');
+    }
+
+    protected function _getAudienceMenu()
+    {
+        return $this->_getWPMenu('audience');
+    }
+
+    protected function _getPrimaryMenu()
+    {
+        return $this->_getWPMenu('primary');
+    }
+
+    protected function _getWPMenu($strMenuName,$strMenuFormat = null)
+    {
+        if(is_null($strMenuFormat)){
+            $strMenuFormat = $this->aryOptions['menu_format'];
+        }
+
+        $aryMenuOptions = array(
+            'theme_location'    => $strMenuName,
+            'items_wrap'        => $strMenuFormat
+        );
+
+        return $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
+    }
+    /**
+     * Captures the contents of a function that normally echos directly
+     *
+     * @param $strCallBack
+     * @param array $aryOptions
+     * @return string
+     * @todo discuss with Jeremiah where this should be located. doesn't seem right to have it in this class
+     */
+    protected function _captureOutPut($strCallBack,$aryOptions=array())
+    {
+        $strReturn = '';
+        if(function_exists($strCallBack) && is_callable($strCallBack)){
+            ob_start();
+            call_user_func_array($strCallBack,$aryOptions);
+            $strReturn = ob_get_contents();
+            ob_end_clean();
+        }
+
+        return $strReturn;
     }
 } 
