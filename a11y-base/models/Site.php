@@ -98,6 +98,11 @@ class Site extends Base {
         return $this->PageList;
     }
 
+    public function currentPublicMembers()
+    {
+        return array_keys($this->aryData);
+    }
+
     private function _getSiteName()
     {
         //return get_bloginfo('name');
