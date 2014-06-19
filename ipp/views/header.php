@@ -36,8 +36,13 @@
     <!--<![endif]-->
     <link rel="shortcut icon" href="<?php echo $strActiveStylesheet; ?>/favicon.ico" />
 
-    <?php if('' != $strTrackingInput) : ?>
-        <?php echo $strTrackingInput; // should this be moved to the footer? ?>
+    <?php if('' != $strTrackingCode) : ?>
+        <?php echo $strTrackingCode;
+        /**
+         * @todo should this be moved to the footer?
+         * @todo rename to strAnalyticsCode ?
+         */
+        ?>
     <?php endif; ?>
 
     <?php echo $strWpHeaderContents; ?>
