@@ -37,8 +37,9 @@ class Site extends Base {
         $this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
-        $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
         $this->add_data('AudienceMenu',$this->_getAudienceMenu());
+        $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
+
 
         /**
          * @todo if we are doing this on the constructor, and making it a publicly available member, then why does
