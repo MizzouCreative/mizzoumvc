@@ -160,6 +160,7 @@ class Site extends Base {
 
     protected function _getWPMenu($strMenuName,$strMenuFormat = null)
     {
+        _mizzou_log($strMenuName,'name of menu requested',false,array('func'=>__FUNCTION__));
         if(is_null($strMenuFormat)){
             $strMenuFormat = $this->aryOptions['menu_format'];
         }
@@ -169,7 +170,12 @@ class Site extends Base {
             'items_wrap'        => $strMenuFormat
         );
 
-        return $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
+        _mizzou_log($aryMenuOptions,'options I am sending to the capture function');
+        $strCapture = $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
+        _mizzou_log($strCapture,'contents of the menu that was captured');
+        return $strCapture;
+        //return $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
+
     }
     /**
      * Captures the contents of a function that normally echos directly
