@@ -30,14 +30,21 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         'graduate-research-assistants'
     );
 
+    $boolIncludeNoIndex = false;
+    $boolIncludeSidebar = false;
+
     //convert all the data for the inner view into variables
     extract($aryData);
 
+    /**
+     * next we need our site object
+     * @todo do we need to check for the existence?
+     */
     if(!isset($objSite) || !is_object($objSite)){
         $objSite = new Site();
     }
 
-    _mizzou_log($objSite,'our site object');
+    //_mizzou_log($objSite,'our site object');
     /**
      * If the page title has not been overridden, get the default title and add our prepend
      */
@@ -50,7 +57,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     //_mizzou_log($wp_query,'wp_query');
 
     $strHeaderTitle = determineHeaderTitle($strPageTitle,$objSite->Name);
-    _mizzou_log($strHeaderTitle,'our header title as returned');
+    //_mizzou_log($strHeaderTitle,'our header title as returned');
 
     $strEditPostLink = '';
     if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
@@ -63,11 +70,33 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
      * needed
      */
 
-    $boolIncludeSidebar = false;
-
     if(is_page() && in_array($objMainPost->slug,$aryIncludeSidebarPages)){
         $boolIncludeSidebar = true;
     }
+
+    /**
+     * This one is a big of a bugger...
+     * If we have access to the MainPost object AND either noindex or nolink is set and ON
+     * OR
+     * we're on a 404 page
+     * then
+     * we want to include the meta element for robots to not index the page
+     *
+     */
+    if(
+        is_404()
+        || (
+                isset($objMainPost)
+                && (
+                (isset($objMainPost->noindex) && $objMainPost->noindex == 'on')
+                ||
+                (isset($objMainPost->nolink) && $objMainPost->nolink == 'on')
+                )
+            )
+    ) {
+        $boolIncludeNoIndex = true;
+    }
+
 
     /**
      * @todo this needs to be moved either into a theme option or config file
@@ -80,34 +109,39 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
      * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
      */
     //get the contents for the breadcrumbs
-
-    ob_start();
-    breadcrumbs();
-    $strBreadCrumbs = ob_get_contents();
-    ob_clean();
+    $strBreadCrumbs = mizzouCaptureOutput('breadcrumbs');
 
     $strThemePath = mizzouDeterminePathToTheme();
     $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
     $strInnerView = $strViewsPath . $strInnerViewFileName . '.php';
+
+    //now we need to start getting everyhing
+
     //get contents from the inner view
     if(file_exists($strInnerView)){
+        ob_start();
         require_once $strInnerView;
         $strInnerViewContent = ob_get_contents();
-        ob_clean();
+        ob_end_clean();
     } else {
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
 
-    ob_end_clean();
-
+    $strWpHeaderContents = mizzouCaptureOutput('wp_head');
+    $strSearchFormContents = mizzouCaptureOutput('get_search_form');
+    $strWpFooterContents = mizzouCaptureOutput('wp_footer');
     //start actual output
-    get_header();
+    require_once $strViewsPath.'header.php';
+
+    /**
+     * @todo replace with a require to the sidebar view
+     */
     if($boolIncludeSidebar) {
         get_sidebar();
     }
 
     require_once $strViewsPath . 'outerView.php';
-    get_footer();
+    require_once $strViewsPath . 'footer.php';
 }
 
 function mizzouIncludeView($strViewName)
