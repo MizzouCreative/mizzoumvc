@@ -197,12 +197,21 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
         if(is_single()){
             //we need to figure out what post type it is
             global $wp_query;
-            _mizzou_log($wp_query,'trying to figure out proper CPT name for a single post',false,array('func'=>__FUNCTION__));
+            $strPostType = get_post_type();
+            if($strPostType != 'post'){
+                $aryTitle[] = 'Blog';
+            } else {
+                $objPostType = get_post_type_object($strPostType);
+                $aryTitle[] = $objPostType->labels->name;
+            }
+
         } else {
 
         }
+    } elseif(is_page()) {
+        //do sub sub pages need to have that information reflected in the title?
     } else {
-        //it's not an archive or a single. what do we have left? Just pages, right?
+        //it's not an archive a single, or a page. what do we have left?
     }
 
     if($strSiteName != ''){
