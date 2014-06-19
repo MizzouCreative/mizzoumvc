@@ -35,6 +35,7 @@ class Site extends Base {
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
         $this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
+        $this->add_data('TrackingCode',$this->_getTrackingCode());
     }
 
     public function  getLastModifiedDate($strDateFormat=null)
@@ -130,5 +131,10 @@ class Site extends Base {
     {
 
         return ($this->ParentThemeURL == $this->ChildThemeURL) ? $this->ParentThemeURL : $this->ChildThemeURL;
+    }
+
+    protected function _getTrackingCode()
+    {
+        return $this->_getSiteOption('tracking_input');
     }
 } 
