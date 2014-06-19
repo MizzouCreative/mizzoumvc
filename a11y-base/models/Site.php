@@ -172,7 +172,7 @@ class Site extends Base {
         );
 
         _mizzou_log($aryMenuOptions,'options I am sending to the capture function');
-        $strCapture = $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
+        $strCapture = $this->_captureOutPut('wp_nav_menu',array($aryMenuOptions));
         _mizzou_log($strCapture,'contents of the menu that was captured');
         return $strCapture;
         //return $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
