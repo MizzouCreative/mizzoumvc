@@ -100,10 +100,7 @@
             <?php $strSearchFormContents; ?>
 
             <div class="mobile-hide">
-                <?php wp_nav_menu( array(
-                    'theme_location' => 'audience',
-                    'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
-                ) ); ?>
+                <?php echo $strAudienceMenu; ?>
             </div>
 
         </div> <!-- end span6 -->
@@ -120,10 +117,7 @@
         <div class="container">
 
             <div class="menu-container span12">
-                <?php wp_nav_menu( array(
-                    'theme_location' => 'primary',
-                    'items_wrap'     => '<ol class="%1$s %2$s">%3$s</ol>'
-                ) ); ?>
+                <?php echo $strPrimaryMenu; ?>
             </div>
 
         </div>
