@@ -38,7 +38,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title><?php echo $strHeaderTitle; ?> // University of Missouri</title>
+    <title><?php echo $strHeaderTitle; ?></title>
     <meta content="<?php echo $objSite->Name; // $strSiteName; ?>" name="apple-mobile-web-app-title"/>
     <?php if($boolIncludeNoIndex) : ?>
         <META NAME="ROBOTS" CONTENT="NOINDEX,NOARCHIVE">
