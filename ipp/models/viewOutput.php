@@ -103,8 +103,25 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
      */
     $intSpanWidth = ($boolIncludeSidebar) ? 8 : 12;
 
-    //outerView needs breadcrumbs and inner view data
+    /**
+     * For now, we want to make both the $objSite-> members and direct variables available to designers. Eventually
+     * we'll decide one way or the other
+     */
+    $arySiteSiteMembers = array('URL','Name');
+    foreach($objSite->currentPublicMembers() as $strSiteKey){
+        $strSiteVariable = '';
+        if(in_array($strSiteKey,$arySiteSiteMembers)) {
+            $strSiteVariable = 'Site'.$strSiteKey;
+        } else {
+            $strSiteVariable = $strSiteKey;
+        }
 
+        $strSiteVariable = 'str'.$strSiteVariable;
+
+        $$strSiteVariable = $objSite->{$strSiteKey};
+    }
+
+    //outerView needs breadcrumbs and inner view data
     /**
      * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
      */
