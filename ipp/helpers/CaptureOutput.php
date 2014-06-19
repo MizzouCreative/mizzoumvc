@@ -13,7 +13,7 @@
  * @param $aryOptions
  * @return string
  */
-function mizzouCaptureOutput($strCallBack,$aryOptions)
+function mizzouCaptureOutput($strCallBack,$aryOptions=array())
 {
     $strReturn = '';
     if(function_exists($strCallBack) && is_callable($strCallBack)){
