@@ -39,6 +39,13 @@ class Site extends Base {
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
         $this->add_data('AudienceMenu',$this->_getAudienceMenu());
+
+        /**
+         * @todo if we are doing this on the constructor, and making it a publicly available member, then why does
+         * the method need to be publicly accessible?
+         */
+        $this->getPageList();
+        $this->getLastModifiedDate();
     }
 
     public function  getLastModifiedDate($strDateFormat=null)
@@ -48,7 +55,7 @@ class Site extends Base {
             $strDateFormat = $this->aryOptions['date_format'];
         }
 
-        if(!$this->is_set('ModifiedDate')){
+        if(!$this->is_set('LastModifiedDate')){
             if(is_single() || is_page()){
                 $strModifiedDate = get_the_modified_time($this->aryOptions['date_format']);
             } else {
@@ -60,18 +67,18 @@ class Site extends Base {
                 $strModifiedDate = date($this->aryOptions['date_format'],strtotime($strLastModDate));
             }
 
-            $this->add_data('ModifiedDate',$strModifiedDate);
+            $this->add_data('LastModifiedDate',$strModifiedDate);
         } elseif($strDateFormat != $this->aryOptions['date_format']) {
             /**
              * date modified is already set, but they are also passing in a date format. verify that the current date
              * we have set is the same format as the one they are requesting.
              */
-            if($this->ModifiedDate != $strNewFormattedDate = date($strDateFormat,strtotime($this->ModifiedDate))){
+            if($this->ModifiedDate != $strNewFormattedDate = date($strDateFormat,strtotime($this->LastModifiedDate))){
                 return $strNewFormattedDate;
             }
         }
 
-        return $this->ModifiedDate;
+        return $this->LastModifiedDate;
     }
 
     public function getPageList()
@@ -170,18 +177,20 @@ class Site extends Base {
      * @param $strCallBack
      * @param array $aryOptions
      * @return string
-     * @todo discuss with Jeremiah where this should be located. doesn't seem right to have it in this class
+     * @uses mizzouCaptureOutput
+     * @uses _mizzou_log
+     * @todo discuss with Jeremiah. I'm not happy about this dependency
      */
     protected function _captureOutPut($strCallBack,$aryOptions=array())
     {
-        $strReturn = '';
-        if(function_exists($strCallBack) && is_callable($strCallBack)){
-            ob_start();
-            call_user_func_array($strCallBack,$aryOptions);
-            $strReturn = ob_get_contents();
-            ob_end_clean();
+        if(function_exists('mizzouCaptureOutput') && is_callable('mizzouCaptureOutput')){
+            return mizzouCaptureOutput($strCallBack,$aryOptions);
+        } else {
+            /**
+             * @todo throw exception?
+             */
+            $strMsg = 'You asked me to capture the contents of ' . $strCallBack . ' but the mizzouCaptureOutput function doesnt exist or isnt callable.';
+            _mizzou_log($aryOptions,$strMsg,false,array('func'=>__FUNCTION__));
         }
-
-        return $strReturn;
     }
 } 
