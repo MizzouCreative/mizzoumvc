@@ -142,7 +142,8 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     }
 
     require_once $strViewsPath . 'outerView.php';
-    require_once $strViewsPath . 'footer.php';
+    //require_once $strViewsPath . 'footer.php';
+    get_footer();
 }
 
 function mizzouIncludeView($strViewName)
