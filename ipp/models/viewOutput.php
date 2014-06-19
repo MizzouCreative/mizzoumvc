@@ -129,7 +129,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
 
     //$strWpHeaderContents = mizzouCaptureOutput('wp_head');
     $strSearchFormContents = mizzouCaptureOutput('get_search_form');
-    //$strWpFooterContents = mizzouCaptureOutput('wp_footer');
+
     //start actual output
     //require_once $strViewsPath.'header.php';
     get_header();
@@ -142,8 +142,11 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     }
 
     require_once $strViewsPath . 'outerView.php';
-    //require_once $strViewsPath . 'footer.php';
-    get_footer();
+
+    $strWpFooterContents = mizzouCaptureOutput('wp_footer');
+    _mizzou_log($strWpFooterContents,'the contents of our footer after the capture');
+    require_once $strViewsPath . 'footer.php';
+    //get_footer();
 }
 
 function mizzouIncludeView($strViewName)
