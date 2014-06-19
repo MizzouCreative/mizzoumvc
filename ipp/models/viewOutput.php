@@ -199,10 +199,10 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
             global $wp_query;
             $strPostType = get_post_type();
             if($strPostType != 'post'){
-                $aryTitle[] = 'Blog';
-            } else {
                 $objPostType = get_post_type_object($strPostType);
                 $aryTitle[] = $objPostType->labels->name;
+            } else {
+                $aryTitle[] = 'Blog';
             }
 
         } else {
