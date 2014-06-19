@@ -171,12 +171,12 @@ class Site extends Base {
             'items_wrap'        => $strMenuFormat
         );
 
-        _mizzou_log($aryMenuOptions,'options I am sending to the capture function');
-        $strCapture = $this->_captureOutPut('wp_nav_menu',array($aryMenuOptions));
-        _mizzou_log($strCapture,'contents of the menu that was captured');
-        return $strCapture;
-        //return $this->_captureOutPut('wp_nav_menu',$aryMenuOptions);
-
+        /**
+         * wp_nav_menu needs the first parameter passed to it to be an array.  captureoutput needs an array of parameters
+         * that it passes to the called function, so we need to pass our array of option as the first item in the array
+         * that we pass to captureoutput
+         */
+        return $this->_captureOutPut('wp_nav_menu',array($aryMenuOptions));
     }
     /**
      * Captures the contents of a function that normally echos directly
