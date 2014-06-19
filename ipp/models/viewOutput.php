@@ -127,12 +127,14 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
 
-    //$strWpHeaderContents = mizzouCaptureOutput('wp_head');
+    $strWpHeaderContents = mizzouCaptureOutput('wp_head');
     $strSearchFormContents = mizzouCaptureOutput('get_search_form');
 
+    _mizzou_log($strWpHeaderContents,'contents of our header capture');
     //start actual output
-    //require_once $strViewsPath.'header.php';
-    get_header();
+
+    require_once $strViewsPath.'header.php';
+    //get_header();
 
     /**
      * @todo replace with a require to the sidebar view
@@ -144,7 +146,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
     require_once $strViewsPath . 'outerView.php';
 
     $strWpFooterContents = mizzouCaptureOutput('wp_footer');
-    _mizzou_log($strWpFooterContents,'the contents of our footer after the capture');
+
     require_once $strViewsPath . 'footer.php';
     //get_footer();
 }
