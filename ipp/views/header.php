@@ -10,37 +10,51 @@
  * @copyright 2013 Curators of the University of Missouri
  *
  * Will need
- *  - objMainPost w/ custom meta data
- *  - strHeadTitle
- *  - template location: in site model
- *  - site option for tracking code
- *  - blog url: in site model
- *  - blog name in site model
- *  - navigation menus: audience and primary
- *  - search form: where should this come from?
- *  - contents of wp_head where should this come from?
+ *  - <title> contents: $strHeadTitle
+ *  - template location: see $objSite below
+ *  - site option for tracking code: see $objSite below
+ *  - blog url: see $objSite below
+ *  - blog name: see $objSite below
+ *  - navigation menus: see $objSite below
+ *  - search form: $strSearchFormContents
+ *  - contents of wp_head: $strWpHeaderContents
+ *  - whether or not to include <meta> robots: $boolIncludeNoIndex
+ *
+ *  $objSite contains
+ *  -> CopyrightYear (also accessible as $strCopyrightYear)
+ *  -> Name (also accessible as $strSiteName)
+ *  -> URL (also accessible as $strSiteURL)
+ *  -> ParentThemeURL (also accessible as $strParentThemeURL)
+ *  -> ChildThemeURL (also accessible as $strChildTheme)
+ *  -> ActiveStylesheet (also accessible as $strActiveStylesheet)
+ *  -> ActiveThemeURL (also accessible as $strActiveThemeURL)
+ *  -> TrackingCode (also accessible as $strTrackingCode)
+ *  -> PrimaryMenu (also accessible as $strPrimaryMenu)
+ *  -> AudienceMenu (also accessible as $strAudienceMenu)
+ *  -> LastModifiedDate (also accessible as $strModifiedDate)
+ *
  */?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
 
     <title><?php echo $strHeaderTitle; ?> // University of Missouri</title>
-    <meta content="<?php echo $strSiteName; ?>" name="apple-mobile-web-app-title"/>
+    <meta content="<?php echo $objSite->Name; // $strSiteName; ?>" name="apple-mobile-web-app-title"/>
     <?php if($boolIncludeNoIndex) : ?>
         <META NAME="ROBOTS" CONTENT="NOINDEX,NOARCHIVE">
     <?php endif; ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;">
     <!--[if ! lte IE 7]><!-->
-    <link href="<?php echo $strActiveStylesheet; ?>" rel="stylesheet">
+    <link href="<?php echo $objSite->ActiveStylesheet;// $strActiveStylesheet; ?>" rel="stylesheet">
     <!--<![endif]-->
-    <link rel="shortcut icon" href="<?php echo $strActiveStylesheet; ?>/favicon.ico" />
+    <link rel="shortcut icon" href="<?php echo $objSite->ActiveThemeURL;// $strActiveThemeURL; ?>/favicon.ico" />
 
-    <?php if('' != $strTrackingCode) : ?>
-        <?php echo $strTrackingCode;
+    <?php if('' != $objSite->TrackingCode) : ?>
+        <?php echo $objSite->TrackingCode;
         /**
          * @todo should this be moved to the footer?
-         * @todo rename to strAnalyticsCode ?
+         * @todo rename to $objSite->AnalyticsCode ?
          */
         ?>
     <?php endif; ?>
@@ -69,7 +83,7 @@
                         <a href="http://missouri.edu/" title="University of Missouri home">
 								<span class="shield">
 									<svg width="108" height="62px">
-                                        <image xlink:href="<?php echo $strActiveThemeURL; ?>/images/mu-mark.svg" alt="MU Logo" src="<?php echo $strActiveThemeURL; ?>/images/mu-mark.png" width="108" height="62px"/>
+                                        <image xlink:href="<?php echo $objSite->ActiveThemeURL; //$strActiveThemeURL; ?>/images/mu-mark.svg" alt="MU Logo" src="<?php echo $objSite->ActiveThemeURL;// $strActiveThemeURL; ?>/images/mu-mark.png" width="108" height="62px"/>
                                     </svg>
 								</span>
 								<span class="text">
@@ -85,8 +99,8 @@
                     </div>
 
                     <div id="site-title">
-                        <a href="<?php echo $strSiteURL; ?>">
-                            <?php echo $strSiteName; ?>
+                        <a href="<?php echo $objSite->URL;//$strSiteURL; ?>">
+                            <?php echo $objSite->Name;// $strSiteName; ?>
                         </a>
                     </div>
                 </div> <!-- end .banner -->
@@ -100,7 +114,7 @@
             <?php $strSearchFormContents; ?>
 
             <div class="mobile-hide">
-                <?php echo $strAudienceMenu; ?>
+                <?php echo $objSite->AudienceMenu; // $strAudienceMenu; ?>
             </div>
 
         </div> <!-- end span6 -->
@@ -117,7 +131,7 @@
         <div class="container">
 
             <div class="menu-container span12">
-                <?php echo $strPrimaryMenu; ?>
+                <?php echo $objSite->PrimaryMenu;// $strPrimaryMenu; ?>
             </div>
 
         </div>
