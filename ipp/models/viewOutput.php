@@ -199,7 +199,9 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
             global $wp_query;
             $strPostType = get_post_type();
             if($strPostType != 'post'){
+                _mizzou_log($strPostType,'the post type of the single',false,array('func'=>__FUNCTION__));
                 $objPostType = get_post_type_object($strPostType);
+                _mizzou_log($objPostType,'the post type object');
                 $aryTitle[] = $objPostType->labels->name;
             } else {
                 $aryTitle[] = 'Blog';
