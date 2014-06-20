@@ -87,7 +87,7 @@ function mizzouReplacePostTitleLabel($strInput){
                  * Pass through is intentional
                  */
             case 'project':
-                    $strInput = str_replace('title',$post_type,$strInput);
+                    $strInput = str_replace('title',$post_type . ' title',$strInput);
                 break;
             case 'person':
                     $strInput = 'Enter first and last name';
