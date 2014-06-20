@@ -23,6 +23,8 @@ function mizzouIppInit()
     //add rewrite tag so that we can use it when we register our taxonomies
     //add_rewrite_tag('%post_type%','([^/]+)');
 
+    add_filter('enter_title_here','mizzouReplacePostTitleLabel');
+
 }
 //handle to add custom post type 
 
@@ -67,6 +69,32 @@ function mizzouRemoveRestrictionOnArchives($objQuery)
     if($objQuery->is_archive() && $objQuery->is_main_query()){
         $objQuery->set('posts_per_page',-1);
     }
+}
+
+/**
+ * Changes the pretext in the title field from "Enter title here" to "Enter
+ * headline here"
+ *
+ * @param type $strInput
+ * @return type
+ */
+function mizzouReplacePostTitleLabel($strInput){
+    global $post_type;
+    if(is_admin() && $strInput == 'Enter title here'){
+        switch($post_type){
+            case 'publication':
+                /**
+                 * Pass through is intentional
+                 */
+            case 'project':
+                    $strInput = str_replace('title',$post_type,$strInput);
+                break;
+            case 'person':
+                    $strInput = 'Enter first and last name';
+        }
+    }
+
+    return $strInput;
 }
 
 add_action('init', 'mizzouIppInit');
