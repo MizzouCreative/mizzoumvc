@@ -32,7 +32,6 @@
  * @copyright 2014 Curators of the University of Missouri
  *
  */
-global $objPerson;
 ?>
 
 <div class="span3 one-third" id="portrait-container">
