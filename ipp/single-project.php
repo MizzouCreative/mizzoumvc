@@ -15,5 +15,5 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 
 $aryData = array();
 $objProject = new Project();
-$aryData['objMainPost'] = $objProject->convertPost($post,array('include_meta'=>true, 'format_date'=>true,'date_format'=>'F Y'));
+$aryData['objMainPost'] = $objProject->convertPost($post,array('include_meta'=>true));
 mizzouOutPutView('single-project',$aryData);
