@@ -16,14 +16,6 @@
  */
 ?>
 <div class="span8">
-    <?php if($objMainPost->authors != '') : ?>
-        <p class="authors"><?php echo $objMainPost->authors; ?></p>
-    <?php endif; ?>
-    <p class="date"><?php echo $objMainPost->formatted_date; ?></p>
     <?php echo $objMainPost->content; ?>
-
-    <?php if($objMainPost->link != '') : ?>
-        <p><a href="<?php echo $objMainPost->link; ?>">View this project at <?php echo $objMainPost->link; ?></a></p>
-    <?php endif; ?>
 </div>
 
