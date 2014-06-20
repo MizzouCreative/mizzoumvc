@@ -1,8 +1,7 @@
 <?php
 /**
- * Template file used to render a single project
+ * Inner view file used to render a single project
  *
- * NOTE - the html structure was copied from /plugins/mizzou-projects/templates/single-project.php
  *
  * Has access to the following variables
  *  - objMainPost Mizzou project object for main post
