@@ -146,4 +146,32 @@ class Base {
         $this->boolError = true;
         $this->error_messages[] = $strMessage;
     }
+
+    /**
+     * Captures the contents of a function that normally echos directly
+     *
+     * @param $strCallBack
+     * @param $aryOptions
+     * @return string
+     */
+    protected function _captureOutput($strCallBack,$aryOptions=array())
+    {
+        $strReturn = '';
+        if(function_exists($strCallBack) && is_callable($strCallBack)){
+            ob_start();
+            call_user_func_array($strCallBack,$aryOptions);
+            $strReturn = ob_get_contents();
+            ob_end_clean();
+        } else {
+            /**
+             * What to do, what to do...
+             * @todo throw exception?
+             */
+            $strMsg = 'You asked me to call ' . $strCallBack . ' but it isnt available or callable. You also gave me '
+                    . 'the following options';
+            _mizzou_log($aryOptions,$strMsg,false,array('func'=>__FUNCTION__));
+        }
+
+        return $strReturn;
+    }
 } 
