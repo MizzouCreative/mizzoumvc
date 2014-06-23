@@ -183,26 +183,4 @@ class Site extends Base {
          */
         return $this->_captureOutPut('wp_nav_menu',array($aryMenuOptions));
     }
-    /**
-     * Captures the contents of a function that normally echos directly
-     *
-     * @param $strCallBack
-     * @param array $aryOptions
-     * @return string
-     * @uses mizzouCaptureOutput
-     * @uses _mizzou_log
-     * @todo discuss with Jeremiah. I'm not happy about this dependency
-     */
-    protected function _captureOutPut($strCallBack,$aryOptions=array())
-    {
-        if(function_exists('mizzouCaptureOutput') && is_callable('mizzouCaptureOutput')){
-            return mizzouCaptureOutput($strCallBack,$aryOptions);
-        } else {
-            /**
-             * @todo throw exception?
-             */
-            $strMsg = 'You asked me to capture the contents of ' . $strCallBack . ' but the mizzouCaptureOutput function doesnt exist or isnt callable.';
-            _mizzou_log($aryOptions,$strMsg,false,array('func'=>__FUNCTION__));
-        }
-    }
-} 
+}
