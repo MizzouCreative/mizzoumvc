@@ -4,6 +4,7 @@
  * User: gilzow
  * Date: 6/19/14
  * Time: 12:31 PM
+ * @deprecated
  */
 
 /**
@@ -12,6 +13,7 @@
  * @param $strCallBack
  * @param $aryOptions
  * @return string
+ * @deprecated moved function to Base.php class. 20140624
  */
 function mizzouCaptureOutput($strCallBack,$aryOptions=array())
 {
