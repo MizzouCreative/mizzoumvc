@@ -70,7 +70,26 @@ switch($aryData['objMainPost']->slug){
          */
         $strView = 'staff';
         break;
+    case 'services':
         break;
+        $objPost = new WpBase();
+        $aryFeaturePostOptions = array(
+            'count'         => 1,
+            'include_meta'  => true,
+            'complex_meta'  => array(
+                'meta_key'      => 'post_featured',
+                'meta_value'    => 'yes'
+            ),
+        );
+
+        $aryFeaturedPosts = $objPost->retrieveContent($aryFeaturePostOptions);
+
+        if(count($aryFeaturedPosts) == 1){
+            $aryData['objFeaturedPost'] = $aryFeaturedPosts[0];
+        }
+
+        $strView = 'page-services';
+
     default:
         $strView = 'page';
         break;
