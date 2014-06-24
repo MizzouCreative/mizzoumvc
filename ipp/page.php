@@ -71,7 +71,6 @@ switch($aryData['objMainPost']->slug){
         $strView = 'staff';
         break;
     case 'services':
-        break;
         $objPost = new WpBase();
         $aryFeaturePostOptions = array(
             'count'         => 1,
@@ -89,6 +88,7 @@ switch($aryData['objMainPost']->slug){
         }
 
         $strView = 'page-services';
+        break;
 
     default:
         $strView = 'page';
