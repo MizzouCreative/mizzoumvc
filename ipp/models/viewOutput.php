@@ -158,7 +158,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
     //$strSearchFormContents = mizzouCaptureOutput('get_search_form');
     $strSearchFormContents = $objSite->SearchForm;
     //$strWpFooterContents = mizzouCaptureOutput('wp_footer');
-    $strWpFooterContents = $objSite->SwpFooter;
+    $strWpFooterContents = $objSite->wpFooter;
 
     //start actual output
 
