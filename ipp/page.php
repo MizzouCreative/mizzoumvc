@@ -78,7 +78,7 @@ switch($aryData['objMainPost']->slug){
             'complex_meta'  => array(
                 array(
                     'meta_key'      => 'post_featured',
-                    'meta_value'    => 'yes'
+                    'meta_value'    => 'Yes'
                 )
             ),
         );
