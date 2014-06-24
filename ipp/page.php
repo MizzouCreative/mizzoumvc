@@ -84,7 +84,7 @@ switch($aryData['objMainPost']->slug){
         );
 
         $aryFeaturedPosts = $objPost->retrieveContent($aryFeaturePostOptions);
-
+        _mizzou_log($aryFeaturedPosts,'return from retrieving featured posts');
         if(count($aryFeaturedPosts) == 1){
             $aryData['objFeaturedPost'] = $aryFeaturedPosts[0];
         }
