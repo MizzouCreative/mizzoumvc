@@ -18,8 +18,12 @@
  * @uses mizzouDeterminePathToTheme() from helpers\paths.php
  * @todo this seriously needs refactoring
  */
-function mizzouOutPutView($strInnerViewFileName,$aryData)
+function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
 {
+    $aryDefaultOptions = array(
+        'include_sidebars'  => false,
+    );
+
     $aryIncludeSidebarPages = array(
         'about',
         'strategic-plan',
@@ -144,9 +148,15 @@ function mizzouOutPutView($strInnerViewFileName,$aryData)
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
 
-    $strWpHeaderContents = mizzouCaptureOutput('wp_head');
-    $strSearchFormContents = mizzouCaptureOutput('get_search_form');
-    $strWpFooterContents = mizzouCaptureOutput('wp_footer');
+    /**
+     * @todo captureContents is in the site model so we need to expand it to allow for storage of this type of data
+     */
+    //$strWpHeaderContents = mizzouCaptureOutput('wp_head');
+    $strWpHeaderContents = $objSite->wpHeader;
+    //$strSearchFormContents = mizzouCaptureOutput('get_search_form');
+    $strSearchFormContents = $objSite->SearchForm;
+    //$strWpFooterContents = mizzouCaptureOutput('wp_footer');
+    $strWpFooterContents = $objSite->SearchForm;
 
     //start actual output
 
