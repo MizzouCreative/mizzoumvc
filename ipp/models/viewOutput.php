@@ -149,6 +149,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
         $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
     }
 
+
     /**
      * @todo captureContents is in the site model so we need to expand it to allow for storage of this type of data
      */
@@ -157,7 +158,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
     //$strSearchFormContents = mizzouCaptureOutput('get_search_form');
     $strSearchFormContents = $objSite->SearchForm;
     //$strWpFooterContents = mizzouCaptureOutput('wp_footer');
-    $strWpFooterContents = $objSite->SearchForm;
+    $strWpFooterContents = $objSite->SwpFooter;
 
     //start actual output
 
