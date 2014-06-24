@@ -39,6 +39,9 @@ class Site extends Base {
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('AudienceMenu',$this->_getAudienceMenu());
         $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
+        $this->add_data('wpHeader',$this->_getWpHeader());
+        $this->add_data('wpFooter',$this->_getWpFooter());
+        $this->add_data('SearchForm',$this->_getSearchForm());
 
 
         /**
@@ -98,9 +101,29 @@ class Site extends Base {
         return $this->PageList;
     }
 
+    public function getSidebar($strSidebarName)
+    {
+        return $this->_captureOutput('dynamic_sidebar',array($strSidebarName));
+    }
+
     public function currentPublicMembers()
     {
         return array_keys($this->aryData);
+    }
+
+    protected function _getWpHeader()
+    {
+        return $this->_captureOutput('wp_head');
+    }
+
+    protected function _getWpFooter()
+    {
+        return $this->_captureOutput('wp_footer');
+    }
+
+    protected function _getSearchForm()
+    {
+        return $this->_captureOutput('get_search_form');
     }
 
     private function _getSiteName()
