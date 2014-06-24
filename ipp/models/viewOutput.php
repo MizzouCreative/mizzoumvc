@@ -138,6 +138,7 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
 
     //now we need to start getting everyhing
 
+    _mizzou_log($strInnerView,'attempting to get: ');
     //get contents from the inner view
     if(file_exists($strInnerView)){
         ob_start();
