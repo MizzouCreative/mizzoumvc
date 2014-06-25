@@ -16,6 +16,6 @@ $objWpBase = new WpBase('post_');
 /**
  * @todo move excerpt length to a config/theme option
  */
-$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts,array('excerpt_length'=>50));
+$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts,array('excerpt_length'=>50,'include_image'=>true));
 
 mizzouOutPutView('blog',$aryData);
