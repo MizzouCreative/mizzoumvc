@@ -10,8 +10,8 @@ $aryFeaturePostOptions = array(
     'include_meta'  => true,
     'complex_meta'  => array(
         array(
-            'meta_key'      => 'post_featured',
-            'meta_value'    => 'Yes'
+            'key'      => 'post_featured',
+            'value'    => 'Yes'
         )
     ),
 );
@@ -27,12 +27,12 @@ $aryOptions = array (
     'meta_query' =>
         array (
               array (
-                'meta_key' => 'post_featured',
-                'meta_value' => 'Yes',
+                'key' => 'post_featured',
+                'value' => 'Yes',
             ),
         ),
 );
-
+/**
 $aryOptions = array(
     'post_type'     => 'post',
     'posts_per_page'=> 1,
@@ -40,7 +40,7 @@ $aryOptions = array(
     'order'         => 'DESC',
     'meta_key'      => 'post_featured',
     'meta_value'    => 'Yes'
-);
+);*/
 ?>
 
 <p>aryFeaturedPosts:</p>
