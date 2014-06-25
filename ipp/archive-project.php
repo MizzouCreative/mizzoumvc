@@ -20,6 +20,10 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 
 global $wp_query;
 $aryData = array();
+/**
+ * Why are we using the base class instead of the project class here?
+ * @todo convert to Project
+ */
 $objWpBase = new WpBase();
 
 $aryProjects = $objWpBase->convertPosts($wp_query->posts);
