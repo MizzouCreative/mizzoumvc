@@ -35,8 +35,10 @@ $intLastColumn = $intDesiredColumns - 1;
             <div class="span4 <?php echo $strColumnClass; ?>">
                 <div class="post-item">
                     <a class="clearfix post-link" href="<?php echo $objPost->permalink; ?>">
+                        <?php if($objPost->image != ''){ ?>
+                            <img src="<?php echo $objPost->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objPost->image->alt; ?>">
+                        <?php } ?>
                         <h3 class="post-title"><?php echo $objPost->title; ?></h3>
-                        <img src="<?php echo $objStaff->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objStaff->image->alt; ?>">
 
                         <p class="post-excerpt"><?php echo $objPost->excerpt; ?></p>
                     </a>
