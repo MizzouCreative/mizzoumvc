@@ -32,6 +32,15 @@ $aryOptions = array (
             ),
         ),
 );
+
+$aryOptions = array(
+    'post_type'     => 'post',
+    'posts_per_page'=> 1,
+    'orderby'       => 'date',
+    'order'         => 'DESC',
+    'meta_key'      => 'post_featured',
+    'meta_value'    => 'Yes'
+);
 ?>
 
 <p>aryFeaturedPosts:</p>
