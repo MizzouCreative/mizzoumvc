@@ -36,7 +36,8 @@ class WpBase
         'order_by'          => 'date',
         'order_direction'   => 'DESC',
         'include_meta'      => false,
-        'include_image'     => false,
+        //per IPP meeting, images should always be available.
+        'include_image'     => true,
         'meta_prefix'       => '',
         'suppress_empty_meta'=> false,
         'passthru'          => null,
