@@ -33,6 +33,7 @@ $aryData['intAuthorID'] = $intAuthorID;
 $aryOptions = array(
     'resort'        => array('key'=>'type'),
     'include_meta'  => true,
+    'include_image' => true,
     'meta_prefix'   => 'publication_'
 );
 
