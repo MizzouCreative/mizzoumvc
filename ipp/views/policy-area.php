@@ -31,10 +31,6 @@
 ?>
 
     <div class="span8">
-                <?php if($objMainPost->image != '') : ?>
-                    <img src="<?php echo $objMainPost->image->src_large; ?>" width="static?" height="static?" alt="<?php echo $objMainPost->image->alt; ?>">
-                <?php endif; ?>
-
                 <section aria-label="content" role="region">
                     <?php echo $objMainPost->content; ?>
                 </section>
