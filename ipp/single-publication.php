@@ -15,7 +15,9 @@ $aryPublicationOptions = array(
     'include_meta'      =>true,
     'format_date'       =>true,
     'date_format'       =>'F Y',
-    'include_attachments'=>true,
+    'include_attachments'=>array(
+        'download'=>true
+    ),
 );
 
 $aryPosts = $objPublicationModel->convertPosts(array($post),$aryPublicationOptions);
