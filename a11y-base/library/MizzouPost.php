@@ -54,6 +54,9 @@ class MizzouPost extends PostBase
     {
         if($mxdPost->post_type == 'attachment' && isset($aryOptions['foo'])){
             _mizzou_log($aryOptions,'aryOptions as passed into MizzouPost');
+        } else {
+            _mizzou_log($mxdPost->post_type,'if we arent dealing with an attachment, what are dealing with');
+            _mizzou_log($aryOptions,'if the post type is attachment, what are the options?');
         }
 
         parent::__construct($mxdPost);
