@@ -282,6 +282,7 @@ class WpBase
          * include_attachments can either be true, or it can be array with further options
          */
         if(is_array($aryOptions['include_attachments']) || (is_bool($aryOptions['include_attachments']) && $aryOptions['include_attachments'])){
+            _mizzou_log($aryOptions,'weve been asked to retrieve attachments. here are the options that were included');
             $aryAttachmentOptions = array(
                 'post_type'     => 'attachment',
                 'posts_per_page'=>-1,
@@ -295,6 +296,7 @@ class WpBase
                 if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['download'])){
                     $aryAttachmentConvertOptions['download'] = $aryOptions['include_attachments']['download'];
                 }
+                _mizzou_log($aryAttachmentConvertOptions,'getting ready to convert some attachments. here are the options im passing over');
                 $objMizzouPost->add_data('attachments',$this->convertPosts($aryAttachments,$aryAttachmentConvertOptions));
             }
 
