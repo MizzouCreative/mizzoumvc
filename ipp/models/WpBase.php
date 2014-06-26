@@ -295,6 +295,7 @@ class WpBase
                 $aryAttachmentConvertOptions = array();
                 if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['download'])){
                     $aryAttachmentConvertOptions['download'] = $aryOptions['include_attachments']['download'];
+                    $aryAttachmentConvertOptions['foo'] = 'bar';
                 }
                 _mizzou_log($aryAttachmentConvertOptions,'getting ready to convert some attachments. here are the options im passing over');
                 $objMizzouPost->add_data('attachments',$this->convertPosts($aryAttachments,$aryAttachmentConvertOptions));
