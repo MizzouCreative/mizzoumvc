@@ -116,7 +116,7 @@
     <div class="span3 left-offset1">
                 <?php if(isset($aryPolicyScholars) && count($aryPolicyScholars) > 0): ?>
                 <section>
-                    <h3><?php echo $objMainPost->title; ?> Policy Research Scholars</h3>
+                    <h3>Policy Research Scholars</h3>
                     <ul>
                         <?php foreach($aryPolicyScholars as $objScholar): ?>
                             <li><a href="<?php echo $objScholar->permalink; ?>" title="Link to <?php echo $objScholar->title; ?> profile"><?php echo $objScholar->title; ?></a></li>
