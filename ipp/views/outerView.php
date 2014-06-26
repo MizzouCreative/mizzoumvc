@@ -40,7 +40,7 @@ $boolH1Class = false;
     <main id="main" role="main">
         <div id="content">
             <article role="article">
-                <?php if($objMainPost->post_type == 'page' && $objMainPost->image != '') : $strH1Class = 'featured'; ?>
+                <?php if($objMainPost->post_type == 'page' && $objMainPost->image != '') : $boolH1Class= true; ?>
                     <div class="featured-image-wrapper">
                         <img src="<?php echo $objMainPost->image->src_large; ?>" alt="<?php $objMainPost->image->alt; ?>" />
                     </div>
