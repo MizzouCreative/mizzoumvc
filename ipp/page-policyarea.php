@@ -39,6 +39,7 @@ $objPageModel = new PolicyArea(); // our model object
 $aryData = array();
 //gather the necessary data
 $aryData['objMainPost'] = new MizzouPost($post);
+_mizzou_log($aryData['objMainPost'],'in a policy area. does it have a featured image?');
 $aryData['objMainContact'] = $objPageModel->retrieveContact($post->post_name);
 $aryData['aryRelatedProjects'] = $objPageModel->retrieveProjects($post->post_name);
 // hack. leave here in the controller? Or move to the model?
