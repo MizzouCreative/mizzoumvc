@@ -23,7 +23,6 @@
  */
 ?>
 <section aria-label="content" role="region">
-    <img src="<?php echo $objMainPost->image->src_large; ?>" width="static?" height="static?" alt="<?php echo $objMainPost->image->alt; ?>">
     <?php echo $objMainPost->content; ?>
     <?php if(isset($objFeaturedPost) && is_object($objFeaturedPost)) : ?>
         <div class="clearfix"></div>
