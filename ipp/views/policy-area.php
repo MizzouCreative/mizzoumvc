@@ -44,7 +44,7 @@
                     
                     <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
                         <section>
-                            <h3>Contact:</h3>
+                            <h3>Contact</h3>
                             <?php if($objMainContact->image != '') { ?>
                                 <div class="span1 alpha one-third portrait<?php echo ' ',$strFirstColClass; ?>">
                                     <a href="<?php echo $objMainContact->permalink; ?>" rel="bookmark" title="<?php echo $objMainContact->title; ?>">
@@ -86,7 +86,7 @@
     <div class="span4">
                     <?php if (count($aryRelatedProjects) > 0) : ?>
                         <section>
-                            <h3>Related Projects:</h3>
+                            <h3>Related Projects</h3>
                             <ul>
                                 <?php foreach ($aryRelatedProjects as $objProject) : ?>
                                     <li><a href="<?php echo $objProject->permalink; ?>" title="Link to <?php echo $objProject->title; ?>"><?php echo $objProject->title; ?></a></li>
@@ -100,7 +100,7 @@
     <div class="span4">
                     <?php if (count($aryRelatedPublications) > 0) : ?>
                         <section>
-                            <h3>Related Publications:</h3>
+                            <h3>Related Publications</h3>
                             <ul>
                                 <?php foreach ($aryRelatedPublications as $objPublication) : ?>
                                     <li><a href="<?php echo $objPublication->permalink; ?>" title="Link to <?php echo $objPublication->title; ?>"><?php echo $objPublication->title; ?></a></li>
