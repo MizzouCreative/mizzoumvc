@@ -52,14 +52,14 @@ class MizzouPost extends PostBase
 
     public function __construct($mxdPost, $aryOptions = array())
     {
-        if($mxdPost->post_type == 'attachment'){
+        if($mxdPost->post_type == 'attachment' && isset($aryOptions['foo'])){
             _mizzou_log($aryOptions,'aryOptions as passed into MizzouPost');
         }
 
         parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
-        if($mxdPost->post_type == 'attachment'){
+        if($mxdPost->post_type == 'attachment' && isset($aryOptions['foo'])){
             _mizzou_log($this->aryOptions,'our options after merging in MizzouPost');
         }
 
