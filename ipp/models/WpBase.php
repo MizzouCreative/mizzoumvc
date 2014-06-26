@@ -305,7 +305,7 @@ class WpBase
 
             if(count($aryAttachments) > 0){
                 $aryAttachmentConvertOptions = array();
-                if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['download'])){
+                if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['permalink'])){
                     $aryAttachmentConvertOptions['permalink'] = $aryOptions['include_attachments']['permalink'];
                     $aryAttachmentConvertOptions['foo'] = 'bar';
                 }
