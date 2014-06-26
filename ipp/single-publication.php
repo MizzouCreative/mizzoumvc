@@ -15,8 +15,9 @@ $aryPublicationOptions = array(
     'include_meta'      =>true,
     'format_date'       =>true,
     'date_format'       =>'F Y',
-    'include_attachments'=>array(
-        'permalink'=>'download'
+    'include_attachment_link'=>array(
+        'pullfrom'  => 'pdf',
+        'newkey'    => 'pdfURL'
     ),
 );
 
