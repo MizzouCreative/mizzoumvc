@@ -68,7 +68,7 @@ class MizzouPost extends PostBase
         //now that we're done we no longer need the original post
         unset($this->objOriginalPost);
 
-        if($aryOptions['include_image']){
+        if($this->aryOptions['include_image']){
             $this->getFeaturedImage();
         }
     }
