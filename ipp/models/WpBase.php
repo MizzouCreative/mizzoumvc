@@ -46,6 +46,7 @@ class WpBase
         'passthru'          => null,
         'format_date'       => false,
         'resort'            => false,
+        'include_attachments'=> false,
     );
 
     protected $strArchivePermalink  = '';
@@ -221,6 +222,7 @@ class WpBase
 
         /**
          * Do we need to include an attachment URL?
+         * @todo can we do something to combine this with the include_attachments area below?
          */
         if(isset($aryOptions['include_attachment_link'])){
             if(isset($aryOptions['include_attachment_link']['pullfrom'])
@@ -238,7 +240,7 @@ class WpBase
         }
 
         /**
-         * Do we need to include a subobject?
+         * Do we need to include a subobject? These should be RELATED subobjects, not things like images or attachments
          *
          * @todo Do/will we ever need the ability to include related objects outside this method?
          * @todo I dont like relying on get_post here...
@@ -273,6 +275,22 @@ class WpBase
                  */
                 _mizzou_log($aryOptions,'well something went wrong in our checks. Here are the options we were working with',false,array('func'=>__FUNCTION__));
             }
+        }
+
+
+        if($aryOptions['include_attachments']){
+            $aryAttachmentOptions = array(
+                'post_type'     => 'attachment',
+                'posts_per_page'=>-1,
+                'post_parent'   => $objMizzouPost->ID
+            );
+
+            $aryAttachments = get_posts($aryAttachmentOptions);
+
+            if(count($aryAttachments) > 0){
+                $objMizzouPost->add_data('attachments',$this->convertPosts($aryAttachments));
+            }
+
         }
 
         return $objMizzouPost;
