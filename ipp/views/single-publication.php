@@ -36,10 +36,11 @@
 <p><a href="<?php echo $objMainPost->link; ?>">View this publication at <?php echo $objMainPost->link; ?></a></p>
 <?php endif; ?>
 
+<?php if($objMainPost->pdfURL != '') : ?>
+    <p><a href="<?php echo $objMainPost->pdfURL; ?>" title="Download <?php echo $objMainPost->title; ?>">Download</a> </p>
+<?php endif; ?>
+
 <?php if($strMorePublications != '') : ?>
 <p>More publications from <?php echo $strMorePublications; ?></p>
 <?php endif; ?>
 </div>
-<xmp>
-    <?php var_export($objMainPost); ?>
-</xmp>
