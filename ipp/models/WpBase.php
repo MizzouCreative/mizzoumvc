@@ -191,7 +191,15 @@ class WpBase
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
 
         /**
-         * We need a new array of options to give to the MizzouPost object that contains include_meta, and include_image
+         * We need a new array of options to give to the MizzouPost object that contains
+         *  - include_meta
+         *      - meta_prefix
+         *      - suppress_empty
+         *  - include_image
+         *  - excerpt_length
+         *  - format_date
+         *  - date_format
+         *  - permalink
          * which are available
          * @todo the possible options for MizzouPost is growing, so how do we allow those options to expand without
          * having to manually match them here?
@@ -211,11 +219,15 @@ class WpBase
 
         /**
          * If they've set format_date to true, then what we want is to merge the keys format_date and date_format with
-         * their respective values into our MizzouPostOptions arreay. We should already have them in the larger aryOptions, but
+         * their respective values into our MizzouPostOptions array. We should already have them in the larger aryOptions, but
          * we want just those two keys.
          */
         if($aryOptions['format_date']){
             $aryMizzouPostOptions = array_merge($aryMizzouPostOptions,array_intersect_key($aryOptions,array_flip(array('format_date','date_format'))));
+        }
+
+        if(isset($aryOptions['permalink'])){
+            $aryMizzouPostOptions['permalink'] = $aryOptions['permalink'];
         }
 
         $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
@@ -294,7 +306,7 @@ class WpBase
             if(count($aryAttachments) > 0){
                 $aryAttachmentConvertOptions = array();
                 if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['download'])){
-                    $aryAttachmentConvertOptions['download'] = $aryOptions['include_attachments']['download'];
+                    $aryAttachmentConvertOptions['permalink'] = $aryOptions['include_attachments']['permalink'];
                     $aryAttachmentConvertOptions['foo'] = 'bar';
                 }
                 _mizzou_log($aryAttachmentConvertOptions,'getting ready to convert some attachments. here are the options im passing over');
