@@ -33,6 +33,7 @@ class MizzouPost extends PostBase
         'include_meta'  => false,
         'include_image' => false,
         'excerpt_length'=> 55, //same as wordpress' default
+        'download'      => false,
     );
 
     /**
@@ -242,7 +243,12 @@ class MizzouPost extends PostBase
 
     private function _setPermalink()
     {
-        $this->add_data('permalink',get_permalink($this->ID));
+        if($this->post_type == 'attachment' && $this->aryOptions['download']){
+            $strPermalink = get_attachment_link($this->ID);
+        } else {
+            $strPermalink = get_permalink($this->ID);
+        }
+        $this->add_data('permalink',$strPermalink);
     }
 
     private function _setPostFormat()
