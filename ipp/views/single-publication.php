@@ -40,3 +40,6 @@
 <p>More publications from <?php echo $strMorePublications; ?></p>
 <?php endif; ?>
 </div>
+<xmp>
+    <?php var_export($objMainPost); ?>
+</xmp>
