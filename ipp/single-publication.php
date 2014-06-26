@@ -16,7 +16,7 @@ $aryPublicationOptions = array(
     'format_date'       =>true,
     'date_format'       =>'F Y',
     'include_attachments'=>array(
-        'download'=>true
+        'permalink'=>'download'
     ),
 );
 
