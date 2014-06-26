@@ -31,7 +31,7 @@ class MizzouPost extends PostBase
         'date_format'   => 'F, j Y',
         'suppress_empty'=> false,
         'include_meta'  => false,
-        'include_image' => false,
+        'include_image' => true,
         'excerpt_length'=> 55, //same as wordpress' default
         'permalink'      => 'page',
     );
