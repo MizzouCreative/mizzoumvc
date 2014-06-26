@@ -278,7 +278,10 @@ class WpBase
         }
 
 
-        if($aryOptions['include_attachments']){
+        /**
+         * include_attachments can either be true, or it can be array with further options
+         */
+        if(is_array($aryOptions['include_attachments']) || (is_bool($aryOptions['include_attachments']) && $aryOptions['include_attachments'])){
             $aryAttachmentOptions = array(
                 'post_type'     => 'attachment',
                 'posts_per_page'=>-1,
@@ -288,7 +291,11 @@ class WpBase
             $aryAttachments = get_posts($aryAttachmentOptions);
 
             if(count($aryAttachments) > 0){
-                $objMizzouPost->add_data('attachments',$this->convertPosts($aryAttachments));
+                $aryAttachmentConvertOptions = array();
+                if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['download'])){
+                    $aryAttachmentConvertOptions['download'] = $aryOptions['include_attachments']['download'];
+                }
+                $objMizzouPost->add_data('attachments',$this->convertPosts($aryAttachments,$aryAttachmentConvertOptions));
             }
 
         }
