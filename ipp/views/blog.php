@@ -42,7 +42,6 @@ $intLastColumn = $intDesiredColumns - 1;
 
                         <p class="post-excerpt"><?php echo $objPost->excerpt; ?></p>
                     </a>
-
                 </div>
             </div>
             <?php if($intCounter == $intLastColumn ) : $intCounter = 0;?>
