@@ -55,6 +55,9 @@ $boolH1Class = false;
 
 
     <?php
+        /**
+         * @todo capture the contents of the function and move the functionality up to the controller
+         */
         if (is_user_logged_in()) {
             comments_template();
         }
