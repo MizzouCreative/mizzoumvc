@@ -11,7 +11,14 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 
 $objPublicationModel = new Publication();
 $aryData = array();
-$aryPosts = $objPublicationModel->convertPosts(array($post),array('include_meta'=>true, 'format_date'=>true,'date_format'=>'F Y'));
+$aryPublicationOptions = array(
+    'include_meta'      =>true,
+    'format_date'       =>true,
+    'date_format'       =>'F Y',
+    'include_attachments'=>true,
+);
+
+$aryPosts = $objPublicationModel->convertPosts(array($post),$aryPublicationOptions);
 $aryData['objMainPost'] = $aryPosts[0];
 
 /**
