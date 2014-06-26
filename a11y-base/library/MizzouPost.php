@@ -52,19 +52,12 @@ class MizzouPost extends PostBase
 
     public function __construct($mxdPost, $aryOptions = array())
     {
-        if($mxdPost->post_type == 'attachment' && isset($aryOptions['foo'])){
+        if($mxdPost->post_type == 'attachment'){
             _mizzou_log($aryOptions,'aryOptions as passed into MizzouPost');
-        } else {
-            _mizzou_log($mxdPost->post_type,'if we arent dealing with an attachment, what are dealing with');
-            _mizzou_log($aryOptions,'if the post type is attachment, what are the options?');
         }
 
         parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
-
-        if($mxdPost->post_type == 'attachment' && isset($aryOptions['foo'])){
-            _mizzou_log($this->aryOptions,'our options after merging in MizzouPost');
-        }
 
         $this->_setMembers($this->objOriginalPost);
 
@@ -254,7 +247,7 @@ class MizzouPost extends PostBase
     private function _setPermalink()
     {
         if($this->post_type == 'attachment' && $this->aryOptions['permalink'] == 'download'){
-            $strPermalink = get_attachment_link($this->ID);
+            $strPermalink = wp_get_attachment_url($this->ID);
         } else {
             $strPermalink = get_permalink($this->ID);
         }
