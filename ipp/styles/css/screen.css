@@ -800,6 +800,71 @@ div.aligncenter {
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
 }
+.policy-area-description {
+  margin-bottom: 72px;
+  margin-bottom: 4rem;
+}
+#content h3.projects,
+#content h3.publications {
+  padding-top: 18px;
+  padding-right: 18px;
+  padding-bottom: 18px;
+  padding-left: 18px;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  margin-bottom: 0px;
+  margin-bottom: 0rem;
+  background: #f1b82d;
+  color: #555555;
+  border-radius: 9px 9px 0px 0px;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+  background-clip: padding-box;
+  border-bottom: 1px solid #d39a0e;
+  font-weight: 300;
+}
+#content ul.portfolio-list {
+  margin-top: 0;
+}
+#content ul.portfolio-list li {
+  padding: 0;
+  margin: 0;
+}
+#content ul.portfolio-list li a {
+  display: block;
+  border-bottom: 1px solid #dddddd;
+  padding-top: 18px;
+  padding-right: 9px;
+  padding-bottom: 18px;
+  padding-left: 18px;
+  padding-top: 1rem;
+  padding-right: 0.5rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  /*         .rem(margin-bottom,.5); */
+  /*                     background: @smoke; */
+  /*                 .radius(.25,.25,.25,.25); */
+  text-decoration: none;
+}
+#content ul.portfolio-list li a:hover {
+  background: #f4f4f4;
+}
+#content ul.portfolio-list li a.archive-link {
+  border-radius: 0px 0px 9px 9px;
+  border-radius: 0rem 0rem 0.5rem 0.5rem;
+  background-clip: padding-box;
+  padding-top: 18px;
+  padding-right: 18px;
+  padding-bottom: 18px;
+  padding-left: 18px;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  background: #fcf1d4;
+  border-bottom: 1px solid #f1b82d;
+}
 @media screen and (max-width: 740px) {
   .post-wrapper.span3 {
     width: 31.3333333% !important;
@@ -857,6 +922,8 @@ hr {
   margin-top: 1rem;
   margin-bottom: 18px;
   margin-bottom: 1rem;
+  border: none;
+  border-top: 1px solid #ccc;
 }
 pre {
   margin: 0;
@@ -941,8 +1008,6 @@ ins {
 }
 .featured-image-wrapper,
 .post-shortcode-wrapper {
-  margin-left: -14%;
-  margin-right: -14.66667%;
   display: block;
   position: relative;
   z-index: 100;
@@ -1088,24 +1153,24 @@ a:focus {
   font-size: 2rem;
   padding-top: 18px;
   padding-right: 18px;
-  padding-bottom: 36px;
+  padding-bottom: 18px;
   padding-left: 18px;
   padding-top: 1rem;
   padding-right: 1rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
   padding-left: 1rem;
   margin-top: -216px;
   margin-right: 18px;
-  margin-bottom: 0px;
+  margin-bottom: 18px;
   margin-left: -18px;
   margin-top: -12rem;
   margin-right: 1rem;
-  margin-bottom: 0rem;
+  margin-bottom: 1rem;
   margin-left: -1rem;
   letter-spacing: -1px;
   text-decoration: none;
-  border-radius: 9px 9px 0px 0px;
-  border-radius: 0.5rem 0.5rem 0rem 0rem;
+  border-radius: 0px 9px 0px 0px;
+  border-radius: 0rem 0.5rem 0rem 0rem;
   background-clip: padding-box;
 }
 @media only screen and (max-width: 385px) {
@@ -1529,6 +1594,16 @@ Interface Elements
   color: #fff;
   text-decoration: none;
 }
+.gray {
+  background: #f4f4f4;
+  border-radius: 9px 9px 9px 9px;
+  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  background-clip: padding-box;
+  padding-top: 18px;
+  padding-top: 1rem;
+  padding-bottom: 9px;
+  padding-bottom: 0.5rem;
+}
 .banner {
   display: block;
   position: relative;
@@ -1776,6 +1851,9 @@ Interface Elements
 #content .address_2 {
   font-weight: 400;
   color: #555555;
+}
+#content .email a {
+  word-break: break-all;
 }
 #content ol.contact.single-person li.address_1,
 #content ol.contact.single-person li.office-label {

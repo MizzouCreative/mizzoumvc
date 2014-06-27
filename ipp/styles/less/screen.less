@@ -32,6 +32,8 @@ hr {
 	display: block;
 	.rem(margin-top,1);
 	.rem(margin-bottom,1);
+	border: none;
+	border-top: 1px solid #ccc;
 	}
 
 
@@ -109,8 +111,6 @@ ins {
 
 .featured-image-wrapper,
 .post-shortcode-wrapper {
-	margin-left: -14%;
-	margin-right: -14.66667%;
 	display: block;
 	position: relative;
 	z-index: 100
@@ -255,11 +255,11 @@ a:focus {
 			background: #fff;
 			font-weight: 900;
 			.rem (font-size,2);
-			.space (padding, 1, 1, 2, 1);
-			.space (margin, -12, 1, 0, -1);
+			.space (padding, 1, 1, 1, 1);
+			.space (margin, -12, 1, 1, -1);
 			letter-spacing:-1px; 
 			text-decoration:none; 
-			.radius (.5,.5,0,0);
+			.radius (0,.5,0,0);
 	
 			@media @mq-small {
 					margin-top: 0;
@@ -685,6 +685,12 @@ Interface Elements
 	text-decoration: none;
 }
 
+.gray {
+    background: @smoke;
+    .radius(.5,.5,.5,.5);
+    .rem(padding-top, 1);
+    .rem(padding-bottom, .5);
+}
 
 // MU Mark controls
 @import url('banner.less'); // Styles for the MU Branding
