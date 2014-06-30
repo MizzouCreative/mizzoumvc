@@ -34,8 +34,9 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
         'graduate-research-assistants'
     );
 
-    $boolIncludeNoIndex = false;
-    $boolIncludeSidebar = false;
+    $boolIncludeNoIndex             = false;
+    $boolIncludeSidebar             = false;
+    $boolIncludeImageAboveHeader    = false;
 
     //convert all the data for the inner view into variables
     extract($aryData);
@@ -78,8 +79,12 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
         $boolIncludeSidebar = true;
     }
 
+    if($objMainPost->post_type == 'page' && $objMainPost->image != ''){
+        $boolIncludeImageAboveHeader = true;
+    }
+
     /**
-     * This one is a big of a bugger...
+     * This one is a bit of a bugger...
      * If we have access to the MainPost object AND either noindex or nolink is set and ON
      * OR
      * we're on a 404 page
