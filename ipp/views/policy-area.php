@@ -30,14 +30,14 @@
 */
 ?>
 
-<div class="span8 right-offset1">
+<div class="span7 right-offset1">
     <section aria-label="content" role="region">
         <div class="policy-area-description">
             <?php echo $objMainPost->content; ?>
         </div>
     </section>
     
-    <div class="span4 alpha">
+    <div class="left-half">
         <?php if (count($aryRelatedProjects) > 0) : ?>
             <section>
                 <h3 class="projects">Related Projects</h3>
@@ -51,7 +51,7 @@
         <?php endif; ?>
     </div><!-- end span4 -->
     
-    <div class="span4 omega">
+    <div class="right-half">
         <?php if (count($aryRelatedPublications) > 0) : ?>
             <section>
                 <h3 class="publications">Related Publications</h3>
@@ -69,7 +69,7 @@
 </div>
 
 
-<div class="span3 pad gray">
+<div class="span4 pad gray">
                 
     <?php if(isset($objMainContact) && is_object($objMainContact)): ?>
         <section>
@@ -81,9 +81,9 @@
 	                        <img src="<?php echo $objMainContact->image->src_medium; ?>" width="static?" height="static?" alt="<?php echo $objMainContact->image->alt; ?>">
 	                    </a>
 	                </div>
-	                <div class="span2 two-thirds omega">
+	                <div class="span3 two-thirds omega">
 	            <?php } else { ?>
-	                <div class="span3 alpha">
+	                <div class="span4 alpha">
 	            <?php } ?>
 	    
 	                <ol class="contact nobullet">
