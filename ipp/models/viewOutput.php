@@ -22,7 +22,10 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
 {
     $aryDefaultOptions = array(
         'include_sidebars'  => false,
+        'override_outerview'=>false,
     );
+
+    $aryOptions = array_merge($aryDefaultOptions,$aryOptions);
 
     $aryIncludeSidebarPages = array(
         'about',
@@ -143,16 +146,19 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
 
     //now we need to start getting everyhing
 
-    _mizzou_log($strInnerView,'attempting to get: ');
+    //_mizzou_log($strInnerView,'attempting to get: ');
     //get contents from the inner view
-    if(file_exists($strInnerView)){
-        ob_start();
-        require_once $strInnerView;
-        $strInnerViewContent = ob_get_contents();
-        ob_end_clean();
-    } else {
-        $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
+    if(!$aryOptions['override_outerview']){
+        if(file_exists($strInnerView)){
+            ob_start();
+            require_once $strInnerView;
+            $strInnerViewContent = ob_get_contents();
+            ob_end_clean();
+        } else {
+            $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
+        }
     }
+
 
 
     /**
@@ -176,7 +182,12 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
         get_sidebar();
     }
 
-    require_once $strViewsPath . 'outerView.php';
+    if($aryOptions['override_outerview']){
+        require_once $strInnerView;
+    } else {
+        require_once $strViewsPath . 'outerView.php';
+    }
+
 
     // replaces get_footer();
     require_once $strViewsPath . 'footer.php';
