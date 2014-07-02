@@ -31,12 +31,12 @@ $arySlides = $objSlide->retrieveContent($arySlideOptions);
 $aryData['objSlide'] = (count($arySlides) == 1) ? $arySlides[0] : '';
 
 //now we need to get the widgets.
-$aryWidgets = array();
+$aryData['aryWidgets'] = array();
 foreach($aryWidgetNames as $strWidgetName){
     /**
      * @todo migrate this into a front page model
      */
-    $aryWidgets[$strWidgetName] = mizzouCaptureOutput('dynamic_sidebar',array($strWidgetName));
+    $aryData['aryWidgets'][$strWidgetName] = mizzouCaptureOutput('dynamic_sidebar',array($strWidgetName));
 }
 
 mizzouOutPutView('front-page',$aryData,array('override_outerview'=>true));
