@@ -8,5 +8,5 @@
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'WpBase.php';
 
 class Slide extends WpBase {
-    protected $strPostType = 'project';
+    protected $strPostType = 'slide';
 } 
