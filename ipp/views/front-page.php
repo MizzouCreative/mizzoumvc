@@ -44,9 +44,11 @@
             </div><!-- end .span8 -->
 
             <div class="span4">
-                <?php dynamic_sidebar( 'primary-widget' ); ?>
-
-                <?php dynamic_sidebar('home_right')  ?>
+            <?php if(count($aryWidgets) > 0) : ?>
+                <?php foreach($aryWidgets as $strWidget) : ?>
+                    <?php echo $strWidget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             </div>
 
 
