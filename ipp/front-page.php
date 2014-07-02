@@ -12,6 +12,11 @@ $aryData = array();
 $aryWidgetNames = array('primary-widget','home_right');
 
 $objSlide = new Slide();
+
+global $post;
+$aryData['objMainPost'] = new MizzouPost($post);
+
+
 /**
  * @todo will we ever use slides anywhere besides on the front page?
  * @todo will we ever want slides and NOT include meta or images? if no, then move these into the Slide class
