@@ -6,6 +6,11 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'models'.DIRECTORY_SEPARA
 
 $aryData = array();
 
+/**
+ * @todo use ThemeOptions class to dynamically pull list of widgets to display
+ */
+$aryWidgetNames = array('primary-widget','home_right');
+
 $objSlide = new Slide();
 /**
  * @todo will we ever use slides anywhere besides on the front page?
@@ -19,6 +24,15 @@ $arySlideOptions = array(
 $arySlides = $objSlide->retrieveContent($arySlideOptions);
 
 $aryData['objSlide'] = (count($arySlides) == 1) ? $arySlides[0] : '';
+
+//now we need to get the widgets.
+$aryWidgets = array();
+foreach($aryWidgetNames as $strWidgetName){
+    /**
+     * @todo migrate this into a front page model
+     */
+    $aryWidgets[$strWidgetName] = mizzouCaptureOutput('dynamic_sidebar',array($strWidgetName));
+}
 
 mizzouOutPutView('front-page',$aryData,array('override_outerview'=>true));
 
