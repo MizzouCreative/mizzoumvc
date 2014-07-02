@@ -4,6 +4,8 @@
  * displays the Blog Posts Index or a static page. The Front Page template takes
  * precedence over the Blog Posts Index (Home) template.
  *
+ * objSlide
+ * aryWidgets
  *
  * @package WordPress
  * @subpackage IPP
