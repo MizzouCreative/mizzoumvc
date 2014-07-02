@@ -218,7 +218,7 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
         $strPageTitle = strip_tags($strPageTitle);
     }
 
-    if(!empty($strPageTitle && $strPageTitle != '')){
+    if(!empty($strPageTitle) && $strPageTitle != ''){
         $aryTitle[] = $strPageTitle;
     }
 
