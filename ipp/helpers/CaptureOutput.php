@@ -23,6 +23,8 @@ function mizzouCaptureOutput($strCallBack,$aryOptions=array())
         call_user_func_array($strCallBack,$aryOptions);
         $strReturn = ob_get_contents();
         ob_end_clean();
+    } else {
+        _mizzou_log($strCallBack,'you asked me to call but i cant');
     }
 
     return $strReturn;
