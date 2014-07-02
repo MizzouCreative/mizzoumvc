@@ -20,3 +20,5 @@ $arySlides = $objSlide->retrieveContent($arySlideOptions);
 
 $aryData['objSlide'] = (count($arySlides) == 1) ? $arySlides[0] : '';
 
+mizzouOutPutView('front-page',$aryData,array('override_outerview'=>true));
+
