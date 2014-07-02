@@ -218,7 +218,10 @@ function determineHeaderTitle($strPageTitle=null,$strSiteName = '')
         $strPageTitle = strip_tags($strPageTitle);
     }
 
-    $aryTitle[] = $strPageTitle;
+    if(!empty($strPageTitle && $strPageTitle != '')){
+        $aryTitle[] = $strPageTitle;
+    }
+
 
     if(is_archive() || is_single()){
         //ok, we have a lot of different archives to deal with. let's separate out the single
