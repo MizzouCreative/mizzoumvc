@@ -283,7 +283,8 @@ class MizzouPost extends PostBase
     {
         $aryDefaults = array(
             'meta_prefix'   => $this->strPostPrefix,
-            'suppress_empty'=> $this->aryOptions['suppress_empty']
+            'suppress_empty'=> $this->aryOptions['suppress_empty'],
+            'capture_widgets'=>false,
         );
 
         if(is_array($this->aryOptions['include_meta'])){
@@ -298,6 +299,20 @@ class MizzouPost extends PostBase
         $this->_reformatMetaData($aryOptions);
         $this->_consolidateMetaGroups($aryOptions);
 
+        if($aryOptions['capture_widgets'] && isset($this->widget) && count($this->widget) > 0){
+
+        }
+
+    }
+
+    private function _captureWidgetOutput()
+    {
+        $aryWidgets = array();
+        foreach($this->widget as $strWidgetName){
+            $aryWidgets[$strWidgetName] = $this->_captureOutput('dynamic_sidebar',array($strWidgetName));
+        }
+
+        $this->add_data('widgets',$aryWidgets);
     }
 
     private function _processExcerpt()
