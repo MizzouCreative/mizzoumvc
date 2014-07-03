@@ -16,7 +16,7 @@ $aryWidgetNames = array('primary-widget','home_right');
 $objSlide = new Slide();
 
 global $post;
-$aryData['objMainPost'] = new MizzouPost($post,array('include_meta'=>array('meta_prefix'=>'page_')));
+$aryData['objMainPost'] = new MizzouPost($post,array('include_meta'=>array('meta_prefix'=>'page_','capture_widgets'=>true)));
 _mizzou_log($aryData['objMainPost'],'the main post object when on the front page');
 
 /**
