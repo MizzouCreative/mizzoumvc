@@ -8,6 +8,8 @@ $aryData = array();
 
 /**
  * @todo use ThemeOptions class to dynamically pull list of widgets to display
+ * Actually, it makes more sense to have the widgets be part of the post/page object and then let content owners
+ * choose widgets on the page where they should appear./
  */
 $aryWidgetNames = array('primary-widget','home_right');
 
@@ -15,7 +17,7 @@ $objSlide = new Slide();
 
 global $post;
 $aryData['objMainPost'] = new MizzouPost($post);
-
+_mizzou_log($aryData['objMainPost'],'the main post object when on the front page');
 
 /**
  * @todo will we ever use slides anywhere besides on the front page?
