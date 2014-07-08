@@ -16,3 +16,4 @@ $aryData = array();
 $objWpBase = new WpBase();
 
 $aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
+mizzouOutPutView('blog',$aryData);
