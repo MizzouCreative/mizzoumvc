@@ -371,36 +371,37 @@
         
         margin-top: 0;
         
-            li {
-                padding: 0;
-                margin: 0;
+        li {
+            padding: 0;
+            margin: 0;
 
-                a {
-                    display: block;
-                    border-bottom: 1px solid @gray-light;
-                    .space(padding,1,.5,1,1);
-            /*         .rem(margin-bottom,.5); */
+            a {
+                display: block;
+                border-bottom: 1px solid @gray-light;
+                .space(padding,1,.5,1,1);
+        /*         .rem(margin-bottom,.5); */
 /*                     background: @smoke; */
-    /*                 .radius(.25,.25,.25,.25); */
-                    text-decoration: none;
+/*                 .radius(.25,.25,.25,.25); */
+                text-decoration: none;
 
-                    &:hover {
-                        background: @smoke;
-                    }
-
-                    &.archive-link {
-                        .radius(0,0,.5,.5);
-                        .space(padding,1,1,1,1);
-                        background: @mu-gold-light;
-                        border-bottom: 1px solid @mu-gold;
-                    }
-                    
+                &:hover {
+                    background: @smoke;
                 }
-        
-        }
+
+                &.archive-link {
+                    .radius(0,0,.5,.5);
+                    .space(padding,1,1,1,1);
+                    background: @mu-gold-light;
+                    border-bottom: 1px solid @mu-gold;
+                }
+                
+            } // end a
     
-    }
-}
+        } // end li
+    
+    } // end ul.portfolio-list
+    
+} // #content
 
 
 @media @mq-mobile {
