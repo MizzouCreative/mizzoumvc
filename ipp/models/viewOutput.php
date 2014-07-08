@@ -329,7 +329,12 @@ function determinePagePath($strPageTitle,$strSiteName='')
                         $strYearURL = get_year_link($strYear);
                         //pass-through done intentionally
                     case 'month':
-                        $aryPath[$strMonth] = $strMonthURL;
+                        /**
+                         * $strMonth is the numeric representation of our month (e.g. 06), but we'll want it in text
+                         * format
+                         */
+                        $objDate = DateTime::createFromFormat('!m',$strMonth);
+                        $aryPath[$objDate->format('F')] = $strMonthURL;
                         if(is_null($strYearURL)) $strYearURL = get_year_link($strYear);
                         //pass-through done intentionally
                     case 'year':
