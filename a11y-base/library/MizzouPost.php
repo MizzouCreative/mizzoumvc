@@ -34,6 +34,7 @@ class MizzouPost extends PostBase
         'include_image' => true,
         'excerpt_length'=> 55, //same as wordpress' default
         'permalink'      => 'page',
+        'title_override'=> false,
     );
 
     /**
