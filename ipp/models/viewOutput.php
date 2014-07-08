@@ -297,7 +297,8 @@ function determinePagePath($strPageTitle,$strSiteName='')
                  * @todo the name of the default post type should either be pulled dynamically or moved into the theme
                  * options so we can get it from there, not typed statically.
                  */
-                $aryPath['Blog'] = get_post_type_archive_link($strPostType);
+                //$aryPath['Blog'] = get_post_type_archive_link($strPostType);
+                $aryPath['Blog'] = get_permalink(get_option('page_for_posts'));
             }
 
         } else {
