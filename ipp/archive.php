@@ -16,4 +16,5 @@ $aryData = array();
 $objWpBase = new WpBase();
 
 $aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
+$aryData['strPageTitle'] = post_type_archive_title('',false);
 mizzouOutPutView('blog',$aryData);
