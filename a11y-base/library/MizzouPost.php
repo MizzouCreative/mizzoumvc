@@ -114,8 +114,10 @@ class MizzouPost extends PostBase
     {
         //we need the full pattern to use including the prefix, if applicable
         $strFullPattern = $this->_buildFullMetaGroupPattern($aryOptions['meta_prefix']);
+        _mizzou_log($strFullPattern,'the pattern I\'ll use to grep with',false,array('func'=>__FUNCTION__));
         //find all of the field keys that match our pattern
         $aryMetaGroupKeys = preg_grep($strFullPattern,array_keys($this->aryOriginalCustomData));
+        _mizzou_log($aryMetaGroupKeys,'matches i found from the grep');
         //loop through each match, pull out the group component and add it the group array
         foreach($aryMetaGroupKeys as $strKeyInGroup){
             if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
@@ -281,7 +283,8 @@ class MizzouPost extends PostBase
     {
         $aryDefaults = array(
             'meta_prefix'   => $this->strPostPrefix,
-            'suppress_empty'=> $this->aryOptions['suppress_empty']
+            'suppress_empty'=> $this->aryOptions['suppress_empty'],
+            'capture_widgets'=>false,
         );
 
         if(is_array($this->aryOptions['include_meta'])){
@@ -296,6 +299,20 @@ class MizzouPost extends PostBase
         $this->_reformatMetaData($aryOptions);
         $this->_consolidateMetaGroups($aryOptions);
 
+        if($aryOptions['capture_widgets'] && isset($this->widget) && count($this->widget) > 0){
+            $this->_captureWidgetOutput();
+        }
+
+    }
+
+    private function _captureWidgetOutput()
+    {
+        $aryWidgets = array();
+        foreach($this->widget as $strWidgetName){
+            $aryWidgets[$strWidgetName] = $this->_captureOutput('dynamic_sidebar',array($strWidgetName));
+        }
+
+        $this->add_data('widgets',$aryWidgets);
     }
 
     private function _processExcerpt()
