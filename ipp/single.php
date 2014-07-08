@@ -49,7 +49,7 @@ if (count($aryCategories) > 0) {
 
     if(count($objWPQuery->posts) > 0){
         $objPostModel = new WpBase();
-        $aryData['aryRelatedPosts'] = $objPostModel->convertPosts($aryRelatedPosts);
+        $aryData['aryRelatedPosts'] = $objPostModel->convertPosts($objWPQuery->posts);
     }
 }
 
