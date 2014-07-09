@@ -279,30 +279,28 @@ function determinePagePath($strPageTitle,$strSiteName='')
         $strPageTitle = strip_tags($strPageTitle);
     }
 
-    if(!empty($strPageTitle) && $strPageTitle != ''){
-        $aryPath[$strPageTitle] = null; //we dont include a URL for the page we are on
-    }
-
-
     if(is_archive() || is_single()){
         //ok, we have a lot of different archives to deal with. let's separate out the single
+        $strPostType = get_post_type();
+
+        if($strPostType != 'post'){
+            $objPostType = get_post_type_object($strPostType);
+            $strPostTypeName = $objPostType->labels->name;
+            $strPostTypeURL = get_post_type_archive_link($strPostType);
+        } else {
+            /**
+             * @todo the name of the default post type should either be pulled dynamically or moved into the theme
+             * options so we can get it from there, not typed statically.
+             */
+            $strPostTypeName = 'Blog';
+            $strPostTypeURL = get_permalink(get_option('page_for_posts'));
+        }
+
         if(is_single()){
-            //we need to figure out what post type it is
-            global $wp_query;
-            $strPostType = get_post_type();
-            if($strPostType != 'post'){
-                _mizzou_log($strPostType,'the post type of the single',false,array('func'=>__FUNCTION__));
-                $objPostType = get_post_type_object($strPostType);
-                _mizzou_log($objPostType,'the post type object');
-                $aryPath[$objPostType->labels->name] = get_post_type_archive_link($strPostType);
-            } else {
-                /**
-                 * @todo the name of the default post type should either be pulled dynamically or moved into the theme
-                 * options so we can get it from there, not typed statically.
-                 */
-                //$aryPath['Blog'] = get_post_type_archive_link($strPostType);
-                $aryPath['Blog'] = get_permalink(get_option('page_for_posts'));
+            if(!empty($strPageTitle) && $strPageTitle != ''){
+                $aryPath[$strPageTitle] = null; //we dont include a URL for the page we are on
             }
+            $aryPath[$strPostTypeName] = $strPostTypeURL;
 
         } else {
             /**
@@ -351,6 +349,9 @@ function determinePagePath($strPageTitle,$strSiteName='')
                         _mizzou_log($strDateArchiveType,'we are in a date archive, but if failed day, month and year checks',false,array('func'=>__FUNCTION__));
                         break;
                 }
+
+                $aryPath[$strPostTypeName] = $strPostTypeURL;
+
             } elseif(is_tax() || is_tag() || is_category()){
                 $strTerm = get_query_var('term');
                 $strTaxonomy = get_query_var('taxonomy');
