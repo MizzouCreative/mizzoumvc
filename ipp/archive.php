@@ -12,9 +12,21 @@ function mizzouDetermineArchiveTitle()
     $strPageTitle = '';
     if(is_date()){
 
+        if(is_day()){
+            $strTimeFormat = 'F j, Y';
+        } elseif(is_month()){
+            $strTimeFormat = 'F Y';
+        } elseif(is_year()){
+            $strTimeFormat = 'Y';
+        }
+
+        $strPageTitle = get_the_time($strTimeFormat) . ' Archive';
+
     } else {
         $strPageTitle = post_type_archive_title();
     }
+
+    return $strPageTitle;
 }
 
 global $wp_query;
@@ -27,5 +39,5 @@ $objWpBase = new WpBase();
 
 $aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
 //$aryData['strPageTitle'] = post_type_archive_title('',false);
-$aryData['strPageTitle'] = 'foobar';
+$aryData['strPageTitle'] = mizzouDetermineArchiveTitle();
 mizzouOutPutView('blog',$aryData);
