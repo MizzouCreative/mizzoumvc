@@ -350,18 +350,22 @@ function determinePagePath($strPageTitle,$strSiteName='')
                         break;
                 }
 
-                $aryPath[$strPostTypeName] = $strPostTypeURL;
-
             } elseif(is_tax() || is_tag() || is_category()){
                 $strTerm = get_query_var('term');
                 $strTaxonomy = get_query_var('taxonomy');
                 $objTaxonomy = get_taxonomy($strTaxonomy);
                 $objTerm = get_term_by('slug',$strTerm,$strTaxonomy);
+                /**
                 _mizzou_log($strTerm,'the cat/tag/tax term');
                 _mizzou_log($strTaxonomy,'the cat/tag/tax name');
                 _mizzou_log($objTaxonomy,'the taxonomy object');
                 _mizzou_log($objTerm,'the taxonomy term object');
+                */
+                $aryPath[$objTerm->name] = null;
+
             }
+
+            $aryPath[$strPostTypeName] = $strPostTypeURL;
 
         }
     } elseif(is_page()) {
