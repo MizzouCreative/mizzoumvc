@@ -83,7 +83,10 @@ function mizzouOutPutView($strInnerViewFileName,$aryData,$aryOptions=array())
         $boolIncludeSidebar = true;
     }
 
-    if($objMainPost->post_type == 'page' && $objMainPost->image != ''){
+    /**
+     * @todo Instead of checking to see if the MainPost->post_type is page, couldnt we just do is_page()?
+     */
+    if(isset($objMainPost) && $objMainPost->post_type == 'page' && $objMainPost->image != ''){
         $boolIncludeImageAboveHeader = true;
     }
 
