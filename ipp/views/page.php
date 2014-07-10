@@ -19,5 +19,8 @@
  */
 ?>
 <section aria-label="content" role="region">
-    <?php echo $objMainPost->content; ?>
+    <div class="span12">
+        <?php echo $objMainPost->content; ?>
+    </div>
+
 </section>
