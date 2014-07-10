@@ -23,6 +23,7 @@
  */
 ?>
 <section aria-label="content" role="region">
+    <div class="span12">
     <?php echo $objMainPost->content; ?>
     <?php if(isset($objFeaturedPost) && is_object($objFeaturedPost)) : ?>
         <div class="clearfix"></div>
@@ -31,4 +32,5 @@
             <a href="<?php echo $objFeaturedPost->permalink; ?>"><?php echo $objFeaturedPost->title; ?></a>
         </div>
     <?php endif; ?>
+    </div>
 </section>
