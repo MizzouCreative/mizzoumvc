@@ -116,7 +116,7 @@ class Content extends Base {
         //get the contents for the breadcrumbs
         $strBreadCrumbs = self::_captureOutput('breadcrumbs');
 
-        $strThemePath = $objSite->ActiveThemeURL;
+        $strThemePath = $objSite->ActiveThemePath;
         $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
         $strInnerView = $strViewsPath . $strInnerViewFileName . '.php';
 
