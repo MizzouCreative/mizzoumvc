@@ -16,8 +16,6 @@
  * of the designer.
  */
 
-$strFirstColumnClass = 'alpha';
-$strLastColumnClass = 'omega';
 $intDesiredColumns = 3;
 $intLastColumn = $intDesiredColumns - 1;
 ?>
@@ -32,7 +30,7 @@ $intLastColumn = $intDesiredColumns - 1;
                     $strColumnClass = $strLastColumnClass;
                 }
             ?>
-            <div class="span4 <?php echo $strColumnClass; ?>">
+            <div class="span4">
                 <div class="post-item">
                     <a class="clearfix post-link" href="<?php echo $objPost->permalink; ?>">
                         <?php if($objPost->image != ''){ ?>

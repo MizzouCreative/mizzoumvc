@@ -9,18 +9,14 @@
 }
 
 
-
 /* Slide  */
 
 
 .slide {
-	display: block;
 	.rem (margin-top,1.5);
 	.rem (margin-bottom,1);
 	position: relative;
-	overflow: hidden;
-	min-height: 460px;
-	.rem (max-height,2);
+	min-height: 360px;
 	background-position: center center;
 	background-size: cover;
 	-webkit-background-size: cover;
@@ -64,45 +60,66 @@
 
 	.slide-text {
 		position: absolute;
-		top: 0;
-		right: 0;
-		right: 0;
+
+		&.top {
+    		top: 0;
+        }
+	
+		&.bottom {
+            bottom: 0;
+        }
+
+		&.left {
+            float: left !important;
+        }
+		&.right {
+            float: right !important;
+            right: 0;
+        }
+		
+		
 	}
 
-	.slide-text h2 {
+	h2 {
 		display: inline-block;
-		.space (padding, 1, 1.5, 1, 1);
-
-		margin: 0 !important;
+		font-weight: @light;
+		.space (padding, .5, 1, .5, 1);
+		.space (margin, .5, .5, .75, .5);
 		height: auto;
 		color: #fff;
-		text-shadow: 0px 1px 5px #000;
+		text-shadow: 0px 0px 2px #000;
 		background: rgba(0,0,0,.5);
-		.radius (0,0,1,0);
+		.radius (.25,.25,.25,.25);
 		.transition3;
 	}
 
 
-	.slide-text p {
+	.slide-text h3 {
 		color: #fff;
 		text-shadow: 0px 1px 2px #5885AE;
-		margin: 0 !important;
-		.space(padding,1,1,0,1);
+		.space (margin, .5, .5, .75, 1.5);
+		.space(padding,1,1,0,0);
 		.rem (font-size,3.5);
 		.rem (line-height, 4);
 		font-weight: @light;
-		.transition3;
 	}
 
-	.slide-text h2 {
-		margin-bottom: 18px;
+	.slide-text p {
+		color: #fff;
+		text-shadow: 0px 0px 3px #5885AE;
+		.space (margin, .5, .5, .75, 1.5);
+		.space(padding,0,1,0,0);
+		.rem (font-size,1);
+		.rem (line-height, 1.5);
+		font-weight: @light;
 	}
+
 
 	
 	.slide-text .slide-content a {
 		background: rgba(0,0,0,.5);
-		.radius (.5,.5,.5,.5);
-		.space(padding,0,.5,0,.5);
+		.radius (.25,.25,.25,.25);
+		.space(padding,0,.25,0,.25);
 
 	}
 
@@ -122,90 +139,6 @@
 		// background: rgba(255,255,255,1);
 	}
 
-	.slide-text.left {
-		left: 0;
-	}
-	
-	.slide-text.bottom {
-		top: auto;
-		bottom: 0;
-	}
-
-	/* Top Left */
-	
-	.top.left.slide-text {
-		width: 33%;
-		background: rgba(255,255,255,.5);
-		.radius (0,0,1,0);
-	}
-	
-	.top.left.slide-text h2 {
-		.space(padding,1,1,1,0);
-	}
-	
-	.top.left.slide-text p {
-		margin: 0 !important;
-		.space(padding,1,1,1,1);
-		background: none;
-	}
-
-
-	/* Top Right */
-	
-	.top.right.slide-text {
-		width: 33%;
-		background: rgba(255,255,255,.5);
-		.radius (0,0,0,1);
-		text-align: right;
-	}
-	
-	.top.right.slide-text h2 {
-		.space(padding,1,0,1,1);
-		.radius (0,0,0,1);
-	}
-	
-	.top.right.slide-text p {
-		margin: 0 !important;
-		.space(padding,1,1,1,1);
-		background: none;
-	}
-	
-
-	a.clearfix:hover .top.right.slide-text p,
-	a.clearfix:focus .top.left.slide-text p
-	{
-		background: none;
-	}
-
-	/* Bottom Right */
-	
-	.bottom.right.slide-text {
-		right: 0;
-		width: 44%;
-		.radius (1,0,0,0);
-		text-align: right;
-	}
-	
-	.bottom.right.slide-text h2 {
-		margin: -1px !important;
-		.space(padding,1,0,0,1);
-		.radius (1,0,0,0);
-	}
-	
-	.bottom.right.slide-text p {
-		margin: 0 !important;
-		.space(padding,1,0,0,1);
-		.radius (1,0,0,0);
-		background: #fff;
-	}
-	
-	.bottom.left {
-		width: 76.3333333%;
-	}
-	
-	.bottom.left p {
-		.radius (0,1,0,0);
-	}
 
 } // end .slide
 
@@ -268,6 +201,8 @@
 
 }
 
+// Blog Post Archive
+
 .post-archive .post-item a.post-link {
 	.rem (min-height,3);
 	.radius (.5,.5,0,1);
@@ -280,19 +215,24 @@
 
 	a.post-link {
 		display: block;
+		overflow: hidden;
 		text-decoration: none;
 		min-height: 180px;
 		.rem (min-height,10);
 		background: #fff;
 		border: 1px solid @gray-light;
-		.space (padding, 1, 1, 2, 1);
 		.radius (1,1,0,2);
 		.transition8;
+
+    	img {
+    		.radius (.9,.9,0,0);
+    	}
+
 	}
 
 	a.post-link:hover,
 	a.post-link:focus{
-		color: @mu-gold-dark;
+		color: @charcoal;
 		border: 1px solid @mu-gold;
 		.transition3;
 	}
@@ -302,9 +242,12 @@
 		.rem (line-height,1.75);
 		font-weight: @light;
 		text-decoration: none;
-		.space(margin, 0, 0, .75, 0) !important;
+		.space(margin, 1, .5, .75, 1) !important;
 		padding: 0 !important;
 		
+	}
+	p.post-excerpt {
+		.space(margin, 0, .75, 1, 1) !important;
 	}
 
 	h4.post-title {
