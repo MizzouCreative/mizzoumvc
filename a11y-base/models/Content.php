@@ -125,7 +125,7 @@ class Content extends Base {
          * Also temporary
          * @todo dont let this go to production
          */
-        $strHeadTitle = self::_getHeadTitle($strPageTitle);
+        $strHeaderTitle = self::_getHeaderTitle($strPageTitle);
 
         $strThemePath = $objSite->ActiveThemePath;
         $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
@@ -329,7 +329,7 @@ class Content extends Base {
         return $aryPath;
     }
 
-    protected function _getHeadTitle($strPageTitle)
+    protected function _getHeaderTitle($strPageTitle)
     {
         $aryParts = self::_determinePagePath($strPageTitle);
         $aryPathKeys = array_keys($aryParts);
