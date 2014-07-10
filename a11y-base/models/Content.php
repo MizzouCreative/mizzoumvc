@@ -116,6 +116,12 @@ class Content extends Base {
         //get the contents for the breadcrumbs
         $strBreadCrumbs = self::_captureOutput('breadcrumbs');
 
+        /**
+         * Temporary setting of strPageTitle
+         * @todo dont let this go to production. Finish out the method
+         */
+        $strPageTitle = self::_determinePageTitle();
+
         $strThemePath = $objSite->ActiveThemePath;
         $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
         $strInnerView = $strViewsPath . $strInnerViewFileName . '.php';
@@ -165,5 +171,24 @@ class Content extends Base {
         // replaces get_footer();
         require_once $strViewsPath . 'footer.php';
 
+    }
+
+    protected function _determinePageTitle()
+    {
+        $strPageTitle = wp_title('',false);
+        if(is_archive()){
+            if(is_date()){
+
+            } else {
+                /**
+                 * If it isn't a dated archive, has it been filtered by a taxonomy?
+                 */
+                global $wp_query;
+                $objQueried = get_queried_object();
+                if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
+                    $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
+                }
+            }
+        }
     }
 } 
