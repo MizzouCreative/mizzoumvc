@@ -25,7 +25,7 @@
  *  -> Name (also accessible as $strSiteName)
  *  -> URL (also accessible as $strSiteURL)
  *  -> ParentThemeURL (also accessible as $strParentThemeURL)
- *  -> ChildThemeURL (also accessible as $strChildTheme)
+ *  -> ChildThemeURL (also accessible as $strChildThemeURL)
  *  -> ActiveStylesheet (also accessible as $strActiveStylesheet)
  *  -> ActiveThemeURL (also accessible as $strActiveThemeURL)
  *  -> TrackingCode (also accessible as $strTrackingCode)
@@ -48,7 +48,7 @@
     <!--[if ! lte IE 7]><!-->
     <link href="<?php echo $objSite->ActiveStylesheet;// $strActiveStylesheet; ?>" rel="stylesheet">
     <!--<![endif]-->
-    <link rel="shortcut icon" href="<?php echo $objSite->ActiveThemeURL;// $strActiveThemeURL; ?>/favicon.ico" />
+    <link rel="shortcut icon" href="<?php echo $objSite->ActiveThemeURL;// $strActiveThemeURL; ?>favicon.ico" />
 
     <?php if('' != $objSite->TrackingCode) : ?>
         <?php echo $objSite->TrackingCode;
@@ -83,7 +83,7 @@
                         <a href="http://missouri.edu/" title="University of Missouri home">
 								<span class="shield">
 									<svg width="108" height="62px">
-                                        <image xlink:href="<?php echo $objSite->ActiveThemeURL; //$strActiveThemeURL; ?>/images/mu-mark.svg" alt="MU Logo" src="<?php echo $objSite->ActiveThemeURL;// $strActiveThemeURL; ?>/images/mu-mark.png" width="108" height="62px"/>
+                                        <image xlink:href="<?php echo $objSite->ActiveThemeURL; //$strActiveThemeURL; ?>images/mu-mark.svg" alt="MU Logo" src="<?php echo $objSite->ActiveThemeURL;// $strActiveThemeURL; ?>images/mu-mark.png" width="108" height="62px"/>
                                     </svg>
 								</span>
 								<span class="text">
