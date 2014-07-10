@@ -148,12 +148,12 @@ class Site extends Base {
 
     private function _getParentThemePath()
     {
-        return get_template_directory();
+        return get_template_directory() . DIRECTORY_SEPARATOR;
     }
 
     private function _getChildThemePath()
     {
-        return get_stylesheet_directory();
+        return get_stylesheet_directory() . DIRECTORY_SEPARATOR;
     }
 
     private function _getChildThemeURL()
