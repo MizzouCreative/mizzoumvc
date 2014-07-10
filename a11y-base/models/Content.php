@@ -121,6 +121,11 @@ class Content extends Base {
          * @todo dont let this go to production. Finish out the method
          */
         $strPageTitle = self::_determinePageTitle();
+        /**
+         * Also temporary
+         * @todo dont let this go to production
+         */
+        $strHeadTitle = self::_getHeadTitle($strPageTitle);
 
         $strThemePath = $objSite->ActiveThemePath;
         $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
@@ -192,5 +197,142 @@ class Content extends Base {
         }
 
         return $strPageTitle;
+    }
+
+    protected function _determinePagePath($strPageTitle,$strSiteName='')
+    {
+        $aryPath = array();
+
+        if(is_null($strPageTitle)){
+            $strPageTitle = self::_determinePageTitle();
+        } else {
+            /**
+             * since we need this in the header, and its possible for the controller to manually set the page title, we
+             * need to make sure there isn't any html in the page title
+             */
+            $strPageTitle = strip_tags($strPageTitle);
+        }
+
+        if(is_archive() || is_single()){
+            //ok, we have a lot of different archives to deal with. let's separate out the single
+            $strPostType = get_post_type();
+
+            if($strPostType != 'post'){
+                $objPostType = get_post_type_object($strPostType);
+                $strPostTypeName = $objPostType->labels->name;
+                $strPostTypeURL = get_post_type_archive_link($strPostType);
+            } else {
+                /**
+                 * @todo the name of the default post type should either be pulled dynamically or moved into the theme
+                 * options so we can get it from there, not typed statically.
+                 */
+                $strPostTypeName = 'Blog';
+                $strPostTypeURL = get_permalink(get_option('page_for_posts'));
+            }
+
+            if(is_single()){
+                if(!empty($strPageTitle) && $strPageTitle != ''){
+                    $aryPath[$strPageTitle] = null; //we dont include a URL for the page we are on
+                }
+                $aryPath[$strPostTypeName] = $strPostTypeURL;
+
+            } else {
+                /**
+                 * ok, what type of archive are we dealing with. Also, seems silly that we have to check specifically for
+                 * category and tag considering they are just default taxonomies and dont really differ.
+                 */
+                if(is_date()){
+                    $strYear    = get_the_time('Y');
+                    $strYearURL = null;
+                    $strMonth   = get_the_time('m');
+                    $strMonthURL= null;
+
+                    $strDateArchiveType = null;
+
+                    if(is_day()){
+                        $strDateArchiveType = 'day';
+                    } elseif(is_month()){
+                        $strDateArchiveType = 'month';
+                    } elseif(is_year()){
+                        $strDateArchiveType = 'year';
+                    }
+
+                    switch($strDateArchiveType){
+                        case 'day':
+                            $aryPath[get_the_time('d')] = null;
+                            $strMonthURL = get_month_link($strYear,$strMonth);
+                            $strYearURL = get_year_link($strYear);
+                        //pass-through done intentionally
+                        case 'month':
+                            /**
+                             * $strMonth is the numeric representation of our month (e.g. 06), but we'll want it in text
+                             * format
+                             */
+                            $objDate = DateTime::createFromFormat('!m',$strMonth);
+                            $aryPath[$objDate->format('F')] = $strMonthURL;
+                            if(is_null($strYearURL)) $strYearURL = get_year_link($strYear);
+                        //pass-through done intentionally
+                        case 'year':
+                            $aryPath[$strYear] = $strYearURL;
+                            break;
+
+                        default:
+                            /**
+                             * @todo besides log, do we need to throw an exception?
+                             */
+                            _mizzou_log($strDateArchiveType,'we are in a date archive, but if failed day, month and year checks',false,array('func'=>__FUNCTION__));
+                            break;
+                    }
+
+                } elseif(is_tax() || is_tag() || is_category()){
+                    $strTerm = get_query_var('term');
+                    $strTaxonomy = get_query_var('taxonomy');
+                    $objTaxonomy = get_taxonomy($strTaxonomy);
+                    $objTerm = get_term_by('slug',$strTerm,$strTaxonomy);
+                    /**
+                    _mizzou_log($strTerm,'the cat/tag/tax term');
+                    _mizzou_log($strTaxonomy,'the cat/tag/tax name');
+                    _mizzou_log($objTaxonomy,'the taxonomy object');
+                    _mizzou_log($objTerm,'the taxonomy term object');
+                     */
+                    $aryPath[$objTerm->name] = null;
+
+                }
+
+                $aryPath[$strPostTypeName] = $strPostTypeURL;
+
+            }
+        } elseif(is_page()) {
+            //do sub sub pages need to have that information reflected in the title?
+        } else {
+            //it's not an archive a single, or a page. what do we have left?
+        }
+
+        /**
+         * @todo get this data from the site object
+         */
+        if($strSiteName == ''){
+            $strSiteName = get_bloginfo('name');
+        }
+
+        /**
+         * @todo get this data from the site object
+         */
+        $aryPath[$strSiteName] = home_url();
+
+        /**
+         * Inclusion of this information should be in a theme option
+         * @todo include theme option for this
+         */
+        $aryPath['University of Missouri'] = 'http://missouri.edu/';
+
+        return $aryPath;
+    }
+
+    protected function _getHeadTitle($strPageTitle)
+    {
+        $aryParts = self::_determinePagePath($strPageTitle);
+        $aryPathKeys = array_keys($aryParts);
+        return array_reverse($aryPathKeys);
     }
 } 
