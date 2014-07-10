@@ -36,6 +36,9 @@ class Site extends Base {
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
         $this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
+        $this->add_data('ParentThemePath',$this->_getParentThemePath());
+        $this->add_data('ChildThemePath',$this->_getChildThemePath());
+        $this->add_data('ActiveThemePath',$this->_getActiveThemePath());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('AudienceMenu',$this->_getAudienceMenu());
         $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
@@ -143,6 +146,16 @@ class Site extends Base {
         return get_template_directory_uri().'/';
     }
 
+    private function _getParentThemePath()
+    {
+        return get_template_directory();
+    }
+
+    private function _getChildThemePath()
+    {
+        return get_stylesheet_directory();
+    }
+
     private function _getChildThemeURL()
     {
         /**
@@ -170,6 +183,15 @@ class Site extends Base {
     {
 
         return ($this->ParentThemeURL == $this->ChildThemeURL) ? $this->ParentThemeURL : $this->ChildThemeURL;
+    }
+
+    protected function _getActiveThemePath()
+    {
+        if(is_child_theme()){
+            return $this->ChildThemePath;
+        } else {
+            return $this->ParentThemePath;
+        }
     }
 
     protected function _getTrackingCode()
