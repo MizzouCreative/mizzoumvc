@@ -34,4 +34,5 @@ require_once 'views' . DIRECTORY_SEPARATOR . 'projects-loop.php';
 $aryData['strLoopContent'] = ob_get_clean();
 
 //$aryData['strPageTitle'] = post_type_archive_title('',false);
-mizzouOutPutView('archive-project',$aryData);
+//mizzouOutPutView('archive-project',$aryData);
+Content::render('archive-project',$aryData);
