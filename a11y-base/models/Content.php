@@ -98,7 +98,7 @@ class Content extends Base {
 
         foreach($objSite->currentPublicMembers() as $strSiteKey){
             $strSiteVariable = '';
-            if(in_array($strSiteKey,self::$arySiteSiteMembersr)) {
+            if(in_array($strSiteKey,self::$arySiteSiteMembers)) {
                 $strSiteVariable = 'Site'.$strSiteKey;
             } else {
                 $strSiteVariable = $strSiteKey;
