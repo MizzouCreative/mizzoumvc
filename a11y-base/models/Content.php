@@ -333,6 +333,10 @@ class Content extends Base {
     {
         $aryParts = self::_determinePagePath($strPageTitle);
         $aryPathKeys = array_keys($aryParts);
-        return array_reverse($aryPathKeys);
+        $aryTitleParts = array_reverse($aryPathKeys);
+        /**
+         * @todo implosion glue should come from a theme option
+         */
+        return implode(' // ', $aryTitleParts);
     }
 } 
