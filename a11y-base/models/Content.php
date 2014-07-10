@@ -332,8 +332,7 @@ class Content extends Base {
     protected function _getHeaderTitle($strPageTitle)
     {
         $aryParts = self::_determinePagePath($strPageTitle);
-        $aryPathKeys = array_keys($aryParts);
-        $aryTitleParts = array_reverse($aryPathKeys);
+        $aryTitleParts = array_keys($aryParts);
         /**
          * @todo implosion glue should come from a theme option
          */
