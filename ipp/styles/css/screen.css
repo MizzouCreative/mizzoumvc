@@ -395,7 +395,7 @@ div.aligncenter {
   margin-bottom: 18px;
   margin-bottom: 1rem;
   position: relative;
-  min-height: 460px;
+  min-height: 360px;
   background-position: center center;
   background-size: cover;
   -webkit-background-size: cover;
@@ -433,35 +433,46 @@ div.aligncenter {
   color: #d39a0e !important;
 }
 .slide .slide-text {
-  position: relative;
-  right: 0;
+  position: absolute;
 }
 .slide .slide-text.top {
   top: 0;
 }
-.slide .slide-text.middle {
-  bottom: 0;
-}
 .slide .slide-text.bottom {
   bottom: 0;
 }
+.slide .slide-text.left {
+  float: left !important;
+}
+.slide .slide-text.right {
+  float: right !important;
+  right: 0;
+}
 .slide h2 {
   display: inline-block;
-  padding-top: 18px;
-  padding-right: 27px;
-  padding-bottom: 18px;
+  font-weight: 300;
+  padding-top: 9px;
+  padding-right: 18px;
+  padding-bottom: 9px;
   padding-left: 18px;
-  padding-top: 1rem;
-  padding-right: 1.5rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
   padding-left: 1rem;
-  margin: 0 !important;
+  margin-top: 9px;
+  margin-right: 9px;
+  margin-bottom: 13.5px;
+  margin-left: 9px;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-left: 0.5rem;
   height: auto;
   color: #fff;
-  text-shadow: 0px 1px 5px #000;
+  text-shadow: 0px 0px 2px #000;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 0px 0px 18px 0px;
-  border-radius: 0rem 0rem 1rem 0rem;
+  border-radius: 4.5px 4.5px 4.5px 4.5px;
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
   background-clip: padding-box;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
@@ -469,15 +480,22 @@ div.aligncenter {
 .slide .slide-text h3 {
   color: #fff;
   text-shadow: 0px 1px 2px #5885AE;
-  margin: 0 !important;
+  margin-top: 9px;
+  margin-right: 9px;
+  margin-bottom: 13.5px;
+  margin-left: 27px;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-left: 1.5rem;
   padding-top: 18px;
   padding-right: 18px;
   padding-bottom: 0px;
-  padding-left: 18px;
+  padding-left: 0px;
   padding-top: 1rem;
   padding-right: 1rem;
   padding-bottom: 0rem;
-  padding-left: 1rem;
+  padding-left: 0rem;
   font-size: 63px;
   font-size: 3.5rem;
   line-height: 72px;
@@ -485,17 +503,24 @@ div.aligncenter {
   font-weight: 300;
 }
 .slide .slide-text p {
-  color: #333;
-  text-shadow: 0px 1px 0px #fff;
-  margin: 0 !important;
-  padding-top: 18px;
+  color: #fff;
+  text-shadow: 0px 0px 3px #5885AE;
+  margin-top: 9px;
+  margin-right: 9px;
+  margin-bottom: 13.5px;
+  margin-left: 27px;
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.75rem;
+  margin-left: 1.5rem;
+  padding-top: 0px;
   padding-right: 18px;
   padding-bottom: 0px;
-  padding-left: 18px;
-  padding-top: 1rem;
+  padding-left: 0px;
+  padding-top: 0rem;
   padding-right: 1rem;
   padding-bottom: 0rem;
-  padding-left: 1rem;
+  padding-left: 0rem;
   font-size: 18px;
   font-size: 1rem;
   line-height: 27px;
@@ -504,17 +529,17 @@ div.aligncenter {
 }
 .slide .slide-text .slide-content a {
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 9px 9px 9px 9px;
-  border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border-radius: 4.5px 4.5px 4.5px 4.5px;
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
   background-clip: padding-box;
   padding-top: 0px;
-  padding-right: 9px;
+  padding-right: 4.5px;
   padding-bottom: 0px;
-  padding-left: 9px;
+  padding-left: 4.5px;
   padding-top: 0rem;
-  padding-right: 0.5rem;
+  padding-right: 0.25rem;
   padding-bottom: 0rem;
-  padding-left: 0.5rem;
+  padding-left: 0.25rem;
 }
 .slide .slide-text .slide-content a:hover,
 .slide .slide-text .slide-content a:focus {
@@ -605,28 +630,26 @@ div.aligncenter {
 }
 .post-item a.post-link {
   display: block;
+  overflow: hidden;
   text-decoration: none;
   min-height: 180px;
   min-height: 10rem;
   background: #fff;
   border: 1px solid #dddddd;
-  padding-top: 18px;
-  padding-right: 18px;
-  padding-bottom: 36px;
-  padding-left: 18px;
-  padding-top: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 2rem;
-  padding-left: 1rem;
   border-radius: 18px 18px 0px 36px;
   border-radius: 1rem 1rem 0rem 2rem;
   background-clip: padding-box;
   transition: 0.8s ease-in;
   transition-property: color, background, background-color, opacity, border;
 }
+.post-item a.post-link img {
+  border-radius: 16.2px 16.2px 0px 0px;
+  border-radius: 0.9rem 0.9rem 0rem 0rem;
+  background-clip: padding-box;
+}
 .post-item a.post-link:hover,
 .post-item a.post-link:focus {
-  color: #d39a0e;
+  color: #333333;
   border: 1px solid #f1b82d;
   transition: 0.3s ease-out;
   transition-property: color, background, background-color, opacity, border;
@@ -638,15 +661,25 @@ div.aligncenter {
   line-height: 1.75rem;
   font-weight: 300;
   text-decoration: none;
-  margin-top: 0px !important;
-  margin-right: 0px !important;
+  margin-top: 18px !important;
+  margin-right: 9px !important;
   margin-bottom: 13.5px !important;
-  margin-left: 0px !important;
-  margin-top: 0rem !important;
-  margin-right: 0rem !important;
+  margin-left: 18px !important;
+  margin-top: 1rem !important;
+  margin-right: 0.5rem !important;
   margin-bottom: 0.75rem !important;
-  margin-left: 0rem !important;
+  margin-left: 1rem !important;
   padding: 0 !important;
+}
+.post-item p.post-excerpt {
+  margin-top: 0px !important;
+  margin-right: 13.5px !important;
+  margin-bottom: 18px !important;
+  margin-left: 18px !important;
+  margin-top: 0rem !important;
+  margin-right: 0.75rem !important;
+  margin-bottom: 1rem !important;
+  margin-left: 1rem !important;
 }
 .post-item h4.post-title {
   line-height: 22.5px;
@@ -2782,12 +2815,12 @@ a.event-link:focus .calendar-month {
   font-size: 14.4px;
   font-size: 0.8rem;
 }
-.publication-item p.authors {
+.authors {
   color: #222222;
   font-size: 18px;
   font-size: 1rem;
 }
-.publication-item p.date {
+.date {
   margin-top: 0px;
   margin-top: 0rem;
   margin-right: 0px;

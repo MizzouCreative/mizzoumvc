@@ -26,21 +26,23 @@
  */
 ?>
 <div class="span8">
-<?php if($objMainPost->authors != '') : ?>
-<p class="authors"><?php echo $objMainPost->authors; ?></p>
-<?php endif; ?>
-<p class="date"><?php echo $objMainPost->formatted_date; ?></p>
-<?php echo $objMainPost->content; ?>
-
-<?php if($objMainPost->link != '') : ?>
-<p><a href="<?php echo $objMainPost->link; ?>">View this publication at <?php echo $objMainPost->link; ?></a></p>
-<?php endif; ?>
-
-<?php if($objMainPost->pdfURL != '') : ?>
-    <p><a href="<?php echo $objMainPost->pdfURL; ?>" title="Download <?php echo $objMainPost->title; ?>">Download</a> </p>
-<?php endif; ?>
-
-<?php if($strMorePublications != '') : ?>
-<p>More publications from <?php echo $strMorePublications; ?></p>
-<?php endif; ?>
+        <?php if($objMainPost->authors != '') : ?>
+            <p class="authors"><?php echo $objMainPost->authors; ?></p>
+        <?php endif; ?>
+        
+        <p class="date"><?php echo $objMainPost->formatted_date; ?></p>
+        
+        <?php echo $objMainPost->content; ?>
+        
+        <?php if($objMainPost->link != '') : ?>
+            <p><a href="<?php echo $objMainPost->link; ?>">View this publication at <?php echo $objMainPost->link; ?></a></p>
+        <?php endif; ?>
+        
+        <?php if($objMainPost->pdfURL != '') : ?>
+            <p><a href="<?php echo $objMainPost->pdfURL; ?>" title="Download PDF <?php echo $objMainPost->title; ?>">Download (PDF)</a> </p>
+        <?php endif; ?>
+        
+        <?php if($strMorePublications != '') : ?>
+            <p>More publications from <?php echo $strMorePublications; ?></p>
+        <?php endif; ?>
 </div>

@@ -19,25 +19,23 @@
 
         <article role="article">
 
-            <div class="span8">
+            <div class="span9">
                 
                 <?php if($objSlide != '') : ?>
            
-                    <div class="slide" style="background-image: url('<?php echo $objSlide->image->src_large; ?>')">
+                    <div class="slide" style="background-image: url('<?php echo $objSlide->image->src_large; ?>'); 
+                                              height: <?php echo $objSlide->text_height; ?>px;">
      
                         <?php if ($objSlide->link != '') : ?>
                             <a class="clearfix" href="<?php echo $objSlide->link; ?>">
                         <?php endif; ?>
                          
-                        <div class="<?php echo $objSlide->text_width; ?> alpha">
-    
-                            <div class="slide-text <?php echo $objSlide->text_position; ?>">
-                                <div class="slide-content">
-                                    <?php echo $objSlide->content; ?>
-                                </div>
+                        <div class="slide-text <?php echo $objSlide->text_position; ?> <?php echo $objSlide->text_width; ?> alpha omega">
+                            <div class="slide-content">
+                                <?php echo $objSlide->content; ?>
                             </div>
-                        
                         </div>
+                    
                         
                         <?php if ($objSlide->link != '') : ?>
                             </a>
@@ -46,7 +44,7 @@
                 </div><!-- end .slide  -->
             </div><!-- end .span8 -->
 
-            <div class="span4">
+            <div class="span3">
             <?php if(count($aryWidgets) > 0) : ?>
                 <?php foreach($aryWidgets as $strWidget) : ?>
                     <?php echo $strWidget; ?>
