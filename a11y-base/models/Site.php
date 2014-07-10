@@ -140,7 +140,7 @@ class Site extends Base {
 
     private function _getParentThemeURL()
     {
-        return get_template_directory_uri();
+        return get_template_directory_uri().'/';
     }
 
     private function _getChildThemeURL()
@@ -148,7 +148,7 @@ class Site extends Base {
         /**
          * get_stylesheet_directory_uri will return the URL of the active theme or child theme
          */
-        return get_stylesheet_directory_uri();
+        return get_stylesheet_directory_uri().'/';
     }
 
     private function _getActiveStylesheet()
