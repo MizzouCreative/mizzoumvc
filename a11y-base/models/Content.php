@@ -190,5 +190,7 @@ class Content extends Base {
                 }
             }
         }
+
+        return $strPageTitle;
     }
 } 
