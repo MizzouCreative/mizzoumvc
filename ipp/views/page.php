@@ -19,5 +19,7 @@
  */
 ?>
 <section aria-label="content" role="region">
-        <?php echo $objMainPost->content; ?>
+
+            <?php echo $objMainPost->content; ?>
+
 </section>
