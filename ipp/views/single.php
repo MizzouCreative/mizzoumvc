@@ -27,7 +27,7 @@
 
 <footer>
     <p class="postmetadata">Published
-        <time datetime="<?php echo date('c',$objMainPost->timestamp); // ISO 8601 ?>" pubdate>
+        <time datetime="<?php echo $objMainPost->iso8601_date; ?>" pubdate>
             <?php echo $objMainPost->formatted_date; ?>
         </time>
     </p>
