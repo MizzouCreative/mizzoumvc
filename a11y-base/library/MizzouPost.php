@@ -214,7 +214,13 @@ class MizzouPost extends PostBase
         $this->_setTitle();
         $this->_processExcerpt();
 
+        /**
+         * @todo why is this being done here directly instead of wrapped in a method?
+         */
         $this->aryData['timestamp'] = strtotime($this->aryData['date']);
+
+        $this->_setISO8601Date();
+
         /**
          * @todo maybe we should just always create a formatted date and simply allow the calling script to override
          * the format?
@@ -278,6 +284,11 @@ class MizzouPost extends PostBase
     {
         $this->aryData['formatted_date'] = date($this->aryOptions['date_format'],$this->aryData['timestamp']);
 
+    }
+
+    private function _setISO8601Date()
+    {
+        $this->aryData['iso8601_date'] = date('c',$this->aryData['timestamp']);
     }
 
     private function _handleMetaData()
