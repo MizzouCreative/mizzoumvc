@@ -33,8 +33,6 @@
     </p>
 </footer>
 
-</article>
-
 <?php if(count($aryRelatedPosts) > 0) : ?>
 
         <ol class="skip-links">
