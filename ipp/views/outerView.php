@@ -42,7 +42,7 @@ $strPreBreadcrumbDivContents = ($boolIncludeSidebar) ? 'flex span8' : 'span12';
                     </div>
                 <?php endif;?>
                 <header>
-                    <div class="span12">
+                    <div>
                         <h1 id="title"<?php if($boolIncludeImageAboveHeader): ?> class="featured"<?php endif; ?>><?php echo $strPageTitle; if($strEditPostLink != '') :?> <a href="<?php echo $strEditPostLink; ?>" class="post-edit-link">Edit</a><?php endif; ?></h1>
                     </div>
                 </header>
