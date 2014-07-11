@@ -33,9 +33,7 @@
  */
 ?>
 <section aria-label="content" role="region">
-    <div class="span12">
-        <?php echo $objMainPost->content; ?>
-        <?php //replace $strStaffLoop with require to view file ?>
-        <?php echo $strStaffLoop; ?>
-    </div>
+    <?php echo $objMainPost->content; ?>
+    <?php //replace $strStaffLoop with require to view file ?>
+    <?php echo $strStaffLoop; ?>
 </section>
