@@ -45,6 +45,10 @@ class Site extends Base {
         $this->add_data('wpHeader',$this->_getWpHeader());
         $this->add_data('wpFooter',$this->_getWpFooter());
         $this->add_data('SearchForm',$this->_getSearchForm());
+        /**
+         * @todo needs to be a theme option.  Manually adding for now
+         */
+        $this->add_data('IncludeBreadcrumbs',false);
 
 
         /**
