@@ -39,5 +39,6 @@ $objWpBase = new WpBase();
 
 $aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
 //$aryData['strPageTitle'] = post_type_archive_title('',false);
-$aryData['strPageTitle'] = mizzouDetermineArchiveTitle();
-mizzouOutPutView('blog',$aryData);
+//$aryData['strPageTitle'] = mizzouDetermineArchiveTitle();
+//mizzouOutPutView('blog',$aryData);
+Content::render('blog',$aryData);
