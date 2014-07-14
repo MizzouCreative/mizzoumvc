@@ -204,7 +204,11 @@ class Content extends Base {
                         $aryDateParts[] = get_the_time('d');
                         $strDatePattern = ' %s,';
                     case 'month':
-                        $aryDateParts[] = get_the_time('F');
+                        /**
+                         * since it is possible that the day is already in the array, we need to make sure that month
+                         * is pushed onto the beginning of the array no matter what, hence the array_unshift
+                         */
+                        array_unshift($aryDateParts,get_the_time('F'));
                         $strDatePattern = '%s'.$strDatePattern;
                     case 'year':
                         $aryDateParts[] = get_the_time('Y');
