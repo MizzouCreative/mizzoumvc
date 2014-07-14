@@ -13,6 +13,7 @@ global $wp_query,$post;
 //_mizzou_log($post,'post',false,array('file'=>__FILE__));
 /**
  * Why are we using base instead of the Publications object?
+ * @todo switch to publication model
  */
 $objWpBase = new WpBase();
 
