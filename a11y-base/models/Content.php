@@ -134,7 +134,7 @@ class Content extends Base {
          * Also temporary
          * @todo dont let this go to production
          */
-        $strHeaderTitle = self::_getHeaderTitle($strPageTitle);
+        $strHeaderTitle = self::_getHeaderTitle($strPageTitle,$objSite->Name);
 
         $strThemePath = $objSite->ActiveThemePath;
         $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
@@ -187,61 +187,72 @@ class Content extends Base {
 
     }
 
+    protected function _getPageTitle()
+    {
+
+    }
+
     /**
      * Determines H1 title for an archive page
      * @return string
      */
-    protected function _determinePageTitle()
+    protected function _determinePageTitle($strPageTitle = '')
     {
-        if(is_archive()){
-            _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
-            if(is_date()){
-                $strDateArchiveType = self::_determineDateArchiveType();
-                $aryDateParts = array();
-                $strDatePattern = '';
-                switch ($strDateArchiveType){
-                    case 'day':
-                        $aryDateParts[] = get_the_time('d');
-                        $strDatePattern = ' %s,';
-                    case 'month':
-                        /**
-                         * since it is possible that the day is already in the array, we need to make sure that month
-                         * is pushed onto the beginning of the array no matter what, hence the array_unshift
-                         */
-                        array_unshift($aryDateParts,get_the_time('F'));
-                        $strDatePattern = '%s'.$strDatePattern;
-                    case 'year':
-                        $aryDateParts[] = get_the_time('Y');
-                        $strDatePattern .= ' %d';
-                        break;
-                }
 
-                $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
-                $strPostType = get_post_type();
-                if($strPostType != 'post'){
-                    $objPostType = get_post_type_object($strPostType);
-                    $strPostTypeName = $objPostType->labels->name;
+        if('' == $strPageTitle){
+            if(is_archive()){
+                _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
+                if(is_date()){
+                    $strDateArchiveType = self::_determineDateArchiveType();
+                    $aryDateParts = array();
+                    $strDatePattern = '';
+                    switch ($strDateArchiveType){
+                        case 'day':
+                            $aryDateParts[] = get_the_time('d');
+                            $strDatePattern = ' %s,';
+                        case 'month':
+                            /**
+                             * since it is possible that the day is already in the array, we need to make sure that month
+                             * is pushed onto the beginning of the array no matter what, hence the array_unshift
+                             */
+                            array_unshift($aryDateParts,get_the_time('F'));
+                            $strDatePattern = '%s'.$strDatePattern;
+                        case 'year':
+                            $aryDateParts[] = get_the_time('Y');
+                            $strDatePattern .= ' %d';
+                            break;
+                    }
+
+                    $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
+                    $strPostType = get_post_type();
+                    if($strPostType != 'post'){
+                        $objPostType = get_post_type_object($strPostType);
+                        $strPostTypeName = $objPostType->labels->name;
+                    } else {
+                        $strPostTypeName = 'Blog Posts';
+                    }
+
+                    $strPageTitle .= ' ' . $strPostTypeName;
+                    _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
                 } else {
-                    $strPostTypeName = 'Blog Posts';
+                    $strPageTitle = post_type_archive_title();
+                    _mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
+                    /**
+                     * If it isn't a dated archive, has it been filtered by a taxonomy?
+                     */
+                    global $wp_query;
+                    $objQueried = get_queried_object();
+                    if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
+                        $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
+                    }
                 }
-
-                $strPageTitle .= ' ' . $strPostTypeName;
-                _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
-            } else {
-                $strPageTitle = post_type_archive_title();
-                _mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
-                /**
-                 * If it isn't a dated archive, has it been filtered by a taxonomy?
-                 */
-                global $wp_query;
-                $objQueried = get_queried_object();
-                if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
-                    $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
-                }
+            } elseif(is_single()){
+                $strPageTitle = wp_title('',false);
             }
-        } elseif(is_single()){
-            $strPageTitle = wp_title('',false);
         }
+
+
+
 
         return $strPageTitle;
     }
@@ -383,10 +394,24 @@ class Content extends Base {
         return $strDateArchiveType;
     }
 
-    protected function _getHeaderTitle($strPageTitle)
+    protected function _getHeaderTitle($strPageTitle,$strSiteName)
     {
-        $aryParts = self::_determinePagePath($strPageTitle);
-        $aryTitleParts = array_keys($aryParts);
+        $aryTitleParts = array();
+        $aryTitleParts[] = $strPageTitle;
+
+        $strPostType = get_post_type();
+
+        if($strPostType != 'post'){
+            $objPostType = get_post_type_object($strPostType);
+            $strPostTypeName = $objPostType->labels->name;
+        } else {
+            $strPostTypeName = 'Blog Posts';
+        }
+
+        $aryTitleParts[] = $strPostTypeName;
+        $aryTitleParts[] = $strSiteName;
+        $aryTitleParts[] = 'University of Missouri';
+
         /**
          * @todo implosion glue should come from a theme option
          */
