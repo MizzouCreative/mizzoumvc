@@ -193,8 +193,6 @@ class Content extends Base {
      */
     protected function _determinePageTitle()
     {
-        $strPageTitle = wp_title('',false);
-        _mizzou_log($strPageTitle,'title as returned by wp_title',false,array('func'=>__FUNCTION__));
         if(is_archive()){
             _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
             if(is_date()){
@@ -206,7 +204,7 @@ class Content extends Base {
                         $aryDateParts[] = get_the_time('d');
                         $strDatePattern = ' %s,';
                     case 'month':
-                        $aryDateParts[] = get_the_time('m');
+                        $aryDateParts[] = get_the_time('F');
                         $strDatePattern = '%s'.$strDatePattern;
                     case 'year':
                         $aryDateParts[] = get_the_time('Y');
@@ -215,8 +213,19 @@ class Content extends Base {
                 }
 
                 $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
+                $strPostType = get_post_type();
+                if($strPostType != 'post'){
+                    $objPostType = get_post_type_object($strPostType);
+                    $strPostTypeName = $objPostType->labels->name;
+                } else {
+                    $strPostTypeName = 'Blog Posts';
+                }
+
+                $strPageTitle .= ' ' . $strPostTypeName;
                 _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
             } else {
+                $strPageTitle = post_type_archive_title();
+                _mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
                 /**
                  * If it isn't a dated archive, has it been filtered by a taxonomy?
                  */
@@ -226,6 +235,8 @@ class Content extends Base {
                     $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
                 }
             }
+        } elseif(is_single()){
+            $strPageTitle = wp_title('',false);
         }
 
         return $strPageTitle;
