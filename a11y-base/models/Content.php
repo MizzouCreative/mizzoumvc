@@ -36,6 +36,10 @@ class Content extends Base {
 
         extract($aryData);
 
+        /**
+         * @todo don't like this since it creates a direct dependency, but we need data from the Site model in order
+         * to know what to pass/not pass to the view
+         */
         if(!isset($objSite) || !is_object($objSite)){
             $objSite = new Site();
         }
@@ -114,7 +118,12 @@ class Content extends Base {
          * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
          */
         //get the contents for the breadcrumbs
-        $strBreadCrumbs = self::_captureOutput('breadcrumbs');
+        if($objSite->IncludeBreadcrumbs){
+            $strBreadCrumbs = self::_captureOutput('breadcrumbs');
+        } else {
+            $strBreadCrumbs = '';
+        }
+
 
         /**
          * Temporary setting of strPageTitle
@@ -178,9 +187,14 @@ class Content extends Base {
 
     }
 
+    /**
+     * Determines H1 title for an archive page
+     * @return string
+     */
     protected function _determinePageTitle()
     {
         $strPageTitle = wp_title('',false);
+
         if(is_archive()){
             if(is_date()){
 
@@ -247,15 +261,7 @@ class Content extends Base {
                     $strMonth   = get_the_time('m');
                     $strMonthURL= null;
 
-                    $strDateArchiveType = null;
-
-                    if(is_day()){
-                        $strDateArchiveType = 'day';
-                    } elseif(is_month()){
-                        $strDateArchiveType = 'month';
-                    } elseif(is_year()){
-                        $strDateArchiveType = 'year';
-                    }
+                    $strDateArchiveType = self::_determineDateArchiveType();
 
                     switch($strDateArchiveType){
                         case 'day':
@@ -327,6 +333,21 @@ class Content extends Base {
         $aryPath['University of Missouri'] = 'http://missouri.edu/';
 
         return $aryPath;
+    }
+
+    protected function _determineDateArchiveType()
+    {
+        $strDateArchiveType = '';
+
+        if(is_day()){
+            $strDateArchiveType = 'day';
+        } elseif(is_month()){
+            $strDateArchiveType = 'month';
+        } elseif(is_year()){
+            $strDateArchiveType = 'year';
+        }
+
+        return $strDateArchiveType;
     }
 
     protected function _getHeaderTitle($strPageTitle)
