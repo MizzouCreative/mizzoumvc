@@ -405,7 +405,7 @@ class Content extends Base {
             $objPostType = get_post_type_object($strPostType);
             $strPostTypeName = $objPostType->labels->name;
         } else {
-            $strPostTypeName = 'Blog Posts';
+            $strPostTypeName = 'Blog';
         }
 
         $aryTitleParts[] = $strPostTypeName;
