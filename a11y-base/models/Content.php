@@ -194,10 +194,28 @@ class Content extends Base {
     protected function _determinePageTitle()
     {
         $strPageTitle = wp_title('',false);
-
+        _mizzou_log($strPageTitle,'title as returned by wp_title',false,array('func'=>__FUNCTION__));
         if(is_archive()){
+            _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
             if(is_date()){
+                $strDateArchiveType = self::_determineDateArchiveType();
+                $aryDateParts = array();
+                $strDatePattern = '';
+                switch ($strDateArchiveType){
+                    case 'day':
+                        $aryDateParts[] = get_the_time('d');
+                        $strDatePattern = ' %s,';
+                    case 'month':
+                        $aryDateParts[] = get_the_time('m');
+                        $strDatePattern = '%s'.$strDatePattern;
+                    case 'year':
+                        $aryDateParts[] = get_the_time('Y');
+                        $strDatePattern .= ' %d';
+                        break;
+                }
 
+                $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
+                _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
             } else {
                 /**
                  * If it isn't a dated archive, has it been filtered by a taxonomy?
