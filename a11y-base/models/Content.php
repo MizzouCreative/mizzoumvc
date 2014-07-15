@@ -236,7 +236,7 @@ class Content {
                     }
 
                     $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
-                    $objPagePostType = $this->_getPagePostType();
+                    $objPagePostType = self::_getPagePostType();
 
                     $strPageTitle .= ' ' . $objPagePostType->labels->name;
                     _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
@@ -397,7 +397,7 @@ class Content {
     protected function _getDateArchiveType()
     {
         if('' == self::$strDateArchiveType){
-            $this->_determineDateArchiveType();
+            self::_determineDateArchiveType();
         }
 
         return self::$strDateArchiveType;
@@ -418,21 +418,21 @@ class Content {
         self::$strDateArchiveType = $strDateArchiveType;
     }
 
-    protected function _getHeaderTitle($strSiteName)
+    protected function _getHeaderTitle($strPageTitle,$strSiteName)
     {
         if('' == self::$strHeaderTitle){
-            $this->_determineHeaderTitle($strSiteName);
+            self::_determineHeaderTitle($strPageTitle,$strSiteName);
         }
 
         return self::$strHeaderTitle;
     }
 
-    protected function _determineHeaderTitle($strSiteName)
+    protected function _determineHeaderTitle($strPageTitle,$strSiteName)
     {
         $aryTitleParts = array();
-        $aryTitleParts[] = $this->_getPageTitle();
+        $aryTitleParts[] = strip_tags($strPageTitle);
 
-        $objPostType = $this->_getPagePostType();
+        $objPostType = self::_getPagePostType();
 
         $aryTitleParts[] = $objPostType->labels->name;
         $aryTitleParts[] = $strSiteName;
@@ -447,7 +447,7 @@ class Content {
     protected function _getPagePostType()
     {
         if(is_null(self::$objPagePostType)){
-            $this->_determinePagePostType();
+            self::_determinePagePostType();
         }
 
         return self::$objPagePostType;
