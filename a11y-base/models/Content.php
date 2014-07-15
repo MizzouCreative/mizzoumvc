@@ -187,11 +187,6 @@ class Content extends Base {
 
     }
 
-    protected function _getPageTitle()
-    {
-
-    }
-
     /**
      * Determines H1 title for an archive page
      * @return string
@@ -255,6 +250,11 @@ class Content extends Base {
 
 
         return $strPageTitle;
+    }
+
+    protected function _getPageTitle($strPageTitle)
+    {
+
     }
 
     protected function _determinePagePath($strPageTitle,$strSiteName='')
@@ -391,30 +391,59 @@ class Content extends Base {
             $strDateArchiveType = 'year';
         }
 
-        return $strDateArchiveType;
+        $this->add_data('DateArchiveType',$strDateArchiveType);
+
     }
 
-    protected function _getHeaderTitle($strPageTitle,$strSiteName)
+    protected function _getDateArchiveType()
     {
-        $aryTitleParts = array();
-        $aryTitleParts[] = $strPageTitle;
-
-        $strPostType = get_post_type();
-
-        if($strPostType != 'post'){
-            $objPostType = get_post_type_object($strPostType);
-            $strPostTypeName = $objPostType->labels->name;
-        } else {
-            $strPostTypeName = 'Blog';
+        if(!isset($this->DateArchiveType)){
+            $this->_determineDateArchiveType();
         }
 
-        $aryTitleParts[] = $strPostTypeName;
+        return $this->DateArchiveType;
+    }
+
+    protected function _getHeaderTitle($strSiteName)
+    {
+        if(!isset($this->HeaderTitle)){
+            $this->_determineHeaderTitle($strSiteName);
+        }
+
+        return $this->HeaderTitle;
+    }
+
+    protected function _determineHeaderTitle($strSiteName)
+    {
+        $aryTitleParts = array();
+        $aryTitleParts[] = $this->_getPageTitle();
+
+        $objPostType = $this->_getPagePostType();
+
+        $aryTitleParts[] = $objPostType->labels->name;
         $aryTitleParts[] = $strSiteName;
         $aryTitleParts[] = 'University of Missouri';
 
         /**
          * @todo implosion glue should come from a theme option
          */
-        return implode(' // ', $aryTitleParts);
+        $this->add_data('HeaderTitle',implode(' // ',$aryTitleParts));
     }
+
+    protected function _determinePagePostType()
+    {
+
+        $strPostType = get_post_type();
+        $this->add_data('PagePostType',get_post_type_object($strPostType));
+    }
+
+    protected function _getPagePostType()
+    {
+        if(!isset($this->PagePostType)){
+            $this->_determinePagePostType();
+        }
+
+        return $this->PagePostType;
+    }
+
 } 
