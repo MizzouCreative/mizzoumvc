@@ -126,10 +126,14 @@ class Content extends Base {
 
 
         /**
-         * Temporary setting of strPageTitle
-         * @todo dont let this go to production. Finish out the method
+         * @todo i dont like this one bit.  The situation we have is that it's possible for a controller to override
+         * what the page title is, instead of us determining the page title.  But we also have methods here (specifically
+         * self::_getHeaderTitle() and self::_determineHeaderTitle() that need the page title whether or not it has been
+         * determined manually, or overridden. Going to need to think on this a bit...
+         * the page title
          */
-        $strPageTitle = self::_determinePageTitle();
+        $strPageTitle = (isset($strPageTitle)) ? $strPageTitle : '';
+        $strPageTitle = self::_getPageTitle();
         /**
          * Also temporary
          * @todo dont let this go to production
@@ -187,6 +191,14 @@ class Content extends Base {
 
     }
 
+    protected function _getPageTitle($strPageTitle='')
+    {
+        if(!isset($this->PageTitle)){
+            $this->_determinePageTitle($strPageTitle='');
+        }
+
+        return $this->PageTitle;
+    }
     /**
      * Determines H1 title for an archive page
      * @return string
@@ -194,7 +206,7 @@ class Content extends Base {
     protected function _determinePageTitle($strPageTitle = '')
     {
 
-        if('' == $strPageTitle){
+        if('' == $strPageTitle || empty($strPageTitle)){
             if(is_archive()){
                 _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
                 if(is_date()){
@@ -219,15 +231,9 @@ class Content extends Base {
                     }
 
                     $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
-                    $strPostType = get_post_type();
-                    if($strPostType != 'post'){
-                        $objPostType = get_post_type_object($strPostType);
-                        $strPostTypeName = $objPostType->labels->name;
-                    } else {
-                        $strPostTypeName = 'Blog Posts';
-                    }
+                    $objPagePostType = $this->_getPagePostType();
 
-                    $strPageTitle .= ' ' . $strPostTypeName;
+                    $strPageTitle .= ' ' . $objPagePostType->labels->name;
                     _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
                 } else {
                     $strPageTitle = post_type_archive_title();
@@ -235,7 +241,7 @@ class Content extends Base {
                     /**
                      * If it isn't a dated archive, has it been filtered by a taxonomy?
                      */
-                    global $wp_query;
+                    //global $wp_query;
                     $objQueried = get_queried_object();
                     if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
                         $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
@@ -246,15 +252,7 @@ class Content extends Base {
             }
         }
 
-
-
-
-        return $strPageTitle;
-    }
-
-    protected function _getPageTitle($strPageTitle)
-    {
-
+        $this->add_data('PageTitle',$strPageTitle);
     }
 
     protected function _determinePagePath($strPageTitle,$strSiteName='')
@@ -379,6 +377,15 @@ class Content extends Base {
         return $aryPath;
     }
 
+    protected function _getDateArchiveType()
+    {
+        if(!isset($this->DateArchiveType)){
+            $this->_determineDateArchiveType();
+        }
+
+        return $this->DateArchiveType;
+    }
+
     protected function _determineDateArchiveType()
     {
         $strDateArchiveType = '';
@@ -393,15 +400,6 @@ class Content extends Base {
 
         $this->add_data('DateArchiveType',$strDateArchiveType);
 
-    }
-
-    protected function _getDateArchiveType()
-    {
-        if(!isset($this->DateArchiveType)){
-            $this->_determineDateArchiveType();
-        }
-
-        return $this->DateArchiveType;
     }
 
     protected function _getHeaderTitle($strSiteName)
@@ -430,13 +428,6 @@ class Content extends Base {
         $this->add_data('HeaderTitle',implode(' // ',$aryTitleParts));
     }
 
-    protected function _determinePagePostType()
-    {
-
-        $strPostType = get_post_type();
-        $this->add_data('PagePostType',get_post_type_object($strPostType));
-    }
-
     protected function _getPagePostType()
     {
         if(!isset($this->PagePostType)){
@@ -446,4 +437,10 @@ class Content extends Base {
         return $this->PagePostType;
     }
 
-} 
+    protected function _determinePagePostType()
+    {
+
+        $strPostType = get_post_type();
+        $this->add_data('PagePostType',get_post_type_object($strPostType));
+    }
+}
