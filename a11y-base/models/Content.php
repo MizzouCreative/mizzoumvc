@@ -25,6 +25,11 @@ class Content {
 
     protected static $arySiteSiteMembers = array('URL','Name');
 
+    protected static $strDateArchiveType = '';
+    protected static $strPageTitle = '';
+    protected static $strHeaderTitle = '';
+    protected static $objPagePostType = null;
+
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
         $strEditPostLink                = '';
@@ -193,11 +198,11 @@ class Content {
 
     protected function _getPageTitle($strPageTitle='')
     {
-        if(!isset(self::$PageTitle)){
+        if('' == self::$strPageTitle){
             self::_determinePageTitle($strPageTitle);
         }
 
-        return self::$PageTitle;
+        return self::$strPageTitle;
     }
     /**
      * Determines H1 title for an archive page
@@ -252,10 +257,21 @@ class Content {
             }
         }
 
-        self::$PageTitle = $strPageTitle;
+        self::$strPageTitle = $strPageTitle;
 
     }
 
+    /**
+     * Originally this was built to be used to determine the paths for use in breadcrumbs and in the HeaderTitle. At this
+     * point, it's future is unclear since the general consensus is to never use breadcrumbs
+     *
+     * Marking as deprecated until we know what we want to do with it
+     *
+     * @param $strPageTitle
+     * @param string $strSiteName
+     * @return array
+     * @deprecated
+     */
     protected function _determinePagePath($strPageTitle,$strSiteName='')
     {
         $aryPath = array();
@@ -380,7 +396,7 @@ class Content {
 
     protected function _getDateArchiveType()
     {
-        if(!isset(self::$strDateArchiveType)){
+        if('' == self::$strDateArchiveType){
             $this->_determineDateArchiveType();
         }
 
@@ -404,7 +420,7 @@ class Content {
 
     protected function _getHeaderTitle($strSiteName)
     {
-        if(!isset(self::$strHeaderTitle)){
+        if('' == self::$strHeaderTitle){
             $this->_determineHeaderTitle($strSiteName);
         }
 
@@ -430,7 +446,7 @@ class Content {
 
     protected function _getPagePostType()
     {
-        if(!isset(self::$objPagePostType)){
+        if(is_null(self::$objPagePostType)){
             $this->_determinePagePostType();
         }
 
