@@ -7,7 +7,7 @@
  * ASSUMES that Base.php and Site.php classes have already been included
  */
 
-class Content extends Base {
+class Content {
     protected static $aryDefaultOptions = array(
         'include_sidebars'  => false,
         'override_outerview'=>false,
@@ -38,7 +38,7 @@ class Content extends Base {
 
         /**
          * @todo don't like this since it creates a direct dependency, but we need data from the Site model in order
-         * to know what to pass/not pass to the view
+         * to know what to pass/not pass to the view. Dependency injection via render method? or
          */
         if(!isset($objSite) || !is_object($objSite)){
             $objSite = new Site();
@@ -193,11 +193,11 @@ class Content extends Base {
 
     protected function _getPageTitle($strPageTitle='')
     {
-        if(!isset($this->PageTitle)){
-            $this->_determinePageTitle($strPageTitle='');
+        if(!isset(self::$PageTitle)){
+            self::_determinePageTitle($strPageTitle);
         }
 
-        return $this->PageTitle;
+        return self::$PageTitle;
     }
     /**
      * Determines H1 title for an archive page
@@ -241,7 +241,7 @@ class Content extends Base {
                     /**
                      * If it isn't a dated archive, has it been filtered by a taxonomy?
                      */
-                    //global $wp_query;
+                    global $wp_query;
                     $objQueried = get_queried_object();
                     if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
                         $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
@@ -252,7 +252,8 @@ class Content extends Base {
             }
         }
 
-        $this->add_data('PageTitle',$strPageTitle);
+        self::$PageTitle = $strPageTitle;
+
     }
 
     protected function _determinePagePath($strPageTitle,$strSiteName='')
@@ -379,11 +380,11 @@ class Content extends Base {
 
     protected function _getDateArchiveType()
     {
-        if(!isset($this->DateArchiveType)){
+        if(!isset(self::$strDateArchiveType)){
             $this->_determineDateArchiveType();
         }
 
-        return $this->DateArchiveType;
+        return self::$strDateArchiveType;
     }
 
     protected function _determineDateArchiveType()
@@ -398,17 +399,16 @@ class Content extends Base {
             $strDateArchiveType = 'year';
         }
 
-        $this->add_data('DateArchiveType',$strDateArchiveType);
-
+        self::$strDateArchiveType = $strDateArchiveType;
     }
 
     protected function _getHeaderTitle($strSiteName)
     {
-        if(!isset($this->HeaderTitle)){
+        if(!isset(self::$strHeaderTitle)){
             $this->_determineHeaderTitle($strSiteName);
         }
 
-        return $this->HeaderTitle;
+        return self::$strHeaderTitle;
     }
 
     protected function _determineHeaderTitle($strSiteName)
@@ -425,22 +425,20 @@ class Content extends Base {
         /**
          * @todo implosion glue should come from a theme option
          */
-        $this->add_data('HeaderTitle',implode(' // ',$aryTitleParts));
+        self::$strHeaderTitle = implode(' // ',$aryTitleParts);
     }
 
     protected function _getPagePostType()
     {
-        if(!isset($this->PagePostType)){
+        if(!isset(self::$objPagePostType)){
             $this->_determinePagePostType();
         }
 
-        return $this->PagePostType;
+        return self::$objPagePostType;
     }
 
     protected function _determinePagePostType()
     {
-
-        $strPostType = get_post_type();
-        $this->add_data('PagePostType',get_post_type_object($strPostType));
+        self::$objPagePostType = get_post_type_object(get_post_type());
     }
 }
