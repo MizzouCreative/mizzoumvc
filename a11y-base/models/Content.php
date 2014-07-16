@@ -238,7 +238,7 @@ class Content {
                     $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
                     $objPagePostType = self::_getPagePostType();
 
-                    $strPageTitle .= ' ' . $objPagePostType->labels->name;
+                    $strPageTitle .= ' ' . $objPagePostType->label;
                     _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
                 } else {
                     $strPageTitle = post_type_archive_title();
@@ -455,6 +455,27 @@ class Content {
 
     protected function _determinePagePostType()
     {
-        self::$objPagePostType = get_post_type_object(get_post_type());
+        self::$objPagePostType = self::_adjustPostTypeLabels(get_post_type_object(get_post_type()));
+    }
+
+    protected function _adjustPostTypeLabels($objPostType)
+    {
+        switch($objPostType->name){
+            case 'post':
+                /**
+                 * @todo is there ever going to be a situation where the default post type is being used with its
+                 * default labels and we DONT want to adjust the label? Or should we have a theme option here that
+                 * allows us to define what the label should be for the default type?  This just seems to specific to
+                 * the IPP website requirements.
+                 */
+                if($objPostType->label == 'Post'){
+                    $objPostType->labels->name = 'Blog';
+                    $objPostType->label = 'Blog Posts';
+                }
+
+                break;
+        }
+
+        return $objPostType;
     }
 }
