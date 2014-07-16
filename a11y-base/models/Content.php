@@ -216,10 +216,12 @@ class Content {
      */
     protected function _determinePageTitle()
     {
+        $strPageTitle = '';
         if(is_archive()){
             _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
             if(is_date()){
                 $strDateArchiveType = self::_determineDateArchiveType();
+                _mizzou_log($strDateArchiveType,'our archive date type');
                 $aryDateParts = array();
                 $strDatePattern = '';
                 switch ($strDateArchiveType){
@@ -238,6 +240,9 @@ class Content {
                         $strDatePattern .= ' %d';
                         break;
                 }
+
+                _mizzou_log($strDatePattern,'our date pattern');
+                _mizzou_log($aryDateParts,'our date parts');
 
                 $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
                 $objPagePostType = self::_getPagePostType();
