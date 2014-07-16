@@ -483,6 +483,7 @@ class Content {
                 break;
         }
 
+        _mizzou_log($objPostType,'our post type after we adjusted the labels');
         return $objPostType;
     }
 }
