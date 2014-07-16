@@ -462,12 +462,18 @@ class Content {
 
     protected function _determinePagePostType()
     {
-        self::$objPagePostType = self::_adjustPostTypeLabels(get_post_type_object(get_post_type()));
+        $strPostType = get_post_type();
+        self::_adjustPostTypeLabels($strPostType);
+        self::$objPagePostType = get_post_type_object($strPostType);
     }
 
-    protected function _adjustPostTypeLabels($objPostType)
+    protected function _adjustPostTypeLabels($strPostType)
     {
-        switch($objPostType->name){
+        /**
+         * For the love of God, wordpress... why do you have such a hard-on for global variables????!?!#@#@!~$!@
+         */
+        global $wp_post_types;
+        switch($strPostType){
             case 'post':
                 /**
                  * @todo is there ever going to be a situation where the default post type is being used with its
@@ -475,15 +481,14 @@ class Content {
                  * allows us to define what the label should be for the default type?  This just seems to specific to
                  * the IPP website requirements.
                  */
-                if($objPostType->label == 'Post'){
-                    $objPostType->labels->name = 'Blog';
-                    $objPostType->label = 'Blog Posts';
+                if(isset($wp_post_types[$strPostType]) && $wp_post_types[$strPostType]->labels->name == 'Posts'){
+                    $wp_post_types[$strPostType]->labels->name = 'Blog';
+                    $wp_post_types[$strPostType]->label = 'Blog Posts';
                 }
 
                 break;
         }
 
-        _mizzou_log($objPostType,'our post type after we adjusted the labels');
-        return $objPostType;
+        _mizzou_log($wp_post_types[$strPostType],'our post type after we adjusted the labels');
     }
 }
