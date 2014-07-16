@@ -220,7 +220,7 @@ class Content {
         if(is_archive()){
             _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
             if(is_date()){
-                $strDateArchiveType = self::_determineDateArchiveType();
+                $strDateArchiveType = self::_getDateArchiveType();
                 _mizzou_log($strDateArchiveType,'our archive date type');
                 $aryDateParts = array();
                 $strDatePattern = '';
