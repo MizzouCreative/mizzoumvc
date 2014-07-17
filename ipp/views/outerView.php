@@ -29,7 +29,7 @@ $strPreBreadcrumbDivContents = ($boolIncludeSidebar) ? 'flex span8' : 'span12';
 ?>
 
 <div class="<?php echo $strPreBreadcrumbDivContents; ?>">
-    <?php // echo $strBreadCrumbs; ?>
+
 <?php if(!$boolIncludeSidebar) : // we need to end the div if we didnt have a sidebar ?>
     </div> <!-- end span12 -->
 <?php endif; ?>
