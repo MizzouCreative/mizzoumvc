@@ -211,8 +211,9 @@ class Content {
         return self::$strPageTitle;
     }
     /**
-     * Determines H1 title for an archive page
+     * Determines H1 title for pages
      * @return string
+     * @todo sub-page support, category/taxonomy support and pagination support
      */
     protected function _determinePageTitle()
     {
