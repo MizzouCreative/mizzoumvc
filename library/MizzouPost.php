@@ -275,6 +275,10 @@ class MizzouPost extends PostBase
         $this->aryData['title'] = apply_filters('the_title',$this->aryData['title_raw']);
     }
 
+    /**
+     * @todo change this to use strftime
+     * @todo possibly add your own date pattern parsing method with additional tokens for AP Style components
+     */
     private function _setFormattedDate()
     {
         if($this->aryOptions['format_date'] && !is_null($this->aryOptions['date_format'])){
