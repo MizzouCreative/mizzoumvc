@@ -28,7 +28,7 @@ class MizzouPost extends PostBase
      */
     protected $aryOptions = array(
         'format_date'   => false,
-        'date_format'   => 'F, j Y',
+        'date_format'   => null,
         'suppress_empty'=> false,
         'include_meta'  => false,
         'include_image' => true,
@@ -50,6 +50,8 @@ class MizzouPost extends PostBase
      * @var string
      */
     private $strMetaGroupPattern = '([a-zA-Z]*)\d';
+
+    private $strDefaultDateFormat = ' j, Y';
 
     public function __construct($mxdPost, $aryOptions = array())
     {
@@ -221,14 +223,7 @@ class MizzouPost extends PostBase
 
         $this->_setISO8601Date();
 
-        /**
-         * @todo maybe we should just always create a formatted date and simply allow the calling script to override
-         * the format?
-         */
-        if($this->aryOptions['format_date']){
-            $this->_setFormattedDate();
-        }
-
+        $this->_setFormattedDate();
     }
 
     /**
@@ -282,8 +277,29 @@ class MizzouPost extends PostBase
 
     private function _setFormattedDate()
     {
-        $this->aryData['formatted_date'] = date($this->aryOptions['date_format'],$this->aryData['timestamp']);
+        if($this->aryOptions['format_date'] && !is_null($this->aryOptions['date_format'])){
+            $strFormattedDate = date($this->aryOptions['date_format'],$this->aryData['timestamp']);
+        } else {
+            $strFormattedDate = $this->_getAPMonth() . date($this->strDefaultDateFormat,$this->aryData['timestamp']);
+        }
+        $this->aryData['formatted_date'] = $strFormattedDate;
 
+    }
+
+    private function _getAPMonth()
+    {
+        $strMonth = date('F',$this->timestamp);
+        if(strlen($strMonth) > 5){ //stoopid september... grumble, grumble
+            if($strMonth == 'September'){
+                $intTruncLen = 4;
+            } else {
+                $intTruncLen = 3;
+            }
+
+            $strMonth = substr($strMonth,0,$intTruncLen) . '.';
+        }
+
+        return $strMonth;
     }
 
     private function _setISO8601Date()
