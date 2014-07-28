@@ -226,6 +226,10 @@ class MizzouPost extends PostBase
         $this->_setISO8601Date();
 
         $this->_setFormattedDate();
+
+        if($this->aryOptions['include_taxonomy']){
+            $this->_retrieveTaxonomies();
+        }
     }
 
     /**
