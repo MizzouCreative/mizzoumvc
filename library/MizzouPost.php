@@ -35,6 +35,8 @@ class MizzouPost extends PostBase
         'excerpt_length'=> 55, //same as wordpress' default
         'permalink'      => 'page',
         'title_override'=> false,
+        'include_taxonomy'=>false,
+        'only_taxonomies' =>null,
     );
 
     /**
@@ -353,5 +355,11 @@ class MizzouPost extends PostBase
         if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
             $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryOptions['excerpt_length']);
         }
+    }
+
+    protected function _retrieveTaxonomies()
+    {
+        $aryTaxonomies = get_object_taxonomies($this->post_type,'names');
+        _mizzou_log($aryTaxonomies,'taxonomies associated with ' . $this->post_type);
     }
 } 
