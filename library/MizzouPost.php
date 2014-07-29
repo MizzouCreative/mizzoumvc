@@ -363,7 +363,17 @@ class MizzouPost extends PostBase
 
     protected function _retrieveTaxonomies()
     {
-        $aryTaxonomies = get_object_taxonomies($this->post_type,'names');
+        $aryTaxStore = array();
+        $aryTaxonomies = get_object_taxonomies($this->post_type,'objects');
         _mizzou_log($aryTaxonomies,'taxonomies associated with ' . $this->post_type);
+        if(!is_null($this->aryOptions['only_taxonomies']) && is_array($this->aryOptions['only_taxonomies'])){
+            $aryTaxonomies = array_intersect($aryTaxonomies,$this->aryOptions['only_taxonomies']);
+        }
+
+        /**
+        foreach($aryTaxonomies as $objTaxonomy){
+
+        }*/
+
     }
 } 
