@@ -391,16 +391,30 @@ class MizzouPost extends PostBase
 
 
         foreach($aryTaxonomies as $objTaxonomy){
-            _mizzou_log(get_class($objTaxonomy),'taxonomy object is a ?');
-            _mizzou_log($objTaxonomy,'a taxonomy object');
             $aryTaxTerms = get_the_terms($this->ID,$objTaxonomy->name);
-            _mizzou_log(current($aryTaxTerms),'what type of object is a tax term?');
-            _mizzou_log($aryTaxTerms,'all our tax terms');
-            $aryTaxStore[] = array(
-                'name'  => $objTaxonomy->name,
-                'label' => $objTaxonomy->label
-            );
+            $objTaxonomy->items = array();
+
+            if(is_array($aryTaxTerms)){
+                if(is_bool($this->aryOptions['taxonomies']['filter_url']) && $this->aryOptions['taxonomies']['filter_url']){
+                    foreach($aryTaxTerms as $objTaxTerm){
+                        $aryURLParts = array(
+                            $this->aryOptions['taxonomies']['url'],
+                            $objTaxonomy->name,
+                            $objTaxTerm->slug
+                        );
+                        $objTaxTerm->url = vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts);
+                    }
+
+                    $objTaxonomy->items[] = $objTaxTerm;
+                } else {
+                    $objTaxonomy->items = $aryTaxTerms;
+                }
+            }
+
+            $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
         }
+        _mizzou_log($aryTaxStore,'the collection of taxonomies and data we will store in the post object');
+        $this->taxonomies = $aryTaxStore;
 
     }
 } 
