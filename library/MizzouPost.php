@@ -365,15 +365,21 @@ class MizzouPost extends PostBase
     {
         $aryTaxStore = array();
         $aryTaxonomies = get_object_taxonomies($this->post_type,'objects');
-        _mizzou_log($aryTaxonomies,'taxonomies associated with ' . $this->post_type);
+        //_mizzou_log($aryTaxonomies,'taxonomies associated with ' . $this->post_type);
         if(!is_null($this->aryOptions['only_taxonomies']) && is_array($this->aryOptions['only_taxonomies'])){
             $aryTaxonomies = array_intersect($aryTaxonomies,$this->aryOptions['only_taxonomies']);
         }
 
-        /**
-        foreach($aryTaxonomies as $objTaxonomy){
 
-        }*/
+        foreach($aryTaxonomies as $objTaxonomy){
+            $aryTaxTerms = get_the_terms($this->ID,$objTaxonomy->name);
+            _mizzou_log(get_class($aryTaxTerms[0]),'what type of object is a tax term?');
+            _mizzou_log($aryTaxTerms,'all our tax terms');
+            $aryTaxStore[] = array(
+                'name'  => $objTaxonomy->name,
+                'label' => $objTaxonomy->label
+            );
+        }
 
     }
 } 
