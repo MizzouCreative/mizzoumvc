@@ -355,6 +355,7 @@ class MizzouPost extends PostBase
 
     private function _handleTaxonomyOptions()
     {
+        _mizzou_log($this->aryOptions['taxonomies'],'taxonomies is our post object is requested');
         if(is_array($this->aryOptions['taxonomies'])){
             $this->aryOptions['taxonomies'] = array_merge($this->aryTaxonomyDefaults,$this->aryOptions['taxonomies']);
         }
