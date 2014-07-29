@@ -403,9 +403,8 @@ class MizzouPost extends PostBase
                             $objTaxTerm->slug
                         );
                         $objTaxTerm->url = vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts);
+                        $objTaxonomy->items[] = $objTaxTerm;
                     }
-
-                    $objTaxonomy->items[] = $objTaxTerm;
                 } else {
                     $objTaxonomy->items = $aryTaxTerms;
                 }
