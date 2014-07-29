@@ -412,7 +412,7 @@ class MizzouPost extends PostBase
 
             $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
         }
-        _mizzou_log($aryTaxStore,'the collection of taxonomies and data we will store in the post object');
+
         $this->taxonomies = $aryTaxStore;
 
     }
