@@ -35,8 +35,7 @@ class MizzouPost extends PostBase
         'excerpt_length'=> 55, //same as wordpress' default
         'permalink'      => 'page',
         'title_override'=> false,
-        'include_taxonomy'=>false,
-        'only_taxonomies' =>null,
+        'taxonomies'    => false,
     );
 
     /**
@@ -47,6 +46,13 @@ class MizzouPost extends PostBase
     protected $aryMetaDefaults = array(
         'meta_prefix'   => null,
         'suppress_empty'=> null
+    );
+    protected $aryTaxonomyDefaults = array(
+        'only_taxonomies'   => array(), //only include specific taxonomies
+        'filter_url'        => false,
+        'url'               => '',
+        'url_pattern'       => '%s?%s=%s'
+
     );
     /**
      * @var string
@@ -68,6 +74,10 @@ class MizzouPost extends PostBase
 
         if(FALSE !== $this->aryOptions['include_meta']){
             $this->_handleMetaData();
+        }
+
+        if(false !== $this->aryOptions['taxonomies']){
+            $this->_handleTaxonomyOptions();
         }
 
         //now that we're done we no longer need the original post
@@ -227,7 +237,7 @@ class MizzouPost extends PostBase
 
         $this->_setFormattedDate();
 
-        if($this->aryOptions['include_taxonomy']){
+        if(is_array($this->aryOptions['taxonomies']) && !is_bool($this->aryOptions['taxonomies']) ){
             $this->_retrieveTaxonomies();
         }
     }
@@ -343,6 +353,13 @@ class MizzouPost extends PostBase
 
     }
 
+    private function _handleTaxonomyOptions()
+    {
+        if(is_array($this->aryOptions['taxonomies'])){
+            $this->aryOptions['taxonomies'] = array_merge($this->aryTaxonomyDefaults,$this->aryOptions['taxonomies']);
+        }
+    }
+
     private function _captureWidgetOutput()
     {
         $aryWidgets = array();
@@ -372,8 +389,10 @@ class MizzouPost extends PostBase
 
 
         foreach($aryTaxonomies as $objTaxonomy){
+            _mizzou_log(get_class($objTaxonomy,'taxonomy object is a ?'));
+            _mizzou_log($objTaxonomy,'a taxonomy object');
             $aryTaxTerms = get_the_terms($this->ID,$objTaxonomy->name);
-            _mizzou_log(get_class($aryTaxTerms[0]),'what type of object is a tax term?');
+            _mizzou_log(current($aryTaxTerms),'what type of object is a tax term?');
             _mizzou_log($aryTaxTerms,'all our tax terms');
             $aryTaxStore[] = array(
                 'name'  => $objTaxonomy->name,
