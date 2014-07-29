@@ -385,8 +385,8 @@ class MizzouPost extends PostBase
         $aryTaxStore = array();
         $aryTaxonomies = get_object_taxonomies($this->post_type,'objects');
         //_mizzou_log($aryTaxonomies,'taxonomies associated with ' . $this->post_type);
-        if(!is_null($this->aryOptions['taxonomies']['only_taxonomies']) && is_array($this->aryOptions['taxonomies']['only_taxonomies'])){
-            $aryTaxonomies = array_intersect($aryTaxonomies,$this->aryOptions['taxonomies']['only_taxonomies']);
+        if(is_array($this->aryOptions['taxonomies']['only_taxonomies']) && count($this->aryOptions['taxonomies']['only_taxonomies']) > 0){
+            $aryTaxonomies = array_intersect_key($aryTaxonomies,array_flip($this->aryOptions['taxonomies']['only_taxonomies']));
         }
 
 
