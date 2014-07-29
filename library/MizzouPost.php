@@ -70,14 +70,14 @@ class MizzouPost extends PostBase
         parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
+        if(false !== $this->aryOptions['taxonomies']){
+            $this->_handleTaxonomyOptions();
+        }
+
         $this->_setMembers($this->objOriginalPost);
 
         if(FALSE !== $this->aryOptions['include_meta']){
             $this->_handleMetaData();
-        }
-
-        if(false !== $this->aryOptions['taxonomies']){
-            $this->_handleTaxonomyOptions();
         }
 
         //now that we're done we no longer need the original post
