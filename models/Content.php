@@ -442,7 +442,10 @@ class Content {
 
         $objPostType = self::_getPagePostType();
 
-        $aryTitleParts[] = $objPostType->labels->name;
+        if($strPageTitle !== $objPostType->labels->name){
+            $aryTitleParts[] = $objPostType->labels->name;
+        }
+
         $aryTitleParts[] = $strSiteName;
         $aryTitleParts[] = 'University of Missouri';
 
