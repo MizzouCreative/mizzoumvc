@@ -219,7 +219,7 @@ class Content {
     {
         $strPageTitle = '';
         if(is_archive()){
-            _mizzou_log(post_type_archive_title(),'we know we have an archive, here is the post_type_archive_title');
+            _mizzou_log(post_type_archive_title(null,false),'we know we have an archive, here is the post_type_archive_title');
             if(is_date()){
                 $strDateArchiveType = self::_getDateArchiveType();
                 _mizzou_log($strDateArchiveType,'our archive date type');
@@ -251,7 +251,7 @@ class Content {
                 $strPageTitle .= ' ' . $objPagePostType->label;
                 _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
             } else {
-                $strPageTitle = post_type_archive_title();
+                $strPageTitle = post_type_archive_title(null,false);
                 _mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
                 /**
                  * If it isn't a dated archive, has it been filtered by a taxonomy?
