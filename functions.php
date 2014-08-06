@@ -100,6 +100,7 @@ function mizzou_add_URL_query_vars($aryVars){
  * 
  * @param array $aryIgnoreWords words/characters to ignore, DEFAULT: / - .php .html .aspx
  * @return string
+ * @todo this needs to be converted over to the Site model?
  */
 function mizzou_gather_404_search_terms($aryIgnoreWords=null){
     $aryIgnore = array(
@@ -231,9 +232,11 @@ function edit_tag_link_new_window($content) {
  * @todo documentation
  * @param boolean $boolReturn, default is false
  * @global type $wpdb
+ * @deprecated moved into Site model
  */
 function site_modified_date($boolReturn=false) {
-	global $wpdb;
+	_mizzou_log(__FUNCTION__,'use of deprecated function detected.',true);
+    global $wpdb;
 	$last_site_update =  $wpdb->get_var( "SELECT post_modified FROM $wpdb->posts WHERE post_status = 'publish' ORDER BY post_modified DESC LIMIT 1" );
 	$strLastUpdate = date('M j, Y', strtotime($last_site_update));
 
@@ -266,6 +269,9 @@ add_action('init','mizzou_setup');
 * ================= DEBUG =====================================
 */
 
+/**
+ * @todo should this function be moved into the Framework singleton?
+ */
 if(!function_exists('_mizzou_log')){
   /**
   * For logging debug messages into the debug log.
