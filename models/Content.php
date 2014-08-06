@@ -467,6 +467,7 @@ class Content {
     protected function _determinePagePostType()
     {
         $strPostType = get_post_type();
+        _mizzou_log($strPostType,'return from get_post_type');
         self::_adjustPostTypeLabels($strPostType);
         self::$objPagePostType = get_post_type_object($strPostType);
     }
@@ -482,7 +483,7 @@ class Content {
                 /**
                  * @todo is there ever going to be a situation where the default post type is being used with its
                  * default labels and we DONT want to adjust the label? Or should we have a theme option here that
-                 * allows us to define what the label should be for the default type?  This just seems to specific to
+                 * allows us to define what the label should be for the default type?  This just seems too specific to
                  * the IPP website requirements.
                  */
                 if(isset($wp_post_types[$strPostType]) && $wp_post_types[$strPostType]->labels->name == 'Posts'){
