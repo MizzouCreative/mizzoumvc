@@ -146,9 +146,13 @@ class Content {
             $strPageTitle = self::_getPageTitle();
         }
 
+        _mizzou_log($aryOptions,'aryOptions before I check to see if we are in an archive');
         if(is_archive() && $aryOptions['include_pagination']){
+            _mizzou_log(null,'we are in an archive and pagination has been requested');
             $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
+            _mizzou_log($strPaginationNext,'contents of paginationNext');
             $strPaginationPrevious = get_previous_posts_link('Newer Entries &raquo;');
+            _mizzou_log($strPaginationPrevious,'contents of pagination previous');
             if(is_null($strPaginationNext)) $strPaginationNext = '';
             if(is_null($strPaginationPrevious)) $strPaginationPrevious = '';
         }
