@@ -11,6 +11,7 @@ class Content {
     protected static $aryDefaultOptions = array(
         'include_sidebars'  => false,
         'override_outerview'=>false,
+        'include_pagination'=>false,
     );
 
     protected static $aryIncludeSidebarPages = array(
@@ -143,6 +144,13 @@ class Content {
             self::$strPageTitle = $strPageTitle;
         } else {
             $strPageTitle = self::_getPageTitle();
+        }
+
+        if(is_archive() && $aryOptions['include_pagination']){
+            $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
+            $strPaginationPrevious = get_previous_posts_link('Newer Entries &raquo;');
+            if(is_null($strPaginationNext)) $strPaginationNext = '';
+            if(is_null($strPaginationPrevious)) $strPaginationPrevious = '';
         }
 
         /**
