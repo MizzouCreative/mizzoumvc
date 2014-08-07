@@ -39,7 +39,7 @@ class Content {
         $boolIncludeImageAboveHeader    = false;
 
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
-
+        _mizzou_log($aryOptions,'aryOptions after I merged');
         extract($aryData);
 
         /**
