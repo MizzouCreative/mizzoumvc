@@ -475,10 +475,27 @@ class Content {
 
     protected function _determinePagePostType()
     {
-        $strPostType = get_post_type();
-        _mizzou_log($strPostType,'return from get_post_type');
-        self::_adjustPostTypeLabels($strPostType);
-        self::$objPagePostType = get_post_type_object($strPostType);
+        //$strPostType = get_post_type();
+
+        /**
+         * the normal method failed so fall back to a secondary method
+         * @todo should we just do this method all the time instead of using it when get_post_type fails?
+         */
+        $strPostType = get_query_var('post_type');
+        if(is_array($strPostType)){
+            $strPostType = reset($strPostType);
+        }
+
+        if('' != $strPostType){
+            self::_adjustPostTypeLabels($strPostType);
+            self::$objPagePostType = get_post_type_object($strPostType);
+        } else {
+            /**
+             * @todo we need to do something else here besides log. We have functionality further down the line that
+             * depends on the PostType being determined.
+             */
+            _mizzou_log(null,'WARNING: We were unable to determine the post type we are dealing with',true);
+        }
     }
 
     protected function _adjustPostTypeLabels($strPostType)
