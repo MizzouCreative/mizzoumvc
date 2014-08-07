@@ -294,7 +294,7 @@ if(!function_exists('_mizzou_log')){
   function _mizzou_log( $mxdVariable, $strPrependMessage = null, $boolBackTraced = false, $aryDetails = array() ) {
     $boolBackTrace = true;
     if( WP_DEBUG === true ){
-      $strMessage = 'MIZZOU_LOG: ';
+      $strMessage = 'MIZZOU_LOGGER: ';
       
       if(count($aryDetails) > 0){
           if(isset($aryDetails['line'])){
