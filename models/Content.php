@@ -520,6 +520,20 @@ class Content {
                 break;
         }
 
-        _mizzou_log($wp_post_types[$strPostType],'our post type after we adjusted the labels');
+        //_mizzou_log($wp_post_types[$strPostType],'our post type after we adjusted the labels');
+    }
+
+    protected function _includeTaxonomyMenu()
+    {
+        $aryPubMenu = array();
+        global $wp_query; //stoopid wordpress globals
+        $aryWPQuery = $wp_query->query;
+        if(isset($aryWPQuery['post_type'])) unset($aryWPQuery['post_type']);
+        $strCurrentKey = reset($aryWPQuery);
+        $strCurrentTaxonomy = key($aryWPQuery);
+        $aryTaxonomies = get_object_taxonomies(self::$objPagePostType->name,'objects');
+        foreach($aryTaxonomies as $objTaxonomy){
+
+        }
     }
 }
