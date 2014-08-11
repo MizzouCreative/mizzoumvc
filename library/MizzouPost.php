@@ -389,11 +389,11 @@ class MizzouPost extends PostBase
             $aryTaxonomies = array_intersect_key($aryTaxonomies,array_flip($this->aryOptions['taxonomies']['only_taxonomies']));
         }
 
-        if(2446 == $this->ID) _mizzou_log($aryTaxonomies,'list of taxonomies for post ID 2446');
+        //if(2446 == $this->ID) _mizzou_log($aryTaxonomies,'list of taxonomies for post ID 2446');
 
         foreach($aryTaxonomies as $objTaxonomy){
             $aryTaxTerms = get_the_terms($this->ID,$objTaxonomy->name);
-            if(2446 == $this->ID) _mizzou_log($aryTaxTerms,'list of tax terms for post ID 2446');
+            //if(2446 == $this->ID) _mizzou_log($aryTaxTerms,'list of tax terms for post ID 2446');
             $objTaxonomy->items = array();
 
             if(is_array($aryTaxTerms)){
@@ -417,12 +417,12 @@ class MizzouPost extends PostBase
                 _mizzou_log($objTaxonomy->name,'name of the taxonomy that supposedly doesnt have any terms associated with this post');
                  */
             }
-            if(2446 == $this->ID) _mizzou_log($objTaxonomy->items,'objTaxonomy items for post id before assigning it back to the post object');
-            if(2446 == $this->ID) _mizzou_log($objTaxonomy,'objTaxonomy for post id 2446 before assigning it back to the post object');
+            //if(2446 == $this->ID) _mizzou_log($objTaxonomy->items,'objTaxonomy items for post id before assigning it back to the post object');
+            //if(2446 == $this->ID) _mizzou_log($objTaxonomy,'objTaxonomy for post id 2446 before assigning it back to the post object');
             $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
         }
 
         $this->taxonomies = $aryTaxStore;
-        if(2446 == $this->ID) _mizzou_log($this->taxonomies,'list of all taxonomies for post 2446 immediately after assignment');
+        //if(2446 == $this->ID) _mizzou_log($this->taxonomies,'list of all taxonomies for post 2446 immediately after assignment');
     }
 } 
