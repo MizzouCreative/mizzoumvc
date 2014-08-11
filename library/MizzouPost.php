@@ -417,7 +417,8 @@ class MizzouPost extends PostBase
                 _mizzou_log($objTaxonomy->name,'name of the taxonomy that supposedly doesnt have any terms associated with this post');
                  */
             }
-
+            if(2446 == $this->ID) _mizzou_log($objTaxonomy->items,'objTaxonomy items for post id before assigning it back to the post object');
+            if(2446 == $this->ID) _mizzou_log($objTaxonomy,'objTaxonomy for post id 2446 before assigning it back to the post object');
             $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
         }
 
