@@ -423,6 +423,6 @@ class MizzouPost extends PostBase
         }
 
         $this->taxonomies = $aryTaxStore;
-
+        if(2446 == $this->ID) _mizzou_log($this->taxonomies,'list of all taxonomies for post 2446 immediately after assignment');
     }
 } 
