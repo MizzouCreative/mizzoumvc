@@ -410,6 +410,8 @@ class MizzouPost extends PostBase
                 }
             } else {
                 _mizzou_log($aryTaxTerms,'well, tax terms isnt an array, so what is it???');
+                _mizzou_log($this->ID,'ID of the current post that doesnt have tax terms');
+                _mizzou_log($objTaxonomy->name,'name of the taxonomy that supposedly doesnt have any terms associated with this post');
             }
 
             $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
