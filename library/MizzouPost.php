@@ -408,6 +408,8 @@ class MizzouPost extends PostBase
                 } else {
                     $objTaxonomy->items = $aryTaxTerms;
                 }
+            } else {
+                _mizzou_log($aryTaxTerms,'well, tax terms isnt an array, so what is it???');
             }
 
             $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
