@@ -132,7 +132,7 @@ class Site extends Base {
      * @param  string $strViewName
      * @return string $strReturn
      */
-    public function includeView($strViewName)
+    public function getView($strViewName)
     {
         $strReturn = '';
         if(FALSE === strpos($strViewName,'.php')){
