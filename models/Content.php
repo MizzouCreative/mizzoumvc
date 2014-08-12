@@ -447,7 +447,11 @@ class Content {
     protected function _determineHeaderTitle($strPageTitle,$strSiteName)
     {
         $aryTitleParts = array();
-        $aryTitleParts[] = strip_tags($strPageTitle);
+        $strPageTitle = trim(strip_tags($strPageTitle));
+
+        if('' != $strPageTitle){
+            $aryTitleParts[] = $strPageTitle;
+        }
 
         $objPostType = self::_getPagePostType();
 
