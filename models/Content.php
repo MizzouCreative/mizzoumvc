@@ -206,7 +206,8 @@ class Content {
 
 
         // replaces get_footer();
-        require_once $strViewsPath . 'footer.php';
+        //require_once $strViewsPath . 'footer.php';
+        require_once $strThemePath . 'footer.php';
 
     }
 
