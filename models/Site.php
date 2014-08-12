@@ -47,7 +47,7 @@ class Site extends Base {
         $this->add_data('wpHeader',$this->_getWpHeader());
         $this->add_data('wpFooter',$this->_getWpFooter());
         $this->add_data('SearchForm',$this->_getSearchForm());
-        $this->add_data('MobileNav',$this->_getMobileNav());
+        //$this->add_data('MobileNav',$this->_getMobileNav());
         /**
          * @todo needs to be a theme option.  Manually adding for now
          */
@@ -153,7 +153,8 @@ class Site extends Base {
 
     protected function _getMobileNav()
     {
-        return $this->_captureOutput('get_template_part',array('mobile','nav'));
+        return '';
+        //return $this->_captureOutput('get_template_part',array('mobile','nav'));
     }
 
     protected function _getWpHeader()
