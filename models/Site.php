@@ -18,6 +18,7 @@
 
 /**
  * Class Site
+ * @todo I'm really thinking this needs to be a singleton as well...
  */
 class Site extends Base {
     protected  $aryOptions = array(
@@ -97,6 +98,7 @@ class Site extends Base {
     {
         //if the pagelist hasnt been set, or if they have requested a different exclusion list
         if(!$this->is_set('PageList') || $this->aryOptions['pagelist_exclude'] !== $aryExclude) {
+            $this->aryOptions['pagelist_exclude'] = $aryExclude;
             $aryPageListOptions = array(
                 'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
                 'title_li'		=> '',
@@ -104,7 +106,7 @@ class Site extends Base {
                 'walker' 		=> new A11yPageWalker(),
                 'echo'          => false,
             );
-            _mizzou_log($aryPageListOptions,'aryPageListOptions',true,array('func'=>__FUNCTION__,'file'=>__FILE__));
+            _mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $this->add_data('PageList',wp_list_pages($aryPageListOptions));
             _mizzou_log($this->PageList,'PageList as stored in Site object',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
         }
