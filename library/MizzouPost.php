@@ -431,7 +431,7 @@ class MizzouPost extends PostBase
                         $objTaxTermClone->add_data('url',vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts));
                     }
 
-                    $aryTaxonomyTerms = $objTaxTermClone;
+                    $aryTaxonomyTerms[] = $objTaxTermClone;
                 }
 
                 $objTaxonomyClone->add_data('items',$aryTaxonomyTerms);
