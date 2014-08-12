@@ -92,13 +92,13 @@ class Site extends Base {
         return $this->LastModifiedDate;
     }
 
-    public function getPageList()
+    public function getPageList($aryExclude=array())
     {
         if(!$this->is_set('PageList')){
             $aryPageListOptions = array(
                 'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
                 'title_li'		=> '',
-                'exclude'      	=> 2129, //why are excluding this item?
+                'exclude'      	=> implode(',',$aryExclude),
                 'walker' 		=> new A11yPageWalker(),
                 'echo'          => false,
             );
