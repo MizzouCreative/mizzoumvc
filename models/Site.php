@@ -131,6 +131,7 @@ class Site extends Base {
      * The name is includeVIEW but it really includes the controller for the view so everything is loaded correctly
      * @param  string $strViewName
      * @return string $strReturn
+     * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
      */
     public function getView($strViewName)
     {
