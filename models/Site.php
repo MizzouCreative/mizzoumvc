@@ -21,8 +21,9 @@
  */
 class Site extends Base {
     protected  $aryOptions = array(
-        'date_format'   => 'M j, Y',
-        'menu_format'   => '<ol class="%1$s %2$s">%3$s</ol>'
+        'date_format'       => 'M j, Y',
+        'menu_format'       => '<ol class="%1$s %2$s">%3$s</ol>',
+        'pagelist_exclude'  => array(),
     );
 
     public function __construct($aryOptions = array())
@@ -92,9 +93,10 @@ class Site extends Base {
         return $this->LastModifiedDate;
     }
 
-    public function getPageList($aryExclude=array())
+    public function getPageList($aryExclude = array())
     {
-        if(!$this->is_set('PageList')){
+        //if the pagelist hasnt been set, or if they have requested a different exclusion list
+        if(!$this->is_set('PageList') || $this->aryOptions['pagelist_exclude'] !== $aryExclude) {
             $aryPageListOptions = array(
                 'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
                 'title_li'		=> '',
