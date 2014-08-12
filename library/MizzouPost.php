@@ -243,6 +243,26 @@ class MizzouPost extends PostBase
     }
 
     /**
+     * @param $objObject
+     * @return stdClass
+     * @todo this is very similar to _setMembers. Can we consolidate?
+     * @todo should this be moved higher? PostBase, or possibly Base?  It's pretty basic functionality
+     */
+    private function _cloneObject($objObject)
+    {
+        if(is_object($objObject)){
+            $objNew = new Base();
+            $aryObjectMembers = get_object_vars($objObject);
+            foreach($aryObjectMembers as $strMember=>$strMemberVal){
+                $objNew->add_data($strMember,$strMemberVal);
+            }
+            return $objNew;
+        } else {
+            return $objObject;
+        }
+    }
+
+    /**
      * Reformats the post's custom data.
      *
      * Removes the prefix from the id, and removes any internal custom data fields
@@ -397,19 +417,20 @@ class MizzouPost extends PostBase
             $objTaxonomy->items = array();
 
             if(is_array($aryTaxTerms)){
-                if(is_bool($this->aryOptions['taxonomies']['filter_url']) && $this->aryOptions['taxonomies']['filter_url']){
-                    foreach($aryTaxTerms as $objTaxTerm){
+                foreach($aryTaxTerms as $objTaxTerm){
+                    $objTaxTermClone = $this->_cloneObject($objTaxTerm);
+                    if(is_bool($this->aryOptions['taxonomies']['filter_url']) && $this->aryOptions['taxonomies']['filter_url']){
                         $aryURLParts = array(
                             $this->aryOptions['taxonomies']['url'],
                             $objTaxonomy->name,
-                            $objTaxTerm->slug
+                            $objTaxTermClone->slug
                         );
-                        $objTaxTerm->url = vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts);
-                        $objTaxonomy->items[] = $objTaxTerm;
+                        $objTaxTermClone->add_data('url',vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts));
                     }
-                } else {
-                    $objTaxonomy->items = $aryTaxTerms;
+
+                    $objTaxonomy->items[] = $objTaxTermClone;
                 }
+
             } else {
                 /**
                 _mizzou_log($aryTaxTerms,'well, tax terms isnt an array, so what is it???');
