@@ -455,7 +455,11 @@ class Content {
 
         $objPostType = self::_getPagePostType();
 
-        if($strPageTitle !== $objPostType->labels->name){
+        /**
+         * @todo Should we check to see if it isnt null, or check to see if it is an object? We're making an assumption
+         * right now that if it isnt null, then ->labels and ->labels->name have been set and are accessible
+         */
+        if(!is_null($objPostType) && $strPageTitle !== $objPostType->labels->name){
             $aryTitleParts[] = $objPostType->labels->name;
         }
 
@@ -498,6 +502,8 @@ class Content {
             /**
              * @todo we need to do something else here besides log. We have functionality further down the line that
              * depends on the PostType being determined.
+             *
+             * HOWEVER, there are perfectly valid scenarios where we dont have a post type. Front Page is one
              */
             _mizzou_log(null,'WARNING: We were unable to determine the post type we are dealing with',true);
         }
