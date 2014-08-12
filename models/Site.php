@@ -142,7 +142,7 @@ class Site extends Base {
         }
         $objSite = $this;
         ob_start();
-        locate_template($strViewName,true,true);
+        require_once locate_template($strViewName,false);
         $strReturn = ob_get_contents();
         ob_end_clean();
 
