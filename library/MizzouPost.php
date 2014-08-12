@@ -414,7 +414,9 @@ class MizzouPost extends PostBase
         foreach($aryTaxonomies as $objTaxonomy){
             $aryTaxTerms = get_the_terms($this->ID,$objTaxonomy->name);
             //if(2446 == $this->ID) _mizzou_log($aryTaxTerms,'list of tax terms for post ID 2446');
-            $objTaxonomy->items = array();
+            $objTaxonomyClone = $this->_cloneObject($objTaxonomy);
+            $objTaxonomyClone->add_data('items',array());
+            //$objTaxonomy->items = array();
 
             if(is_array($aryTaxTerms)){
                 foreach($aryTaxTerms as $objTaxTerm){
@@ -422,13 +424,13 @@ class MizzouPost extends PostBase
                     if(is_bool($this->aryOptions['taxonomies']['filter_url']) && $this->aryOptions['taxonomies']['filter_url']){
                         $aryURLParts = array(
                             $this->aryOptions['taxonomies']['url'],
-                            $objTaxonomy->name,
+                            $objTaxonomyClone->name,
                             $objTaxTermClone->slug
                         );
                         $objTaxTermClone->add_data('url',vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts));
                     }
 
-                    $objTaxonomy->items[] = $objTaxTermClone;
+                    $objTaxonomyClone->items[] = $objTaxTermClone;
                 }
 
             } else {
@@ -440,7 +442,7 @@ class MizzouPost extends PostBase
             }
             //if(2446 == $this->ID) _mizzou_log($objTaxonomy->items,'objTaxonomy items for post id before assigning it back to the post object');
             //if(2446 == $this->ID) _mizzou_log($objTaxonomy,'objTaxonomy for post id 2446 before assigning it back to the post object');
-            $aryTaxStore[$objTaxonomy->label] = $objTaxonomy;
+            $aryTaxStore[$objTaxonomyClone->label] = $objTaxonomyClone;
         }
 
         $this->taxonomies = $aryTaxStore;
