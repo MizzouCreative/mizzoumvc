@@ -47,6 +47,7 @@ class Site extends Base {
         $this->add_data('wpHeader',$this->_getWpHeader());
         $this->add_data('wpFooter',$this->_getWpFooter());
         $this->add_data('SearchForm',$this->_getSearchForm());
+        $this->add_data('MobileNav',$this->_getMobileNav());
         /**
          * @todo needs to be a theme option.  Manually adding for now
          */
@@ -122,6 +123,35 @@ class Site extends Base {
     public function currentPublicMembers()
     {
         return array_keys($this->aryData);
+    }
+
+    /**
+     * Allows views to include subviews
+     *
+     * The name is includeVIEW but it really includes the controller for the view so everything is loaded correctly
+     * @param  string $strViewName
+     * @return string $strReturn
+     */
+    public function includeView($strViewName)
+    {
+        $strReturn = '';
+        if(FALSE === strpos($strViewName,'.php')){
+            //.php was not included
+            $strViewName .= '.php';
+        }
+        $objSite = $this;
+        ob_start();
+        locate_template($strViewName,true,true);
+        $strReturn = ob_get_contents();
+        ob_end_clean();
+
+        return $strReturn;
+
+    }
+
+    protected function _getMobileNav()
+    {
+        return $this->_captureOutput('get_template_part',array('mobile','nav'));
     }
 
     protected function _getWpHeader()
