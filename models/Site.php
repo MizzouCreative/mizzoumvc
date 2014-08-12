@@ -104,7 +104,9 @@ class Site extends Base {
                 'walker' 		=> new A11yPageWalker(),
                 'echo'          => false,
             );
+            _mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $this->add_data('PageList',wp_list_pages($aryPageListOptions));
+            _mizzou_log($this->PageList,'PageList as stored in Site object',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
         }
 
         return $this->PageList;
