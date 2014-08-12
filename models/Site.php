@@ -133,6 +133,7 @@ class Site extends Base {
      * @return string $strReturn
      * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
      */
+    /*
     public function getView($strViewName)
     {
         $strReturn = '';
@@ -148,7 +149,7 @@ class Site extends Base {
 
         return $strReturn;
 
-    }
+    }*/
 
     protected function _getMobileNav()
     {
