@@ -144,7 +144,7 @@ class Site extends Base {
             $strViewName .= '.php';
         }
         $objSite = $this;
-        $strFoo = 'Bar';
+
         ob_start();
 
         require_once locate_template($strViewName,false);
