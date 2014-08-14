@@ -136,12 +136,16 @@ class Site extends Base {
     public function getView($strViewName)
     {
         $strReturn = '';
+        /**
+         * @todo this would probably be better with a regex where you match at the end
+         */
         if(FALSE === strpos($strViewName,'.php')){
             //.php was not included
             $strViewName .= '.php';
         }
-        $objSite = clone $this;
+
         ob_start();
+        $objSite = $this;
         require_once locate_template($strViewName,false);
         $strReturn = ob_get_contents();
         ob_end_clean();
