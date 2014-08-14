@@ -146,6 +146,10 @@ class Content {
             $strPageTitle = self::_getPageTitle();
         }
 
+        /**
+         * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
+         * other CPTs, then we need to include Next & Previous page links
+         */
         if((is_home() || is_archive()) && $aryOptions['include_pagination']){
             $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
             $strPaginationPrevious = get_previous_posts_link('Newer Entries &raquo;');
@@ -161,6 +165,10 @@ class Content {
 
         $strThemePath = $objSite->ActiveThemePath;
         $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
+        /**
+         * @todo we should probably switch to using either wordpress' locate_template function, or using our own method
+         * that wraps locate_template
+         */
         $strInnerView = $strViewsPath . $strInnerViewFileName . '.php';
 
         //now we need to start getting everyhing
@@ -251,14 +259,14 @@ class Content {
                         break;
                 }
 
-                _mizzou_log($strDatePattern,'our date pattern');
-                _mizzou_log($aryDateParts,'our date parts');
+                //_mizzou_log($strDatePattern,'our date pattern');
+                //_mizzou_log($aryDateParts,'our date parts');
 
                 $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
                 $objPagePostType = self::_getPagePostType();
 
                 $strPageTitle .= ' ' . $objPagePostType->label;
-                _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
+                //_mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
             } else {
                 $strPageTitle = post_type_archive_title(null,false);
                 _mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
@@ -506,7 +514,7 @@ class Content {
              * HOWEVER, there are perfectly valid scenarios where we dont have a post type. Front Page is one, Search
              */
             global $wp_query;
-            _mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
+            //_mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
         }
     }
 
