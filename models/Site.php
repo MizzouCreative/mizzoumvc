@@ -140,7 +140,7 @@ class Site extends Base {
             //.php was not included
             $strViewName .= '.php';
         }
-        $objSite = $this;
+        $objSite = self;
         ob_start();
         require_once locate_template($strViewName,false);
         $strReturn = ob_get_contents();
