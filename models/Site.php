@@ -133,8 +133,14 @@ class Site extends Base {
      * @return string $strReturn
      * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
      */
-    public function getView($strViewName)
+    public function getView($strViewName,$aryOptions=array())
     {
+        if(count($aryOptions) > 0){
+            if(isset($aryOptions['passthrough']) && is_array($aryOptions['passthrough'])){
+                extract($aryOptions['passthrough']);
+            }
+        }
+
         $strReturn = '';
         /**
          * @todo this would probably be better with a regex where you match at the end
