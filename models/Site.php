@@ -46,7 +46,7 @@ class Site extends Base {
         $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
         $this->add_data('wpHeader',$this->_getWpHeader());
         $this->add_data('wpFooter',$this->_getWpFooter());
-        $this->add_data('SearchForm',$this->_getSearchForm());
+        //$this->add_data('SearchForm',$this->_getSearchForm());
         //$this->add_data('MobileNav',$this->_getMobileNav());
         /**
          * @todo needs to be a theme option.  Manually adding for now
