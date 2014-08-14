@@ -279,7 +279,7 @@ class Content {
                     $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
                 }
             }
-        } elseif(is_single()){
+        } else {
             $strPageTitle = wp_title('',false);
         }
         _mizzou_log($strPageTitle,'page title as determined',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
