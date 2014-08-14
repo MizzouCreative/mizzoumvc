@@ -39,7 +39,7 @@ class Content {
         $boolIncludeImageAboveHeader    = false;
 
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
-        _mizzou_log($aryOptions,'aryOptions after I merged');
+        //_mizzou_log($aryOptions,'aryOptions after I merged');
         extract($aryData);
 
         /**
@@ -466,7 +466,7 @@ class Content {
         $aryTitleParts[] = $strSiteName;
         $aryTitleParts[] = 'University of Missouri';
 
-        _mizzou_log($aryTitleParts,'aryTitleParts right before we implode');
+        //_mizzou_log($aryTitleParts,'aryTitleParts right before we implode');
         /**
          * @todo implosion glue should come from a theme option
          */
@@ -503,9 +503,10 @@ class Content {
              * @todo we need to do something else here besides log. We have functionality further down the line that
              * depends on the PostType being determined.
              *
-             * HOWEVER, there are perfectly valid scenarios where we dont have a post type. Front Page is one
+             * HOWEVER, there are perfectly valid scenarios where we dont have a post type. Front Page is one, Search
              */
-            _mizzou_log(null,'WARNING: We were unable to determine the post type we are dealing with',true);
+            global $wp_query;
+            _mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
         }
     }
 

@@ -107,9 +107,9 @@ class Site extends Base {
                 'walker' 		=> new A11yPageWalker(),
                 'echo'          => false,
             );
-            _mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+            //_mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $this->add_data('PageList',wp_list_pages($aryPageListOptions));
-            _mizzou_log($this->PageList,'PageList as stored in Site object',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+            //_mizzou_log($this->PageList,'PageList as stored in Site object',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
         }
 
         return $this->PageList;
@@ -269,7 +269,7 @@ class Site extends Base {
 
     protected function _getWPMenu($strMenuName,$strMenuFormat = null)
     {
-        _mizzou_log($strMenuName,'name of menu requested',false,array('func'=>__FUNCTION__));
+        //_mizzou_log($strMenuName,'name of menu requested',false,array('func'=>__FUNCTION__));
         if(is_null($strMenuFormat)){
             $strMenuFormat = $this->aryOptions['menu_format'];
         }
