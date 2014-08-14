@@ -156,9 +156,11 @@ class Site extends Base {
         $objSite = $this;
 
         ob_start();
-
-        require_once locate_template($strViewName,false);
+        $strFile = locate_template($strViewName,false);
+        _mizzou_log($strFile,'return from locate template');
+        require_once $strFile;
         $strReturn = ob_get_contents();
+        _mizzou_log($strReturn,'contents of strReturn from ob_get_contents');
         ob_end_clean();
 
         return $strReturn;
