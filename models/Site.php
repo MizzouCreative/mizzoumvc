@@ -136,9 +136,6 @@ class Site extends Base {
      */
     public function getView($strViewName,$aryOptions=array())
     {
-        if('searchform'==$strViewName){
-            _mizzou_log($aryOptions,'just called to render the searchform',true,array('func'=>__FUNCTION__));
-        }
         if(count($aryOptions) > 0){
             if(isset($aryOptions['passthrough']) && is_array($aryOptions['passthrough'])){
                 extract($aryOptions['passthrough']);
@@ -156,11 +153,9 @@ class Site extends Base {
         $objSite = $this;
 
         ob_start();
-        $strFile = locate_template($strViewName,false);
-        _mizzou_log($strFile,'return from locate template');
-        require $strFile;
+
+        require locate_template($strViewName,false);
         $strReturn = ob_get_contents();
-        _mizzou_log($strReturn,'contents of strReturn from ob_get_contents');
         ob_end_clean();
 
         return $strReturn;
