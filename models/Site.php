@@ -151,7 +151,6 @@ class Site extends Base {
             $strViewName .= '.php';
         }
         $objSite = $this;
-        _mizzou_log(locate_template($strViewName,false),'getting ready to call');
         ob_start();
 
         require locate_template($strViewName,false);
