@@ -144,10 +144,7 @@ class Site extends Base {
 
             if(!isset($aryOptions)){
                 //aryOptions wasn't sent through as a passthrough variable
-                $aryOptions = array();
-                if(isset($aryViewOptions['exclude'])){
-                    $aryOptions['exclude'] = $aryViewOptions['exclude'];
-                }
+                $aryOptions = $aryViewOptions;
             }
 
         }
