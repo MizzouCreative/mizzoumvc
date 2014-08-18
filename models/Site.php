@@ -136,19 +136,23 @@ class Site extends Base {
      */
     public function getView($strViewName,$aryViewOptions=array())
     {
+        _mizzou_log($aryViewOptions,'aryViewOptions as passed in',false,array('func'=>__FUNCTION__));
         if(count($aryViewOptions) > 0){
             if(isset($aryViewOptions['passthrough']) && is_array($aryViewOptions['passthrough'])){
                 extract($aryViewOptions['passthrough']);
             }
+
+            if(!isset($aryOptions)){
+                //aryOptions wasn't sent through as a passthrough variable
+                $aryOptions = array();
+                if(isset($aryViewOptions['exclude'])){
+                    $aryOptions['exclude'] = $aryViewOptions['exclude'];
+                }
+            }
+
         }
 
-        if(!isset($aryOptions)){
-            //aryOptions wasn't sent through as a passthrough variable
-            $aryOptions = array();
-            if(isset($aryViewOptions['exclude'])){
-                $aryOptions['exclude'] = $aryViewOptions['exclude'];
-            }
-        }
+
 
         $strReturn = '';
         /**
