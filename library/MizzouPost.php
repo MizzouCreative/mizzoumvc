@@ -422,6 +422,12 @@ class MizzouPost extends PostBase
                 foreach($aryTaxTerms as $objTaxTerm){
                     $aryTaxonomyTerms = array();
                     $objTaxTermClone = $this->_cloneObject($objTaxTerm);
+                    /**
+                     * @todo refactor this section so that if a specific URL and URL structure hasnt been passed in, we
+                     * fall back to the default taxonomy URl.
+                     * @todo on a similar note, if they say they want a filter_url, but dont give is a specific url_pattern,
+                     * then fall back to using /post-type/?tax_name=tax_term. @see taxonomy-filter-menu.php in IPP Project
+                     */
                     if(is_bool($this->aryOptions['taxonomies']['filter_url']) && $this->aryOptions['taxonomies']['filter_url']){
                         $aryURLParts = array(
                             $this->aryOptions['taxonomies']['url'],
