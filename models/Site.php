@@ -130,15 +130,23 @@ class Site extends Base {
      *
      * The name is includeVIEW but it really includes the controller for the view so everything is loaded correctly
      * @param  string $strViewName
-     * @param array $aryOptions list of options.
+     * @param array $aryViewOptions list of options.
      * @return string $strReturn contents of the view that was called
      * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
      */
-    public function getView($strViewName,$aryOptions=array())
+    public function getView($strViewName,$aryViewOptions=array())
     {
-        if(count($aryOptions) > 0){
-            if(isset($aryOptions['passthrough']) && is_array($aryOptions['passthrough'])){
-                extract($aryOptions['passthrough']);
+        if(count($aryViewOptions) > 0){
+            if(isset($aryViewOptions['passthrough']) && is_array($aryViewOptions['passthrough'])){
+                extract($aryViewOptions['passthrough']);
+            }
+        }
+
+        if(!isset($aryOptions)){
+            //aryOptions wasn't sent through as a passthrough variable
+            $aryOptions = array();
+            if(isset($aryViewOptions['exclude'])){
+                $aryOptions['exclude'] = $aryViewOptions['exclude'];
             }
         }
 
