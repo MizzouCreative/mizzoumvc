@@ -132,8 +132,17 @@ class Base {
      * Have we encountered an error
      *
      * @return boolean
+     * @deprecated left for backwards compatibility
      */
     public function is_error(){
+        return $this->boolError;
+    }
+
+    /**
+     * Have we encountered an error
+     * @return bool
+     */
+    public function isError(){
         return $this->boolError;
     }
 
