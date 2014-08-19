@@ -16,11 +16,10 @@ class PostBase extends Base
         if(is_object($mxdPost) && $mxdPost instanceof WP_Post){
             $objPost = $mxdPost;
         } elseif(is_numeric($mxdPost)){
-            if(null !== $objPost = get_post($mxdPost)){
-                $objPost = get_post($mxdPost);
-            } else {
+            if(null == $objPost = get_post($mxdPost)){
                 $strLogMsg = 'we were given a post id, but wordpress returned a null.';
                 _mizzou_log($mxdPost,$strLogMsg,false,array('func'=>__FUNCTION__));
+                $this->add_error($strLogMsg);
             }
         } else {
             /**
@@ -29,7 +28,8 @@ class PostBase extends Base
              */
             $strLogMsg = 'We werent given a post id, or an instance of WP_Post. Not sure what to do';
             _mizzou_log($mxdPost,$strLogMsg,false,array('func'=>__FUNCTION__));
-            $objPost = new stdClass();
+            $this->add_error($strLogMsg);
+            $objPost = null;
         }
 
         $this->objOriginalPost = $objPost;
