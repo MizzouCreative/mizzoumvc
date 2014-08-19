@@ -70,22 +70,26 @@ class MizzouPost extends PostBase
         parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
-        if(false !== $this->aryOptions['taxonomies']){
-            $this->_handleTaxonomyOptions();
+        //if we hit an error in the creation of the post object, dont do any of this
+        if(!$this->isError()){
+            if(false !== $this->aryOptions['taxonomies']){
+                $this->_handleTaxonomyOptions();
+            }
+
+            $this->_setMembers($this->objOriginalPost);
+
+            if(FALSE !== $this->aryOptions['include_meta']){
+                $this->_handleMetaData();
+            }
+
+            //now that we're done we no longer need the original post
+            unset($this->objOriginalPost);
+
+            if($this->aryOptions['include_image']){
+                $this->getFeaturedImage();
+            }
         }
 
-        $this->_setMembers($this->objOriginalPost);
-
-        if(FALSE !== $this->aryOptions['include_meta']){
-            $this->_handleMetaData();
-        }
-
-        //now that we're done we no longer need the original post
-        unset($this->objOriginalPost);
-
-        if($this->aryOptions['include_image']){
-            $this->getFeaturedImage();
-        }
     }
 
     public function retrieveParentName()
