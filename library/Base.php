@@ -11,14 +11,21 @@ class Base {
      */
     protected  $aryData                = array();
     /**
-     * stores the ORIGINAL data we need to access
+     * stores the ORIGINAL custom data we need to access
      *
-     * @var mixed
+     * @var array
      */
     protected  $aryOriginalCustomData   = array();
 
+    /**
+     * holds the original post object as give to us by wordpress
+     * @var null
+     */
     protected $objOriginalPost = null;
 
+    /**
+     * @var array
+     */
     protected $aryBaseKeys              = array();
     /**
      * Default message to be displayed if a field of data is requested but isnt set/found
