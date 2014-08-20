@@ -21,6 +21,9 @@
  * @todo I'm really thinking this needs to be a singleton as well...
  */
 class Site extends Base {
+    /**
+     * @var array
+     */
     protected  $aryOptions = array(
         'date_format'       => 'M j, Y',
         'menu_format'       => '<ol class="%1$s %2$s">%3$s</ol>',
@@ -62,6 +65,17 @@ class Site extends Base {
         $this->getLastModifiedDate();
     }
 
+    /**
+     * Returns last modified date of the site based either the modified time of the current page/single post, or if
+     * on a different page, the last modified date of the post that was most recently modified
+     * @param string $strDateFormat format to use for last modified date
+     * @return string string-formatted last modified date
+     * @uses get_the_modified_time wordpress function
+     * @uses $wpdb wordpress global
+     * @uses $wpdb->get_var
+     * @todo we probably need the ability to format the date according to AP Style like we do for Posts, but where should
+     * that code be placed and how do we handle the dependency?  Seems like that could be a static class
+     */
     public function  getLastModifiedDate($strDateFormat=null)
     {
         //set our formatting option
@@ -95,6 +109,12 @@ class Site extends Base {
         return $this->LastModifiedDate;
     }
 
+    /**
+     * Stores the list of pages+link as returned by wp_list_pages
+     * @param array $aryExclude
+     * @return mixed
+     * @uses wp_list_pages wordpress function
+     */
     public function getPageList($aryExclude = array())
     {
         //if the pagelist hasnt been set, or if they have requested a different exclusion list
@@ -104,7 +124,7 @@ class Site extends Base {
                 'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
                 'title_li'		=> '',
                 'exclude'      	=> implode(',',$aryExclude),
-                'walker' 		=> new A11yPageWalker(),
+                'walker' 		=> new A11yPageWalker(), /* @todo how should we deal with this dependency? */
                 'echo'          => false,
             );
             //_mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
@@ -115,11 +135,22 @@ class Site extends Base {
         return $this->PageList;
     }
 
+    /**
+     * Captures and returns the contents from the call to wordpress' dynamic_sidebar function
+     * @param string $strSidebarName name or id of the dynamic sidebar
+     * @return string sidebar html contents
+     */
     public function getSidebar($strSidebarName)
     {
         return $this->_captureOutput('dynamic_sidebar',array($strSidebarName));
     }
 
+    /**
+     * Returns a list of "public members" of the object.
+     * We're storing all data pieces inside of $this->aryData, so we really dont have ANY public members
+     * @return array
+     * @todo should this be moved up to the parent class?
+     */
     public function currentPublicMembers()
     {
         return array_keys($this->aryData);
@@ -132,11 +163,12 @@ class Site extends Base {
      * @param  string $strViewName
      * @param array $aryViewOptions list of options.
      * @return string $strReturn contents of the view that was called
+     * @uses locate_template wordpress function
      * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
      */
     public function getView($strViewName,$aryViewOptions=array())
     {
-        _mizzou_log($aryViewOptions,'aryViewOptions as passed in',false,array('func'=>__FUNCTION__));
+        //_mizzou_log($aryViewOptions,'aryViewOptions as passed in',false,array('func'=>__FUNCTION__));
         if(count($aryViewOptions) > 0){
             if(isset($aryViewOptions['passthrough']) && is_array($aryViewOptions['passthrough'])){
                 extract($aryViewOptions['passthrough']);
@@ -148,8 +180,6 @@ class Site extends Base {
             }
 
         }
-
-
 
         $strReturn = '';
         /**
@@ -180,48 +210,92 @@ class Site extends Base {
         //return $this->_captureOutput('get_template_part',array('mobile','nav'));
     }
 
+    /**
+     * Captures and returns contents of wp_head wordpress function
+     * @return string contents as returned by wp_head()
+     */
     protected function _getWpHeader()
     {
         return $this->_captureOutput('wp_head');
     }
 
+    /**
+     * Captures and returns contents of wp_footer wordpress function
+     * @return string contents as returned by wp_footer()
+     */
     protected function _getWpFooter()
     {
         return $this->_captureOutput('wp_footer');
     }
 
+    /**
+     * Captures and returns contents of the get_search_form wordpress function
+     * @return string contents as returned by get_search_form()
+     */
     protected function _getSearchForm()
     {
         return $this->_captureOutput('get_search_form');
     }
 
+    /**
+     * Returns the name of the site as defined in Wordpress settings
+     * @return string site blog name
+     */
     private function _getSiteName()
     {
         //return get_bloginfo('name');
         return $this->_getSiteOption('blogname');
     }
 
+    /**
+     * Returns the site's Home URL as defined in Wordpress settings
+     * @return string site's home url
+     */
     private function _getSiteHomeURL()
     {
         //return home_url();
         return $this->_getSiteOption('home');
     }
 
+    /**
+     * Returns the Parent theme's URL. Includes ending forward slash.
+     * Wrapper function to get_template_directory_uri() wordpress function.
+     * @return string Parent Theme's URL
+     * @uses get_template_directory_uri wordpress function
+     */
     private function _getParentThemeURL()
     {
         return get_template_directory_uri().'/';
     }
 
+    /**
+     * Returns Parent theme's server path. Includes ending directory separator.
+     * Wrapper function to get_template_directory() wordpress function.
+     * @return string Parent theme's server path
+     * @uses get_template_directory wordpress function
+     */
     private function _getParentThemePath()
     {
         return get_template_directory() . DIRECTORY_SEPARATOR;
     }
 
+    /**
+     * Returns Child Theme's server path. Includes ending directory separator.
+     * Wrapper function to get_stylesheet_directory() wordpress function.
+     * @return string Child theme's server path
+     * @uses get_stylesheet_directory wordpress function
+     */
     private function _getChildThemePath()
     {
         return get_stylesheet_directory() . DIRECTORY_SEPARATOR;
     }
 
+    /**
+     * Retrieves the child theme's URL. Includes ending forward slash.
+     * Wrapper function for get_stylesheet_directory_uri() wordpress functions.
+     * @return string Child theme's URL
+     * @uses get_stylesheet_directory_uri wordpres function
+     */
     private function _getChildThemeURL()
     {
         /**
@@ -230,11 +304,24 @@ class Site extends Base {
         return get_stylesheet_directory_uri().'/';
     }
 
+    /**
+     * Returns the active theme's stylesheet URL.
+     * Wrapper function for get_stylesheet_uri() wordpress function.
+     * @return string active stylesheet URL, be it child or parent
+     * @uses get_stylesheet_uri wordpress function
+     */
     private function _getActiveStylesheet()
     {
         return get_stylesheet_uri();
     }
 
+    /**
+     * Returns site option
+     * Wrapper function for get_option() wordpress function.
+     * @param string $strOption Site option to retrieve
+     * @return mixed
+     * @uses get_option wordpress function
+     */
     protected function _getSiteOption($strOption)
     {
         /**
@@ -245,12 +332,20 @@ class Site extends Base {
         return get_option($strOption);
     }
 
+    /**
+     * Returns the active theme's url
+     * @return string active theme's URL
+     */
     protected function _getActiveThemeURL()
     {
-
         return ($this->ParentThemeURL == $this->ChildThemeURL) ? $this->ParentThemeURL : $this->ChildThemeURL;
     }
 
+    /**
+     * Returns the active theme's directory path
+     * @return string active theme's directory path
+     * @uses is_child_theme wordpress function
+     */
     protected function _getActiveThemePath()
     {
         if(is_child_theme()){
@@ -260,21 +355,45 @@ class Site extends Base {
         }
     }
 
+    /**
+     * Returns the custom site option 'tracking input'.  Typically this will be your google analytics code
+     * @return mixed
+     * @todo this is IPP-specific unless we agree that all sites/themes will include this custom option.
+     * I'm actually torn on the validity of allowing the changing of analytics code in the wordpress GUI vs statically
+     * placing the tracking code in the footer view.
+     */
     protected function _getTrackingCode()
     {
         return $this->_getSiteOption('tracking_input');
     }
 
+    /**
+     * Returns the markup for the audience menu
+     * @return string markup for the audience menu
+     * @todo this is IPP specific unless we agree that all sites/themes will include an audience menu
+     */
     protected function _getAudienceMenu()
     {
         return $this->_getWPMenu('audience');
     }
 
+    /**
+     * Returns the markup for the primary audience menu
+     * @return string markup for the primary audience menu
+     * @todo this is IPP specific unless we agree that all sites/theme will include an audience menu
+     */
     protected function _getPrimaryMenu()
     {
         return $this->_getWPMenu('primary');
     }
 
+    /**
+     * Captures and returns the markup+contents of the requested wordpress menu
+     * @param $strMenuName Name, ID or slug of the menu to retrieve
+     * @param null $strMenuFormat sprintf format that the menu should follow (items_wrap in the options of wp_nav_menu)
+     * @return string markup of the menu requested
+     * @todo seems like we need a public getMenu method that calls this method.
+     */
     protected function _getWPMenu($strMenuName,$strMenuFormat = null)
     {
         //_mizzou_log($strMenuName,'name of menu requested',false,array('func'=>__FUNCTION__));
