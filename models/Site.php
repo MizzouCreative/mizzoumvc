@@ -17,12 +17,12 @@
  */
 
 /**
- * Class Site
- * @todo I'm really thinking this needs to be a singleton as well...
+ * Stores basic information used across the site.
+ * @todo move getView into Framework class?
  */
 class Site extends Base {
     /**
-     * @var array
+     * @var array default options
      */
     protected  $aryOptions = array(
         'date_format'       => 'M j, Y',
@@ -74,7 +74,7 @@ class Site extends Base {
      * @uses $wpdb wordpress global
      * @uses $wpdb->get_var
      * @todo we probably need the ability to format the date according to AP Style like we do for Posts, but where should
-     * that code be placed and how do we handle the dependency?  Seems like that could be a static class
+     * that code be placed and how do we handle the dependency?  Seems like that could be a static class?
      */
     public function  getLastModifiedDate($strDateFormat=null)
     {
@@ -316,7 +316,7 @@ class Site extends Base {
     }
 
     /**
-     * Returns site option
+     * Retrieves/returns a site option
      * Wrapper function for get_option() wordpress function.
      * @param string $strOption Site option to retrieve
      * @return mixed
