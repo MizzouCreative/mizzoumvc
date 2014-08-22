@@ -50,7 +50,7 @@ class ImageData extends PostBase
     }
 
     /**
-     *
+     * Retrieves and sets the additional information about an image: alt, caption, additional sizes URLs
      */
     protected function _retrieve_wp_data(){
         /**
