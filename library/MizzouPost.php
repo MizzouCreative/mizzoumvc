@@ -15,16 +15,15 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageData.php';
 class MizzouPost extends PostBase
 {
     /**
-     * @var string
+     * @var string default post type prefix
      */
     protected $strPostPrefix= 'post_';
     /**
-     * @var array
+     * @var array list of post members to exclude from truncating
      */
     protected $aryPropertyExclude = array('post_type','post_name');
     /**
-     * If incl
-     * @var array
+     * @var array default options
      */
     protected $aryOptions = array(
         'format_date'   => false,
@@ -47,6 +46,9 @@ class MizzouPost extends PostBase
         'meta_prefix'   => null,
         'suppress_empty'=> null
     );
+    /**
+     * @var array taxonomy option defaults
+     */
     protected $aryTaxonomyDefaults = array(
         'only_taxonomies'   => array(), //only include specific taxonomies
         'filter_url'        => false,
@@ -55,17 +57,18 @@ class MizzouPost extends PostBase
 
     );
     /**
-     * @var string
+     * @var string regex pattern for locating post members that should be consolidated into an array
      */
     private $strMetaGroupPattern = '([a-zA-Z]*)\d';
 
+    /**
+     * @var string should be the default date format, but i think this is now deprecated, due to AP Style
+     * @todo deprecate/remove
+     */
     private $strDefaultDateFormat = ' j, Y';
 
     public function __construct($mxdPost, $aryOptions = array())
     {
-        if($mxdPost->post_type == 'attachment'){
-            _mizzou_log($aryOptions,'aryOptions as passed into MizzouPost');
-        }
 
         parent::__construct($mxdPost);
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
@@ -92,6 +95,9 @@ class MizzouPost extends PostBase
 
     }
 
+    /**
+     * @return string the name of the current post's parent
+     */
     public function retrieveParentName()
     {
         if(!$this->is_set('parent_name')){
@@ -108,6 +114,11 @@ class MizzouPost extends PostBase
         return $this->get('parent_name');
     }
 
+    /**
+     * Retrieves and possibly returns an Image object for the post's featured image
+     * @param bool $boolReturn
+     * @return mixed object|void
+     */
     public function getFeaturedImage($boolReturn = false)
     {
         if(!isset($this->aryData['image']) && !isset($this->aryData['hasFeaturedImage'])){
@@ -115,6 +126,9 @@ class MizzouPost extends PostBase
             if($this->aryData['hasFeaturedImage']){
                 $intImageID = get_post_thumbnail_id($this->aryData['ID']);
                 //_mizzou_log($intImageID,'the post has a featured image. this is its id');
+                /**
+                 * @todo how should we deal with this dependency?
+                 */
                 $this->add_data('image',new ImageData($intImageID));
             }
         }
@@ -129,6 +143,18 @@ class MizzouPost extends PostBase
         }
     }
 
+    /**
+     * Consolidates the Posts applicable custom data down into array collections
+     * For any custom post data that is named <post-type>_<key>_#, it will consolidate the values into an array keyed
+     * as <key>. Example
+     *
+     * person_address_1
+     * person_address_2
+     * person_address_3
+     *
+     * Will becomes an array 'address' containing the values from the three fields
+     * @param array $aryOptions
+     */
     protected function _consolidateMetaGroups($aryOptions)
     {
         //we need the full pattern to use including the prefix, if applicable
@@ -191,6 +217,11 @@ class MizzouPost extends PostBase
         }
     }
 
+    /**
+     * Builds the regex pattern used by @see _consolidateMetaGroups
+     * @param string $strPrefix post type prefix
+     * @return string the regext pattern to use
+     */
     protected function _buildFullMetaGroupPattern($strPrefix=null)
     {
         $strPattern = '';
@@ -203,6 +234,12 @@ class MizzouPost extends PostBase
         return $strPattern;
     }
 
+    /**
+     * Copies the members from the WP_Post object into this object
+     * WP_Post is final so we can't extend it
+     * @param WP_Post $objPost
+     * @todo how is the functionality here different from @see _cloneObject? can we consolidate these two?
+     */
     private function _setMembers(WP_Post $objPost)
     {
         $aryPostMembers = get_object_vars($objPost);
@@ -247,8 +284,8 @@ class MizzouPost extends PostBase
     }
 
     /**
-     * @param $objObject
-     * @return stdClass
+     * @param object $objObject
+     * @return object stdClass
      * @todo this is very similar to _setMembers. Can we consolidate?
      * @todo should this be moved higher? PostBase, or possibly Base?  It's pretty basic functionality
      */
@@ -288,6 +325,9 @@ class MizzouPost extends PostBase
         }
     }
 
+    /**
+     * Retrieves/sets the post's permalink
+     */
     private function _setPermalink()
     {
         if($this->post_type == 'attachment' && $this->aryOptions['permalink'] == 'download'){
@@ -298,11 +338,17 @@ class MizzouPost extends PostBase
         $this->add_data('permalink',$strPermalink);
     }
 
+    /**
+     * Retrieves/sets the post's format
+     */
     private function _setPostFormat()
     {
         $this->aryData['post_format'] = (FALSE !== $strPostFormat = get_post_format($this->aryData['ID'])) ? $strPostFormat : 'standard';
     }
 
+    /**
+     *
+     */
     private function _setContent()
     {
         $this->aryData['content_raw'] = $this->aryData['content'];
