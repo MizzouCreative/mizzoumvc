@@ -284,6 +284,7 @@ class MizzouPost extends PostBase
     }
 
     /**
+     * Clones the public members of an object to a new object
      * @param object $objObject
      * @return object stdClass
      * @todo this is very similar to _setMembers. Can we consolidate?
@@ -347,7 +348,8 @@ class MizzouPost extends PostBase
     }
 
     /**
-     *
+     * Retrieves and sets both the raw contents member (content_raw) and the contents member (content) after running the
+     * raw contents through the the_content filters.
      */
     private function _setContent()
     {
@@ -355,6 +357,10 @@ class MizzouPost extends PostBase
         $this->aryData['content'] = apply_filters('the_content',$this->aryData['content_raw']);
     }
 
+    /**
+     * Retrieves and sets both the raw title member (title_raw) and title member (title) after running the raw title
+     * through the the_title filters
+     */
     private function _setTitle()
     {
         $this->aryData['title_raw'] = $this->aryData['title'];
@@ -376,6 +382,10 @@ class MizzouPost extends PostBase
 
     }
 
+    /**
+     * Reformats the Month to AP style date format based on the timestamp of the post
+     * @return string AP style formatted month
+     */
     private function _getAPMonth()
     {
         $strMonth = date('F',$this->timestamp);
@@ -392,11 +402,19 @@ class MizzouPost extends PostBase
         return $strMonth;
     }
 
+    /**
+     * Sets the iso8601 formatted date based on the timestamp of the post
+     */
     private function _setISO8601Date()
     {
         $this->aryData['iso8601_date'] = date('c',$this->aryData['timestamp']);
     }
 
+    /**
+     * Retrieves the meta (custom) data associated with a post, and handles the reformatting of meta/custom data and
+     * consolidation of meta/custom fields
+     * @uses get_post_custom
+     */
     private function _handleMetaData()
     {
         $aryDefaults = array(
@@ -423,6 +441,9 @@ class MizzouPost extends PostBase
 
     }
 
+    /**
+     * Handles the setting of taxonomy options
+     */
     private function _handleTaxonomyOptions()
     {
         if(is_array($this->aryOptions['taxonomies'])){
@@ -432,6 +453,10 @@ class MizzouPost extends PostBase
         }
     }
 
+    /**
+     * Captures the contents of all sidebar widgets. This assumes the post has been set up with custom fields that allows
+     * the content editor to choose what widget appears on a post/page
+     */
     private function _captureWidgetOutput()
     {
         $aryWidgets = array();
@@ -442,6 +467,11 @@ class MizzouPost extends PostBase
         $this->add_data('widgets',$aryWidgets);
     }
 
+    /**
+     * Retrieves and sets the excerpt member. If the excerpt isn't explicitly set in the post, sets it based off the
+     * content_raw contents after sending it through wp_trim_words
+     * @uses wp_trim_words
+     */
     private function _processExcerpt()
     {
         //_mizzou_log($this->aryOptions['excerpt_length'],'excerpt length in the options',false,array('func'=>__FUNCTION__));
@@ -450,6 +480,9 @@ class MizzouPost extends PostBase
         }
     }
 
+    /**
+     * Retrieve and sets the taxonomies and taxonomy terms associated with the post
+     */
     protected function _retrieveTaxonomies()
     {
         $aryTaxStore = array();
