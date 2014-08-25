@@ -1,6 +1,6 @@
 <?php
 /**
- * Base class contain magic methods
+ * Base class contain magic methods and ability to capture the contents of global-space functions that echo directly
  */
 
 class Base {
