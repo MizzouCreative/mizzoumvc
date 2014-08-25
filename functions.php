@@ -34,6 +34,10 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARAT
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'widgets.php';
 
 
+/**
+ * Contains and fires all of the add_filter, add_action and remove_action hooks that need to fire during init
+ * @todo rename function to conform to naming standards
+ */
 function mizzou_setup(){
     add_filter('query_vars','mizzou_add_URL_query_vars');
     add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
@@ -79,6 +83,12 @@ function mizzou_setup(){
     
 }
 
+/**
+ * contains all of the other functions that need to occur related to setting up the theme.
+ * @todo since this is really a theme-specific option, should it be moved out of the framework and pushed back down to
+ * the child theme to implement?
+ * @todo rename function to conform to naming standards
+ */
 function mizzou_setup_theme(){
     add_theme_support( 'post-thumbnails' );
 }
@@ -87,7 +97,8 @@ function mizzou_setup_theme(){
  * Adds the 'q' query var for google search 
  * 
  * @param array $aryVars
- * @return array 
+ * @return array
+ * @todo rename function to conform to naming standards
  */
 function mizzou_add_URL_query_vars($aryVars){
     $aryVars[] = 'q';
@@ -101,6 +112,7 @@ function mizzou_add_URL_query_vars($aryVars){
  * @param array $aryIgnoreWords words/characters to ignore, DEFAULT: / - .php .html .aspx
  * @return string
  * @todo this needs to be converted over to the Site model?
+ * @todo rename function to conform to naming standards
  */
 function mizzou_gather_404_search_terms($aryIgnoreWords=null){
     $aryIgnore = array(
@@ -153,6 +165,8 @@ function mizzou_gather_404_search_terms($aryIgnoreWords=null){
  * @param array $aryHidden
  * @param object $objScreen
  * @return array
+ * @todo should this be moved into a theme option and handled by the theme class?
+ * @todo rename function to conform to naming standards
  */
 function mizzou_display_postexcerpt($aryHidden,$objScreen){
     if($objScreen->base == 'post'){
@@ -165,6 +179,7 @@ function mizzou_display_postexcerpt($aryHidden,$objScreen){
 * Removes dashboard items from the Admin dashboard
 * 
 * @return void
+* @todo rename function to conform to naming standards
 */
 function mizzou_remove_dashboard_widgets(){
     global $wp_meta_boxes;
@@ -179,17 +194,18 @@ function mizzou_remove_dashboard_widgets(){
 
 /**
  * Disable 'checked_ontop' for taxonomies (learned from NewsA11y)
- * @param boolean $args
- * @param type $post_id
- * @return boolean
- * @todo complete documentation please
+ * @param array $args
+ * @param integer $post_id
+ * @return array
+ * @todo rename function to conform to naming standards
  */
 function mizzou_no_top_float( $args, $post_id ) {
   // If the taxonomy is set and equals person_type or group
-	if ( isset( $args['taxonomy'] ) && 'person_type' == $args['taxonomy'] || 'group' == $args['taxonomy'] || 'group' == $args['author_assignment']   )
-		$args['checked_ontop'] = false;
- 
-	return $args;
+	if ( isset( $args['taxonomy'] ) && 'person_type' == $args['taxonomy'] || 'group' == $args['taxonomy'] || 'group' == $args['author_assignment']   ) {
+        $args['checked_ontop'] = false;
+    }
+
+    return $args;
 }
 
 
