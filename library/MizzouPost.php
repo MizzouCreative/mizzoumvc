@@ -468,8 +468,8 @@ class MizzouPost extends PostBase
     }
 
     /**
-     * Retrieves and sets the excerpt member. If the excerpt isn't explicitly set in the post, sets it based off the
-     * content_raw contents after sending it through wp_trim_words
+     * Retrieves and sets the excerpt member. If the excerpt isn't explicitly set in the post, use the raw content and
+     * truncate. Then run everything through the get_the_excerpt filter
      * @uses wp_trim_words
      */
     private function _processExcerpt()
@@ -478,6 +478,8 @@ class MizzouPost extends PostBase
         if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
             $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryOptions['excerpt_length']);
         }
+
+        $this->aryData['excerpt'] = apply_filters('get_the_excerpt',$this->aryData['excerpt']);
     }
 
     /**
