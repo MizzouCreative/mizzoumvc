@@ -474,12 +474,13 @@ class MizzouPost extends PostBase
      */
     private function _processExcerpt()
     {
-        //_mizzou_log($this->aryOptions['excerpt_length'],'excerpt length in the options',false,array('func'=>__FUNCTION__));
+        _mizzou_log($this->aryData['excerpt'],'excerpt before running the filters',false,array('func'=>__FUNCTION__));
         if($this->aryData['excerpt'] == '' && $this->aryData['content_raw'] != ''){
             $this->aryData['excerpt'] = wp_trim_words($this->aryData['content_raw'],$this->aryOptions['excerpt_length']);
         }
 
         $this->aryData['excerpt'] = apply_filters('get_the_excerpt',$this->aryData['excerpt']);
+        _mizzou_log($this->aryData['excerpt'],'excerpt AFTER running the filters',false,array('func'=>__FUNCTION__));
     }
 
     /**
