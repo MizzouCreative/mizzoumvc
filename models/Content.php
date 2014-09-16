@@ -1,19 +1,33 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 7/10/14
- * Time: 1:55 PM
+ *
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ *
  * ASSUMES that Base.php and Site.php classes have already been included
+ *
+ * @todo rename to Framework to better reflect it's purpose?
  */
 
 class Content {
+    /**
+     * @var array default options used by the render method
+     */
     protected static $aryDefaultOptions = array(
         'include_sidebars'  => false,
         'override_outerview'=>false,
         'include_pagination'=>false,
     );
 
+    /**
+     * @var array list of pages that should include a sidebar
+     * @todo this is completely specific to IPP and needs to be moved back down to the child theme and then sent back up
+     * via the theme options class
+     */
     protected static $aryIncludeSidebarPages = array(
         'about',
         'strategic-plan',
@@ -24,13 +38,36 @@ class Content {
         'graduate-research-assistants'
     );
 
+    /**
+     * @var array
+     */
     protected static $arySiteSiteMembers = array('URL','Name');
 
+    /**
+     * @var string
+     */
     protected static $strDateArchiveType = '';
+
+    /**
+     * @var string
+     */
     protected static $strPageTitle = '';
+
+    /**
+     * @var string
+     */
     protected static $strHeaderTitle = '';
+
+    /**
+     * @var null
+     */
     protected static $objPagePostType = null;
 
+    /**
+     * @param string $strInnerViewFileName
+     * @param array $aryData
+     * @param array $aryOptions
+     */
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
         $strEditPostLink                = '';
@@ -219,6 +256,9 @@ class Content {
 
     }
 
+    /**
+     * @return string
+     */
     protected function _getPageTitle()
     {
         if('' == self::$strPageTitle){
@@ -419,6 +459,9 @@ class Content {
         return $aryPath;
     }
 
+    /**
+     * @return string
+     */
     protected function _getDateArchiveType()
     {
         if('' == self::$strDateArchiveType){
@@ -428,6 +471,9 @@ class Content {
         return self::$strDateArchiveType;
     }
 
+    /**
+     *
+     */
     protected function _determineDateArchiveType()
     {
         $strDateArchiveType = '';
@@ -443,6 +489,11 @@ class Content {
         self::$strDateArchiveType = $strDateArchiveType;
     }
 
+    /**
+     * @param $strPageTitle
+     * @param $strSiteName
+     * @return string
+     */
     protected function _getHeaderTitle($strPageTitle,$strSiteName)
     {
         if('' == self::$strHeaderTitle){
@@ -452,6 +503,10 @@ class Content {
         return self::$strHeaderTitle;
     }
 
+    /**
+     * @param $strPageTitle
+     * @param $strSiteName
+     */
     protected function _determineHeaderTitle($strPageTitle,$strSiteName)
     {
         $aryTitleParts = array();
@@ -481,6 +536,9 @@ class Content {
         self::$strHeaderTitle = implode(' // ',$aryTitleParts);
     }
 
+    /**
+     * @return null
+     */
     protected function _getPagePostType()
     {
         if(is_null(self::$objPagePostType)){
@@ -490,6 +548,9 @@ class Content {
         return self::$objPagePostType;
     }
 
+    /**
+     *
+     */
     protected function _determinePagePostType()
     {
         //$strPostType = get_post_type();
@@ -518,6 +579,9 @@ class Content {
         }
     }
 
+    /**
+     * @param $strPostType
+     */
     protected function _adjustPostTypeLabels($strPostType)
     {
         /**
@@ -543,6 +607,9 @@ class Content {
         //_mizzou_log($wp_post_types[$strPostType],'our post type after we adjusted the labels');
     }
 
+    /**
+     * 
+     */
     protected function _includeTaxonomyMenu()
     {
         $aryPubMenu = array();

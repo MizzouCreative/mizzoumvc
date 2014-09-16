@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 6/12/14
- * Time: 1:52 PM
+ * Collects and contains site-specific information
+ *
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  *
  * @uses home_url()
  * @uses get_bloginfo()
@@ -12,6 +16,8 @@
  * @uses A11yPageWalker
  * @uses wp_list_pages()
  *
+ * @todo some dependcencies need to be addressed.
+ * @todo there are a couple of methods that seem outside the scope of the class
  *
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
@@ -165,6 +171,8 @@ class Site extends Base {
      * @return string $strReturn contents of the view that was called
      * @uses locate_template wordpress function
      * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
+     * @todo the function of this model is for site specific data. this doesnt fit at all. This should probably be
+     * moved into the Framework (Content) model/class
      */
     public function getView($strViewName,$aryViewOptions=array())
     {

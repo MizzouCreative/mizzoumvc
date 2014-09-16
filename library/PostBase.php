@@ -1,9 +1,17 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 6/4/14
- * Time: 1:00 PM
+ * Basis for all post-based models.
+ *
+ * Ensures that we start with either a wordpress post object, or that we are able to get one from the ID that is
+ * passed in.
+ *
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ * @todo there is a dependency here on _mizzou_log. Either remove or inject the dependency
  */
 
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Base.php';

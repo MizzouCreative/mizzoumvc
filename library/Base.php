@@ -1,6 +1,13 @@
 <?php
 /**
  * Base class contain magic methods and ability to capture the contents of global-space functions that echo directly
+ *
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 class Base {
@@ -169,6 +176,7 @@ class Base {
      * @param $strCallBack
      * @param $aryOptions
      * @return string
+     * @todo direct dependency on _mizzou_log.  Either remove dependency or inject
      */
     protected function _captureOutput($strCallBack,$aryOptions=array())
     {
