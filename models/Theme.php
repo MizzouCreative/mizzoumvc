@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 6/26/14
- * Time: 1:13 PM
+ * Retrieves and stores all of the theme options
+ *
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 class Theme extends Base {
