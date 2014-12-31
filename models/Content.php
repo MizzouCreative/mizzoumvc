@@ -623,4 +623,64 @@ class Content {
 
         }
     }
+
+    /**
+     * Initializes Template engines filesystem loader
+     * @return Twig_Loader_Filesystem
+     *
+     * @todo should this be here? We now have a direct dependency on a TWIG object. What if we want to change template
+     * systems?
+     */
+    protected function _initializeViewLoader()
+    {
+        $aryViewDirectories = array();
+        $strParentThemePath = get_template_directory().DIRECTORY_SEPARATOR;
+        $strChildThemePath = get_stylesheet_directory().DIRECTORY_SEPARATOR;
+
+        if($strChildThemePath != $strParentThemePath){
+            $aryViewDirectories[] = $strChildThemePath;
+        }
+
+        $aryViewDirectories[] = $strParentThemePath;
+
+        foreach($aryViewDirectories as $intDirectoryKey=>$strDirectory){
+            $aryViewDirectories[$intDirectoryKey] = $strDirectory.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
+        }
+
+        return new Twig_Loader_Filesystem($aryViewDirectories);
+
+    }
+
+    protected function _initializeViewEngine()
+    {
+        $objTELoader = self::_initializeViewLoader();
+
+    }
+
+    protected function _determineViewCacheLocation()
+    {
+        $strViewCacheLocation = '';
+
+        if(defined('VIEW_CACHE_LOCATION')){
+            $strViewCacheLocation = VIEW_CACHE_LOCATION;
+        } else {
+            //let's see if we have a cache directory
+            $strParentThemePath = get_template_directory().DIRECTORY_SEPARATOR;
+            $strPossibleCacheLocation = $strParentThemePath.'cache'.DIRECTORY_SEPARATOR;
+            if(!is_dir($strPossibleCacheLocation) && !file_exists($strPossibleCacheLocation)){
+                //we need to make a directory
+                if(mkdir($strPossibleCacheLocation,'0755')){
+                    $strViewCacheLocation = $strPossibleCacheLocation;
+                }
+            } elseif(!is_writable($strPossibleCacheLocation)) {
+                //it exists but we cant write to it...
+                if(chmod($strPossibleCacheLocation,'0755')){
+                    $strViewCacheLocation = $strPossibleCacheLocation;
+                }
+            } else {
+                $strViewCacheLocation = $strPossibleCacheLocation;
+            }
+
+        }
+    }
 }
