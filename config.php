@@ -20,20 +20,22 @@
 */
 
 /**
- * At a minimum, change the sitesearch value to the new site's domain
+ * GSA's site search url. This is the same for every site
  */
-define('GSA_SEARCH_PARAMS',  serialize(array(
-    'site'            => 'default_collection',
-    'proxystylesheet' => 'wc_basic',
-    'client'          => 'wc_standard',
-    'output'          => 'xml_no_dtd',
-    'sitesearch'      => 'ExampleChild.missouri.edu'
-)));
+define('GSA_SEARCH_URL','http://search.missouri.edu/search?');
 
 /**
-* GSA's site search url
-*/
-define('GSA_SEARCH_URL','http://search.missouri.edu/search?');
+ * At a minimum, change the sitesearch value to the new site's domain
+ */
+if(!defined('GSA_SEARCH_PARAMS')){
+    define('GSA_SEARCH_PARAMS',  serialize(array(
+        'site'            => 'default_collection',
+        'proxystylesheet' => 'wc_basic',
+        'client'          => 'wc_standard',
+        'output'          => 'xml_no_dtd',
+        'sitesearch'      => 'ExampleChild.missouri.edu'
+    )));
+}
 
 /**
  * The maxinum number of pagination links to show on archive pages. This does 
@@ -44,5 +46,7 @@ define('GSA_SEARCH_URL','http://search.missouri.edu/search?');
  * 
  * Prev 1 ... 16 17 18 *19* 20 21 22 ... 31 Next
  */
-define('SITE_MAX_NUM_ARCHIVE_PAGE_LINKS',6);
-?>
+
+if(!defined('SITE_MAX_NUM_ARCHIVE_PAGE_LINKS')){
+    define('SITE_MAX_NUM_ARCHIVE_PAGE_LINKS',6);
+}
