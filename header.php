@@ -10,13 +10,12 @@
  * @copyright 2013 Curators of the University of Missouri
  */
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 
-	<title><?php if ( ( is_category() ) ) { ?>Archive: <?php } ?><?php if ( ( is_tag() ) ) { ?>Tag: <?php } ?><?php wp_title(''); ?><?php if ( !( is_home() ) ) { ?> // <?php } ?><?php bloginfo('name'); ?> // University of Missouri</title>
+	<title> // University of Missouri</title>
     <meta content="<?php bloginfo( 'name' ); ?>" name="apple-mobile-web-app-title"/>
     
 	<?php global $post; $themeta = get_post_custom($post->ID); // Get the meta fields for the current page?>

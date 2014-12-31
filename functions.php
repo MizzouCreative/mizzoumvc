@@ -33,6 +33,8 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARAT
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'shortcodes.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'widgets.php';
 
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'twig'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'Twig'.DIRECTORY_SEPARATOR.'Autoloader.php';
+
 
 /**
  * Contains and fires all of the add_filter, add_action and remove_action hooks that need to fire during init
@@ -54,6 +56,11 @@ function mizzou_setup(){
             return $aryMethods;
 	}   
     );
+
+    /**
+     * @todo is this the best place for this to occur?
+     */
+    Twig_Autoloader::register();
     
     /**
      * Remove link for feeds

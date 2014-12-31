@@ -1,9 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: gilzow
- * Date: 5/15/14
- * Time: 1:25 PM
+ * Most basic post model.
+ *
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 /**

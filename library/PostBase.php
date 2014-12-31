@@ -1,6 +1,6 @@
 <?php
 /**
- * Basis for all post-based models.
+ * Basis for all post-related models.
  *
  * Ensures that we start with either a wordpress post object, or that we are able to get one from the ID that is
  * passed in.
