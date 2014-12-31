@@ -64,16 +64,35 @@ class Content {
     protected static $objPagePostType = null;
 
     /**
+     *
+     */
+    protected static $objViewEngine = null;
+
+    /**
+     *
+     */
+    protected static $objView = null;
+    /**
      * @param string $strInnerViewFileName
      * @param array $aryData
      * @param array $aryOptions
      */
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
+        $aryViewVariables               = array();
         $strEditPostLink                = '';
         $boolIncludeNoIndex             = false;
         $boolIncludeSidebar             = false;
         $boolIncludeImageAboveHeader    = false;
+
+        /**
+         * @todo refactor to remove pre-twig code
+         */
+        $aryViewVariables['EditPostLink']           = $strEditPostLink;
+        $aryViewVariables['IncludeNoIndex']         = $boolIncludeNoIndex;
+        $aryViewVariables['IncludeSidebar']         = $boolIncludeSidebar;
+        $aryViewVariables['IncludeImageAboveHeader']= $boolIncludeImageAboveHeader;
+
 
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
         //_mizzou_log($aryOptions,'aryOptions after I merged');
@@ -87,9 +106,12 @@ class Content {
             $objSite = new Site();
         }
 
+        self::$objViewEngine = self::_initializeViewEngine();
+
         //do we need the EditPostLink?
         if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
             $strEditPostLink = ' ' . $strPostLink;
+            $aryViewVariables['EditPostLink'] = $strEditPostLink;
         }
 
         /**
@@ -103,10 +125,12 @@ class Content {
              */
             if(in_array($objMainPost->slug,self::$aryIncludeSidebarPages)){
                 $boolIncludeSidebar = true;
+                $aryViewVariables['IncludeSidebar'] = $boolIncludeSidebar;
             }
 
             if($objMainPost->image != ''){
                 $boolIncludeImageAboveHeader = true;
+                $aryViewVariables['IncludeImageAboveHeader'] = $boolIncludeImageAboveHeader;
             }
         }
 
@@ -131,12 +155,16 @@ class Content {
             )
         ) {
             $boolIncludeNoIndex = true;
+            $aryViewVariables['IncludeNoIndex'] = $boolIncludeNoIndex;
         }
 
         /**
          * @todo this needs to be moved either into a theme option or config file
+         * deprecated?
+         *
          */
         $intSpanWidth = ($boolIncludeSidebar) ? 8 : 12;
+        $aryViewVariables['SpanWidth'] = $intSpanWidth;
 
         /**
          * For now, we want to make both the $objSite-> members and direct variables available to designers. Eventually
@@ -151,6 +179,8 @@ class Content {
                 $strSiteVariable = $strSiteKey;
             }
 
+            $aryViewVariables[$strSiteVariable] = $objSite->{$strSiteKey};
+
             $strSiteVariable = 'str'.$strSiteVariable;
 
             $$strSiteVariable = $objSite->{$strSiteKey};
@@ -159,13 +189,15 @@ class Content {
         //outerView needs breadcrumbs and inner view data
         /**
          * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
+         * @todo How do we tell twig to include a subview?
          */
         //get the contents for the breadcrumbs
+        /**
         if($objSite->IncludeBreadcrumbs){
-            $strBreadCrumbs = self::_captureOutput('breadcrumbs');
+            $strBreadCrumbs = $objSite->_captureOutput('breadcrumbs');
         } else {
             $strBreadCrumbs = '';
-        }
+        }*/
 
 
         /**
@@ -183,6 +215,8 @@ class Content {
             $strPageTitle = self::_getPageTitle();
         }
 
+        $aryViewVariables['PageTitle'] = $strPageTitle;
+
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
          * other CPTs, then we need to include Next & Previous page links
@@ -192,6 +226,9 @@ class Content {
             $strPaginationPrevious = get_previous_posts_link('Newer Entries &raquo;');
             if(is_null($strPaginationNext)) $strPaginationNext = '';
             if(is_null($strPaginationPrevious)) $strPaginationPrevious = '';
+
+            $aryViewVariables['PaginationNext'] = $strPaginationNext;
+            $aryViewVariables['PaginationPrevious'] = $strPaginationPrevious;
         }
 
         /**
@@ -199,14 +236,19 @@ class Content {
          * @todo dont let this go to production
          */
         $strHeaderTitle = self::_getHeaderTitle($strPageTitle,$objSite->Name);
+        $aryViewVariables['HeaderTitle'] = $strHeaderTitle;
 
-        $strThemePath = $objSite->ActiveThemePath;
-        $strViewsPath = $strThemePath.'views'.DIRECTORY_SEPARATOR;
         /**
-         * @todo we should probably switch to using either wordpress' locate_template function, or using our own method
-         * that wraps locate_template
+         * check the view name to see if we've been given the full name w/ extension, or just the file name
          */
-        $strInnerView = $strViewsPath . $strInnerViewFileName . '.php';
+        if(!preg_match('/\.[a-z]{2,4}/',$strInnerViewFileName)){
+            /**
+             * @todo Is this an option that can be configured in twig? Or can we make this a config variable higher?
+             */
+            $strInnerViewFileName .= '.html';
+        }
+
+        self::$objView = self::$objViewEngine->loadTemplate($strInnerViewFileName);
 
         //now we need to start getting everyhing
 
@@ -654,6 +696,8 @@ class Content {
     protected function _initializeViewEngine()
     {
         $objTELoader = self::_initializeViewLoader();
+        $strCacheLocation = self::_determineViewCacheLocation();
+        return new Twig_Environment($objTELoader,array('cache'=>$strCacheLocation));
 
     }
 
@@ -681,6 +725,15 @@ class Content {
                 $strViewCacheLocation = $strPossibleCacheLocation;
             }
 
+        }
+
+        if(''==$strViewCacheLocation){
+            /**
+             * @todo we need a more elegant way of handling this
+             */
+            echo 'view cache location is not available or is not writeable. I can\'t continue until you fix this. ';exit;
+        } else {
+            return $strViewCacheLocation;
         }
     }
 }
