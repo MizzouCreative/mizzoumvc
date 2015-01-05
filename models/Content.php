@@ -705,7 +705,7 @@ class Content {
     {
         $objTELoader = self::_initializeViewLoader();
         $strCacheLocation = self::_determineViewCacheLocation();
-        return new Twig_Environment($objTELoader,array('cache'=>$strCacheLocation));
+        return new Twig_Environment($objTELoader,array('cache'=>$strCacheLocation,'auto_reload'=>true));
 
     }
 
