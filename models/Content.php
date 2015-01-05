@@ -245,7 +245,7 @@ class Content {
             /**
              * @todo Is this an option that can be configured in twig? Or can we make this a config variable higher?
              */
-            $strInnerViewFileName .= '.html';
+            $strInnerViewFileName .= '.twig';
         }
 
         self::$objView = self::$objViewEngine->loadTemplate($strInnerViewFileName);
@@ -254,6 +254,7 @@ class Content {
 
         //_mizzou_log($strInnerView,'attempting to get: ');
         //get contents from the inner view
+        /**
         if(!$aryOptions['override_outerview']){
             if(file_exists($strInnerView)){
                 ob_start();
@@ -263,7 +264,7 @@ class Content {
             } else {
                 $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
             }
-        }
+        }*/
 
 
 
@@ -271,20 +272,24 @@ class Content {
          * @todo captureContents is in the site model so we need to expand it to allow for storage of this type of data
          */
         $strWpHeaderContents = $objSite->wpHeader;
+        $aryViewVariables['strWpHeaderContents'] = $objSite->wpHeader;
         $strSearchFormContents = $objSite->SearchForm;
+        $aryViewVariables['strSearchFormContents'] = $objSite->SearchForm;
         $strWpFooterContents = $objSite->wpFooter;
+        $aryViewVariables['strWpFooterContents'] = $objSite->wpFooter;
 
         //start actual output
 
         // replaces get_header();
-        require_once $strViewsPath.'header.php';
+        //require_once $strViewsPath.'header.html';
         /**
          * @todo replace with a require to the sidebar view
          */
+        /**
         if($boolIncludeSidebar) {
             get_sidebar();
-        }
-
+        }*/
+        /**
         if($aryOptions['override_outerview']){
             require_once $strInnerView;
         } else {
@@ -293,9 +298,10 @@ class Content {
 
 
         // replaces get_footer();
-        //require_once $strViewsPath . 'footer.php';
-        require_once $strThemePath . 'footer.php';
-
+        //require_once $strViewsPath . 'footer.html';
+        require_once $strThemePath . 'footer.html';
+        */
+        echo self::$objView->render($aryViewVariables);
     }
 
     /**
