@@ -1,0 +1,58 @@
+{##
+ * View file used to contain header content of theme pages
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Andrea Chappelear
+ * @copyright 2015 Curators of the University of Missouri
+ *
+ * Will need
+ *  - <title> contents: strHeadTitle
+ *  - template location: see objSite below
+ *  - site option for tracking code: see objSite below
+ *  - blog url: see objSite below
+ *  - blog name: see objSite below
+ *  - navigation menus: see objSite below
+ *  - search form: strSearchFormContents
+ *  - contents of wp_head: strWpHeaderContents
+ *  - whether or not to include <meta> robots: boolIncludeNoIndex
+ *
+ *  objSite contains
+ *  -> CopyrightYear (also accessible as strCopyrightYear)
+ *  -> Name (also accessible as strSiteName)
+ *  -> URL (also accessible as strSiteURL)
+ *  -> ParentThemeURL (also accessible as strParentThemeURL)
+ *  -> ChildThemeURL (also accessible as strChildThemeURL)
+ *  -> ActiveStylesheet (also accessible as strActiveStylesheet)
+ *  -> ActiveThemeURL (also accessible as strActiveThemeURL)
+ *  -> TrackingCode (also accessible as strTrackingCode)
+ *  -> PrimaryMenu (also accessible as strPrimaryMenu)
+ *  -> AudienceMenu (also accessible as strAudienceMenu)
+ *  -> LastModifiedDate (also accessible as strModifiedDate)
+ *
+ *
+ * @todo move strSearchFormContents to an include in the baseView.twig view? Or leave here, but make it an include?
+ * @todo Shouldnt tracking code be moved into the theme options and then accessed via objTheme object?
+##}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{{ strHeadTitle }}</title>
+    <meta content="{{ objSite.name }}" name="apple-mobile-web-app-title"/>
+{% if boolIncludeNoIndex %}
+    <meta name="ROBOTS" content="NOINDEX,NOARCHIVE">
+{% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;">
+    <!--[if ! lte IE 7]><!-->
+    <link href="{{ objSite.ActiveStylesheet }}" rel="stylesheet">
+    <!--<![endif]-->
+    <link rel="shortcut icon" href="{{ objSite.ActiveThemeURL }}favicon.ico" />
+
+    {{ strWpHeaderContents }}
+
+
+</head>

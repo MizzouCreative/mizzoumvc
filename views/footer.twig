@@ -1,0 +1,45 @@
+{##
+ * View file used to render the last section of every page
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Charlie Tripplet, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
+ *
+ * Needs the following data
+ *  - Site's root URL: see objSite below
+ *  - Name of the site: see objSite below
+ *  - html formatted list of pages in wordpress as returned by wp_list_pages: see objSite below
+ *  - Parent Theme's root URL: see objSite below
+ *  - Child Theme's root URL: see objSite below
+ *  - Last modified date of either the page/post/CPT or the last update made to the site in general: see objSite below
+ *  - Current copyright year: see objSite below
+ *  - Contents as returned by wp_footer(): strWpFooterContents
+ *
+ *  objSite contains
+ *  -> CopyRightYear (also accessible as strCopyRightYear)
+ *  -> Name (also accessible as strSiteName)
+ *  -> URL (also accessible as strSiteURL)
+ *  -> ParentThemeURL (also accessible as strParentThemeURL)
+ *  -> ChildThemeURL (also accessible as strChildTheme)
+ *  -> ActiveStylesheet (also accessible as strActiveStylesheet)
+ *  -> ActiveThemeURL (also accessible as strActiveThemeURL)
+ *  -> TrackingCode (also accessible as strTrackingCode)
+ *  -> PrimaryMenu (also accessible as strPrimaryMenu)
+ *  -> AudienceMenu (also accessible as strAudienceMenu)
+ *  -> LastModifiedDate (also accessible as strLastModifiedDate)
+ *  -> PageList (also accessible as strPageList)
+ *
+##}
+<div id="footer-layer">
+    <footer role="contentinfo" id="footer">
+        <div class="contact"><span class="phone">573-882-3304</span> Columbia, MO 65211</div>
+        <div class="contact-links"><a href="/contact/" class="button outline">Office Hours, Department &amp; Fax&nbsp;Numbers</a></div>
+        <small class="fine-print">&copy; <time datetime="{{ objSite.CopyrightYear }}">{{ objSite.CopyrightYear }}</time> &mdash; Curators of the University of Missouri. All rights reserved. <a href="http://missouri.edu/dmca/">DMCA</a> and <a href="http://missouri.edu/copyright/">other copyright information</a>. An <a href="http://missouri.edu/eeo-aa/">equal opportunity/access/affirmative action/pro-disabled and veteran employer</a>.</small>
+    </footer>
+</div>
+{{ objSite.wpFooter }}
+</body>
+</html>
