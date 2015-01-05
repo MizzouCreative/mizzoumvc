@@ -186,6 +186,8 @@ class Content {
             $$strSiteVariable = $objSite->{$strSiteKey};
         }
 
+        $aryViewVariables['objSite'] = $objSite;
+
         //outerView needs breadcrumbs and inner view data
         /**
          * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
@@ -236,7 +238,7 @@ class Content {
          * @todo dont let this go to production
          */
         $strHeaderTitle = self::_getHeaderTitle($strPageTitle,$objSite->Name);
-        $aryViewVariables['HeaderTitle'] = $strHeaderTitle;
+        $aryViewVariables['HeadTitle'] = $strHeaderTitle;
 
         /**
          * check the view name to see if we've been given the full name w/ extension, or just the file name
