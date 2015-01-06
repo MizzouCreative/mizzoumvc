@@ -65,9 +65,6 @@ function mizzou_setup(){
      */
     Twig_Autoloader::register();
 
-    define('MVC_PARENT_PATH',get_template_directory().DIRECTORY_SEPARATOR);
-    define('MVC_CHILD_PATH',get_stylesheet_directory().DIRECTORY_SEPARATOR);
-    
     /**
      * Remove link for feeds
      */
@@ -292,6 +289,12 @@ add_action('after_setup_theme','mizzou_setup_theme');
 */
 add_action('init','mizzou_setup');
 
+
+/**
+ * ================= CONSTANTS ================================
+ */
+define('MVC_PARENT_PATH',get_template_directory().DIRECTORY_SEPARATOR);
+define('MVC_CHILD_PATH',get_stylesheet_directory().DIRECTORY_SEPARATOR);
 
 /**
  * NO ADDITIONAL CODE SHOULD BE BELOW THIS LINE
