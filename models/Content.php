@@ -79,7 +79,7 @@ class Content {
      */
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
-        $aryViewVariables               = array();
+        $aryViewVariables               = $aryData;
         $strEditPostLink                = '';
         $boolIncludeNoIndex             = false;
         $boolIncludeSidebar             = false;
@@ -96,7 +96,9 @@ class Content {
 
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
         //_mizzou_log($aryOptions,'aryOptions after I merged');
-        extract($aryData);
+        //extract($aryData);
+
+
 
         /**
          * @todo don't like this since it creates a direct dependency, but we need data from the Site model in order
@@ -178,6 +180,7 @@ class Content {
         /**
          * For now, we want to make both the $objSite-> members and direct variables available to designers. Eventually
          * we'll decide one way or the other
+         * @todo do we want to replicate this functionality in twig?
          */
 
         foreach($objSite->currentPublicMembers() as $strSiteKey){
@@ -220,13 +223,9 @@ class Content {
          */
         //$strPageTitle = (isset($strPageTitle)) ? $strPageTitle : '';
         //$strPageTitle = self::_getPageTitle();
-        if(isset($strPageTitle)){
-            self::$strPageTitle = $strPageTitle;
-        } else {
-            $strPageTitle = self::_getPageTitle();
+        if(!isset($aryViewVariables['PageTitle'])){
+            $aryViewVariables['PageTitle'] = self::_getPageTitle();
         }
-
-        $aryViewVariables['PageTitle'] = $strPageTitle;
 
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
@@ -246,8 +245,10 @@ class Content {
          * Also temporary
          * @todo dont let this go to production
          */
-        $strHeaderTitle = self::_getHeaderTitle($strPageTitle,$objSite->Name);
-        $aryViewVariables['HeadTitle'] = $strHeaderTitle;
+        if(!isset($aryViewVariables['HeadTitle'])){
+            $aryViewVariables['HeadTitle']= self::_getHeaderTitle($aryViewVariables['PageTitle'],$objSite->Name);
+        }
+
 
         /**
          * check the view name to see if we've been given the full name w/ extension, or just the file name
