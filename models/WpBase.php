@@ -161,7 +161,6 @@ class WpBase
 
         foreach($aryPosts as $objPost){
             $objMizzouPost = $this->convertPost($objPost,$aryOptions);
-            if(2446 == $objMizzouPost->ID) _mizzou_log($objMizzouPost,'post 2446 upon return from convertPost',false,array('func'=>__FUNCTION__));
             if(is_array($aryOptions['resort']) && isset($aryOptions['resort']['key'])){
                 if(!isset($aryOptions['resort']['method'])) $aryOptions['resort']['method'] = 'member';
 
@@ -189,11 +188,9 @@ class WpBase
                         $this->_addElementToGroupArray($aryReturn,$strNewKey,$objMizzouPost);
                 }
             } else {
-                if(2446 == $objMizzouPost->ID) _mizzou_log(null,'post 2446 didnt do any sorting',false,array('func'=>__FUNCTION__));
                 $aryReturn[$objMizzouPost->ID] = $objMizzouPost;
             }
 
-            if(2446 == $objMizzouPost->ID) _mizzou_log($objMizzouPost,'post 2446 getting ready to return',false,array('func'=>__FUNCTION__));
         }
 
         return $aryReturn;
