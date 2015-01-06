@@ -25,6 +25,9 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'MizzouPost.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'A11yPageWalker.php';
 
+/**
+ * @todo which of these can we remove?
+ */
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'settings.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'post-types.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'menus.php';
@@ -61,6 +64,9 @@ function mizzou_setup(){
      * @todo is this the best place for this to occur?
      */
     Twig_Autoloader::register();
+
+    define('MVC_PARENT_PATH',get_template_directory().DIRECTORY_SEPARATOR);
+    define('MVC_CHILD_PATH',get_stylesheet_directory().DIRECTORY_SEPARATOR);
     
     /**
      * Remove link for feeds
