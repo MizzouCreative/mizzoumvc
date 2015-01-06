@@ -6,7 +6,7 @@
  * 
  *
  * @package WordPress
- * @subpackage SITENAME
+ * @subpackage MizzouMVC
  * @category theme
  * @category template
  * @author Paul F. Gilzow & Jason L Rollins, Web Communications, University of Missouri
@@ -14,5 +14,4 @@
  */
 
 Content::render('index',array());
-?>
 
