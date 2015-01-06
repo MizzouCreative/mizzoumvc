@@ -79,6 +79,7 @@ class Content {
      */
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
+        _mizzou_log($aryData,'aryData as passed to us',false,array('func'=>__FUNCTION__));
         $aryViewVariables               = $aryData;
         $strEditPostLink                = '';
         $boolIncludeNoIndex             = false;
@@ -313,6 +314,7 @@ class Content {
         //require_once $strViewsPath . 'footer.html';
         require_once $strThemePath . 'footer.html';
         */
+        _mizzou_log($aryViewVariables,'aryViewVariables right before we render the template',false,array('func'=>__FUNCTION__));
         echo self::$objView->render($aryViewVariables);
     }
 
