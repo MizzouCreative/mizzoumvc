@@ -108,6 +108,15 @@ class Content {
 
         self::$objViewEngine = self::_initializeViewEngine();
 
+        /**
+         * @todo remove the twig debug filter before going to production
+         */
+        $objTwigDebug = new Twig_SimpleFilter('var_export',function($string){
+           return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
+        });
+
+        self::$objViewEngine->addFilter($objTwigDebug);
+
         //do we need the EditPostLink?
         if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
             $strEditPostLink = ' ' . $strPostLink;
