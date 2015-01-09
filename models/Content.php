@@ -21,6 +21,8 @@ class Content {
         'include_sidebars'  => false,
         'override_outerview'=>false,
         'include_pagination'=>false,
+        'include_header'    =>true,
+        'include_footer'    =>true,
     );
 
     /**
@@ -128,6 +130,7 @@ class Content {
 
         /**
          * Page specific checks...
+         * @todo this is specific to IPP and needs to be removed
          */
         if(is_page() && isset($objMainPost)){
             /**
@@ -153,6 +156,7 @@ class Content {
          * we're on a 404 page
          * then
          * we want to include the meta element for robots to not index the page
+         * @todo this is header stuff and should be moved to the header controller
          *
          */
         if(
@@ -245,6 +249,7 @@ class Content {
         /**
          * Also temporary
          * @todo dont let this go to production
+         * @todo this should be moved into the header controller
          */
         if(!isset($aryViewVariables['HeadTitle'])){
             $aryViewVariables['HeadTitle']= self::_getHeaderTitle($aryViewVariables['PageTitle'],$objSite->Name);
@@ -262,6 +267,7 @@ class Content {
         }
 
         self::$objView = self::$objViewEngine->loadTemplate($strInnerViewFileName);
+        _mizzou_log(self::$objViewEngine->getTemplateClass($strInnerViewFileName),'what is the template class for ' . $strInnerViewFileName);
 
         //now we need to start getting everyhing
 
