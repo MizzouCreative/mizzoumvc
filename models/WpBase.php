@@ -122,7 +122,7 @@ class WpBase
             $aryArgs = array_merge($aryArgs,$aryOptions['passthru']);
         }
 
-        _mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+        //_mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
 
         $objQuery =  new WP_Query($aryArgs);
 
@@ -167,7 +167,7 @@ class WpBase
                 switch($aryOptions['resort']['method']){
                     case 'taxonomy':
                         $strTaxonomyName = $aryOptions['resort']['key'];
-                        _mizzou_log($objMizzouPost,'mizzoupost object when trying to sort by taxonomy');
+                        //_mizzou_log($objMizzouPost,'mizzoupost object when trying to sort by taxonomy');
                         if(isset($objMizzouPost->taxonomies[$strTaxonomyName]) && is_array($objMizzouPost->taxonomies[$strTaxonomyName]->items)){
                             foreach($objMizzouPost->taxonomies[$strTaxonomyName]->items as $objTaxTerm){
                                 $this->_addElementToGroupArray($aryReturn,$objTaxTerm->name,$objMizzouPost);
@@ -310,7 +310,7 @@ class WpBase
          * include_attachments can either be true, or it can be array with further options
          */
         if(is_array($aryOptions['include_attachments']) || (is_bool($aryOptions['include_attachments']) && $aryOptions['include_attachments'])){
-            _mizzou_log($aryOptions,'weve been asked to retrieve attachments. here are the options that were included');
+            //_mizzou_log($aryOptions,'weve been asked to retrieve attachments. here are the options that were included');
             $aryAttachmentOptions = array(
                 'post_type'     => 'attachment',
                 'posts_per_page'=>-1,
@@ -324,12 +324,12 @@ class WpBase
                 if(is_array($aryOptions['include_attachments']) && isset($aryOptions['include_attachments']['permalink'])){
                     $aryAttachmentConvertOptions['permalink'] = $aryOptions['include_attachments']['permalink'];
                 }
-                _mizzou_log($aryAttachmentConvertOptions,'getting ready to convert some attachments. here are the options im passing over');
+                //_mizzou_log($aryAttachmentConvertOptions,'getting ready to convert some attachments. here are the options im passing over');
                 $objMizzouPost->add_data('attachments',$this->convertPosts($aryAttachments,$aryAttachmentConvertOptions));
             }
 
         }
-        if(2446 == $objMizzouPost->ID) _mizzou_log($objMizzouPost,'just created the mizzoupost object for post 2446 and preparing to return it');
+        //if(2446 == $objMizzouPost->ID) _mizzou_log($objMizzouPost,'just created the mizzoupost object for post 2446 and preparing to return it');
         return $objMizzouPost;
     }
 
