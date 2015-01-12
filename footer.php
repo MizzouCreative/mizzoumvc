@@ -12,5 +12,4 @@
  * @author Charlie Triplett, University of Missouri
  * @copyright 2013 Curators of the University of Missouri
  */
-?>
-<p>parent footer controller called.</p>
+Content::render('footer',array(),array('include_header'=>false,'include_footer'=>false));

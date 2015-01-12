@@ -9,5 +9,4 @@
  * @author Charlie Triplett
  * @copyright 2013 Curators of the University of Missouri
  */
-?>
-<p>header controller called.</p>
+Content::render('header',array(),array('include_header'=>false,'include_footer'=>false));

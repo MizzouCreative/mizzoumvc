@@ -120,6 +120,13 @@ class Content {
            return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
         });
 
+        self::$objViewEngine->addFunction('controller',new Twig_SimpleFunction('controller',function($strControllerName,$aryData){
+            extract($aryData);
+            if('' != $strController = locate_template($strControllerName.'.php')){
+                require_once $strController;
+            }
+        }));
+
         self::$objViewEngine->addFunction('header',new Twig_SimpleFunction('header','get_header'));
         self::$objViewEngine->addFunction('footer',new Twig_SimpleFunction('footer','get_footer'));
 
