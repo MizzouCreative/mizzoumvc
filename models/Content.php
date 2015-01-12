@@ -120,6 +120,12 @@ class Content {
            return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
         });
 
+        self::$objViewEngine->addFunction('header',new Twig_SimpleFunction('header','get_header'));
+
+        /*$objTwigController = new Twig_SimpleFunction('controller',function($strName){
+
+        });*/
+
         self::$objViewEngine->addFilter($objTwigDebug);
 
         //do we need the EditPostLink?
