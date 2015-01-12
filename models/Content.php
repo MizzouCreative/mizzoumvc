@@ -121,6 +121,7 @@ class Content {
         });
 
         self::$objViewEngine->addFunction('header',new Twig_SimpleFunction('header','get_header'));
+        self::$objViewEngine->addFunction('footer',new Twig_SimpleFunction('footer','get_footer'));
 
         /*$objTwigController = new Twig_SimpleFunction('controller',function($strName){
 
