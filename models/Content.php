@@ -120,7 +120,7 @@ class Content {
            return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
         });
 
-        self::$objViewEngine->addFunction('controller',new Twig_SimpleFunction('controller',function($strControllerName,$aryData){
+        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($strControllerName,$aryData){
             extract($aryData);
             if('' != $strController = locate_template($strControllerName.'.php')){
                 require_once $strController;
