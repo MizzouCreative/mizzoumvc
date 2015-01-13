@@ -120,15 +120,28 @@ class Content {
            return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
         });
 
-        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($strControllerName,$aryData){
-            extract($aryData);
-            if('' != $strController = locate_template($strControllerName.'.php')){
+        /**
+         * @todo this needs to be moved out of here into somewhere else.  But where?
+         */
+        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext){
+            if(is_array($mxdControllerName)){
+                $aryControllerNameParts = $mxdControllerName;
+            } elseif(is_string($mxdControllerName)){
+                $aryControllerNameParts = explode(' ',trim($mxdControllerName));
+            } else {
+                /**
+                 * @todo should this be changed to a try catch with an exception?
+                 * We're expecting a string (or an array), so getting something else WOULD be an exception
+                 */
+                _mizzou_log($mxdControllerName,'what the heck... what were we given instead of the name for a controller?',false,array('FUNC'=>__FUNCTION__,'line'=>__LINE__,'file'=>__FILE__));
+                $aryControllerNameParts = array();
+            }
+            $strControllerName = implode('-',$aryControllerNameParts) . '.php';
+            extract($aryContext);
+            if('' != $strController = locate_template($strControllerName)){
                 require_once $strController;
             }
         }));
-
-        self::$objViewEngine->addFunction('header',new Twig_SimpleFunction('header','get_header'));
-        self::$objViewEngine->addFunction('footer',new Twig_SimpleFunction('footer','get_footer'));
 
         /*$objTwigController = new Twig_SimpleFunction('controller',function($strName){
 
