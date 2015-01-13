@@ -43,6 +43,7 @@ class Header {
     private $aryViewVariables = array();
 
     function __construct($aryContext){
+        //@todo do we really need to extract here? cant we just leave them in the array?
         extract($aryContext);
 
         if(!isset($objSite)){
@@ -52,7 +53,10 @@ class Header {
         }
 
         if(!isset($objPostType)) $objPostType = null;
+        //@todo page title should always be set, throw an exception?
+        if(!isset($PageTitle)) $PageTitle = '';
 
+        $this->aryViewVariables['HeadTitle'] = $this->_determineHeaderTitle($PageTitle,$objSite->name,$objPostType);
 
         /**
          * This one is a bit of a bugger...
@@ -86,6 +90,7 @@ class Header {
      * @param string $strPageTitle
      * @param string $strSiteName
      * @param object $objPostType
+     * @return string <title> element contents
      */
     protected function _determineHeaderTitle($strPageTitle,$strSiteName,$objPostType)
     {
@@ -116,9 +121,16 @@ class Header {
         /**
          * @todo implosion glue should come from a Theme options class
          */
-        self::$strHeaderTitle = implode(' // ',$aryTitleParts);
+        return implode(' // ',$aryTitleParts);
+    }
+
+    public function getHeaderVariables()
+    {
+        return $this->aryViewVariables;
     }
 
 }
 
-Content::render('header',array(),array('include_header'=>false,'include_footer'=>false));
+$objHeader = new Header($aryContext);
+
+Content::render('header',$objHeader->getHeaderVariables(),array('include_header'=>false,'include_footer'=>false));
