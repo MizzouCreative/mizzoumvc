@@ -48,8 +48,7 @@ function mizzou_setup(){
     add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
     add_filter( 'wp_terms_checklist_args', 'mizzou_no_top_float', 10, 2 );
     add_filter('edit_tag_link', 'edit_tag_link_new_window');
-    // Remove tabindex setting from gravity forms (learned from NewsA11y)
-    add_filter("gform_tabindex", create_function("", "return false;"));
+
     /**
      * Completely disable pingback support
      * @see http://blog.sucuri.net/2014/03/more-than-162000-wordpress-sites-used-for-distributed-denial-of-service-attack.html
