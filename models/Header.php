@@ -12,7 +12,7 @@
 * @copyright 2015 Curators of the University of Missouri
  */
 
-class Header extends Base {
+class Header extends Subviews {
 
 
 	function __construct($aryContext){
@@ -124,11 +124,6 @@ class Header extends Base {
 		}
 
 		$this->add_data('HeaderTitle',$strHeaderTitle);
-	}
-
-	public function getTemplateData()
-	{
-		return $this->aryData;
 	}
 
 	protected function _setWpHead()
