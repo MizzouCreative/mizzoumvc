@@ -317,8 +317,6 @@ class Content {
         /**
          * @todo captureContents is in the site model so we need to expand it to allow for storage of this type of data
          */
-        $strWpHeaderContents = $objSite->wpHeader;
-        $aryViewVariables['strWpHeaderContents'] = $objSite->wpHeader;
         $strSearchFormContents = $objSite->SearchForm;
         $aryViewVariables['strSearchFormContents'] = $objSite->SearchForm;
         $strWpFooterContents = $objSite->wpFooter;
