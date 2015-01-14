@@ -12,7 +12,7 @@
 * @copyright 2015 Curators of the University of Missouri
  */
 
-class Header extends Subviews {
+class Header extends Subview {
 
 
 	function __construct($aryContext){
