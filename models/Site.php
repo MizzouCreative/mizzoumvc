@@ -53,8 +53,6 @@ class Site extends Base {
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('AudienceMenu',$this->_getAudienceMenu());
         $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
-        $this->add_data('wpHeader',$this->_getWpHeader());
-        $this->add_data('wpFooter',$this->_getWpFooter());
         //$this->add_data('SearchForm',$this->_getSearchForm());
         //$this->add_data('MobileNav',$this->_getMobileNav());
         /**
@@ -120,6 +118,7 @@ class Site extends Base {
      * @param array $aryExclude
      * @return mixed
      * @uses wp_list_pages wordpress function
+     * @todo specific to the original IPP implementation. See if we still need this
      */
     public function getPageList($aryExclude = array())
     {
@@ -221,6 +220,7 @@ class Site extends Base {
     /**
      * Captures and returns contents of wp_head wordpress function
      * @return string contents as returned by wp_head()
+     * @deprecated
      */
     protected function _getWpHeader()
     {
@@ -369,6 +369,7 @@ class Site extends Base {
      * @todo this is IPP-specific unless we agree that all sites/themes will include this custom option.
      * I'm actually torn on the validity of allowing the changing of analytics code in the wordpress GUI vs statically
      * placing the tracking code in the footer view.
+     * @todo further, this should probably be moved into the footer
      */
     protected function _getTrackingCode()
     {
