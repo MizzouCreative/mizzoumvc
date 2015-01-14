@@ -12,4 +12,5 @@
  * @author Charlie Triplett, University of Missouri
  * @copyright 2013 Curators of the University of Missouri
  */
-Content::render('footer',array(),array('include_header'=>false,'include_footer'=>false));
+$objFooter = new Footer($aryContext);
+Content::render('footer',$objFooter->getTemplateData(),array('include_header'=>false,'include_footer'=>false));
