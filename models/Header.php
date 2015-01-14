@@ -32,6 +32,7 @@ class Header extends Base {
 
 		$this->_setHeaderTitle();
 		$this->_setIncludeNoIndex();
+		$this->_setWpHead();
 	}
 
 
@@ -129,5 +130,11 @@ class Header extends Base {
 	{
 		return $this->aryData;
 	}
+
+	protected function _setWpHead()
+	{
+		$this->add_data('wpHead',$this->_captureOutput('wp_head'));
+	}
+
 
 }
