@@ -183,7 +183,8 @@ class Content {
          * we're on a 404 page
          * then
          * we want to include the meta element for robots to not index the page
-         * @todo this is header stuff and should be moved to the header controller
+         * @todo moved to the header controller. Delete
+         * @deprecated
          *
          */
         if(
