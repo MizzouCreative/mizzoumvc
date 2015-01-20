@@ -275,6 +275,61 @@ function site_modified_date($boolReturn=false) {
     }
 }
 
+function mizzouCreateTaxonomyLabels($strBaseWord,$strBaseWordPlural = '')
+{
+    return mizzouCreateLabels('taxonomy',$strBaseWord,$strBaseWordPlural);
+}
+
+
+function mizzouCreatePostTypeLabels($strBaseWord,$strBaseWordPlural='')
+{
+    return mizzouCreateLabels('post',$strBaseWord,$strBaseWordPlural);
+}
+
+function mizzouCreateLabels($srtType,$strBaseWord,$strBaseWordPlural='')
+{
+    $aryAdditionalLabels = array();
+    if($strBaseWordPlural ==''){
+        $strBaseWordPlural = $strBaseWord . 's';
+    }
+
+    $aryBaseLabels = array(
+        'name'          => $strBaseWordPlural,
+        'singular_name' => $strBaseWord,
+        'menu_name'     => $strBaseWordPlural,
+        'all_items'     => 'All ' . $strBaseWordPlural,
+        'edit_item'     => 'Edit ' . $strBaseWord,
+        'add_new_item'  => 'Add New ' . $strBaseWord,
+        'view_item'     => 'View ' . $strBaseWord,
+        'search_items'  => 'Search ' . $strBaseWordPlural,
+        'not_found'     => 'No ' . $strBaseWordPlural . ' found',
+        'parent_item_colon' => 'Parent ' . $strBaseWord .':',
+    );
+
+    switch ($srtType){
+        case 'post':
+            $aryAdditionalLabels = array(
+                'name_admin_bar'    => $strBaseWord,
+                'new_item'          => 'New ' . $strBaseWord,
+                'not_found_in_trash'=> 'No '.$strBaseWordPlural.' found in Trash',
+            );
+            break;
+        case 'taxonomy':
+            $aryAdditionalLabels = array(
+                'update_item'               => 'Update '.$strBaseWord,
+                'new_item_name'             => 'New ' . $strBaseWord . ' Name',
+                'parent_item'               => 'Parent ' . $strBaseWord,
+                'popular_items'             => 'Popular ' . $strBaseWordPlural,
+                'separate_items_with_commas'=> 'Separate ' . $strBaseWordPlural . ' with commas',
+                'add_or_remove_items'       => 'Add or remove ' . $strBaseWordPlural,
+                'choose_from_most_used'     => 'Choose from the most used ' . $strBaseWordPlural,
+
+            );
+            break;
+    }
+
+    return array_merge($aryBaseLabels,$aryAdditionalLabels);
+}
 /**
 * ================= ACTIONS ================================
 */
