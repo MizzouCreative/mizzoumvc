@@ -1,14 +1,13 @@
 <?php
 /**
- * Template file used to render a attachment page
+ * Controller fo an attachment page
  * 
  *
- * @package WordPress
- * @subpackage SITENAME
+ * @subpackage MizzouMVC
  * @category theme
- * @category template
- * @author Charlie Triplett, University of Missouri
- * @copyright 2013 Curators of the University of Missouri
+ * @category controller
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
  */
 global $wp_query;
 $aryData = array();

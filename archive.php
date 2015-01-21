@@ -1,17 +1,13 @@
 <?php
 /**
- * Template file used to render a archive pages
+ * Controller for archive pages
  * 
- * Will be overriden by category.php/tag.php if available and user is viewing 
- * category/tag archives
  *
- * @package WordPress
- * @subpackage SITENAME
- * @since MIZZOU News 0.1
+ * @subpackage MizzouMVC
  * @category theme
- * @category template
- * @author Charlie Triplett, Web Communications, University of Missouri
- * @copyright 2013 Curators of the University of Missouri
+ * @category controller
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
  */
 global $wp_query;
 $aryData = array();
