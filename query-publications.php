@@ -1,4 +1,8 @@
 <?php
+/**
+ * @deprecated
+ * @todo delete
+ */
 $categories = get_the_terms(get_the_ID(),'category');;
 
 if ($categories) { ?>
