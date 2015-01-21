@@ -3,11 +3,11 @@
  * Template file used to contain header content of theme pages
  *
  * @package WordPress
- * @subpackage Generic Theme
+ * @subpackage MizzouMVC
  * @category theme
  * @category controller
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2013 Curators of the University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
  *
  * If called via a template, will have access to $aryContext which contains all variables given to the templating engine
  *

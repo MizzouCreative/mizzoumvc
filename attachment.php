@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller fo an attachment page
+ * Controller for an attachment page
  * 
  *
  * @subpackage MizzouMVC

@@ -9,6 +9,9 @@
 * @author Paul F. Gilzow & Jason Rollins, Web Communications, University of Missouri
 * @copyright 2013 Curators of the University of Missouri
 * @version 201303281212
+ *
+ * @deprecated
+ * @todo delete
 * 
 * 
 */

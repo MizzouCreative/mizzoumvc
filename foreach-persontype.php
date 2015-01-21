@@ -1,4 +1,9 @@
-<?php foreach( $person_types as $type ) { ?>
+<?php
+/**
+ * @deprecated
+ * @todo delete
+ */
+foreach( $person_types as $type ) { ?>
 
 	<?php if ($center_terms && $program_terms && person_types ) {
 
