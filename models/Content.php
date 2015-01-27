@@ -295,7 +295,7 @@ class Content {
         }
 
         self::$objView = self::$objViewEngine->loadTemplate($strInnerViewFileName);
-        _mizzou_log(self::$objViewEngine->getTemplateClass($strInnerViewFileName),'what is the template class for ' . $strInnerViewFileName);
+        //_mizzou_log(self::$objViewEngine->getTemplateClass($strInnerViewFileName),'what is the template class for ' . $strInnerViewFileName);
 
         //now we need to start getting everyhing
 
