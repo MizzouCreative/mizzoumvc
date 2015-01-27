@@ -23,6 +23,7 @@ class Content {
         'include_pagination'=>false,
         'include_header'    =>true,
         'include_footer'    =>true,
+        'return'            =>false,
     );
 
     /**
@@ -349,7 +350,12 @@ class Content {
         require_once $strThemePath . 'footer.html';
         */
 
-        echo self::$objView->render($aryViewVariables);
+        if($aryOptions['return']){
+            return self::$objView->render($aryViewVariables);
+        } else {
+            echo self::$objView->render($aryViewVariables);
+        }
+
     }
 
     /**
