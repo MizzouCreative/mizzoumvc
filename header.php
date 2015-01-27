@@ -41,8 +41,10 @@
 
 if(!isset($aryContext)){
     _mizzou_log(get_defined_vars(),'aryContext isnt defined for some reason. here is everything that is.',false,array('file'=>__FILE__));
+} elseif(!isset($aryContext['objSite'])) {
+    _mizzou_log($aryContext,'aryContext is set, but objSite is not. Contents of aryContext',false,array('file'=>__FILE__));
 } else {
-    _mizzou_log($aryContext,'content of aryContext',false,array('file'=>__FILE__));
+    _mizzou_log('','objSite IS SET before we create our header object',false,array('file'=>__FILE__));
 }
 
 $objHeader = new Header($aryContext);
