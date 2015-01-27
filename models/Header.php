@@ -17,7 +17,7 @@ class Header extends Subview {
 
 	function __construct($aryContext){
 		//@todo do we really need to extract here? cant we just leave them in the array?
-		array_merge($this->aryData,$aryContext);
+	 	$this->aryData = array_merge($this->aryData,$aryContext);
 
 		if(!isset($this->aryData['objSite'])){
 			/**
