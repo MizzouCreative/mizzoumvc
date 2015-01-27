@@ -23,7 +23,7 @@ class Header extends Subview {
 			/**
 			 * @todo throw a error/exception? We can't really continue without it
 			 */
-			_mizzou_log($this->aryData,'whoa... objSite isnt set. what is?',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+			_mizzou_log($aryContext,'whoa... objSite isnt set. was it in the data passed to us?',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
 		}
 
 		//if we werent given the post type object, set it to null
