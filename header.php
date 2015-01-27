@@ -39,7 +39,11 @@
  * the site model store it
  */
 
-
+if(!isset($aryContext)){
+    _mizzou_log(get_defined_vars(),'aryContext isnt defined for some reason. here is everything that is.',false,array('file'=>__FILE__));
+} else {
+    _mizzou_log($aryContext,'content of aryContext',false,array('file'=>__FILE__));
+}
 
 $objHeader = new Header($aryContext);
 
