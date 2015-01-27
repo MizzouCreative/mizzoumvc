@@ -751,7 +751,15 @@ class Content {
     {
         $objTELoader = self::_initializeViewLoader();
         $strCacheLocation = self::_determineViewCacheLocation();
-        return new Twig_Environment($objTELoader,array('cache'=>$strCacheLocation,'auto_reload'=>true));
+        /**
+         * @todo move this into an options setting?
+         */
+        $aryTEOptions = array(
+            'cache'=>$strCacheLocation,
+            'auto_reload'=>true,
+            'autoescape'=>false,
+        );
+        return new Twig_Environment($objTELoader,$aryTEOptions);
 
     }
 
