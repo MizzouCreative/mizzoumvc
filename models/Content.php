@@ -139,7 +139,7 @@ class Content {
                 $aryControllerNameParts = array();
             }
             $strControllerName = implode('-',$aryControllerNameParts) . '.php';
-            extract($aryContext);
+            //extract($aryContext);
             if('' != $strController = locate_template($strControllerName)){
                 require_once $strController;
             }
