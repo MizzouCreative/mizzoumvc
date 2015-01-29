@@ -124,7 +124,7 @@ class Content {
         /**
          * @todo this needs to be moved out of here into somewhere else.  But where?
          */
-        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext){
+        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
             _mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             _mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             if(is_array($mxdControllerName)){
@@ -140,7 +140,11 @@ class Content {
                 $aryControllerNameParts = array();
             }
             $strControllerName = implode('-',$aryControllerNameParts) . '.php';
-            //extract($aryContext);
+
+            if(count($aryData) != 0){
+                extract($aryData);
+            }
+
             if('' != $strController = locate_template($strControllerName)){
                 require_once $strController;
             }
