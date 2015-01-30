@@ -81,6 +81,8 @@ class Search extends Base {
 
         $arySearchParams['q'] = stripcslashes($arySearchParams['q']);
 
+        $this->add_data('strSearchPhrase',$arySearchParams['q']);
+
         return $arySearchParams;
     }
 
