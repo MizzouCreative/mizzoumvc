@@ -422,4 +422,33 @@ class Site extends Base {
          */
         return $this->_captureOutPut('wp_nav_menu',array($aryMenuOptions));
     }
+
+    protected function _loadOptions()
+    {
+        /**
+         * @todo should this class handle loading up options? Or should we have a separate class for that?
+         */
+        /**
+         * @todo if this stays, HOW should we handle options?
+         */
+
+        /*
+         * @todo this is NOT how the final implementation should work. Alpha-level hack to get things moving
+         */
+        if(defined('GSA_SEARCH_URL')){
+            $this->add_data('strSearchURL',GSA_SEARCH_URL);
+        } else {
+            /**
+             * @todo should we have a fall back option?
+             */
+        }
+
+        if(defined('GSA_SEARCH_PARAMS')){
+            $this->add_data('arySearchParams',unserialize(GSA_SEARCH_PARAMS));
+        } else {
+            /**
+             * Should we have a fall back option?
+             */
+        }
+    }
 }
