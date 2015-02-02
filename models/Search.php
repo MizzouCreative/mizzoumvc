@@ -29,34 +29,41 @@ class Search extends Base {
         }
 
         if(!isset($aryData['GET'])){
-            //#FAIL
-            $this->add_error('I need the values from GET in order to build the correct query');
-            /**
-             * @todo besides logging an error message, what else should we do?
-             */
             $this->aryInternalData['GET'] = array();
         } else {
             $this->aryInternalData['GET'] = $aryData['GET'];
         }
 
-
+        $this->add_data('SearchParams',$this->_prepQueryParams());
     }
 
     public function getSearchResults()
     {
-        return file_get_contents($this->_prepQueryString());
+        /**
+         * If they didnt give us anything to search for then no need to do anything
+         */
+        if($this->SearchTems != ''){
+            if(false !== $strSearchResults = file_get_contents($this->_prepQueryString())){
+                return $strSearchResults;
+            } else {
+                $this->add_error('Search attempt failed');
+                return 'There was an error performing your search';
+            }
+        } else {
+            return '';
+        }
     }
 
     protected function _prepQueryString()
     {
-        $strFullURL = $this->aryInternalData['objSite']->strSearchURL.http_build_query($this->_prepQueryParams());
-        _mizzou_log($strFullURL,'the full search URL we are using',false,array('file'=>__FILE__,'func'=>__FUNCTION__,'line'=>__LINE__));
+        $strFullURL = $this->aryInternalData['objSite']->strSearchURL.http_build_query($this->SearchParams);
         return $strFullURL;
     }
 
     protected function _prepQueryParams()
     {
         $arySearchParams = $this->aryInternalData['objSite']->arySearchParams;
+
 
         //did they use s or q?
         $arySearchParams['q'] = (isset($this->aryInternalData['GET']['q'])) ? $this->aryInternalData['GET']['q'] : $this->aryInternalData['GET']['s'];
