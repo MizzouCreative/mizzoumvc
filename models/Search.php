@@ -86,10 +86,8 @@ class Search extends Base {
 
     protected function _prepSearchTerms($mxdSearchTerms)
     {
-        $strSearchTerms = '';
-        if(is_array($mxdSearchTerms)){
-            $strSearchTerms = implode (' ', $mxdSearchTerms);
-        }
+
+        $strSearchTerms = (is_array($mxdSearchTerms)) ? implode(' ',$mxdSearchTerms) : $mxdSearchTerms;
 
         $strSearchTerms = stripcslashes($strSearchTerms);
 
