@@ -36,6 +36,10 @@ if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s
     _mizzou_log($objSearch->strSearchTerms,'search terms that were searched',false,array('file'=>__FILE__,'line'=>__LINE__));
     $aryData['SearchResults'] = $objSearch->getSearchResults();
     _mizzou_log($aryData['SearchResults'],'search results',false,array('file'=>__FILE__,'line'=>__LINE__));
+
+    if($objSearch->isError()){
+        _mizzou_log($objSearch->error_messages,'error messages from objSearch',false,array('file'=>__FILE__,'line'=>__LINE__));
+    }
 }
 
 Content::render('search',$aryData);
