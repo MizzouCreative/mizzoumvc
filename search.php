@@ -29,8 +29,8 @@ if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s
     $arySearchData['objSite'] = $objSite;
     $objSearch = new Search($arySearchData);
 
-    if($objSearch->strSearchTerms != ''){
-        $aryData['PageTitle'] = 'Search results for ' . htmlentities($objSearch->strSearchTerms,ENT_QUOTES,'UTF-8',false);
+    if($objSearch->SearchTerms != ''){
+        $aryData['PageTitle'] = 'Search results for ' . htmlentities($objSearch->SearchTerms,ENT_QUOTES,'UTF-8',false);
     }
 
     _mizzou_log($objSearch->strSearchTerms,'search terms that were searched',false,array('file'=>__FILE__,'line'=>__LINE__));
