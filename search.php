@@ -14,6 +14,8 @@
  */
 
 
+$aryData = array();
+
 
 /**
 * Doesnt matter if s or q has been used as the search parameter, we want to use either to invoke a gsa search
@@ -27,6 +29,11 @@ if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s
     $arySearchData['objSite'] = $objSite;
     $objSearch = new Search($arySearchData);
 
-    
-    
-} 
+    if($objSearch->strSearchTerms != ''){
+        $aryData['PageTitle'] = 'Search results for ' . htmlentities($objSearch->strSearchTerms,ENT_QUOTES,'UTF-8',false);
+    }
+
+    $aryData['SearchResults'] = $objSearch->getSearchResults();
+}
+
+Content::render('search',$aryData);
