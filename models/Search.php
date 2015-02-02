@@ -94,6 +94,8 @@ class Search extends Base {
          * calling function once we return the prepared terms?  It doesn't make sense to store them AND return them.
          */
         $this->add_data('SearchTerms',$strSearchTerms);
+        _mizzou_log($strSearchTerms,'strSearchTerms directly',false,array('file'=>__FILE__,'line'=>__LINE__));
+        _mizzou_log($this->SearchTerms,'search terms from self::SearchTerms',false,array('file'=>__FILE__,'line'=>__LINE__));
 
         return $strSearchTerms;
     }
