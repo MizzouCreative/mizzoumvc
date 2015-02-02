@@ -78,9 +78,6 @@ class Search extends Base {
             $arySearchParams['filter'] = $this->aryInternalData['GET']['filter'];
         }
 
-
-        $this->add_data('strSearchTerms',$arySearchParams['q']);
-
         return $arySearchParams;
     }
 
@@ -90,6 +87,13 @@ class Search extends Base {
         $strSearchTerms = (is_array($mxdSearchTerms)) ? implode(' ',$mxdSearchTerms) : $mxdSearchTerms;
 
         $strSearchTerms = stripcslashes($strSearchTerms);
+
+        /**
+         * @todo we need to store the prepared search terms for later use/retrieval. Should the action of storing them
+         * be here in this function since it is handling the prep of the search terms, or should it be handled by the
+         * calling function once we return the prepared terms?  It doesn't make sense to store them AND return them.
+         */
+        $this->add_data('SearchTerms',$strSearchTerms);
 
         return $strSearchTerms;
     }
