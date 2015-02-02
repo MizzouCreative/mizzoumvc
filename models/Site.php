@@ -67,6 +67,7 @@ class Site extends Base {
          */
         $this->getPageList();
         $this->getLastModifiedDate();
+        $this->_loadOptions();
     }
 
     /**
