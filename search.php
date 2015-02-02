@@ -21,7 +21,7 @@ $aryData = array();
 * Doesnt matter if s or q has been used as the search parameter, we want to use either to invoke a gsa search
 */
 if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s'] != '')) {
-    require_once '../models/Search.php';
+    require_once 'models/Search.php';
     $arySearchData = array();
     $arySearchData['GET'] = $_GET;
 
