@@ -58,10 +58,8 @@ class Search extends Base {
 
         //did they use s or q?
         $arySearchParams['q'] = (isset($this->aryInternalData['GET']['q'])) ? $this->aryInternalData['GET']['q'] : $this->aryInternalData['GET']['s'];
-        //if it's an array, let's convert it to a string
-        if(is_array($arySearchParams['q'])){
-            $arySearchParams['q'] = implode (' ', $arySearchParams['q']);
-        }
+
+        $arySearchParams['q'] = $this->_prepSearchTerms($arySearchParams['q']);
 
         // are they asking for a page of the search results?
         if ( isset($this->aryInternalData['GET']['start']) && $this->aryInternalData['GET']['start'] != '') {
@@ -79,15 +77,20 @@ class Search extends Base {
         }
 
 
-        $arySearchParams['q'] = stripcslashes($arySearchParams['q']);
-
         $this->add_data('strSearchPhrase',$arySearchParams['q']);
 
         return $arySearchParams;
     }
 
-    protected function _prepSearchParams()
+    protected function _prepSearchTerms($mxdSearchTerms)
     {
+        $strSearchTerms = '';
+        if(is_array($mxdSearchTerms)){
+            $strSearchTerms = implode (' ', $mxdSearchTerms);
+        }
 
+        $strSearchTerms = stripcslashes($strSearchTerms);
+
+        return $strSearchTerms;
     }
 }
