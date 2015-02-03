@@ -14,6 +14,7 @@
 
 class Search extends Base {
 
+    protected $arySearchParams = array();
     protected $aryInternalData = array();
 
     function __construct($aryData)
@@ -28,10 +29,8 @@ class Search extends Base {
             $this->aryInternalData['objSite'] = $aryData['objSite'];
         }
 
-        if(!isset($aryData['GET'])){
-            $this->aryInternalData['GET'] = array();
-        } else {
-            $this->aryInternalData['GET'] = $aryData['GET'];
+        if(isset($aryData['arySearchParams'])){
+            $this->arySearchParams = $aryData['arySearchParams'];
         }
 
         $this->add_data('SearchParams',$this->_prepQueryParams());
@@ -62,27 +61,31 @@ class Search extends Base {
 
     protected function _prepQueryParams()
     {
+        /*
+         * let's copy the default params we need (collection/site, front_end, etc) from our site options into our storage
+         * array that we'll pass back
+         */
         $arySearchParams = $this->aryInternalData['objSite']->arySearchParams;
 
 
         //did they use s or q?
-        $arySearchParams['q'] = (isset($this->aryInternalData['GET']['q'])) ? $this->aryInternalData['GET']['q'] : $this->aryInternalData['GET']['s'];
+        $arySearchParams['q'] = (isset($this->arySearchParams['q'])) ? $this->arySearchParams['q'] : $this->arySearchParams['s'];
 
         $arySearchParams['q'] = $this->_prepSearchTerms($arySearchParams['q']);
 
         // are they asking for a page of the search results?
-        if ( isset($this->aryInternalData['GET']['start']) && $this->aryInternalData['GET']['start'] != '') {
-            $arySearchParams['start']  = $this->aryInternalData['GET']['start'];
+        if ( isset($this->arySearchParams['start']) && $this->arySearchParams['start'] != '' && is_numeric($this->arySearchParams['start'])) {
+            $arySearchParams['start']  = $this->arySearchParams['start'];
         }
 
         // are they asking for a sort method?
-        if ( isset($this->aryInternalData['GET']['sort']) && $this->aryInternalData['GET']['sort'] != ''){
-            $arySearchParams['sort']   = $this->aryInternalData['GET']['sort'];
+        if ( isset($this->arySearchParams['sort']) && $this->arySearchParams['sort'] != ''){
+            $arySearchParams['sort']   = $this->arySearchParams['sort'];
         }
 
         // are they requesting duplicate results be filtered/not filtered?
-        if ( isset($this->aryInternalData['GET']['filter']) && $this->aryInternalData['GET']['filter']  != ''){
-            $arySearchParams['filter'] = $this->aryInternalData['GET']['filter'];
+        if ( isset($this->arySearchParams['filter']) && $this->arySearchParams['filter']  != '' && is_numeric($this->arySearchParams['filter'])){
+            $arySearchParams['filter'] = $this->arySearchParams['filter'];
         }
 
         return $arySearchParams;
