@@ -12,6 +12,7 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 
+require_once 'Search.php';
 class FourOhFour extends Search{
 
     /**
