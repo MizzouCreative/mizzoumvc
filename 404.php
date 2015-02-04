@@ -22,8 +22,9 @@ $aryData['strRequestURI'] = $_SERVER['REQUEST_URI'];
 $aryData['objSite'] = new Site();
 
 $obj404 = new FourOhFour($aryData);
-_mizzou_log($obj404->SearchTerms,'search terms from obj404',false,array('line'=>__LINE__,'file'=>__FILE__));
+
 
 $aryData['SearchResults'] = $obj404->getSearchResults();
+_mizzou_log($aryData['SearchResults'],'search results stored in aryData',false,array('line'=>__LINE__,'file'=>__FILE__));
 Content::render('search',$aryData);
 
