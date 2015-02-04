@@ -12,12 +12,11 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 use Mizzou\CalendarTranslator\AbstractTranslator as AbstractTranslator;
-use stdClass;
 
 /**
  * @todo seriously need to look into autoloaders
  */
-require_once '../helpers/calendar/Mizzou/CalendarTranslator/AbstractTranslator.php';
+require_once dirname(dirname(__FILE__)).'/helpers/calendar/Mizzou/CalendarTranslator/AbstractTranslator.php';
 class Calendar extends AbstractTranslator {
 
     protected function _translate_event($objEvent) {
