@@ -25,6 +25,6 @@ $obj404 = new FourOhFour($aryData);
 
 
 $aryData['SearchResults'] = $obj404->getSearchResults();
-_mizzou_log($aryData['SearchResults'],'search results stored in aryData',false,array('line'=>__LINE__,'file'=>__FILE__));
+_mizzou_log($obj404->isError(),'is search returning an error?',false,array('line'=>__LINE__,'file'=>__FILE__));
 Content::render('search',$aryData);
 
