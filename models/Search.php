@@ -49,6 +49,7 @@ class Search extends Base {
                 return 'There was an error performing your search';
             }
         } else {
+            _mizzou_log($this,'for some reason, search terms were not set',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
             return '';
         }
     }
