@@ -19,7 +19,7 @@ use Mizzou\CalendarTranslator\AbstractTranslator as AbstractTranslator;
 require_once dirname(dirname(__FILE__)).'/helpers/calendar/Mizzou/CalendarTranslator/AbstractTranslator.php';
 class Calendar extends AbstractTranslator {
 
-    protected function _translate_event($objEvent) {
+    protected function _translateEvent($objEvent) {
         $objReturn = new stdClass();
         $objReturn->Id              = $objEvent->id;
         $objReturn->Title           = (string)$objEvent->title;
