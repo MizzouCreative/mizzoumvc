@@ -41,7 +41,7 @@ class Search extends Base {
         /**
          * If they didnt give us anything to search for then no need to do anything
          */
-        if($this->SearchTems != ''){
+        if($this->aryData['SearchTerms'] != ''){
             if(false !== $strSearchResults = file_get_contents($this->_prepQueryString())){
                 return $strSearchResults;
             } else {
