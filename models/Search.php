@@ -49,7 +49,6 @@ class Search extends Base {
                 return 'There was an error performing your search';
             }
         } else {
-            _mizzou_log($this,'for some reason, search terms were not set',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
             return '';
         }
     }
@@ -105,8 +104,6 @@ class Search extends Base {
          * calling function once we return the prepared terms?  It doesn't make sense to store them AND return them.
          */
         $this->add_data('SearchTerms',$strSearchTerms);
-        _mizzou_log($strSearchTerms,'strSearchTerms directly',false,array('file'=>__FILE__,'line'=>__LINE__));
-        _mizzou_log($this->SearchTerms,'search terms from self::SearchTerms',false,array('file'=>__FILE__,'line'=>__LINE__));
 
         return $strSearchTerms;
     }

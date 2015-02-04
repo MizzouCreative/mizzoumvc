@@ -45,12 +45,11 @@ class FourOhFour extends Search{
     protected function _prepSearchTerms($strRequestURI)
     {
         $aryReplace = array_fill(0,count($this->aryIgnore),' ');
+
         //we dont care about the query string
-        _mizzou_log($strRequestURI,'the request URI',false,array('file'=>__FILE__,'func'=>__FUNCTION__,'line'=>__LINE__));
         if(FALSE != preg_match('/^[^?]+/',$this->arySearchParams['q'],$aryMatches)){
             $strRequestURI = $aryMatches[0];
         }
-        _mizzou_log($aryMatches,'aryMatches',false,array('file'=>__FILE__,'func'=>__FUNCTION__,'line'=>__LINE__));
 
         //we dont want to search for index or default if it is at the end of the request uri and has a file extension
         $strRequestURI = preg_replace('/(default|index).\w{2,4}/','',$strRequestURI);
