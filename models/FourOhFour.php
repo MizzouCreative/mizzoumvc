@@ -48,7 +48,7 @@ class FourOhFour extends Search{
         //we dont care about the query string
         _mizzou_log($strRequestURI,'the request URI',false,array('file'=>__FILE__,'func'=>__FUNCTION__,'line'=>__LINE__));
         if(FALSE != preg_match('/^[^?]+/',$this->arySearchParams['q'],$aryMatches)){
-            $strRequestURI = $aryMatches[0][0];
+            $strRequestURI = $aryMatches[0];
         }
         _mizzou_log($aryMatches,'aryMatches',false,array('file'=>__FILE__,'func'=>__FUNCTION__,'line'=>__LINE__));
 
