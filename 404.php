@@ -23,5 +23,6 @@ $aryData['objSite'] = new Site();
 
 $obj404 = new FourOhFour($aryData);
 
-echo $obj404->getSearchResults();
+$aryData['SearchResults'] = $obj404->getSearchResults();
+Content::render('search',$aryData);
 
