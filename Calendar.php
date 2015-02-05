@@ -20,7 +20,8 @@ $aryOptions = array(
     'term'  =>'4581'
 );
 
-$aryData['Events'] = $objCalendar->retrieveCalendarItems($aryOptions);
+$aryReturn = $objCalendar->retrieveCalendarItems($aryOptions);
+$aryData['Events'] = $aryReturn['events'];
 Content::render('calendar',$aryData);
 //echo '<pre>',var_export($objCalendar->retrieveCalendarItems($aryOptions),true),'</pre>';
 
