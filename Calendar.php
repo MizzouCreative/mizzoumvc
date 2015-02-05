@@ -20,4 +20,6 @@ $aryOptions = array(
     'term'  =>'4581'
 );
 
-echo $objCalendar->retrieveCalendarItems($aryOptions);
+echo '<pre>',var_export($objCalendar->retrieveCalendarItems($aryOptions),true),'</pre>';
+
+//echo $objCalendar->retrieveCalendarItems($aryOptions);
