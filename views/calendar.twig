@@ -1,0 +1,20 @@
+{#
+ * 
+ * 
+ * @package WordPress
+ * @subpackage Wordpress MVC
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
+#}
+{% extends 'baseView.twig' %}
+{% block content %}
+    <h2>Calendar Events</h2>
+    {% for  Event in Events %}
+        <div>
+            Title: {{ Event.Title }}<br />
+            Date: {{ Event.Start| date('F j, Y')}}<br />
+            Location: {{ Event.Location }}
+        </div>
+{% endblock %}
