@@ -15,10 +15,9 @@
         <div>
             Title: {{ Event.Title }}<br />
             Date: {{ Event.Start| date('F j, Y')}}<br />
+            {% if Event.Location  %}
             Location: {{ Event.Location }}
+            {% endif %}
         </div>
     {% endfor %}
-    <pre>
-        {{ Events | var_export }}
-    </pre>
 {% endblock %}
