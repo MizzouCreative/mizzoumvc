@@ -331,6 +331,45 @@ function mizzouCreateLabels($srtType,$strBaseWord,$strBaseWordPlural='')
 
     return array_merge($aryBaseLabels,$aryAdditionalLabels);
 }
+
+/**
+ * Removes the default contextual help panel tabs and adds our custom help tab.  Contents for our custom tab are assumed
+ * to be contained in a directory names "views" in a file named "sampleHelp.html".  Adjust as needed
+ *
+ * This is not being used currently in the framework, but is being left here, for now, for future use.
+ *
+ * In order to use, uncomment the add_filter('contextual_help line in the FILTERS area below
+ *
+ * @param $strOldHelp string
+ * @param $intScreenID integer
+ * @param $objScreen object
+ * @return string
+ */
+function mizzouAdjustHelpScreen($strOldHelp,$intScreenID,$objScreen)
+{
+    // we only want to adjust the help contents when working on the default post type
+    if($objScreen->post_type == 'post'){
+        // we only want to adjust the help contents if we can load our custom help contents
+        if (FALSE !== $strHelpContents = file_get_contents(dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'sampleHelp.html')) {
+
+            //get rid of all the default help tabs in the contextual help panel
+            $objScreen->remove_help_tabs();//get rid of all the help tabs
+
+            //remove the help panel sidebar
+            $objScreen->set_help_sidebar('');
+
+            //add our custom help tab
+            $objScreen->add_help_tab(array(
+                'id' => 'sample_help_tab',
+                'title' => 'Sample Help Tab',
+                'content' => $strHelpContents,
+            ));
+        }
+    }
+
+    return $strOldHelp;
+}
+
 /**
 * ================= ACTIONS ================================
 */
@@ -353,6 +392,12 @@ add_action('init','mizzou_setup');
  */
 define('MVC_PARENT_PATH',get_template_directory().DIRECTORY_SEPARATOR);
 define('MVC_CHILD_PATH',get_stylesheet_directory().DIRECTORY_SEPARATOR);
+
+/**
+ * ================= FILTERS ================================
+ */
+// not currently in use. @see mizzouAdjustHelpScreen()
+//add_filter('contextual_help','mizzouAdjustHelpScreen',10,3);
 
 /**
  * NO ADDITIONAL CODE SHOULD BE BELOW THIS LINE
