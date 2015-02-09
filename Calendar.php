@@ -15,6 +15,7 @@ require_once 'models/Calendar.php';
 
 $objSite = new Site();
 $objCalendar = new Calendar();
+
 $aryOptions = array(
     'method'=>'department',
     'term'  =>'4581'
@@ -23,6 +24,3 @@ $aryOptions = array(
 $aryReturn = $objCalendar->retrieveCalendarItems($aryOptions);
 $aryData['Events'] = $aryReturn['events'];
 Content::render('calendar',$aryData);
-//echo '<pre>',var_export($objCalendar->retrieveCalendarItems($aryOptions),true),'</pre>';
-
-//echo $objCalendar->retrieveCalendarItems($aryOptions);
