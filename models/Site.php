@@ -34,7 +34,10 @@ class Site extends Base {
         'date_format'       => 'M j, Y',
         'menu_format'       => '<ol class="%1$s %2$s">%3$s</ol>',
         'pagelist_exclude'  => array(),
+        'config_file'       => 'config.ini',
     );
+
+    protected $arySiteOptions = array();
 
     public function __construct($aryOptions = array())
     {
@@ -173,6 +176,7 @@ class Site extends Base {
      * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
      * @todo the function of this model is for site specific data. this doesnt fit at all. This should probably be
      * moved into the Framework (Content) model/class
+     * @deprecated now handled by the Templating engine
      */
     public function getView($strViewName,$aryViewOptions=array())
     {
@@ -231,6 +235,7 @@ class Site extends Base {
     /**
      * Captures and returns contents of wp_footer wordpress function
      * @return string contents as returned by wp_footer()
+     * @deprecated
      */
     protected function _getWpFooter()
     {
@@ -240,6 +245,7 @@ class Site extends Base {
     /**
      * Captures and returns contents of the get_search_form wordpress function
      * @return string contents as returned by get_search_form()
+     * @deprecated
      */
     protected function _getSearchForm()
     {
@@ -451,5 +457,23 @@ class Site extends Base {
              * Should we have a fall back option?
              */
         }
+
+        //load up the framework options
+        $this->arySiteOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
+        //do we have a child site we are working with?
+        if($this->aryData['ActiveThemePath'] != $this->aryData['ParentThemePath']){
+            $aryChildOptions = $this->_loadOptionsFile($this->aryData['ActiveThemePath'].$this->aryOptions['config_file']);
+            $this->arySiteOptions = array_merge_recursive($this->arySiteOptions,$aryChildOptions);
+        }
+
+    }
+
+    protected function _loadOptionsFile($strPath)
+    {
+        if(!file_exists($strPath) || FALSE == $aryReturn = parse_ini_file($strPath)){
+            $aryReturn = array();
+        }
+
+        return $aryReturn;
     }
 }
