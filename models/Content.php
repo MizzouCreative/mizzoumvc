@@ -750,7 +750,7 @@ class Content {
         $aryViewDirectories[] = $strParentThemePath;
 
         foreach($aryViewDirectories as $intDirectoryKey=>$strDirectory){
-            $aryViewDirectories[$intDirectoryKey] = $strDirectory.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR;
+            $aryViewDirectories[$intDirectoryKey] = $strDirectory.'views'.DIRECTORY_SEPARATOR;
         }
 
         return new Twig_Loader_Filesystem($aryViewDirectories);
