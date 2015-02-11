@@ -15,7 +15,8 @@
 
 
 $aryData = array();
-
+$objSite = new Site();
+_mizzou_log($objSite,'our objSite',false,array('file'=>__FILE__,'line'=>__LINE__));
 
 /**
 * Doesnt matter if s or q has been used as the search parameter, we want to use either to invoke a gsa search
