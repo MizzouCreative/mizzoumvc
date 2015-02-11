@@ -520,9 +520,6 @@ class Site extends Base {
 
     public function option($strOption)
     {
-        $mxdReturn = '';
-        if(isset($this->arySiteOptions[$strOption])){
-
-        }
+        return (isset($this->arySiteOptions[$strOption])) ? $this->arySiteOptions[$strOption] : '';
     }
 }
