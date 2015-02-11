@@ -1,5 +1,0 @@
-<?php
-/**
- * @deprecated
- * @todo delete
- */
