@@ -483,6 +483,8 @@ class Site extends Base {
 
         }
 
+        $this->_loadFlattenedOptions($aryOptions);
+
 
 
 
