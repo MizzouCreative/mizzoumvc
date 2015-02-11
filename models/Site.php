@@ -442,21 +442,23 @@ class Site extends Base {
         /*
          * @todo this is NOT how the final implementation should work. Alpha-level hack to get things moving
          */
+        /**
         if(defined('GSA_SEARCH_URL')){
             $this->add_data('strSearchURL',GSA_SEARCH_URL);
         } else {
             /**
              * @todo should we have a fall back option?
-             */
-        }
 
+        } */
+
+        /**
         if(defined('GSA_SEARCH_PARAMS')){
             $this->add_data('arySearchParams',unserialize(GSA_SEARCH_PARAMS));
         } else {
             /**
              * Should we have a fall back option?
-             */
-        }
+
+        } */
 
         //load up the framework options
         $aryOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
