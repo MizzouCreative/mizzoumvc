@@ -16,7 +16,7 @@ if ( isset( $_GET['start'] ) ) {
 
 if(!$error) {
     if(array_key_exists('error',$_GET)) {
-        $error = $_GET('error');
+        $error = $_GET['error'];
     }
 }
 
@@ -65,7 +65,7 @@ if(!$error) {
     <script src="/templates/yoo_master2/styles/doit/js/custom.js"></script>
 
 </head>
-
+<body>
 <div class="uk-container">
     <header>
         <a id="skipnav" href="#mainContent" class="smallNote offLeft">Skip to main content</a>
@@ -250,5 +250,5 @@ if(!$error) {
 		</footer>
 	</div>';
         ?>
-        </body>
+</body>
 </html>
