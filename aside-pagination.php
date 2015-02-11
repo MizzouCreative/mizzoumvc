@@ -18,6 +18,10 @@
  * @category template-part
  * @author Paul F. Gilzow & Jason L Rollins, Web Communications, University of Missouri
  * @copyright 2013 Curators of the University of Missouri
+ *
+ *
+ * @todo this one will need to be kept and converted to a model+controller, or come up with a different method for
+ * handling pagination
  * 
  */
 
