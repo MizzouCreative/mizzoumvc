@@ -459,13 +459,50 @@ class Site extends Base {
         }
 
         //load up the framework options
-        $this->arySiteOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
+        $aryOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
         //do we have a child site we are working with?
         if($this->aryData['ActiveThemePath'] != $this->aryData['ParentThemePath']){
             $aryChildOptions = $this->_loadOptionsFile($this->aryData['ActiveThemePath'].$this->aryOptions['config_file']);
-            $this->arySiteOptions = array_merge_recursive($this->arySiteOptions,$aryChildOptions);
+        } else {
+            $aryChildOptions = array();
         }
 
+        $aryOptions = array_merge_recursive($aryOptions,$aryChildOptions);
+
+        foreach($aryOptions as $mxdOptionKey => $mxdOptionVal){
+            if(!isset($this->aryData[$mxdOptionKey])){
+                $this->add_data($mxdOptionKey,$mxdOptionVal);
+            } else {
+                //well, something isn't right. we shouldnt have an option with a key that already exists
+                /**
+                 * @todo log it? Warning?
+                 */
+            }
+
+        }
+
+
+
+
+
+    }
+
+    protected function _loadFlattenedOptions(array $aryOptions)
+    {
+        foreach($aryOptions as $mxdKey => $mxdVal){
+            if(is_array($mxdVal)){
+                $this->_loadFlattenedOptions($mxdVal);
+            } else {
+                if(!isset($this->arySiteOptions[$mxdKey])){
+                    $this->arySiteOptions[$mxdKey] = $mxdVal;
+                } else {
+                    /**
+                     * well, we've got two subkeys with the same name
+                     * @todo what do we do? give the second key a different name? log it? warning?
+                     */
+                }
+            }
+        }
     }
 
     protected function _loadOptionsFile($strPath)
@@ -475,5 +512,13 @@ class Site extends Base {
         }
 
         return $aryReturn;
+    }
+
+    public function option($strOption)
+    {
+        $mxdReturn = '';
+        if(isset($this->arySiteOptions[$strOption])){
+
+        }
     }
 }
