@@ -509,7 +509,7 @@ class Site extends Base {
 
     protected function _loadOptionsFile($strPath)
     {
-        if(!file_exists($strPath) || FALSE == $aryReturn = parse_ini_file($strPath)){
+        if(!file_exists($strPath) || FALSE == $aryReturn = parse_ini_file($strPath,true)){
             $aryReturn = array();
         }
 
