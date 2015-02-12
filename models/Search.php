@@ -55,7 +55,7 @@ class Search extends Base {
 
     protected function _prepQueryString()
     {
-        $strFullURL = $this->aryInternalData['objSite']->strSearchURL.http_build_query($this->SearchParams);
+        $strFullURL = $this->aryInternalData['objSite']->option('search_url').http_build_query($this->SearchParams);
         return $strFullURL;
     }
 
@@ -65,7 +65,7 @@ class Search extends Base {
          * let's copy the default params we need (collection/site, front_end, etc) from our site options into our storage
          * array that we'll pass back
          */
-        $arySearchParams = $this->aryInternalData['objSite']->arySearchParams;
+        $arySearchParams = $this->aryInternalData['objSite']->search_parameters;
 
 
         //did they use s or q?
