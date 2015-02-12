@@ -469,7 +469,15 @@ class Site extends Base {
             $aryChildOptions = array();
         }
 
-        $aryOptions = array_merge_recursive($aryOptions,$aryChildOptions);
+        foreach($aryChildOptions as $mxdChildKey => $mxChildVal){
+            if(isset($aryOptions[$mxdChildKey]) && is_array($mxChildVal)){
+                $aryOptions[$mxdChildKey] = array_merge($aryOptions[$mxdChildKey],$mxChildVal);
+            } else {
+                $aryOptions[$mxdChildKey] = $mxChildVal;
+            }
+        }
+
+        //$aryOptions = array_merge_recursive($aryOptions,$aryChildOptions);
 
         foreach($aryOptions as $mxdOptionKey => $mxdOptionVal){
             if(!isset($this->aryData[$mxdOptionKey])){
