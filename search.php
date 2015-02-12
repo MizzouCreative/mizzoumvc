@@ -24,7 +24,7 @@ _mizzou_log($objSite,'our objSite',false,array('file'=>__FILE__,'line'=>__LINE__
 if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s'] != '')) {
     require_once 'models/Search.php';
     $arySearchData = array();
-    $arySearchData['GET'] = $_GET;
+    $arySearchData['arySearchParams'] = $_GET;
 
     $objSite = new Site();
     $arySearchData['objSite'] = $objSite;
