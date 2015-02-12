@@ -24,6 +24,11 @@ class Calendar extends AbstractTranslator {
         parent::__construct($aryOptions);
     }
 
+    /**
+     * Translates the data returned from Localist into an object we can use
+     * @param $objEvent
+     * @return stdClass
+     */
     protected function _translateEvent($objEvent)
     {
         $objReturn = new stdClass();
