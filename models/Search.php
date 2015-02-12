@@ -56,6 +56,7 @@ class Search extends Base {
     protected function _prepQueryString()
     {
         $strFullURL = $this->aryInternalData['objSite']->option('search_url').http_build_query($this->SearchParams);
+        _mizzou_log($strFullURL,'full URL for searching',false,array('file'=>__FILE__,'line'=>__LINE__));
         return $strFullURL;
     }
 
