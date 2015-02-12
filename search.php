@@ -6,17 +6,17 @@
  * be attached to the Search page created in wordpress.  
  *
  * @package WordPress
- * @subpackage mizzou-news
+ * @subpackage MizzouMVC
  * @category theme
- * @category template
+ * @category controller
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2013 Curators of the University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
  */
 
 
 $aryData = array();
 $objSite = new Site();
-_mizzou_log($objSite,'our objSite',false,array('file'=>__FILE__,'line'=>__LINE__));
+
 
 /**
 * Doesnt matter if s or q has been used as the search parameter, we want to use either to invoke a gsa search
