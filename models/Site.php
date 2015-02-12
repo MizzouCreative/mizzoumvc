@@ -54,15 +54,14 @@ class Site extends Base {
         $this->add_data('ChildThemePath',$this->_getChildThemePath());
         $this->add_data('ActiveThemePath',$this->_getActiveThemePath());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
-        $this->add_data('AudienceMenu',$this->_getAudienceMenu());
-        $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
-        //$this->add_data('SearchForm',$this->_getSearchForm());
-        //$this->add_data('MobileNav',$this->_getMobileNav());
         /**
-         * @todo needs to be a theme option.  Manually adding for now
+         * @todo Should this data be moved into the Header model?
          */
-        $this->add_data('IncludeBreadcrumbs',false);
-
+        $this->add_data('AudienceMenu',$this->_getAudienceMenu());
+        /**
+         * @todo Should this data be moved into the Header model?
+         */
+        $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
 
         /**
          * @todo if we are doing this on the constructor, and making it a publicly available member, then why does
@@ -163,63 +162,6 @@ class Site extends Base {
     public function currentPublicMembers()
     {
         return array_keys($this->aryData);
-    }
-
-    /**
-     * Allows views to include subviews
-     *
-     * The name is includeVIEW but it really includes the controller for the view so everything is loaded correctly
-     * @param  string $strViewName
-     * @param array $aryViewOptions list of options.
-     * @return string $strReturn contents of the view that was called
-     * @uses locate_template wordpress function
-     * @todo I wonder if there is some way to combine the OB here and in parent::_captureOutput
-     * @todo the function of this model is for site specific data. this doesnt fit at all. This should probably be
-     * moved into the Framework (Content) model/class
-     * @deprecated now handled by the Templating engine
-     */
-    public function getView($strViewName,$aryViewOptions=array())
-    {
-        //_mizzou_log($aryViewOptions,'aryViewOptions as passed in',false,array('func'=>__FUNCTION__));
-        if(count($aryViewOptions) > 0){
-            if(isset($aryViewOptions['passthrough']) && is_array($aryViewOptions['passthrough'])){
-                extract($aryViewOptions['passthrough']);
-            }
-
-            if(!isset($aryOptions)){
-                //aryOptions wasn't sent through as a passthrough variable
-                $aryOptions = $aryViewOptions;
-            }
-
-        }
-
-        $strReturn = '';
-        /**
-         * @todo this would probably be better with a regex where you match at the end
-         */
-        if(FALSE === strpos($strViewName,'.php')){
-            //.php was not included
-            $strViewName .= '.php';
-        }
-        $objSite = $this;
-        ob_start();
-
-        require locate_template($strViewName,false);
-        $strReturn = ob_get_contents();
-        ob_end_clean();
-
-        return $strReturn;
-
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     */
-    protected function _getMobileNav()
-    {
-        return '';
-        //return $this->_captureOutput('get_template_part',array('mobile','nav'));
     }
 
     /**
@@ -430,6 +372,10 @@ class Site extends Base {
         return $this->_captureOutPut('wp_nav_menu',array($aryMenuOptions));
     }
 
+    /**
+     * Loads options from the parent and child config.ini files
+     * return void
+     */
     protected function _loadOptions()
     {
         //load up the framework options
@@ -467,6 +413,11 @@ class Site extends Base {
         $this->_loadFlattenedOptions($aryOptions);
     }
 
+    /**
+     * Takes all of our user defined options and creates a flat array
+     * @param array $aryOptions list of options
+     * @return void
+     */
     protected function _loadFlattenedOptions(array $aryOptions)
     {
         foreach($aryOptions as $mxdKey => $mxdVal){
@@ -485,6 +436,11 @@ class Site extends Base {
         }
     }
 
+    /**
+     * Safely runs parse_ini_file on $strPath
+     * @param $strPath config.ini location
+     * @return array options loaded in from the config.ini file, or empty array if failure
+     */
     protected function _loadOptionsFile($strPath)
     {
         if(!file_exists($strPath) || FALSE == $aryReturn = parse_ini_file($strPath,true)){
@@ -494,6 +450,11 @@ class Site extends Base {
         return $aryReturn;
     }
 
+    /**
+     * Retrieves a user-defined option
+     * @param string $strOption option to retrieve
+     * @return mixed option contents
+     */
     public function option($strOption)
     {
         return (isset($this->arySiteOptions[$strOption])) ? $this->arySiteOptions[$strOption] : '';
