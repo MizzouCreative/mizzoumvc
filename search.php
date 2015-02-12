@@ -34,7 +34,9 @@ if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s
     _mizzou_log($aryData['SearchResults'],'search results',false,array('file'=>__FILE__,'line'=>__LINE__));
 
     if($objSearch->SearchTerms != ''){
-        $aryData['PageTitle'] = 'Search results for ' . htmlentities($objSearch->SearchTerms,ENT_QUOTES,'UTF-8',false);
+        $aryData['SearchTerms'] = htmlentities($objSearch->SearchTerms,ENT_QUOTES,'UTF-8',false);
+        $aryData['PageTitle'] = 'Search results for ' . $aryData['SearchTerms'];
+
     }
 
     if($objSearch->isError()){
