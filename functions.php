@@ -121,6 +121,7 @@ function mizzou_add_URL_query_vars($aryVars){
  * @return string
  * @todo this needs to be converted over to the Site model?
  * @todo rename function to conform to naming standards
+ * @deprecated moved into 404 model
  */
 function mizzou_gather_404_search_terms($aryIgnoreWords=null){
     $aryIgnore = array(
