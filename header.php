@@ -38,7 +38,5 @@
  */
 
 $objHeader = new Header($aryContext);
-_mizzou_log($aryContext,'aryContext',false,array('line'=>__LINE__,'file'=>__FILE__));
 $aryData = array_merge($aryContext,$objHeader->getTemplateData());
-_mizzou_log($aryData,'aryData after merging with aryContext',false,array('line'=>__LINE__,'file'=>__FILE__));
 Content::render('header',$aryData,array('include_header'=>false,'include_footer'=>false));
