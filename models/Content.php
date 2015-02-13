@@ -108,9 +108,11 @@ class Content {
          * @todo don't like this since it creates a direct dependency, but we need data from the Site model in order
          * to know what to pass/not pass to the view. Dependency injection via render method? or
          */
-        if(!isset($objSite) || !is_object($objSite)){
+        if(!isset($aryData['objSite']) || !is_object($aryData['objSite'])){
             _mizzou_log(time(),'objSite is not set, so I will create it now',false,array('line'=>__LINE__,'file'=>__FILE__));
             $objSite = new Site();
+        } else {
+            $objSite = $aryData['objSite'];
         }
 
         self::$objViewEngine = self::_initializeViewEngine();
