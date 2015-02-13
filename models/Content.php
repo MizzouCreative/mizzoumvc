@@ -109,6 +109,7 @@ class Content {
          * to know what to pass/not pass to the view. Dependency injection via render method? or
          */
         if(!isset($objSite) || !is_object($objSite)){
+            _mizzou_log(time(),'objSite is not set, so I will create it now',false,array('line'=>__LINE__,'file'=>__FILE__));
             $objSite = new Site();
         }
 
