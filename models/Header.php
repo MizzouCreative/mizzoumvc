@@ -118,6 +118,11 @@ class Header extends Subview {
 		return implode(' // ',$aryTitleParts);
 	}
 
+	/**
+	 * Sets the string to be used in <title> element of the page
+	 * @param string $strHeaderTitle
+	 * @return void
+	 */
 	protected function _setHeaderTitle($strHeaderTitle=null)
 	{
 		if(is_null($strHeaderTitle)){
@@ -127,9 +132,38 @@ class Header extends Subview {
 		$this->add_data('HeaderTitle',$strHeaderTitle);
 	}
 
+	/**
+	 * Captures and stores the contents of wp_head
+	 * @return void
+	 */
 	protected function _setWpHead()
 	{
 		$this->add_data('wpHead',$this->_captureOutput('wp_head'));
+	}
+
+	/**
+	 * Retrieves the current page's URL
+	 * This CAN be different than the permalink. You'd think we would use get_permalink, but for sections that deal
+	 * with multiple items, that returns the permalink of the last item.
+	 * @return void
+	 */
+	protected function _setCurrentPageURL()
+	{
+		/**
+		 * I hate globals as much as the next programmer, but wordpress lubs 'em.  I don't see anyway around this unless
+		 * we want to inject the $wp variable into the aryContext array that is passed in on initialization
+		 */
+		global $wp;
+		$this->add_data('CurrentPageUrl',home_url(add_query_arg(array(),$wp->request)));
+	}
+
+	/**
+	 * Gets and sets the current page's short URL
+	 * @return void
+	 */
+	protected function _setCurrentPageShortURL()
+	{
+		$this->add_data('CurrentPageShortUrl',wp_get_shortlink());
 	}
 
 
