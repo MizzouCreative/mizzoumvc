@@ -361,6 +361,7 @@ class Site extends Base {
 
         $aryMenuOptions = array(
             'theme_location'    => $strMenuName,
+            'menu'              => $strMenuName,
             'items_wrap'        => $strMenuFormat
         );
 
