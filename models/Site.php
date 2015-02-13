@@ -342,7 +342,6 @@ class Site extends Base {
      */
     protected function _getPrimaryMenu()
     {
-        _mizzou_log(time(),'you just asked me to get the primary menu',false,array('line'=>__LINE__,'file'=>__FILE__));
         return $this->_getWPMenu('primary');
     }
 
