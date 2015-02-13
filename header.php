@@ -38,5 +38,5 @@
  */
 
 $objHeader = new Header($aryContext);
-
-Content::render('header',$objHeader->getTemplateData(),array('include_header'=>false,'include_footer'=>false));
+$aryData = array_merge($aryContext,$objHeader->getTemplateData());
+Content::render('header',$aryData,array('include_header'=>false,'include_footer'=>false));

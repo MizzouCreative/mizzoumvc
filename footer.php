@@ -10,4 +10,5 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 $objFooter = new Footer($aryContext);
-Content::render('footer',$objFooter->getTemplateData(),array('include_header'=>false,'include_footer'=>false));
+$aryData = array_merge($aryContext,$objFooter->getTemplateData());
+Content::render('footer',$aryData,array('include_header'=>false,'include_footer'=>false));
