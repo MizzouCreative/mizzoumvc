@@ -16,7 +16,7 @@ class Footer extends Subview {
 	public function __construct($aryContext)
 	{
 		$this->_setCopyRightYear();
-
+		$this->_setWpFooter();
 
 	}
 
