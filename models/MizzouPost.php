@@ -319,7 +319,7 @@ class MizzouPost extends PostBase
         $intPrefixLen = strlen($aryOptions['meta_prefix']);
         foreach($this->aryOriginalCustomData as $strKey=>$mxdVal){
             if(0 !== strpos($strKey,'_')){ //we dont need the interal custom data keys=>vals
-                if(0 === strpos($strKey,$aryOptions['meta_prefix'])){
+                if(0 !== $intPrefixLen && 0 === strpos($strKey,$aryOptions['meta_prefix'])){
                     $strKey = substr($strKey,$intPrefixLen);
                 }
 
