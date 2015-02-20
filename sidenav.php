@@ -27,6 +27,8 @@ if(isset($aryContext['menuName'])){
         _mizzou_log($objOldestAncestor,'the oldest ancestor object');
         $strMenu = $objOldestAncestor->post_title;
 
+    } elseif(isset($aryContext['PageTitle'])) {
+        $strMenu = $aryContext['PageTitle'];
     }
 }
 
@@ -40,8 +42,8 @@ if($strMenu != ''){
 
     $strMenuContents = wp_nav_menu($aryMenuOptions);
     _mizzou_log($strMenuContents,'contents of the menu i retrieved');
-    $aryContex['menu'] = $strMenuContents;
-    Content::render('menu', $aryContex);
+    $aryContext['menu'] = $strMenuContents;
+    Content::render('menu', $aryContext);
 
 
 }
