@@ -28,6 +28,7 @@ if(isset($aryContext['menuName'])){
 if($strMenu != ''){
     $aryMenuOptions = array(
         'menu' => $strMenu,
+        'menu_class'=>'sidebar-navigation',
         'echo' => false,
     );
 
