@@ -235,7 +235,7 @@ class MizzouPost extends PostBase
             $strPattern = $strPrefix;
         }
 
-        $strPattern = '/^'.$strPattern.$this->strMetaGroupPattern.'$/';
+        $strPattern = '/^[^_]'.$strPattern.$this->strMetaGroupPattern.'$/';
 
         return $strPattern;
     }
