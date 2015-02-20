@@ -245,7 +245,7 @@ class WpBase
         if(isset($aryOptions['taxonomies'])){
             $aryMizzouPostOptions['taxonomies'] = $aryOptions['taxonomies'];
         }
-
+        _mizzou_log($aryMizzouPostOptions,'collection of options Ill pass into MizzouPost',false,array('line'=>__LINE__,'file'=>__FILE__));
         $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
 
         /**
