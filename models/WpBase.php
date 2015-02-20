@@ -154,8 +154,9 @@ class WpBase
      */
     public function convertPosts($aryPosts,$aryOptions = array())
     {
-        //_mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
+        _mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
         $aryOptions = array_merge($this->aryDefaults,$aryOptions);
+        _mizzou_log($aryOptions,'aryOptions after merging with defaults',false,array('func'=>__FUNCTION__));
 
         $aryReturn = array();
 
