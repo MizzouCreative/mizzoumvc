@@ -16,6 +16,8 @@
  *
 #}
 {{ subview('header',_context) }}
-{% block sidenav %}{% endblock %}
+{% block sidenav %}
+    {{ subview('sidenav',_context) }}
+{% endblock %}
 {% block content %}{% endblock %}
 {{ subview('footer',_context) }}
