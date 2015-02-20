@@ -171,7 +171,7 @@ class MizzouPost extends PostBase
         _mizzou_log($aryMetaGroupKeys,'matches i found from the grep');
         //loop through each match, pull out the group component and add it the group array
         foreach($aryMetaGroupKeys as $strKeyInGroup){
-            if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
+                if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
                 $strNewKey = $aryMatch[1];
                 if(!isset($this->aryData[$strNewKey])){
                     $this->aryData[$strNewKey] = array();
