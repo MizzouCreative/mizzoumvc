@@ -18,7 +18,7 @@ if(isset($aryContext['menuName'])){
     $strMenu = $aryContext['menuName'];
 } elseif(isset($aryContext['objMainPost'])) {
     _mizzou_log('','menu was not overridden so lets try and get the ancestors');
-    $aryAncestors = get_post_ancestors($objMainPost->ID);
+    $aryAncestors = get_post_ancestors($aryContext['objMainPost']->ID);
     _mizzou_log($aryAncestors,'all of the ancestors');
     if(count($aryAncestors) > 0){
         $intOldestAncestor = end($aryAncestors);
