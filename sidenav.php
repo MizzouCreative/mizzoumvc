@@ -11,20 +11,20 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-_mizzou_log('',__FILE__.'called');
+//_mizzou_log('',__FILE__.'called');
 $strMenu = '';
 
 if(isset($aryContext['menuName'])){
     $strMenu = $aryContext['menuName'];
 } elseif(isset($aryContext['objMainPost'])) {
-    _mizzou_log('','menu was not overridden so lets try and get the ancestors');
+    //_mizzou_log('','menu was not overridden so lets try and get the ancestors');
     $aryAncestors = get_post_ancestors($aryContext['objMainPost']->ID);
-    _mizzou_log($aryAncestors,'all of the ancestors');
+    //_mizzou_log($aryAncestors,'all of the ancestors');
     if(count($aryAncestors) > 0){
         $intOldestAncestor = end($aryAncestors);
-        _mizzou_log($intOldestAncestor,'the oldest ancestor id');
+        //_mizzou_log($intOldestAncestor,'the oldest ancestor id');
         $objOldestAncestor = get_post($intOldestAncestor);
-        _mizzou_log($objOldestAncestor,'the oldest ancestor object');
+        //_mizzou_log($objOldestAncestor,'the oldest ancestor object');
         $strMenu = $objOldestAncestor->post_title;
 
     } elseif(isset($aryContext['PageTitle'])) {
@@ -33,7 +33,7 @@ if(isset($aryContext['menuName'])){
 }
 
 if($strMenu != ''){
-    _mizzou_log($strMenu,'the menu I will look for');
+    //_mizzou_log($strMenu,'the menu I will look for');
     $aryMenuOptions = array(
         'menu' => $strMenu,
         'menu_class'=>'sidebar-navigation',
@@ -41,7 +41,7 @@ if($strMenu != ''){
     );
 
     $strMenuContents = wp_nav_menu($aryMenuOptions);
-    _mizzou_log($strMenuContents,'contents of the menu i retrieved');
+    //_mizzou_log($strMenuContents,'contents of the menu i retrieved');
     $aryContext['menu'] = $strMenuContents;
     Content::render('menu', $aryContext);
 
