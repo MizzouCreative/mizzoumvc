@@ -172,11 +172,9 @@ class Header extends Subview {
         if($this->aryData['objSite']->option('stylesheet') != ''){
             $strStyleSheet = $this->aryData['objSite']->ActiveThemeURL . $this->aryData['objSite']->option('stylesheet');
         } else {
-            _mizzou_log($this->aryData['objSite'],'site object',false,array('line'=>__LINE__,'file'=>__FILE__));
             $strStyleSheet = get_stylesheet_uri();
         }
 
-        _mizzou_log($strStyleSheet,'location of the stylesheet',false,array('line'=>__LINE__,'file'=>__FILE__));
         return $strStyleSheet;
     }
 
