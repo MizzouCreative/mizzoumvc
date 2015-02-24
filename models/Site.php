@@ -48,7 +48,7 @@ class Site extends Base {
         $this->add_data('URL',$this->_getSiteHomeURL());
         $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
-        $this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
+        //$this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
         $this->add_data('ParentThemePath',$this->_getParentThemePath());
         $this->add_data('ChildThemePath',$this->_getChildThemePath());
@@ -266,6 +266,7 @@ class Site extends Base {
      * Wrapper function for get_stylesheet_uri() wordpress function.
      * @return string active stylesheet URL, be it child or parent
      * @uses get_stylesheet_uri wordpress function
+     * @deprecated moved to Header model
      */
     private function _getActiveStylesheet()
     {
