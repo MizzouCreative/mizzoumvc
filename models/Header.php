@@ -175,6 +175,7 @@ class Header extends Subview {
             $strStyleSheet = get_stylesheet_uri();
         }
 
+        _mizzou_log($strStyleSheet,'location of the stylesheet',false,array('line'=>__LINE__,'file'=>__FILE__));
         return $strStyleSheet;
     }
 
