@@ -16,9 +16,10 @@ class Header extends Subview {
 
 
 	function __construct($aryContext){
-		$this->aryData = array_merge($this->aryData,$aryContext);
 
-		if(!isset($this->aryData['objSite'])){
+        if(isset($aryContext['objSite'])){
+            $this->add_data('objSite',$aryContext['objSite']);
+        } else {
 			/**
 			 * @todo throw a error/exception? We can't really continue without it
 			 */
@@ -26,9 +27,9 @@ class Header extends Subview {
 		}
 
 		//if we werent given the post type object, set it to null
-		if(!isset($this->aryData['objPostType'])) $this->add_data('objPostType',null);
+        $this->add_data('objPostType',(isset($aryContext['objPostType'])) ? $aryContext['objPostType'] : null);
 		//@todo page title should always be set, throw an exception?
-		if(!isset($this->aryData['PageTitle'])) $this->add_data('PageTitle','');
+		$this->add_data('PageTitle',(isset($aryContext['PageTitle'])) ? $aryContext['PageTitle'] : '');
 
 		$this->_setHeaderTitle();
         $this->_setActiveStylesheet();
