@@ -16,8 +16,7 @@ class Header extends Subview {
 
 
 	function __construct($aryContext){
-		//@todo do we really need to extract here? cant we just leave them in the array?
-	 	$this->aryData = array_merge($this->aryData,$aryContext);
+		$this->aryData = array_merge($this->aryData,$aryContext);
 
 		if(!isset($this->aryData['objSite'])){
 			/**
@@ -32,6 +31,7 @@ class Header extends Subview {
 		if(!isset($this->aryData['PageTitle'])) $this->add_data('PageTitle','');
 
 		$this->_setHeaderTitle();
+        $this->_setActiveStylesheet();
 		$this->_setIncludeNoIndex();
 		$this->_setWpHead();
 	}
@@ -165,6 +165,22 @@ class Header extends Subview {
 	{
 		$this->add_data('CurrentPageShortUrl',wp_get_shortlink());
 	}
+
+    protected function _determineActiveStylesheet()
+    {
+        if($this->aryData['objSite']->option('stylesheet') != ''){
+            $strStyleSheet = $this->aryData['objSite']->ActiveThemeURL . $this->aryData['objSite']->option('stylesheet');
+        } else {
+            $strStyleSheet = get_stylesheet_uri();
+        }
+
+        return $strStyleSheet;
+    }
+
+    protected function _setActiveStylesheet()
+    {
+        $this->add_data('ActiveStylesheet',$this->_determineActiveStylesheet());
+    }
 
 
 }
