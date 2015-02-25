@@ -127,6 +127,7 @@ class WpBase
         $objQuery =  new WP_Query($aryArgs);
 
         if (isset($objQuery->posts) && count($objQuery->posts) > 0){
+            _mizzou_log($aryOptions,'options before I initiate wp_query',false,array('line'=>__LINE__,'file'=>__FILE__));
             $aryReturn = $this->convertPosts($objQuery->posts,$aryOptions);
 
         }
