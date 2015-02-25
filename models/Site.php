@@ -423,7 +423,13 @@ class Site extends Base {
     protected function _loadFlattenedOptions(array $aryOptions)
     {
         foreach($aryOptions as $mxdKey => $mxdVal){
-            if(is_array($mxdVal)){
+            /*
+             * This one might need explaining. We only want to flatten out the options if they have an associative
+             * key.  If it is an indexed array, we dont want to flatten it since we wouldnt have a key to name it with.
+             * Easiest way to see if it is associative is to get an array of just the values and strictly compare that
+             * with the original array
+             */
+            if(is_array($mxdVal) && array_values($mxdVal) !== $mxdVal){
                 $this->_loadFlattenedOptions($mxdVal);
             } else {
                 if(!isset($this->arySiteOptions[$mxdKey])){
