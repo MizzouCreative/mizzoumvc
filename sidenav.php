@@ -32,6 +32,8 @@ if(isset($aryContext['menuName'])){
     }
 }
 
+_mizzou_log($strMenu,'the menu we are going to attempt to look up',false,array('line'=>__LINE__,'file'=>__FILE__));
+
 if($strMenu != ''){
     //_mizzou_log($strMenu,'the menu I will look for');
     $aryMenuOptions = array(
