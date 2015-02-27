@@ -287,8 +287,9 @@ function mizzouCreateLabels($strType,$strBaseWord,$strBaseWordPlural='')
 {
     $aryAdditionalLabels = array();
 
-    if(ctype_lower($strBaseWord)){
-        $strBaseWord = ucfirst($strBaseWord);
+    if(1 == preg_match('/^[a-z_]+$/',$strBaseWord)){
+        $strBaseWord = str_replace('_',' ',$strBaseWord);
+        $strBaseWord = ucwords($strBaseWord);
     }
 
     if($strBaseWordPlural ==''){
