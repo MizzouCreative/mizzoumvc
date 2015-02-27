@@ -45,7 +45,6 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR
 function mizzou_setup(){
     add_filter('query_vars','mizzou_add_URL_query_vars');
     add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
-    add_filter( 'wp_terms_checklist_args', 'mizzou_no_top_float', 10, 2 );
     add_filter('edit_tag_link', 'edit_tag_link_new_window');
 
     /**
@@ -200,25 +199,6 @@ function mizzou_remove_dashboard_widgets(){
     unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
     
 }
-
-/**
- * Disable 'checked_ontop' for taxonomies (learned from NewsA11y)
- * @param array $args
- * @param integer $post_id
- * @return array
- * @todo rename function to conform to naming standards
- */
-function mizzou_no_top_float( $args, $post_id ) {
-  // If the taxonomy is set and equals person_type or group
-	if ( isset( $args['taxonomy'] ) && 'person_type' == $args['taxonomy'] || 'group' == $args['taxonomy'] || 'group' == $args['author_assignment']   ) {
-        $args['checked_ontop'] = false;
-    }
-
-    return $args;
-}
-
-
-
 
 /**
  * Solely here for backwards compatibility and to catch instances when it is still being used
