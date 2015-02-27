@@ -360,6 +360,30 @@ function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
     register_post_type($strPostTypeName,$aryPostTypeOptions);
 }
 
+function mizzouRegisterTaxonomy($strTaxName,$aryOptions=array())
+{
+    $aryTaxonomyArgs = array(
+        'sort'          => true,
+        'hierarchical'  => true,
+    );
+
+    if(!isset($aryOptions['attach'])){
+        $aryAttachedToPostTypes = array('post');
+    } elseif(!is_array($aryOptions['attach'])){
+        $aryAttachedToPostTypes = (array)$aryOptions['attach'];
+    } else {
+        $aryAttachedToPostTypes = $aryOptions['attach'];
+    }
+
+    if(!isset($aryOptions['label']) && isset($aryOptions['labels'])) {
+        $aryTaxonomyArgs['labels'] = mizzouCreateTaxonomyLabels($strTaxName);
+    }
+
+    $aryTaxonomyArgs = array_merge($aryTaxonomyArgs,$aryOptions);
+
+    register_taxonomy($strTaxName,$aryAttachedToPostTypes,$aryTaxonomyArgs);
+}
+
 /**
  * Removes the default contextual help panel tabs and adds our custom help tab.  Contents for our custom tab are assumed
  * to be contained in a directory names "views" in a file named "sampleHelp.html".  Adjust as needed
