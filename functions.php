@@ -283,11 +283,20 @@ function mizzouCreatePostTypeLabels($strBaseWord,$strBaseWordPlural='')
     return mizzouCreateLabels('post',$strBaseWord,$strBaseWordPlural);
 }
 
-function mizzouCreateLabels($srtType,$strBaseWord,$strBaseWordPlural='')
+function mizzouCreateLabels($strType,$strBaseWord,$strBaseWordPlural='')
 {
     $aryAdditionalLabels = array();
+
+    if(ctype_lower($strBaseWord)){
+        $strBaseWord = ucfirst($strBaseWord);
+    }
+
     if($strBaseWordPlural ==''){
         $strBaseWordPlural = $strBaseWord . 's';
+    } else {
+        if(ctype_lower($strBaseWordPlural)){
+            $strBaseWordPlural = ucfirst($strBaseWordPlural);
+        }
     }
 
     $aryBaseLabels = array(
@@ -303,7 +312,7 @@ function mizzouCreateLabels($srtType,$strBaseWord,$strBaseWordPlural='')
         'parent_item_colon' => 'Parent ' . $strBaseWord .':',
     );
 
-    switch ($srtType){
+    switch ($strType){
         case 'post':
             $aryAdditionalLabels = array(
                 'name_admin_bar'    => $strBaseWord,
@@ -326,6 +335,29 @@ function mizzouCreateLabels($srtType,$strBaseWord,$strBaseWordPlural='')
     }
 
     return array_merge($aryBaseLabels,$aryAdditionalLabels);
+}
+
+function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
+{
+    $aryPostTypeOptions = array(
+        'public'    => true,
+        'has_archive'=>true,
+        'menu_position'=>5,
+        'supports'   => array(
+            'title',
+            'editor',
+            'thumbnail',
+            'revision',
+         ),
+    );
+
+    if(!isset($aryOptions['label']) && !isset($aryOptions['labels'])){
+        $aryOptions['labels'] = mizzouCreatePostTypeLabels($strPostTypeName);
+    }
+
+    $aryPostTypeOptions = array_merge($aryPostTypeOptions,$aryOptions);
+
+    register_post_type($strPostTypeName,$aryPostTypeOptions);
 }
 
 /**
