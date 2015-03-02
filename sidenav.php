@@ -39,6 +39,7 @@ if($strMenu != ''){
     $aryMenuOptions = array(
         'menu' => $strMenu,
         'menu_class'=>'sidebar-navigation',
+        'theme_location'=>'no_such_location',
         'echo' => false,
         'fallback_cb'=>'',
     );
