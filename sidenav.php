@@ -40,6 +40,7 @@ if($strMenu != ''){
         'menu' => $strMenu,
         'menu_class'=>'sidebar-navigation',
         'echo' => false,
+        'fallback_cb'=>false,
     );
 
     $strMenuContents = wp_nav_menu($aryMenuOptions);
