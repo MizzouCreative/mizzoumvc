@@ -36,6 +36,7 @@ _mizzou_log($strMenu,'the menu we are going to attempt to look up',false,array('
 
 if($strMenu != ''){
     _mizzou_log($strMenu,'the menu I will look for');
+    // @see http://codex.wordpress.org/Function_Reference/wp_nav_menu#Targeting_a_specific_Menu
     $aryMenuOptions = array(
         'menu' => $strMenu,
         'menu_class'=>'sidebar-navigation',
