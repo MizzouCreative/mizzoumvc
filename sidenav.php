@@ -35,7 +35,7 @@ if(isset($aryContext['menuName'])){
 _mizzou_log($strMenu,'the menu we are going to attempt to look up',false,array('line'=>__LINE__,'file'=>__FILE__));
 
 if($strMenu != ''){
-    //_mizzou_log($strMenu,'the menu I will look for');
+    _mizzou_log($strMenu,'the menu I will look for');
     $aryMenuOptions = array(
         'menu' => $strMenu,
         'menu_class'=>'sidebar-navigation',
@@ -43,7 +43,7 @@ if($strMenu != ''){
     );
 
     $strMenuContents = wp_nav_menu($aryMenuOptions);
-    //_mizzou_log($strMenuContents,'contents of the menu i retrieved');
+    _mizzou_log($strMenuContents,'contents of the menu i retrieved');
     $aryContext['menu'] = $strMenuContents;
     Content::render('menu', $aryContext);
 
