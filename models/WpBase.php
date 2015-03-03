@@ -176,6 +176,9 @@ class WpBase
                             }
                         }
                         break;
+                    case 'post_type':
+                        $this->_addElementToGroupArray($aryReturn,$objMizzouPost->post_type,$objMizzouPost);
+                        break;
                     case 'member':
                         /*
                          * fallthrough done intentionally
