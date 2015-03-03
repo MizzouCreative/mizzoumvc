@@ -177,6 +177,7 @@ class WpBase
                         }
                         break;
                     case 'post_type':
+                        _mizzou_log($objMizzouPost->ID,'going to sort this ID by post type');
                         $this->_addElementToGroupArray($aryReturn,$objMizzouPost->post_type,$objMizzouPost);
                         break;
                     case 'member':
