@@ -506,7 +506,6 @@ class MizzouPost extends PostBase
 
         foreach($aryTaxonomies as $objTaxonomy){
             $aryTaxTerms = get_the_terms($this->ID,$objTaxonomy->name);
-            _mizzou_log($aryTaxTerms,'the taxonomy terms for ' . $objTaxonomy->name,false,array('line'=>__LINE__,'file'=>__FILE__));
             //if(2446 == $this->ID) _mizzou_log($aryTaxTerms,'list of tax terms for post ID 2446');
             $objTaxonomyClone = $this->_cloneObject($objTaxonomy);
 
@@ -534,7 +533,6 @@ class MizzouPost extends PostBase
 
                     $aryTaxonomyTerms[] = $objTaxTermClone;
                 }
-                _mizzou_log($aryTaxonomyTerms,'the final taxonomy terms for ' . $objTaxonomyClone->name,false,array('line'=>__LINE__,'file'=>__FILE__));
                 $objTaxonomyClone->add_data('items',$aryTaxonomyTerms);
 
             } else {
