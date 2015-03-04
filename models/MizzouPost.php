@@ -533,7 +533,7 @@ class MizzouPost extends PostBase
 
                     $aryTaxonomyTerms[] = $objTaxTermClone;
                 }
-
+                _mizzou_log($aryTaxonomyTerms,'the final taxonomy terms for ' . $objTaxonomyClone->name,false,array('line'=>__LINE__,'file'=>__FILE__));
                 $objTaxonomyClone->add_data('items',$aryTaxonomyTerms);
 
             } else {
