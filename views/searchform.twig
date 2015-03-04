@@ -8,9 +8,6 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
 #}
-{% if SearchTerms is not defined %}
-    {% set SearchTerms = "Search #{objSite.Name}" %}
-{% endif %}
     <form class="search-form" action="/search/" method="get" role="search">
         <div class="search-container">
             <input class="search-field" name="q" type="text" onfocus="this.value=''" value="{{ SearchTerms | e }}" title="Search {{ objSite.Name }}"/>
