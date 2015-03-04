@@ -26,7 +26,6 @@ if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s
     $arySearchData = array();
     $arySearchData['arySearchParams'] = $_GET;
 
-    $objSite = new Site();
     $arySearchData['objSite'] = $objSite;
     $objSearch = new Search($arySearchData);
 
