@@ -513,8 +513,9 @@ class MizzouPost extends PostBase
             //$objTaxonomy->items = array();
 
             if(is_array($aryTaxTerms)){
+                $aryTaxonomyTerms = array();
                 foreach($aryTaxTerms as $objTaxTerm){
-                    $aryTaxonomyTerms = array();
+
                     $objTaxTermClone = $this->_cloneObject($objTaxTerm);
                     /**
                      * @todo refactor this section so that if a specific URL and URL structure hasnt been passed in, we
