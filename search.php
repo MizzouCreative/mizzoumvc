@@ -44,4 +44,5 @@ if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s
     }
 }
 
+$aryData['objSite'] = $objSite;
 Content::render('search',$aryData);
