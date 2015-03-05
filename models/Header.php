@@ -201,10 +201,12 @@ class Header extends Subview {
                     $aryMainMenuLI = $objChildNode->getElementsByTagName('li');
                     $boolMatched = false;
                     _mizzou_log($aryMainMenuLI,'matched lis',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-                    while((list($key,$objChildLI) = each($aryMainMenuLI)) && !$boolMatched){
+
+                    for($i=0;$i<$aryMainMenuLI->length;++$i){
+                        $objChildLI = $aryMainMenuLI->item($i);
                         _mizzou_log($objChildLI->nodeValue,'currently looping through main menu. child node value',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         if(trim($this->aryData['PageTitle']) == $objChildLI->nodeValue){
-                            $boolMatched = true;
+                            $i = $aryMainMenuLI->length;
                             /* ok, so we have a node title that matches a page title. now let's go see if we have a
                              * matching menu
                              */
