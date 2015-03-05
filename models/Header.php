@@ -38,7 +38,10 @@ class Header extends Subview {
         /**
          * @todo this should PROBABLY be an optional item
          */
-        $this->_injectPrimaryMenu();
+        if($aryContext['objSite']->option('inject_primary')){
+            $this->_injectPrimaryMenu();
+        }
+
 	}
 
 
