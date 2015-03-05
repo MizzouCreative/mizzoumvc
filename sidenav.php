@@ -14,41 +14,48 @@
 //_mizzou_log('',__FILE__.'called');
 $strMenu = '';
 
-if(isset($aryContext['menuName'])){
-    $strMenu = $aryContext['menuName'];
-} elseif(isset($aryContext['objMainPost'])) {
-    //_mizzou_log('','menu was not overridden so lets try and get the ancestors');
-    $aryAncestors = get_post_ancestors($aryContext['objMainPost']->ID);
-    //_mizzou_log($aryAncestors,'all of the ancestors');
-    if(count($aryAncestors) > 0){
-        $intOldestAncestor = end($aryAncestors);
-        //_mizzou_log($intOldestAncestor,'the oldest ancestor id');
-        $objOldestAncestor = get_post($intOldestAncestor);
-        //_mizzou_log($objOldestAncestor,'the oldest ancestor object');
-        $strMenu = $objOldestAncestor->post_title;
+if(isset($aryContext['objSite']) && $aryContext['objSite']->PageMenu != ''){
+    $aryContext['menu'] = $aryContext['objSite']->PageMenu;
+} else {
+    if(isset($aryContext['menuName'])){
+        $strMenu = $aryContext['menuName'];
+    } elseif(isset($aryContext['objMainPost'])) {
+        //_mizzou_log('','menu was not overridden so lets try and get the ancestors');
+        $aryAncestors = get_post_ancestors($aryContext['objMainPost']->ID);
+        //_mizzou_log($aryAncestors,'all of the ancestors');
+        if(count($aryAncestors) > 0){
+            $intOldestAncestor = end($aryAncestors);
+            //_mizzou_log($intOldestAncestor,'the oldest ancestor id');
+            $objOldestAncestor = get_post($intOldestAncestor);
+            //_mizzou_log($objOldestAncestor,'the oldest ancestor object');
+            $strMenu = $objOldestAncestor->post_title;
 
-    } elseif(isset($aryContext['PageTitle'])) {
-        $strMenu = $aryContext['PageTitle'];
+        } elseif(isset($aryContext['PageTitle'])) {
+            $strMenu = $aryContext['PageTitle'];
+        }
+    }
+
+    _mizzou_log($strMenu,'the menu we are going to attempt to look up',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+    if($strMenu != '' ){
+        _mizzou_log($strMenu,'the menu I will look for');
+        // @see http://codex.wordpress.org/Function_Reference/wp_nav_menu#Targeting_a_specific_Menu
+        $aryMenuOptions = array(
+            'menu' => $strMenu,
+            'menu_class'=>'sidebar-navigation',
+            'theme_location'=>'no_such_location',
+            'echo' => false,
+            'fallback_cb'=>'',
+        );
+
+        $strMenuContents = wp_nav_menu($aryMenuOptions);
+        _mizzou_log($strMenuContents,'contents of the menu i retrieved');
+        $aryContext['menu'] = $strMenuContents;
     }
 }
 
-_mizzou_log($strMenu,'the menu we are going to attempt to look up',false,array('line'=>__LINE__,'file'=>__FILE__));
-
-if($strMenu != ''){
-    _mizzou_log($strMenu,'the menu I will look for');
-    // @see http://codex.wordpress.org/Function_Reference/wp_nav_menu#Targeting_a_specific_Menu
-    $aryMenuOptions = array(
-        'menu' => $strMenu,
-        'menu_class'=>'sidebar-navigation',
-        'theme_location'=>'no_such_location',
-        'echo' => false,
-        'fallback_cb'=>'',
-    );
-
-    $strMenuContents = wp_nav_menu($aryMenuOptions);
-    _mizzou_log($strMenuContents,'contents of the menu i retrieved');
-    $aryContext['menu'] = $strMenuContents;
-    Content::render('menu', $aryContext);
-
-
+if(isset($aryContext['menu'])){
+    Content::render('menu',$aryContext);
 }
+
+
