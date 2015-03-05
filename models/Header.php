@@ -192,7 +192,7 @@ class Header extends Subview {
         if($this->aryData['objSite']->PrimaryMenu != '' && $this->aryData['PageTitle'] != ''){
             $objDomMenu = new DOMDocument();
             $objDomMenu->loadXML($this->aryData['objSite']->PrimaryMenu);
-            _mizzou_log($objDomMenu->saveXML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+            _mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             foreach($objDomMenu->childNodes as $objChildNode){
                 _mizzou_log($objChildNode->nodeName,'child node name',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 _mizzou_log($objChildNode->nodeValue,'child node value',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
