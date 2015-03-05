@@ -10,8 +10,8 @@
 * @category Model
 * @author Paul F. Gilzow, Web Communications, University of Missouri
 * @copyright 2015 Curators of the University of Missouri
+* @dependency objSite model
  */
-
 class Header extends Subview {
 
 
@@ -196,11 +196,13 @@ class Header extends Subview {
             $objDomMenu = new DOMDocument();
             $objDomMenu->loadXML($this->aryData['objSite']->PrimaryMenu);
             //_mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-            $aryNodes = $objDomMenu->getElementsByTagName('ol');
+            $objOLNodes = $objDomMenu->getElementsByTagName('ol');
             _mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-            foreach($aryNodes as $objChildNode){
+            for($j=0;$j<$objOLNodes->length;++$j){
                 _mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                $objChildNode = $objOLNodes->item($j);
                 if($objChildNode->getAttribute('id') == 'menu-primary'){
+                    $j = $objOLNodes->length;
                     $objMainMenuLIList = $objChildNode->getElementsByTagName('li');
                     for($i=0;$i<$objMainMenuLIList->length;++$i){
                         $objChildLI = $objMainMenuLIList->item($i);
@@ -228,6 +230,10 @@ class Header extends Subview {
                                 $objDomSecondaryMenu->loadXML($strSubMenu);
                                 $objSecondaryMenuNode = $objDomSecondaryMenu->getElementsByTagName('ul')->item(0);
 
+                                $objFirstChildOfSecondMenu = $objSecondaryMenuNode->firstChild;
+                                _mizzou_log($objFirstChildOfSecondMenu->nodeValue,'what is the first child of our second menu?');
+
+
                                 $objChildLI->appendChild($objDomMenu->importNode($objSecondaryMenuNode,true));
                                 $this->aryData['objSite']->add_data('PrimaryMenu',$objDomMenu->saveHTML());
                                 _mizzou_log($this->aryData['objSite']->PrimaryMenu,'our menu in html after injection',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
@@ -236,7 +242,10 @@ class Header extends Subview {
                         }
                     }
                 }
+
+
             }
+            foreach($objOLNodes as $objChildNode){}
 
             //_mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject after we tried injecting',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
 
