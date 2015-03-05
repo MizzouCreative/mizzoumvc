@@ -193,9 +193,9 @@ class Header extends Subview {
             $objDomMenu = new DOMDocument();
             $objDomMenu->loadXML($this->aryData['objSite']->PrimaryMenu);
             _mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-            $objMenuOL = $objDomMenu->getElementsByTagName('ol');
+            $aryNodes = $objDomMenu->getElementsByTagName('ol');
 
-            foreach($objMenuOL->childNodes as $objChildNode){
+            foreach($aryNodes as $objChildNode){
                 _mizzou_log($objChildNode->nodeName,'child node name',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 _mizzou_log($objChildNode->nodeValue,'child node value',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             }
