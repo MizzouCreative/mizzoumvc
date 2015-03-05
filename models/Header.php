@@ -201,6 +201,8 @@ class Header extends Subview {
                     foreach($aryMainMenuLI as $objChildLI){
                         if(trim($this->aryData['objSite']->PrimaryMen) == $objChildLI->nodeValue){
                             _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                        } else {
+                            _mizzou_log($objChildLI,'no match so here is the child li object',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         }
                     }
                 }
