@@ -204,7 +204,7 @@ class Header extends Subview {
                             $objDomSecondaryMenu = new DOMDocument();
                             $objDomSecondaryMenu->loadXML('<ul><li>FOOBAR!</li></ul>');
 
-                            $objChildLI->appendChild($objDomSecondaryMenu);
+                            $objChildLI->appendChild($objDomMenu->importNode($objDomSecondaryMenu,true));
 
                             _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         }
