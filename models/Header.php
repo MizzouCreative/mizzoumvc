@@ -199,8 +199,8 @@ class Header extends Subview {
                 if($objChildNode->getAttribute('id') == 'menu-primary'){
                     $aryMainMenuLI = $objChildNode->getElementsByTagName('li');
                     foreach($aryMainMenuLI as $objChildLI){
-                        _mizzou_log(trim($this->aryData['objSite']->PrimaryMenu),'trying to find a match',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-                        if(trim($this->aryData['objSite']->PrimaryMenu) == $objChildLI->nodeValue){
+                        _mizzou_log(trim($this->aryData['PageTitle']),'trying to find a match',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                        if(trim($this->aryData['PageTitle']) == $objChildLI->nodeValue){
                             _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         } else {
                             _mizzou_log($objChildLI->nodeValue,'no match so here is the child li nodeValue',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
