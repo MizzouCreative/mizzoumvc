@@ -203,8 +203,9 @@ class Header extends Subview {
                         if(trim($this->aryData['PageTitle']) == $objChildLI->nodeValue){
                             $objDomSecondaryMenu = new DOMDocument();
                             $objDomSecondaryMenu->loadXML('<ul><li>FOOBAR!</li></ul>');
+                            $objSecondaryMenuNode = $objDomSecondaryMenu->getElementsByTagName('ul')->item(0);
 
-                            $objChildLI->appendChild($objDomMenu->importNode($objDomSecondaryMenu,true));
+                            $objChildLI->appendChild($objDomMenu->importNode($objSecondaryMenuNode,true));
 
                             _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         }
