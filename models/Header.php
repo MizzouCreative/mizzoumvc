@@ -192,28 +192,47 @@ class Header extends Subview {
         if($this->aryData['objSite']->PrimaryMenu != '' && $this->aryData['PageTitle'] != ''){
             $objDomMenu = new DOMDocument();
             $objDomMenu->loadXML($this->aryData['objSite']->PrimaryMenu);
-            _mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+            //_mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             $aryNodes = $objDomMenu->getElementsByTagName('ol');
 
             foreach($aryNodes as $objChildNode){
                 if($objChildNode->getAttribute('id') == 'menu-primary'){
                     $aryMainMenuLI = $objChildNode->getElementsByTagName('li');
-                    foreach($aryMainMenuLI as $objChildLI){
-                        //_mizzou_log(trim($this->aryData['PageTitle']),'trying to find a match',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                    $boolMatched = false;
+                    while((list($intChildKey,$objChildLI) = each($aryMainMenuLI)) && !$boolMatched){
                         if(trim($this->aryData['PageTitle']) == $objChildLI->nodeValue){
-                            $objDomSecondaryMenu = new DOMDocument();
-                            $objDomSecondaryMenu->loadXML('<ul><li>FOOBAR!</li></ul>');
-                            $objSecondaryMenuNode = $objDomSecondaryMenu->getElementsByTagName('ul')->item(0);
+                            $boolMatched = true;
+                            /* ok, so we have a node title that matches a page title. now let's go see if we have a
+                             * matching menu
+                             */
+                            $aryMenuOptions = array(
+                                'menu' => $objChildLI->nodeValue,
+                                /**
+                                 * @todo should we attempt to have an option for the menu class to be inserted here?
+                                 */
+                                //'menu_class'=>'sidebar-navigation',
+                                'theme_location'=>'no_such_location',
+                                'echo' => false,
+                                'fallback_cb'=>'',
+                            );
 
-                            $objChildLI->appendChild($objDomMenu->importNode($objSecondaryMenuNode,true));
+                            if('' != $strSubMenu = wp_nav_menu($aryMenuOptions)){
+                                _mizzou_log($strSubMenu,'we found an element that matches our current page! Here is our matching menu',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                                /**
+                                $objDomSecondaryMenu = new DOMDocument();
+                                $objDomSecondaryMenu->loadXML($strSubMenu);
+                                $objSecondaryMenuNode = $objDomSecondaryMenu->getElementsByTagName('ul')->item(0);
 
-                            _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                                $objChildLI->appendChild($objDomMenu->importNode($objSecondaryMenuNode,true));
+
+                                _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));*/
+                            }
                         }
                     }
                 }
             }
 
-            _mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject after we tried injecting',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+            //_mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject after we tried injecting',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
 
             /*
             foreach($objPrimaryMenu->ol->li as $intLiKey=>$objLI){
