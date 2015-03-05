@@ -35,6 +35,10 @@ class Header extends Subview {
         $this->_setActiveStylesheet();
 		$this->_setIncludeNoIndex();
 		$this->_setWpHead();
+        /**
+         * @todo this should PROBABLY be an optional item
+         */
+        $this->_injectPrimaryMenu();
 	}
 
 
@@ -181,6 +185,15 @@ class Header extends Subview {
     protected function _setActiveStylesheet()
     {
         $this->add_data('ActiveStylesheet',$this->_determineActiveStylesheet());
+    }
+
+    protected function _injectPrimaryMenu()
+    {
+        if($this->aryData['objSite']->PrimaryMenu != ''){
+            $objPrimaryMenu = simplexml_load_string($this->aryData['objSite']->PrimaryMenu);
+            _mizzou_log($objPrimaryMenu,'our primary menu as an xml object',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
+        }
+
     }
 
 
