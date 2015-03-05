@@ -192,8 +192,10 @@ class Header extends Subview {
         if($this->aryData['objSite']->PrimaryMenu != '' && $this->aryData['PageTitle'] != ''){
             $objPrimaryMenu = simplexml_load_string($this->aryData['objSite']->PrimaryMenu);
             foreach($objPrimaryMenu->ol->li as $intLiKey=>$objLI){
-                if($this->aryData['PageTitle'] == $objLI->a){
+                if(trim($this->aryData['PageTitle']) == $objLI->a){
                     _mizzou_log($objLI->a,'we have an li element that matches our page title of ' . $this->aryData['PageTitle'],false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
+                } else {
+                    _mizzou_log($objLI->a,'no match. objLi->a',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
                 }
                 _mizzou_log($objLI,'objLi',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
             }
