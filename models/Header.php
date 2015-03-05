@@ -190,17 +190,28 @@ class Header extends Subview {
     protected function _injectPrimaryMenu()
     {
         if($this->aryData['objSite']->PrimaryMenu != '' && $this->aryData['PageTitle'] != ''){
-            $objPrimaryMenu = simplexml_load_string($this->aryData['objSite']->PrimaryMenu);
+            $objDomMenu = new DOMDocument();
+            $objDomMenu->loadHTML($this->aryData['objSite']->PrimaryMenu);
+
+            foreach($objDomMenu->childNodes as $objChildNode){
+                _mizzou_log($objChildNode->nodeName,'child node name',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
+                _mizzou_log($objChildNode->nodeValue,'child node value',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
+            }
+
+            /*
             foreach($objPrimaryMenu->ol->li as $intLiKey=>$objLI){
                 if(trim($this->aryData['PageTitle']) == (string)$objLI->a){
                     _mizzou_log($objLI->a,'we have an li element that matches our page title of ' . $this->aryData['PageTitle'],false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
+                    $strNewChild = "<ul><li>FOOBAR</li></ul>";
+                    $objNewChild = simplexml_load_string($strNewChild);
+                    $objPrimaryMenu->ol->li[$intLiKey]->addChild($objNewChild);
                 } else {
                     _mizzou_log($objLI->a,'no match. objLi->a',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
                 }
                 _mizzou_log($objLI,'objLi',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
             }
             _mizzou_log($objPrimaryMenu,'our primary menu as an xml object',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
-
+            */
         }
 
     }
