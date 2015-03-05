@@ -202,7 +202,7 @@ class Header extends Subview {
                         if(trim($this->aryData['objSite']->PrimaryMen) == $objChildLI->nodeValue){
                             _mizzou_log($objChildLI,'we found an element that matches our current page!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         } else {
-                            _mizzou_log($objChildLI,'no match so here is the child li object',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                            _mizzou_log($objChildLI->nodeValue,'no match so here is the child li nodeValue',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         }
                     }
                 }
