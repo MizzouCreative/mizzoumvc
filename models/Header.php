@@ -200,8 +200,8 @@ class Header extends Subview {
                 if($objChildNode->getAttribute('id') == 'menu-primary'){
                     $aryMainMenuLI = $objChildNode->getElementsByTagName('li');
                     $boolMatched = false;
-                    _mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-                    while((list($objChildLI) = each($aryMainMenuLI)) && !$boolMatched){
+                    _mizzou_log($aryMainMenuLI,'matched lis',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                    while((list($key,$objChildLI) = each($aryMainMenuLI)) && !$boolMatched){
                         _mizzou_log($objChildLI->nodeValue,'currently looping through main menu. child node value',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                         if(trim($this->aryData['PageTitle']) == $objChildLI->nodeValue){
                             $boolMatched = true;
