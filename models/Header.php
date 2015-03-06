@@ -220,6 +220,7 @@ class Header extends Subview {
                                 'theme_location'=>'no_such_location',
                                 'echo' => false,
                                 'fallback_cb'=>'',
+                                'container'=>false,
                             );
 
                             if('' != $strSubMenu = wp_nav_menu($aryMenuOptions)){
