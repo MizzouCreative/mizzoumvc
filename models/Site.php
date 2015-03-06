@@ -32,7 +32,7 @@ class Site extends Base {
      */
     protected  $aryOptions = array(
         'date_format'       => 'M j, Y',
-        'menu_format'       => '<ol id="%1$s" class="%1$s %2$s">%3$s</ol>',
+        'menu_format'       => '<ul id="%1$s" class="%1$s %2$s">%3$s</ul>',
         'pagelist_exclude'  => array(),
         'config_file'       => 'config.ini',
     );
