@@ -49,7 +49,8 @@ if(isset($aryContext['objSite']) && $aryContext['objSite']->PageMenu != ''){
         );
 
         $strMenuContents = wp_nav_menu($aryMenuOptions);
-        _mizzou_log($strMenuContents,'contents of the menu i retrieved');
+        $aryNavMenuItems = wp_get_nav_menu_items($strMenu);
+        _mizzou_log($aryNavMenuItems,'return of nav get menu for ' . $strMenu);
         $aryContext['menu'] = $strMenuContents;
     }
 }
