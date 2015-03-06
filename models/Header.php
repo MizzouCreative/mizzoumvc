@@ -197,9 +197,9 @@ class Header extends Subview {
             $objDomMenu->loadXML($this->aryData['objSite']->PrimaryMenu);
             //_mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             $objOLNodes = $objDomMenu->getElementsByTagName('ol');
-            _mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+            //_mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             for($j=0;$j<$objOLNodes->length;++$j){
-                _mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                //_mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 $objChildNode = $objOLNodes->item($j);
                 if($objChildNode->getAttribute('id') == 'menu-primary'){
                     $j = $objOLNodes->length;
@@ -223,20 +223,20 @@ class Header extends Subview {
                             );
 
                             if('' != $strSubMenu = wp_nav_menu($aryMenuOptions)){
-                                _mizzou_log($strSubMenu,'we found an element that matches our current page! Here is our matching menu',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                                //_mizzou_log($strSubMenu,'we found an element that matches our current page! Here is our matching menu',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                                 //store it in the site object
                                 $this->aryData['objSite']->add_data('PageMenu',$strSubMenu);
                                 $objDomSecondaryMenu = new DOMDocument();
                                 $objDomSecondaryMenu->loadXML($strSubMenu);
                                 $objSecondaryMenuNode = $objDomSecondaryMenu->getElementsByTagName('ul')->item(0);
-
+                                /*
                                 $objFirstChildOfSecondMenu = $objSecondaryMenuNode->firstChild;
                                 _mizzou_log($objFirstChildOfSecondMenu->nodeValue,'what is the first child of our second menu?');
-
+                                */
 
                                 $objChildLI->appendChild($objDomMenu->importNode($objSecondaryMenuNode,true));
                                 $this->aryData['objSite']->add_data('PrimaryMenu',$objDomMenu->saveHTML());
-                                _mizzou_log($this->aryData['objSite']->PrimaryMenu,'our menu in html after injection',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                                //_mizzou_log($this->aryData['objSite']->PrimaryMenu,'our menu in html after injection',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
 
                             }
                         }
@@ -245,24 +245,7 @@ class Header extends Subview {
 
 
             }
-            foreach($objOLNodes as $objChildNode){}
 
-            //_mizzou_log($objDomMenu->saveHTML(),'our menu as a DOMobject after we tried injecting',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-
-            /*
-            foreach($objPrimaryMenu->ol->li as $intLiKey=>$objLI){
-                if(trim($this->aryData['PageTitle']) == (string)$objLI->a){
-                    _mizzou_log($objLI->a,'we have an li element that matches our page title of ' . $this->aryData['PageTitle'],false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
-                    $strNewChild = "<ul><li>FOOBAR</li></ul>";
-                    $objNewChild = simplexml_load_string($strNewChild);
-                    $objPrimaryMenu->ol->li[$intLiKey]->addChild($objNewChild);
-                } else {
-                    _mizzou_log($objLI->a,'no match. objLi->a',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
-                }
-                _mizzou_log($objLI,'objLi',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
-            }
-            _mizzou_log($objPrimaryMenu,'our primary menu as an xml object',false,array('line'=>__LINE__,'file'=>dirname(__FILE__)));
-            */
         }
 
     }
