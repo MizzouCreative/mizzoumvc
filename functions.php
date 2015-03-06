@@ -88,7 +88,7 @@ function mizzou_setup(){
     remove_action('wp_head', 'start_post_rel_link', 10); 
     remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
-    add_action('wp_head','mizzouRegisterScripts');
+    add_action('wp_enqueue_scripts','mizzouRegisterScripts');
     
 }
 
