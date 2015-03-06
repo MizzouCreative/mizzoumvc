@@ -42,10 +42,11 @@ if(isset($aryContext['objSite']) && $aryContext['objSite']->PageMenu != ''){
         // @see http://codex.wordpress.org/Function_Reference/wp_nav_menu#Targeting_a_specific_Menu
         $aryMenuOptions = array(
             'menu' => $strMenu,
-            'menu_class'=>'sidebar-navigation',
             'theme_location'=>'no_such_location',
             'echo' => false,
             'fallback_cb'=>'',
+            'container'=>false,
+
         );
 
         $strMenuContents = wp_nav_menu($aryMenuOptions);
