@@ -87,6 +87,7 @@ class Content {
     {
         /**
          * @todo refactor to remove pre-twig code
+         * @todo why are we setting $aryViewVariables to $aryData instead of just using $aryData?
          */
         $aryViewVariables               = $aryData;
         $strEditPostLink                = '';
@@ -374,7 +375,7 @@ class Content {
          */
         if(!isset($aryData['Menu']) && self::$intCounter == 0){
             if(self::$intCounter == 0){
-                $aryData['Menu'] = new Menu($aryData);
+                $aryViewVariables['Menu'] = new Menu($aryData);
             } else {
                 _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but Menu still hasnt been created',true);
             }
