@@ -375,7 +375,7 @@ class Content {
          */
         if(!isset($aryData['Menu']) && self::$intCounter == 0){
             if(self::$intCounter == 0){
-                $aryViewVariables['Menu'] = new Menu($aryData);
+                $aryViewVariables['Menu'] = new Menu($aryViewVariables);
             } else {
                 _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but Menu still hasnt been created',true);
             }
