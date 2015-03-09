@@ -75,27 +75,30 @@ class Content {
      *
      */
     protected static $objView = null;
+
+    protected static $intCounter = 0;
     /**
      * @param string $strInnerViewFileName
      * @param array $aryData
      * @param array $aryOptions
+     * @return void
      */
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
-
+        /**
+         * @todo refactor to remove pre-twig code
+         */
         $aryViewVariables               = $aryData;
         $strEditPostLink                = '';
         $boolIncludeNoIndex             = false;
         $boolIncludeSidebar             = false;
         $boolIncludeImageAboveHeader    = false;
 
-        /**
-         * @todo refactor to remove pre-twig code
-         */
-        $aryViewVariables['EditPostLink']           = $strEditPostLink;
-        $aryViewVariables['IncludeNoIndex']         = $boolIncludeNoIndex;
-        $aryViewVariables['IncludeSidebar']         = $boolIncludeSidebar;
-        $aryViewVariables['IncludeImageAboveHeader']= $boolIncludeImageAboveHeader;
+
+        //$aryViewVariables['EditPostLink']           = $strEditPostLink;
+        //$aryViewVariables['IncludeNoIndex']         = $boolIncludeNoIndex;
+        //$aryViewVariables['IncludeSidebar']         = $boolIncludeSidebar;
+        //$aryViewVariables['IncludeImageAboveHeader']= $boolIncludeImageAboveHeader;
 
 
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
@@ -109,7 +112,15 @@ class Content {
          * to know what to pass/not pass to the view. Dependency injection via render method? or
          */
         if(!isset($aryData['objSite']) || !is_object($aryData['objSite'])){
-            $objSite = new Site();
+            if(self::$intCounter == 0){
+                $objSite = new Site();
+            } else {
+                /**
+                 * Somehow we've called Content more than once and still dont have an objSite in site.
+                 * @todo clean this up
+                 */
+                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but objSite still hasnt been created',true);
+            }
         } else {
             $objSite = $aryData['objSite'];
         }
@@ -167,13 +178,13 @@ class Content {
         /**
          * Page specific checks...
          * @todo this is specific to IPP and needs to be removed
-         */
+
         if(is_page() && isset($objMainPost)){
             /**
              * @wp-hack
              * hack. we only want the sidebar on specific pages. change this into a function that determines if a sidebar is actually
              * needed
-             */
+
             if(in_array($objMainPost->slug,self::$aryIncludeSidebarPages)){
                 $boolIncludeSidebar = true;
                 $aryViewVariables['IncludeSidebar'] = $boolIncludeSidebar;
@@ -183,7 +194,7 @@ class Content {
                 $boolIncludeImageAboveHeader = true;
                 $aryViewVariables['IncludeImageAboveHeader'] = $boolIncludeImageAboveHeader;
             }
-        }
+        }*/
 
         /**
          * This one is a bit of a bugger...
@@ -195,7 +206,7 @@ class Content {
          * @todo moved to the header controller. Delete
          * @deprecated
          *
-         */
+
         if(
             is_404()
             || (
@@ -209,7 +220,7 @@ class Content {
         ) {
             $boolIncludeNoIndex = true;
             $aryViewVariables['IncludeNoIndex'] = $boolIncludeNoIndex;
-        }
+        }*/
 
         /**
          * @todo this needs to be moved either into a theme option or config file
@@ -272,6 +283,7 @@ class Content {
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
          * other CPTs, then we need to include Next & Previous page links
+         * @todo this shouldnt be in the Content model, should it? At a minimum, the Previous and Next should be options
          */
         if((is_home() || is_archive()) && $aryOptions['include_pagination']){
             $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
@@ -288,9 +300,10 @@ class Content {
          * @todo dont let this go to production
          * @todo this should be moved into the header controller
          */
+        /**
         if(!isset($aryViewVariables['HeadTitle'])){
             $aryViewVariables['HeadTitle']= self::_getHeaderTitle($aryViewVariables['PageTitle'],$objSite->Name);
-        }
+        }*/
 
 
         /**
@@ -326,12 +339,12 @@ class Content {
 
         /**
          * @todo captureContents is in the site model so we need to expand it to allow for storage of this type of data
-         */
+
         $strSearchFormContents = $objSite->SearchForm;
         $aryViewVariables['strSearchFormContents'] = $objSite->SearchForm;
         $strWpFooterContents = $objSite->wpFooter;
         $aryViewVariables['strWpFooterContents'] = $objSite->wpFooter;
-
+        */
         //start actual output
 
         // replaces get_header();
@@ -356,6 +369,20 @@ class Content {
         require_once $strThemePath . 'footer.html';
         */
 
+        /**
+         * Now we need the data from our menu model
+         */
+        if(!isset($aryData['Menu']) && self::$intCounter == 0){
+            if(self::$intCounter == 0){
+                $aryData['Menu'] = new Menu($aryData);
+            } else {
+                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but Menu still hasnt been created',true);
+            }
+        }
+
+        //increment our internal counter
+        ++self::$intCounter;
+
         if($aryOptions['return']){
             return self::$objView->render($aryViewVariables);
         } else {
@@ -379,6 +406,7 @@ class Content {
      * Determines H1 title for pages
      * @return string
      * @todo sub-page support, category/taxonomy support and pagination support
+     * @todo shouldnt this be moved into the Header model?
      */
     protected function _determinePageTitle()
     {
@@ -601,9 +629,11 @@ class Content {
      * @param $strPageTitle
      * @param $strSiteName
      * @return string
+     * @deprecated moved into Header model @see Header()
      */
     protected function _getHeaderTitle($strPageTitle,$strSiteName)
     {
+        _mizzou_log(null,'deprecated function called!',true,array('func'=>__FUNCTION__,'file'=>basename(__FILE__)));
         if('' == self::$strHeaderTitle){
             self::_determineHeaderTitle($strPageTitle,$strSiteName);
         }
@@ -614,9 +644,11 @@ class Content {
     /**
      * @param $strPageTitle
      * @param $strSiteName
+     * @deprecated moved into Header model @see Header()
      */
     protected function _determineHeaderTitle($strPageTitle,$strSiteName)
     {
+        _mizzou_log(null,'deprecated function called!',true,array('func'=>__FUNCTION__,'file'=>basename(__FILE__)));
         $aryTitleParts = array();
         $strPageTitle = trim(strip_tags($strPageTitle));
 
