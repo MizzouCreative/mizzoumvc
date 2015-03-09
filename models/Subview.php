@@ -15,7 +15,7 @@ class Subview extends Base {
 
 	public function __construct($aryContext)
 	{
-		array_merge($this->aryData,$aryContext);
+		$this->aryData = array_merge($this->aryData,$aryContext);
 
 		if(!isset($this->aryData['objSite'])){
 			/**
