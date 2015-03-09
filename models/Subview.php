@@ -21,6 +21,7 @@ class Subview extends Base {
 			/**
 			 * @todo we need to do something here since every subview needs access to objSite. Throw exception?
 			 */
+            _mizzou_log($this->aryData,'we need objSite, but it wasnt included!',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
 		}
 	}
 
