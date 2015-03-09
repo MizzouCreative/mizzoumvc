@@ -56,18 +56,20 @@ class Site extends Base {
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         /**
          * @todo Should this data be moved into the Header model?
+         * @deprecated moved to Menu model
          */
-        $this->add_data('AudienceMenu',$this->_getAudienceMenu());
+        //$this->add_data('AudienceMenu',$this->_getAudienceMenu());
         /**
          * @todo Should this data be moved into the Header model?
+         * @deprecated moved to Menu model
          */
-        $this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
+        //$this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
 
         /**
          * @todo if we are doing this on the constructor, and making it a publicly available member, then why does
          * the method need to be publicly accessible?
          */
-        $this->getPageList();
+        //$this->getPageList();
         $this->getLastModifiedDate();
         $this->_loadOptions();
     }
