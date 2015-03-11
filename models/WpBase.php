@@ -194,7 +194,7 @@ class WpBase
                         $this->_addElementToGroupArray($aryReturn,$strNewKey,$objMizzouPost);
                 }
             } else {
-                _mizzou_log($aryOptions,'aryoptions. did we drop resorting?',false,array('line'=>__LINE__,'file'=>'wpBase'));
+                //_mizzou_log($aryOptions,'aryoptions. did we drop resorting?',false,array('line'=>__LINE__,'file'=>'wpBase'));
                 $aryReturn[$objMizzouPost->ID] = $objMizzouPost;
             }
 
