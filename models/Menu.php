@@ -109,7 +109,7 @@ class Menu extends Base {
 
     protected function _retrieveMenu($strMenuName)
     {
-        return wp_nav_menu(array_merge($this->aryMenuOptions,array('name'=>$strMenuName)));
+        return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
 
     }
 
