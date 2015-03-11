@@ -12,7 +12,7 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 
-class Menu extends Subview {
+class Menu extends Base {
 
     protected $aryDefaultMenuOptions = array(
         /**
@@ -28,19 +28,32 @@ class Menu extends Subview {
 
     public function __construct($aryContext)
     {
-        parent::__construct($aryContext);
+        if(isset($aryContext['objSite'])){
+            $this->add_data('objSite',$aryContext['objSite']);
+            if(isset($aryContext['objMainPost'])){
+                $this->add_data('objMainPost',$aryContext['objMainPost']);
+            }
 
-        if('' != $aryMenuOptions = $this->aryData['objSite']->option('menu_options')){
-            $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
+            //we're done with context, so lets kill it since it is likely pretty big
+            unset($aryContext);
+
+            if('' != $aryMenuOptions = $this->aryData['objSite']->option('menu_options')){
+                $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
+            } else {
+                $this->aryMenuOptions = $this->aryDefaultMenuOptions;
+            }
+
+            if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
+                $this->_retrieveStaticMenus($aryStaticMenus);
+            }
+
+            $this->_retrievePageMenu();
         } else {
-            $this->aryMenuOptions = $this->aryDefaultMenuOptions;
+            /***
+             * @todo we really kinda need it. what else should we do?
+             */
+            _mizzou_log($aryContext,'Hey, I really REALLY need objSite. Here is what you gave me',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         }
-
-        if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
-            $this->_retrieveStaticMenus($aryStaticMenus);
-        }
-
-        $this->_retrievePageMenu();
     }
 
     protected function _retrieveStaticMenus($aryMenus)
