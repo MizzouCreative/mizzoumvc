@@ -54,7 +54,7 @@ class Menu extends Base {
 
             if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
                 $this->_retrieveStaticMenus($aryStaticMenus);
-                if(isset($aryStaticMenus['Primary']) && ($this->aryData['objSite']->option('inject_primary') || '1' == $this->aryData['objSite']->option('inject_primary'))){
+                if(isset($aryStaticMenus['Primary']) && ($this->aryData['objSite']->option('inject_primary') || $this->aryData['objSite']->menu_options['inject_primary'])){
                     $this->_injectPrimaryMenu();
                 }
             }
