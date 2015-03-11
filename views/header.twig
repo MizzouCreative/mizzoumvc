@@ -57,6 +57,10 @@
 
 </head>
 <body>
-<nav id="main">{{ objSite.PrimaryMenu | raw }}</nav>
-<nav id="secondary">{{ objSite.AudienceMenu | raw}}</nav>
+{% if Menu.Primary is not empty %}
+<nav id="main">{{ Menu.Primary | raw }}</nav>
+{% endif %}
+{% if Menu.Audience is not empty %}
+<nav id="secondary">{{ Menu.Audience | raw}}</nav>
+{% endif %}
 {%  include 'searchform.twig' %}
