@@ -23,7 +23,6 @@ class Menu extends Base {
         'fallback_cb'=>'',
         'container'=>false,
         'menu'=>'',
-        'items_wrap' => '<ol id="%1$s" class="%1$s %2$s">%3$s</ol>',
     );
 
     protected $aryMenuOptions = array();
