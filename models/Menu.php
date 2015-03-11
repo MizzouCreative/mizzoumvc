@@ -54,7 +54,7 @@ class Menu extends Base {
 
             if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
                 $this->_retrieveStaticMenus($aryStaticMenus);
-                if(isset($this->aryData['Primary']) && ($this->aryData['objSite']->option('inject_primary') || $this->aryData['objSite']->menu_options['inject_primary'])){
+                if(isset($this->aryData['Primary']) && ($this->aryData['objSite']->option('inject_primary'))){
                     $this->_injectPrimaryMenu();
                 }
             }
@@ -113,7 +113,7 @@ class Menu extends Base {
          */
         if(!isset($this->aryData['Page']) || $this->Page == ''){
             $strMenu = $this->_determineMenuName();
-            _mizzou_log($strMenu,'name of the page menu im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+            //_mizzou_log($strMenu,'name of the page menu im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             if($strMenu != ''){
                 $this->add_data('Page',$this->_retrieveMenu($strMenu));
             }
@@ -123,7 +123,7 @@ class Menu extends Base {
 
     protected function _retrieveMenu($strMenuName)
     {
-        _mizzou_log($this->aryMenuOptions,'getting ready to retrieve menu ' . $strMenuName . 'with these options',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+        //_mizzou_log($this->aryMenuOptions,'getting ready to retrieve menu ' . $strMenuName . 'with these options',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
 
     }
@@ -142,11 +142,11 @@ class Menu extends Base {
 
     protected function _injectPrimaryMenu()
     {
-        _mizzou_log(null,'ive been asked to inject into the primary menu');
+        //_mizzou_log(null,'ive been asked to inject into the primary menu');
         if($this->aryData['PageTitle'] != ''){ // if we have no page title, then there isnt a menu to inject
             $objDomMenu = new DOMDocument();
             $objDomMenu->loadXML($this->aryData['Primary']);
-            _mizzou_log($objDomMenu->saveHTML(),'our primary menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+            //_mizzou_log($objDomMenu->saveHTML(),'our primary menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             $strListElementType = $this->_determineListElementType();
             $objOLNodes = $objDomMenu->getElementsByTagName($strListElementType);
             //_mizzou_log(null,'currently',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
