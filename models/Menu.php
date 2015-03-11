@@ -30,10 +30,14 @@ class Menu extends Base {
     {
         if(isset($aryContext['objSite'])){
             $this->add_data('objSite',$aryContext['objSite']);
+
             if(isset($aryContext['objMainPost'])){
                 $this->add_data('objMainPost',$aryContext['objMainPost']);
             }
 
+            if(isset($aryContext['PageTitle']) && $aryContext['PageTitle'] != ''){
+                $this->add_data('PageTitle',$aryContext['PageTitle']);
+            }
             //we're done with context, so lets kill it since it is likely pretty big
             unset($aryContext);
 
@@ -58,7 +62,8 @@ class Menu extends Base {
 
     protected function _retrieveStaticMenus($aryMenus)
     {
-       foreach($aryMenus as $strMenu){
+        _mizzou_log($aryMenus,'names of the static menus im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)))
+        foreach($aryMenus as $strMenu){
            if('' != $strStaticMenu = $this->_retrieveMenu($strMenu)){
                $this->add_data($strMenu,$strStaticMenu);
            }
@@ -96,6 +101,7 @@ class Menu extends Base {
     protected function _retrievePageMenu()
     {
         $strMenu = $this->_determineMenuName();
+        _mizzou_log($strMenu,'name of the page menu im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         if($strMenu != ''){
             $this->add_data('Page',$this->_retrieveMenu($strMenu));
         }
