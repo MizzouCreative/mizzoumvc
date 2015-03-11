@@ -112,9 +112,4 @@ class Menu extends Base {
         return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
 
     }
-
-    public function getTemplateData()
-    {
-        return parent::getTemplateData();
-    }
 }
