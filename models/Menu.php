@@ -22,6 +22,7 @@ class Menu extends Base {
         'echo' => false,
         'fallback_cb'=>'',
         'container'=>false,
+        'menu'=>'',
     );
 
     protected $aryMenuOptions = array();
@@ -73,8 +74,8 @@ class Menu extends Base {
     protected function _determineMenuName()
     {
         $strMenu = '';
-        if($this->aryMenuOptions['name'] != ''){
-            $strMenu = $this->aryMenuOptions['name'];
+        if($this->aryMenuOptions['menu'] != ''){
+            $strMenu = $this->aryMenuOptions['menu'];
         } elseif(isset($this->aryData['objMainPost'])){
             /**
              * @todo if we expand MizzouPost() to include ancestor data, we'll need to add a check here so that we arent
