@@ -44,7 +44,7 @@ class Menu extends Base {
             //we're done with context, so lets kill it since it is likely pretty big
             unset($aryContext);
 
-            if('' != $aryMenuOptions = $this->aryData['objSite']->option('menu_options')){
+            if('' != $aryMenuOptions = $this->aryData['objSite']->menu_options){
                 _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
             } else {
