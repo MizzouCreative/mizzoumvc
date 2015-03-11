@@ -46,6 +46,7 @@ class Menu extends Base {
 
             if('' != $aryMenuOptions = $this->aryData['objSite']->menu_options){
                 _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                unset($aryMenuOptions['inject_primary']);//we dont need this one for wp_nav_menu
                 $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
             } else {
                 $this->aryMenuOptions = $this->aryDefaultMenuOptions;
@@ -53,7 +54,7 @@ class Menu extends Base {
 
             if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
                 $this->_retrieveStaticMenus($aryStaticMenus);
-                if(isset($aryStaticMenus['Primary']) && ($this->aryData['objSite']->option('inject_primary') || 'yes' == $this->aryData['objSite']->option('inject_primary'))){
+                if(isset($aryStaticMenus['Primary']) && ($this->aryData['objSite']->option('inject_primary') || '1' == $this->aryData['objSite']->option('inject_primary'))){
                     $this->_injectPrimaryMenu();
                 }
             }
