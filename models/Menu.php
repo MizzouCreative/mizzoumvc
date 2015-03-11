@@ -62,7 +62,7 @@ class Menu extends Base {
 
     protected function _retrieveStaticMenus($aryMenus)
     {
-        _mizzou_log($aryMenus,'names of the static menus im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)))
+        _mizzou_log($aryMenus,'names of the static menus im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         foreach($aryMenus as $strMenu){
            if('' != $strStaticMenu = $this->_retrieveMenu($strMenu)){
                $this->add_data($strMenu,$strStaticMenu);
