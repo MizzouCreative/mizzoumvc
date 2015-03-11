@@ -11,7 +11,7 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-//_mizzou_log('',__FILE__.'called');
+_mizzou_log('',__FILE__.'called',true);
 $strMenu = '';
 
 if(isset($aryContext['objSite']) && $aryContext['objSite']->PageMenu != ''){
