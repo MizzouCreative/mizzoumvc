@@ -121,6 +121,7 @@ class Menu extends Base {
 
     protected function _retrieveMenu($strMenuName)
     {
+        _mizzou_log($this->aryMenuOptions,'getting ready to retrieve menu ' . $strMenuName . 'with these options',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
 
     }
@@ -162,9 +163,9 @@ class Menu extends Base {
                             /**
                              * @todo should we attempt to have an option for the menu class to be inserted here? injection_class in menu_options of the config file?
                              */
-                            $aryMenuOptions = array_merge($this->aryMenuOptions,array('menu' => $objChildLI->nodeValue,));
+                            //$aryMenuOptions = array_merge($this->aryMenuOptions,array('menu' => $objChildLI->nodeValue,));
 
-                            if('' != $strSubMenu = wp_nav_menu($aryMenuOptions)){
+                            if('' != $strSubMenu = $this->_retrieveMenu($objChildLI->nodeValue)){
                                 //_mizzou_log($strSubMenu,'we found an element that matches our current page! Here is our matching menu',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                                 //store it in the site object
                                 $this->add_data('Page',$strSubMenu);
