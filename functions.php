@@ -468,7 +468,7 @@ if(!function_exists('_mizzou_log')){
   * 
   */
   function _mizzou_log( $mxdVariable, $strPrependMessage = null, $boolBackTraced = false, $aryDetails = array() ) {
-    $boolBackTrace = true;
+    $boolBackTrace = false;
     if( WP_DEBUG === true ){
       $strMessage = 'MIZZOU_LOGGER: ';
       
