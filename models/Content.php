@@ -120,7 +120,7 @@ class Content {
                  * Somehow we've called Content more than once and still dont have an objSite in site.
                  * @todo clean this up
                  */
-                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but objSite still hasnt been created',true);
+                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but objSite still hasnt been created',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             }
         } else {
             $objSite = $aryData['objSite'];
@@ -377,7 +377,7 @@ class Content {
             if(self::$intCounter == 0){
                 $aryViewVariables['Menu'] = new Menu($aryViewVariables);
             } else {
-                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but Menu still hasnt been created',true);
+                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but Menu still hasnt been created',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             }
         }
 
