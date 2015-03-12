@@ -17,7 +17,7 @@
 #}
 {{ subview('header',_context) }}
 {% block content %}{% endblock %}
-{% block sidenav %}
-    {{ subview('sidenav',_context) }}
+{% block sidebar %}
+    {% include 'sidebar.twig' %}
 {% endblock %}
 {{ subview('footer',_context) }}
