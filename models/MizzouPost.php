@@ -39,6 +39,7 @@ class MizzouPost extends PostBase
         'permalink'      => 'page',
         'title_override'=> false,
         'taxonomies'    => false,
+        'include_ancestors'=>false,
     );
 
     /**
@@ -96,6 +97,10 @@ class MizzouPost extends PostBase
             if($this->aryOptions['include_image']){
                 $this->getFeaturedImage();
             }
+
+            if($this->aryOptions['include_ancestors']){
+                $this->_setAncestors();
+            }
         }
 
     }
@@ -146,6 +151,25 @@ class MizzouPost extends PostBase
             }
 
         }
+    }
+
+    public function retrieveAncestors()
+    {
+        if(!isset($this->aryData['ancestors'])){
+            $this->_setAncestors();
+        }
+
+        return $this->aryData['ancestors'];
+    }
+
+    public function _setAncestors()
+    {
+        $aryAncestors = get_post_ancestors($this->aryData['ID']);
+        foreach($aryAncestors as $intAncestor){
+            $aryAncestors[$intAncestor] = get_the_title($intAncestor);
+        }
+
+        $this->add_data('ancestors',$aryAncestors);
     }
 
     /**
