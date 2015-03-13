@@ -88,10 +88,13 @@ class Menu extends Base {
              * @todo if we expand MizzouPost() to include ancestor data, we'll need to add a check here so that we arent
              * performing redundant calls
              */
-            $aryAncestors = get_post_ancestors($this->aryData['objMainPost']->ID);
+
+            $aryAncestors = $this->aryData['objMainPost']->retrieveAncestors();
+
+            //$aryAncestors = get_post_ancestors($this->aryData['objMainPost']->ID);
             if(count($aryAncestors) > 0){
-                $intOldestAncestor = end($aryAncestors);
-                $strMenu = get_the_title($intOldestAncestor);
+                $strMenu = end($aryAncestors);
+                //$strMenu = get_the_title($intOldestAncestor);
             } else {
                 /**
                  * So, the main post is the oldest ancestor.  So we should use it's page title ==UNLESS== the title of
