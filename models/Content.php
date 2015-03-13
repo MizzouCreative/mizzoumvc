@@ -282,6 +282,7 @@ class Content {
         }
 
         if(!isset($aryData['RootAncestor']) && self::$intCounter == 0){
+            _mizzou_log(null,'RootAncestor is not set, so were going to go look it up',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null);
         }
         /**
@@ -398,6 +399,7 @@ class Content {
     protected function _determineRootAncestor($objMainPost=null)
     {
         $strReturn = '';
+        _mizzou_log($objMainPost,'objMainPost',false,array('line'=>__LINE__,'file'=>basename(__FILE__),'func'=>__FUNCTION__));
         if(is_page()){
             //if it's a page, then it should have been converted into a MizzouPostObject
             if(!is_null($objMainPost)){
@@ -408,6 +410,7 @@ class Content {
                 $aryAncestorIDs = get_post_ancestors(get_the_ID());
                 $intRootAncestor = end($aryAncestorIDs);
                 $strReturn = get_the_title($intRootAncestor);
+                _mizzou_log(null,'hey, youre on a page, but you didnt convert it to a MizzouPost first!',false,array('line'=>__LINE__,'file'=>basename(__FILE__),'func'=>__FUNCTION__));
             }
         } else {
             //what other situations do we have besides a page and everything else?
@@ -415,7 +418,7 @@ class Content {
             $objPostType = get_post_type_object($strPostType);
             $strReturn = $objPostType->labels->name;
         }
-
+        _mizzou_log($strReturn,'strReturn',false,array('line'=>__LINE__,'file'=>basename(__FILE__),'func'=>__FUNCTION__));
         return $strReturn;
     }
 
