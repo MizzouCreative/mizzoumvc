@@ -283,7 +283,7 @@ class Content {
 
         if(!isset($aryData['RootAncestor']) && self::$intCounter == 0){
             _mizzou_log(null,'RootAncestor is not set, so were going to go look it up',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-            $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null);
+            $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null,$aryViewVariables['PageTitle']);
         }
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
@@ -396,7 +396,7 @@ class Content {
 
     }
 
-    protected function _determineRootAncestor($objMainPost=null)
+    protected function _determineRootAncestor($objMainPost=null,$strPageTitle='')
     {
         $strReturn = '';
         _mizzou_log($objMainPost,'objMainPost',false,array('line'=>__LINE__,'file'=>basename(__FILE__),'func'=>__FUNCTION__));
@@ -404,13 +404,23 @@ class Content {
             //if it's a page, then it should have been converted into a MizzouPostObject
             if(!is_null($objMainPost)){
                 $aryAncestors = $objMainPost->retrieveAncestors();
-                $strReturn = end($aryAncestors);
+                if(count($aryAncestors) > 0){
+                    $strReturn = end($aryAncestors);
+                } else {
+                    // it doesnt have any ancestors so it is the root
+                    $strReturn = $objMainPost->title;
+                }
+
             } else {
                 //should we replicate the functionality here? or just log?
-                $aryAncestorIDs = get_post_ancestors(get_the_ID());
-                $intRootAncestor = end($aryAncestorIDs);
-                $strReturn = get_the_title($intRootAncestor);
                 _mizzou_log(null,'hey, youre on a page, but you didnt convert it to a MizzouPost first!',false,array('line'=>__LINE__,'file'=>basename(__FILE__),'func'=>__FUNCTION__));
+                $aryAncestorIDs = get_post_ancestors(get_the_ID());
+                if(count($aryAncestorIDs) > 0){
+                    $intRootAncestor = end($aryAncestorIDs);
+                    $strReturn = get_the_title($intRootAncestor);
+                } elseif($strPageTitle != '') {
+                    $strReturn = $strPageTitle;
+                }
             }
         } else {
             //what other situations do we have besides a page and everything else?
