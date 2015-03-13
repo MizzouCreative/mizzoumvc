@@ -460,7 +460,7 @@ class Content {
             $strPageTitle = wp_title('',false);
         }
         _mizzou_log($strPageTitle,'page title as determined',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
-        self::$strPageTitle = $strPageTitle;
+        self::$strPageTitle = trim($strPageTitle);
     }
 
     /**
