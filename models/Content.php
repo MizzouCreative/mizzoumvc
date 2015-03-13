@@ -277,10 +277,13 @@ class Content {
          */
         //$strPageTitle = (isset($strPageTitle)) ? $strPageTitle : '';
         //$strPageTitle = self::_getPageTitle();
-        if(!isset($aryViewVariables['PageTitle'])){
+        if(!isset($aryViewVariables['PageTitle']) && count(self::$intCounter == 0)){
             $aryViewVariables['PageTitle'] = self::_getPageTitle();
         }
 
+        if(!isset($aryData['RootAncestor']) && self::$intCounter == 0){
+            $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null);
+        }
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
          * other CPTs, then we need to include Next & Previous page links
@@ -390,6 +393,30 @@ class Content {
             echo self::$objView->render($aryViewVariables);
         }
 
+    }
+
+    protected function _determineRootAncestor($objMainPost=null)
+    {
+        $strReturn = '';
+        if(is_page()){
+            //if it's a page, then it should have been converted into a MizzouPostObject
+            if(!is_null($objMainPost)){
+                $aryAncestors = $objMainPost->retrieveAncestors();
+                $strReturn = end($aryAncestors);
+            } else {
+                //should we replicate the functionality here? or just log?
+                $aryAncestorIDs = get_post_ancestors(get_the_ID());
+                $intRootAncestor = end($aryAncestorIDs);
+                $strReturn = get_the_title($intRootAncestor);
+            }
+        } else {
+            //what other situations do we have besides a page and everything else?
+            $strPostType = get_post_type();
+            $objPostType = get_post_type_object($strPostType);
+            $strReturn = $objPostType->labels->name;
+        }
+
+        return $strReturn;
     }
 
     /**
@@ -749,7 +776,7 @@ class Content {
     }
 
     /**
-     * 
+     * @deprecated
      */
     protected function _includeTaxonomyMenu()
     {
