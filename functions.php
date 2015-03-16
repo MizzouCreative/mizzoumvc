@@ -411,6 +411,29 @@ function mizzouAdjustHelpScreen($strOldHelp,$intScreenID,$objScreen)
     return $strOldHelp;
 }
 
+function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
+{
+    global $menu,$submenu,$wp_post_types;
+
+    if(isset($aryArgs['single'])){
+        $strSingle = $aryArgs['single'];
+        $strPlural = (isset($aryArgs['plural'])) ? $aryArgs['plural'] : $aryArgs['single'].'s';
+        $aryLabels = mizzouCreatePostTypeLabels($strSingle,$strPlural);
+        $menu[5][0] = $strPlural;
+        $submenu['edit.php'][5][0] = 'All ' . $strPlural;
+        $submenu['edit.php'][10][0] = 'Add ' . $strSingle;
+
+        $objPostLabels = &$wp_post_types['post']->labels;
+
+        foreach($aryLabels as $strLabelName => $strLabel){
+            $objPostLabels->{$strLabelName} = $strLabel;
+        }
+    }
+
+
+
+}
+
 /**
 * ================= ACTIONS ================================
 */
