@@ -444,11 +444,10 @@ function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
         $submenu['edit.php'][10][0] = 'Add ' . $strSingle;
 
         $objPostLabels = &$wp_post_types['post']->labels;
-        _mizzou_log($objPostLabels,'post labels before altering',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+
         foreach($aryLabels as $strLabelName => $strLabel){
             $objPostLabels->{$strLabelName} = $strLabel;
         }
-        _mizzou_log($objPostLabels,'post labels before altering',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
     }
 
 
