@@ -412,6 +412,25 @@ function mizzouAdjustHelpScreen($strOldHelp,$intScreenID,$objScreen)
     return $strOldHelp;
 }
 
+/**
+ *
+ *
+ * You'll need to utilize the DynamicHook class to pass in the single/plural version of the label you'll want to use
+ *
+ * @example
+ * add_filter('admin_menu',array(new DynamicHook(array('single'=>'News','plural'=>'News')),'mizzouChangeLabelsOnDefaultPostType'));
+ *
+ * Make sure you do both a
+ * add_filter('admin_menu'
+ * and a
+ * add_action('admin_bar_menu'
+ *
+ * When you hook this function to ensure you change the labels in the backend admin areas, as well as the admin menu bar
+ * when viewing the site while logged in
+ *
+ * @param $mxdArgs
+ * @param $aryArgs
+ */
 function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
 {
     global $menu,$submenu,$wp_post_types;
