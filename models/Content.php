@@ -421,6 +421,8 @@ class Content {
                     $strReturn = $strPageTitle;
                 }
             }
+        } elseif(is_front_page()) {
+            $strReturn = "Home";
         } else {
             //what other situations do we have besides a page and everything else?
             $strPostType = get_post_type();
