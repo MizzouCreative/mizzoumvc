@@ -365,7 +365,7 @@ function mizzouRegisterTaxonomy($strTaxName,$aryOptions=array())
         $aryAttachedToPostTypes = $aryOptions['attach'];
     }
 
-    if(!isset($aryOptions['label']) && isset($aryOptions['labels'])) {
+    if(!isset($aryOptions['label']) && !isset($aryOptions['labels'])) {
         $aryTaxonomyArgs['labels'] = mizzouCreateTaxonomyLabels($strTaxName);
     }
 
