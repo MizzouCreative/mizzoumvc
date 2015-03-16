@@ -425,9 +425,10 @@ class Content {
             $strReturn = "Home";
         } else {
             //what other situations do we have besides a page and everything else?
-            $strPostType = get_post_type();
-            $objPostType = get_post_type_object($strPostType);
-            $strReturn = $objPostType->labels->name;
+            if(FALSE !== $strPostType = get_post_type()){
+                $objPostType = get_post_type_object($strPostType);
+                $strReturn = $objPostType->labels->name;
+            }
         }
 
         return $strReturn;
