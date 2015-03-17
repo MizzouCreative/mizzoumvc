@@ -455,7 +455,7 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
 {
     if(is_array($aryDefaultArgs) && count($aryDefaultArgs) > 0){
         $objQuery = reset($aryDefaultArgs);
-        _mizzou_log($objQuery,'what did i get for $objQuery?',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+        //_mizzou_log($objQuery,'what did i get for $objQuery?',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         if(!is_admin() && $objQuery->is_main_query() && in_array($objQuery->query_vars['post_type'],$aryPostTypes)){
             $objQuery->query_vars['posts_per_page'] = -1;
         }
