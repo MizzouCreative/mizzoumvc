@@ -29,6 +29,7 @@ class Header extends Subview {
 		//if we werent given the post type object, set it to null
         $this->add_data('objPostType',(isset($aryContext['objPostType'])) ? $aryContext['objPostType'] : null);
 		//@todo page title should always be set, throw an exception?
+        _mizzou_log($aryContext,'aryContext to see if we have PageTitle',false,array('line'=>__LINE__,'file'=>__FILE__));
 		$this->add_data('PageTitle',(isset($aryContext['PageTitle'])) ? $aryContext['PageTitle'] : '');
 
 		$this->_setHeaderTitle();
