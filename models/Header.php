@@ -35,6 +35,8 @@ class Header extends Subview {
 		$this->_setHeaderTitle();
         $this->_setActiveStylesheet();
 		$this->_setIncludeNoIndex();
+        $this->_setCurrentPageURL();
+        $this->_setCurrentPageShortURL();
 		$this->_setWpHead();
         /**
          * @todo this should PROBABLY be an optional item
