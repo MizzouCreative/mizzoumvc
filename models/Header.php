@@ -124,7 +124,8 @@ class Header extends Subview {
 		/**
 		 * @todo implosion glue should come from a Theme options class
 		 */
-		return implode(' // ',$aryTitleParts);
+        $strGlue = $this->aryData['objSite']->option('header_title_separator');
+		return implode($strGlue,$aryTitleParts);
 	}
 
 	/**
