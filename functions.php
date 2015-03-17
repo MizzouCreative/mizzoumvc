@@ -449,9 +449,15 @@ function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
             $objPostLabels->{$strLabelName} = $strLabel;
         }
     }
+}
 
+function mizzouRemovePostsPerPageFromCPTs($objQuery,$aryPostTypes)
+{
+    if(!is_admin() && $objQuery->is_main_query() && in_array($objQuery->query_vars['post_type'],$aryPostTypes)){
+        $objQuery->query_vars['posts_per_page'] = -1;
+    }
 
-
+    return;
 }
 
 /**
