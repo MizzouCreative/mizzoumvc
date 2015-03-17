@@ -120,11 +120,9 @@ class Header extends Subview {
 		 */
 		$aryTitleParts[] = 'University of Missouri';
 
-		//_mizzou_log($aryTitleParts,'aryTitleParts right before we implode');
-		/**
-		 * @todo implosion glue should come from a Theme options class
-		 */
+
         $strGlue = $this->aryData['objSite']->option('header_title_separator');
+
 		return implode($strGlue,$aryTitleParts);
 	}
 
