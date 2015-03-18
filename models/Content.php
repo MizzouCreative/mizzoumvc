@@ -173,6 +173,7 @@ class Content {
         });*/
 
         self::$objViewEngine->addFilter($objTwigDebug);
+        self::$objViewEngine->addFilter($objTwigSanitize);
 
         //do we need the EditPostLink?
         if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
