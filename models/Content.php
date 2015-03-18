@@ -135,6 +135,10 @@ class Content {
            return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
         });
 
+        $objTwigSanitize = new Twig_SimpleFilter('sanitize',function($strString){
+            return sanitize_title_with_dashes($strString);
+        });
+
         /**
          * @todo this needs to be moved out of here into somewhere else.  But where?
          */
