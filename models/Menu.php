@@ -52,7 +52,7 @@ class Menu extends Base {
             }
             _mizzou_log($aryContext,'full context contents',false,array('line'=>__LINE__,'file'=>__FILE__));
             if(isset($aryContext['menuName'])){
-                $this->aryMenuOptions['name'] = $aryContext['menuName'];
+                $this->aryMenuOptions['menu'] = $aryContext['menuName'];
             }
             //we're done with context, so lets kill it since it is likely pretty big
             unset($aryContext);
