@@ -44,13 +44,13 @@ class Menu extends Base {
 
 
             if('' != $aryMenuOptions = $this->aryData['objSite']->menu_options){
-                _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+               // _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 unset($aryMenuOptions['inject_primary']);//we dont need this one for wp_nav_menu
                 $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
             } else {
                 $this->aryMenuOptions = $this->aryDefaultMenuOptions;
             }
-            _mizzou_log($aryContext,'full context contents',false,array('line'=>__LINE__,'file'=>__FILE__));
+            //_mizzou_log($aryContext,'full context contents',false,array('line'=>__LINE__,'file'=>__FILE__));
             if(isset($aryContext['menuName'])){
                 $this->aryMenuOptions['menu'] = $aryContext['menuName'];
             }
@@ -88,7 +88,7 @@ class Menu extends Base {
         $strMenu = '';
         if($this->aryMenuOptions['menu'] != ''){
             $strMenu = $this->aryMenuOptions['menu'];
-            _mizzou_log($strMenu,'menu was already set',false,array('line'=>__LINE__,'file'=>__FILE__));
+            //_mizzou_log($strMenu,'menu was already set',false,array('line'=>__LINE__,'file'=>__FILE__));
         } elseif(isset($this->aryData['objMainPost'])){
             /**
              * @todo if we expand MizzouPost() to include ancestor data, we'll need to add a check here so that we arent
@@ -111,7 +111,7 @@ class Menu extends Base {
         } elseif(isset($this->aryData['PageTitle']) && $this->aryData['PageTitle'] != ''){
             $strMenu = $this->aryData['PageTitle'];
         }
-        _mizzou_log($strMenu,'strMenu at the end of the function call',false,array('line'=>__LINE__,'func'=>__FUNCTION__));
+        //_mizzou_log($strMenu,'strMenu at the end of the function call',false,array('line'=>__LINE__,'func'=>__FUNCTION__));
         return $strMenu;
     }
 
