@@ -50,7 +50,7 @@ class Menu extends Base {
             } else {
                 $this->aryMenuOptions = $this->aryDefaultMenuOptions;
             }
-
+            _mizzou_log($aryContext,'full context contents',false,array('line'=>__LINE__,'file'=>__FILE__));
             if(isset($aryContext['menuName'])){
                 $this->aryMenuOptions['name'] = $aryContext['menuName'];
             }
