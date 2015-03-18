@@ -88,6 +88,7 @@ class Menu extends Base {
         $strMenu = '';
         if($this->aryMenuOptions['menu'] != ''){
             $strMenu = $this->aryMenuOptions['menu'];
+            _mizzou_log($strMenu,'menu was already set',false,array('line'=>__LINE__,'file'=>__FILE__));
         } elseif(isset($this->aryData['objMainPost'])){
             /**
              * @todo if we expand MizzouPost() to include ancestor data, we'll need to add a check here so that we arent
@@ -110,7 +111,7 @@ class Menu extends Base {
         } elseif(isset($this->aryData['PageTitle']) && $this->aryData['PageTitle'] != ''){
             $strMenu = $this->aryData['PageTitle'];
         }
-
+        _mizzou_log($strMenu,'strMenu at the end of the function call',false,array('line'=>__LINE__,'func'=>__FUNCTION__));
         return $strMenu;
     }
 
