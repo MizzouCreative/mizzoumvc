@@ -41,8 +41,7 @@ class Menu extends Base {
             if(isset($aryContext['PageTitle']) && $aryContext['PageTitle'] != ''){
                 $this->add_data('PageTitle',$aryContext['PageTitle']);
             }
-            //we're done with context, so lets kill it since it is likely pretty big
-            unset($aryContext);
+
 
             if('' != $aryMenuOptions = $this->aryData['objSite']->menu_options){
                 _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
@@ -51,6 +50,12 @@ class Menu extends Base {
             } else {
                 $this->aryMenuOptions = $this->aryDefaultMenuOptions;
             }
+
+            if(isset($aryContext['menuName'])){
+                $this->aryMenuOptions['name'] = $aryContext['menuName'];
+            }
+            //we're done with context, so lets kill it since it is likely pretty big
+            unset($aryContext);
 
             if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
                 $this->_retrieveStaticMenus($aryStaticMenus);
