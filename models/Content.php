@@ -126,6 +126,18 @@ class Content {
             $objSite = $aryData['objSite'];
         }
 
+        if(FALSE !== $aryOptions['include_pagination'] && $aryOptions['include_pagination'] instanceof WP_Query){
+            $aryPaginationArgs = array('wp_query'=>$aryOptions['include_pagination']);
+            unset($aryOptions['include_pagination']);
+            if(('' != $intPaginationWidth = $objSite->option('pagination_width')) && is_numeric($intPaginationWidth)){
+                $aryPaginationArgs['pagination_width'] = $intPaginationWidth;
+            }
+
+            $aryViewVariables['Pagination'] = new Pagination($aryPaginationArgs);
+        } elseif(!($aryOptions['include_pagination'] instanceof WP_Query)){
+            _mizzou_log($aryOptions['include_pagination'],'you said you wanted to do pagination, but you didnt give me a WP_Query object',false,array('line'=>__LINE__,'file'=>__FILE__));
+        }
+
         self::$objViewEngine = self::_initializeViewEngine();
 
         /**
