@@ -17,7 +17,7 @@ class Pagination extends Base{
     protected $intDefaultPaginationWidth = 5;
     public function __construct($aryArgs)
     {
-        if(isset($aryArgs['wp_query']) && $aryArgs instanceof WP_Query){
+        if(isset($aryArgs['wp_query']) && $aryArgs['wp_query'] instanceof WP_Query){
             _mizzou_log($aryArgs['wp_query'],'wp_query',false,array('line'=>__LINE__,'file'=>__FILE__));
 
             if(isset($aryArgs['pagination_width'])) $this->intDefaultPaginationWidth = $aryArgs['pagination_width'];
