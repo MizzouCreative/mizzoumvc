@@ -129,8 +129,8 @@ class Content {
         if(FALSE !== $aryOptions['include_pagination'] && $aryOptions['include_pagination'] instanceof WP_Query){
             $aryPaginationArgs = array('wp_query'=>$aryOptions['include_pagination']);
             unset($aryOptions['include_pagination']);
-            if(('' != $intPaginationWidth = $objSite->option('pagination_width')) && is_numeric($intPaginationWidth)){
-                $aryPaginationArgs['pagination_width'] = $intPaginationWidth;
+            if(('' != $aryPaginationOptions = $objSite->option('pagination'))){
+                $aryPaginationArgs = array_merge($aryPaginationArgs,$aryPaginationOptions);
             }
 
             $aryViewVariables['Pagination'] = new Pagination($aryPaginationArgs);
