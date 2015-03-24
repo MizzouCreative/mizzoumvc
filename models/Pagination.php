@@ -154,7 +154,7 @@ class Pagination extends Base{
 		//do they even want a next link?
 		if(false !== $this->aryOptions['pagination_next']){
 			//do we need a next link?
-			if($this->UpperLimit != $this->MaxPages){
+			if($this->OnPage != $this->MaxPages){
 				$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('link'=>false,'text'=>$this->aryOptions['pagination_glue']));
 				$objNext = $this->_buildPaginationLinkObject(array(
 					'text'  => $this->aryOptions['pagination_next'],
