@@ -60,14 +60,19 @@ class Pagination extends Base{
 
 	protected function _determineLowerAndUpperLimits()
 	{
+		_mizzou_log($this->MaxPages,'Max Pages',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
+		_mizzou_log($this->OnPage,'On Page',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
+		_mizzou_log($this->MidPoint,'Midpoint',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
 		if($this->MaxPages - $this->OnPage < $this->MidPoint){
 			//we're close to the end, give the extra to the low end
 			$intLowerLimit = (1 > $intLower = $this->OnPage - $this->intDefaultPaginationWidth + ($this->MaxPages - $this->OnPage)) ? 1 : $intLower;
 			$intUpperLimit = $this->MaxPages;
+			_mizzou_log($intLowerLimit,'lower limit',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
+			_mizzou_log($intUpperLimit,'Upper Limit',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
 		} elseif($this->OnPage - $this->MidPoint < 1 ){
 			//we're near the bottom, give the extra to the top
 			$intLowerLimit = 1;
-			$intUpperLimit = min(($this->OnPage+$this->MidPoint+abs($this->OnPage - $this->MidPoint)),$this->MAxPages);
+			$intUpperLimit = min(($this->OnPage+$this->MidPoint+abs($this->OnPage - $this->MidPoint)),$this->MaxPages);
 		} else {
 			//we're in the middle somewhere
 			$intLowerLimit = $this->OnPage - $this->MidPoint;
