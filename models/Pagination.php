@@ -20,7 +20,7 @@ class Pagination extends Base{
 		'pagination_width'          => 5,
 		'pagination_next'           => false,
 		'pagination_prev'           => false,
-		'pagination_glue'           =>'&8230;',
+		'pagination_glue'           =>'&#8230;',
 		'pagination_current_linked' =>true,
 	);
 
