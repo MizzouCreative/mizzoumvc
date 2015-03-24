@@ -520,7 +520,7 @@ class Content {
 	        //now, are we in the midst of pagination?
 	        _mizzou_log($wp_query,'wp_query is paged set?',false,array('line'=>__LINE__,'file'=>__FILE__));
 	        if(isset($wp_query->query_vars['paged']) && $wp_query->query_vars['paged'] != 0){
-		        $strPageTitle .= ', page ' . $wp_query->query_vars['paged'];
+		        $strPageTitle .= ', Page ' . $wp_query->query_vars['paged'];
 	        }
         } else {
             $strPageTitle = wp_title('',false);
