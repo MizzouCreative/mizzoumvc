@@ -791,6 +791,7 @@ class Content {
          * For the love of God, wordpress... why do you have such a hard-on for global variables????!?!#@#@!~$!@
          */
         global $wp_post_types;
+	    _mizzou_log($wp_post_types[$strPostType],'looking for labels on ' . $strPostType,false,array('func'=>__FUNCTION__,'file'=>__FILE__));
         switch($strPostType){
             case 'post':
                 /**
