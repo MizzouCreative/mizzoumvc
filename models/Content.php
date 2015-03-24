@@ -775,7 +775,7 @@ class Content {
              * HOWEVER, there are perfectly valid scenarios where we dont have a post type. Front Page is one, Search
              */
             global $wp_query;
-            //_mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
+            _mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
         }
     }
 
