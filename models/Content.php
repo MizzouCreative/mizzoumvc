@@ -502,7 +502,7 @@ class Content {
                 $objPagePostType = self::_getPagePostType();
 
                 $strPageTitle .= ' ' . $objPagePostType->label;
-                //_mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with');
+                _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with',false,array('line'=>__LINE__,'file'=>__FILE__));
             } else {
                 $strPageTitle = post_type_archive_title(null,false);
                 _mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
