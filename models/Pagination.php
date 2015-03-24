@@ -15,8 +15,6 @@
 class Pagination extends Base{
     public $paged = false;
 	protected $wpPaged = null;
-	protected $wpMaxNumPages = null;
-    protected $intDefaultPaginationWidth = 5;
 
 	protected $aryDefaults = array(
 		'pagination_width'          => 5,
@@ -29,8 +27,6 @@ class Pagination extends Base{
 	protected $aryAdjacentItems = array();
 
 	protected $aryOptions = array();
-
-	protected $objWPQuery = null;
 
 	protected $strHrefPattern = null;
 
