@@ -164,7 +164,7 @@ class Pagination extends Base{
 			}
 		}
 
-		$this->add_data('PaginationItems',$aryPaginationParts);
+		$this->add_data('pages',$aryPaginationParts);
 
 	}
 
