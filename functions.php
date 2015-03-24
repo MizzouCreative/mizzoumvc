@@ -439,17 +439,25 @@ function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
     if(isset($aryArgs['single'])){
         $strSingle = $aryArgs['single'];
         $strPlural = (isset($aryArgs['plural'])) ? $aryArgs['plural'] : $aryArgs['single'].'s';
-        $aryLabels = mizzouCreatePostTypeLabels($strSingle,$strPlural);
+
         $menu[5][0] = $strPlural;
         $submenu['edit.php'][5][0] = 'All ' . $strPlural;
         $submenu['edit.php'][10][0] = 'Add ' . $strSingle;
 
-        $objPostLabels = &$wp_post_types['post']->labels;
+		mizzouChangeLabelsonDefaultPostTypeFrontEnd($strSingle,$strPlural);
+	}
+}
 
-        foreach($aryLabels as $strLabelName => $strLabel){
-            $objPostLabels->{$strLabelName} = $strLabel;
-        }
-    }
+function mizzouChangeLabelsonDefaultPostTypeFrontEnd($strSingle,$strPlural)
+{
+	global $wp_post_types;
+	$aryLabels = mizzouCreatePostTypeLabels($strSingle,$strPlural);
+
+	$objPostLabels = &$wp_post_types['post']->labels;
+
+	foreach($aryLabels as $strLabelName => $strLabel){
+		$objPostLabels->{$strLabelName} = $strLabel;
+	}
 }
 
 function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
