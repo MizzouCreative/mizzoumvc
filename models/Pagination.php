@@ -61,7 +61,7 @@ class Pagination extends Base{
 	{
 		if($this->MaxPages - $this->OnPage < $this->MidPoint){
 			//we're close to the end, give the extra to the low end
-			$intLowerLimit = (1 > $intLower = $this->OnPage - $this->intDefaultPaginationWidth + ($this->MaxPages - $this->OnPage)) ? 1 : $intLower;
+			$intLowerLimit = (1 > $intLower = $this->OnPage - $this->aryOptions['pagination_width'] + ($this->MaxPages - $this->OnPage)) ? 1 : $intLower;
 			$intUpperLimit = $this->MaxPages;
 		} elseif($this->OnPage - $this->MidPoint < 1 ){
 			//we're near the bottom, give the extra to the top
