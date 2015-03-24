@@ -13,7 +13,9 @@
  */
 
 class Pagination extends Base{
-    public $paged = true;
+    public $paged = false;
+	protected $wpPaged = null;
+	protected $wpMaxNumPages = null;
     protected $intDefaultPaginationWidth = 5;
 
 	protected $aryDefaults = array(
@@ -37,38 +39,34 @@ class Pagination extends Base{
     public function __construct($aryArgs)
     {
         if(isset($aryArgs['wp_query']) && $aryArgs['wp_query'] instanceof WP_Query){
-            _mizzou_log($aryArgs['wp_query'],'wp_query',false,array('line'=>__LINE__,'file'=>__FILE__));
-			$this->objWPQuery = $aryArgs['wp_query'];
-	        unset($aryArgs['wp_query']);
+            $this->wpPaged = $aryArgs['wp_query']->query_vars['paged'];
+	        $this->add_data('MaxPages',(isset($aryArgs['wp_query']->max_num_pages)) ? $aryArgs['wp_query']->max_num_pages : 1);
+	        $this->add_data('OnPage',($this->wpPaged != 0) ? $this->wpPaged :1);
 
-	        $this->aryOptions = array_merge($this->aryDefaults,$aryArgs);
+	        unset($aryArgs['wp_query']);//we no longer need it, so no use storing it any longer
 
-            $this->add_data('OnPage',($this->objWPQuery->query_vars['paged'] != 0) ? $this->objWPQuery->query_vars['paged'] :1);
-            $this->add_data('MaxPages',(isset($this->objWPQuery->max_num_pages)) ? $this->objWPQuery->max_num_pages : 1);
-	        if($this->MaxPages > 1 ) $this->paged = true;
-            $this->add_data('MidPoint',round($this->aryOptions['pagination_width'],0,PHP_ROUND_HALF_DOWN));
+	        if($this->MaxPages > 1 ) {
+		        $this->paged = true;
 
-			$this->_determineLowerAndUpperLimits();
-	        $this->_determineHrefPattern();
-			$this->_buildPagination();
+		        $this->aryOptions = array_merge($this->aryDefaults,$aryArgs);
 
+		        $this->add_data('MidPoint',round($this->aryOptions['pagination_width'],0,PHP_ROUND_HALF_DOWN));
 
-        } else {
+		        $this->_determineLowerAndUpperLimits();
+		        $this->_determineHrefPattern();
+		        $this->_buildPagination();
+	        }
+		} else {
             _mizzou_log($aryArgs,'You either didnt set wp_query, or what you gave us wasnt wp_query',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
     }
 
 	protected function _determineLowerAndUpperLimits()
 	{
-		_mizzou_log($this->MaxPages,'Max Pages',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
-		_mizzou_log($this->OnPage,'On Page',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
-		_mizzou_log($this->MidPoint,'Midpoint',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
 		if($this->MaxPages - $this->OnPage < $this->MidPoint){
 			//we're close to the end, give the extra to the low end
 			$intLowerLimit = (1 > $intLower = $this->OnPage - $this->intDefaultPaginationWidth + ($this->MaxPages - $this->OnPage)) ? 1 : $intLower;
 			$intUpperLimit = $this->MaxPages;
-			_mizzou_log($intLowerLimit,'lower limit',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
-			_mizzou_log($intUpperLimit,'Upper Limit',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
 		} elseif($this->OnPage - $this->MidPoint < 1 ){
 			//we're near the bottom, give the extra to the top
 			$intLowerLimit = 1;
@@ -97,7 +95,7 @@ class Pagination extends Base{
 
 	protected function _determineHrefPattern()
 	{
-		if(!isset($this->objWPQuery->query_vars['paged']) || $this->objWPQuery->query_vars['paged'] == 0 || false === strpos($_SERVER['REQUEST_URI'],'/page/')){
+		if(is_null($this->wpPaged) || $this->wpPaged == 0 || false === strpos($_SERVER['REQUEST_URI'],'/page/')){
 			$strHrefBase = $_SERVER['REQUEST_URI'];
 		} else {
 			$strHrefBase = substr($_SERVER['REQUEST_URI'],0,(strpos($_SERVER['REQUEST_URI'],'/page/') + 1 ));
