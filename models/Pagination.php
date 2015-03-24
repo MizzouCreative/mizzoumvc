@@ -32,7 +32,7 @@ class Pagination extends Base{
 
 	protected $strHrefPattern = null;
 
-	protected $OnPage,$MaxPages,$MidPoint,$LowerLimit,$UpperLimit;
+	//protected $OnPage,$MaxPages,$MidPoint,$LowerLimit,$UpperLimit;
 
     public function __construct($aryArgs)
     {
