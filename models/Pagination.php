@@ -151,11 +151,17 @@ class Pagination extends Base{
 			$aryPaginationParts[] = $objPaginationLink;
 		}
 
+		//do we need a last page?
+		if($this->UpperLimit != $this->MaxPages){
+			$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('link'=>false,'text'=>$this->aryOptions['pagination_glue']));
+			$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('page'=>$this->MaxPages));
+		}
+
 		//do they even want a next link?
 		if(false !== $this->aryOptions['pagination_next']){
 			//do we need a next link?
 			if($this->OnPage != $this->MaxPages){
-				$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('link'=>false,'text'=>$this->aryOptions['pagination_glue']));
+
 				$objNext = $this->_buildPaginationLinkObject(array(
 					'text'  => $this->aryOptions['pagination_next'],
 					'page'  => ($this->OnPage+1),
