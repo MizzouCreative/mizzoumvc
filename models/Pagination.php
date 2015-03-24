@@ -19,7 +19,7 @@ class Pagination extends Base{
 	protected $aryDefaults = array(
 		'pagination_width'          => 5,
 		'pagination_next'           => false,
-		'pagination_prev'           => false,
+		'pagination_previous'       => false,
 		'pagination_glue'           =>'&#8230;',
 		'pagination_current_linked' =>true,
 	);
@@ -108,13 +108,13 @@ class Pagination extends Base{
 	{
 		$aryPaginationParts = array();
 		//first, do they even want prev?
-		if(false !== $this->aryOptions['pagination_prev']){
+		if(false !== $this->aryOptions['pagination_previous']){
 			//they do, but is it needed?
 			if($this->OnPage != 1){
 				$objPrevious = $this->_buildPaginationLinkObject(
-					array('text'=>$this->aryOptions['pagination_prev'],
+					array('text'=>$this->aryOptions['pagination_previous'],
 						'page'=>($this->OnPage-1),
-						'class'=>'pagination-prev'
+						'class'=>'pagination-previous'
 					)
 				);
 
@@ -135,7 +135,10 @@ class Pagination extends Base{
 			//if this is the current page, then we need to change the defaults
 			if($i == $this->OnPage){
 				$aryPaginationLinkOptions['class'] = 'current';
-				$aryPaginationLinkOptions['link'] = $this->aryOptions['pagination_current_linked'];
+				if(true !== $this->aryOptions['pagination_current_linked']){
+					$aryPaginationLinkOptions['link'] = false;
+				}
+
 
 			}
 
