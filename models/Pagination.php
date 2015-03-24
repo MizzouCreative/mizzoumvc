@@ -17,11 +17,11 @@ class Pagination extends Base{
     protected $intDefaultPaginationWidth = 5;
 
 	protected $aryDefaults = array(
-		'pagination_width'  => 5,
-		'pagination_first'  => false,
-		'pagination_last'   => false,
-		'pagination_next'   => false,
-		'pagination_prev'   => false,
+		'pagination_width'          => 5,
+		'pagination_next'           => false,
+		'pagination_prev'           => false,
+		'pagination_glue'           =>'&8230;',
+		'pagination_current_linked' =>true,
 	);
 
 	protected $aryAdjacentItems = array();
@@ -29,6 +29,10 @@ class Pagination extends Base{
 	protected $aryOptions = array();
 
 	protected $objWPQuery = null;
+
+	protected $strHrefPattern = null;
+
+	protected $OnPage,$MaxPages,$MidPoint,$LowerLimit,$UpperLimit;
 
     public function __construct($aryArgs)
     {
@@ -39,13 +43,14 @@ class Pagination extends Base{
 
 	        $this->aryOptions = array_merge($this->aryDefaults,$aryArgs);
 
-            $this->add_data('OnPage',($aryArgs['wp_query']->query_vars['paged'] != 0) ? $aryArgs['wp_query']->query_vars['paged'] :1);
-            $this->add_data('MaxPages',(isset($aryArgs['wp_query']->max_num_pages)) ? $aryArgs['wp_query']->max_num_pages : 1);
+            $this->add_data('OnPage',($this->objWPQuery->query_vars['paged'] != 0) ? $this->objWPQuery->query_vars['paged'] :1);
+            $this->add_data('MaxPages',(isset($this->objWPQuery->max_num_pages)) ? $this->objWPQuery->max_num_pages : 1);
 	        if($this->MaxPages > 1 ) $this->paged = true;
             $this->add_data('MidPoint',round($this->aryOptions['pagination_width'],0,PHP_ROUND_HALF_DOWN));
 
 			$this->_determineLowerAndUpperLimits();
-
+	        $this->_determineHrefPattern();
+			$this->_buildPagination();
 
 
         } else {
@@ -55,7 +60,7 @@ class Pagination extends Base{
 
 	protected function _determineLowerAndUpperLimits()
 	{
-		if($this->aryData['MaxPages'] - $this->aryData['OnPage'] < $this->aryData['MidPoint']){
+		if($this->MaxPages - $this->OnPage < $this->MidPoint){
 			//we're close to the end, give the extra to the low end
 			$intLowerLimit = (1 > $intLower = $this->OnPage - $this->intDefaultPaginationWidth + ($this->MaxPages - $this->OnPage)) ? 1 : $intLower;
 			$intUpperLimit = $this->MaxPages;
@@ -84,24 +89,129 @@ class Pagination extends Base{
 		$this->add_data('UpperLimit',$intUpperLimit);
 	}
 
-	protected function _determineNext()
-	{
 
+	protected function _determineHrefPattern()
+	{
+		if(!isset($this->objWPQuery->query_vars['paged']) || $this->objWPQuery->query_vars['paged'] == 0 || false === strpos($_SERVER['REQUEST_URI'],'/page/')){
+			$strHrefBase = $_SERVER['REQUEST_URI'];
+		} else {
+			$strHrefBase = substr($_SERVER['REQUEST_URI'],0,(strpos($_SERVER['REQUEST_URI'],'/page/') + 1 ));
+		}
+
+		$this->strHrefPattern = $strHrefBase . 'page/%d/';
+
+		if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != ''){
+			$this->strHrefPattern .= '?'.htmlentities($_SERVER['QUERY_STRING'],ENT_QUOTES,'UTF-8',false);
+		}
 	}
 
-	protected function _determinePrevious()
+	protected function _buildPagination()
 	{
+		$aryPaginationParts = array();
+		//first, do they even want prev?
+		if(false !== $this->aryOptions['pagination_prev']){
+			//they do, but is it needed?
+			if($this->OnPage != 1){
+				$objPrevious = $this->_buildPaginationLinkObject(
+					array('text'=>$this->aryOptions['pagination_prev'],
+						'page'=>($this->OnPage-1),
+						'class'=>'pagination-prev'
+					)
+				);
 
-	}
-
-	protected function _setAdjacentItems()
-	{
-		$strPattern = '/^pagination_([a-z]+)/';
-		foreach($this->aryOptions as $strOptionKey => $strOptionValue){
-			if($strOptionKey != 'pagination_width' && false !== $strOptionValue && 1 == preg_match($strPattern,$strOptionKey,$aryMatches)){
-				$this->aryAdjacentItems[] = $aryMatches[1];
+				$aryPaginationParts[] = $objPrevious;
+				$this->add_data('previous',$objPrevious);
 			}
 		}
+
+		//now, do we need a first page?
+		if($this->LowerLimit != 1){
+			$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('page'=>'1'));
+			$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('link'=>false,'text'=>$this->aryOptions['pagination_glue']));
+		}
+
+		//now we'll loop through the lower to upper limits
+		for($i=$this->LowerLimit;$i<=$this->UpperLimit;++$i){
+			$aryPaginationLinkOptions = array('page'=>$i);
+			//if this is the current page, then we need to change the defaults
+			if($i == $this->OnPage){
+				$aryPaginationLinkOptions['class'] = 'current';
+				$aryPaginationLinkOptions['link'] = $this->aryOptions['pagination_current_linked'];
+
+			}
+
+			//store it temporarily
+			$objPaginationLink = $this->_buildPaginationLinkObject($aryPaginationLinkOptions);
+
+			//if this is the current page, we want a separate copy
+			if($i == $this->OnPage) $this->add_data('current',$objPaginationLink);
+
+			$aryPaginationParts[] = $objPaginationLink;
+		}
+
+		//do they even want a next link?
+		if(false !== $this->aryOptions['pagination_next']){
+			//do we need a next link?
+			if($this->UpperLimit != $this->MaxPages){
+				$aryPaginationParts[] = $this->_buildPaginationLinkObject(array('link'=>false,'text'=>$this->aryOptions['pagination_glue']));
+				$objNext = $this->_buildPaginationLinkObject(array(
+					'text'  => $this->aryOptions['pagination_next'],
+					'page'  => ($this->OnPage+1),
+					'class' => 'pagination-next'
+				));
+
+				$this->add_data('next',$objNext);
+				$aryPaginationParts[] = $objNext;
+			}
+		}
+
+		$this->add_data('PaginationItems',$aryPaginationParts);
+
+	}
+
+	protected function _buildPaginationLinkObject($aryOptions)
+	{
+		$aryDefaults = array(
+			'text'=>'',
+			'page'=>null,
+			'class'=>'',
+			'link'=>true,
+		);
+
+		$aryOptions = array_merge($aryDefaults,$aryOptions);
+
+		$objPage = new stdClass();
+
+		if($aryOptions['text'] == ''){
+			//no text give, so we probably we want to use the page
+			if(!is_null($aryOptions['page'])){
+				$strText = $aryOptions['page'];
+			} else {
+				//they didnt give us text, nor page. are we linking this one?
+				_mizzou_log($aryOptions,'you didnt give me text or a page number',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
+				if(!$aryOptions['link']){
+					//we're going to ASSUME that this is a glue piece and they just forgot to give it to us
+					$strText = $this->aryOptions['pagination_glue'];
+				} else {
+					_mizzou_log($aryOptions,'you want to link the page, but didnt give me text or a page number',false,array('line'=>__LINE__,'func'=>__FUNCTION__,'file'=>__FILE__));
+					$strText = "I'm really not sure";
+				}
+			}
+		} else {
+			$strText = $aryOptions['text'];
+		}
+
+		$objPage->text = $strText;
+
+		if($aryOptions['link'] && !is_null($aryOptions['page'])){
+			$objPage->href = sprintf($this->strHrefPattern,$aryOptions['page']);
+		}
+
+		if($aryOptions['class'] != ''){
+			$objPage->class = $aryOptions['class'];
+		}
+
+		return $objPage;
 	}
 
 }
