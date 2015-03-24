@@ -500,7 +500,7 @@ class Content {
 
                 $strPageTitle = vsprintf($strDatePattern,$aryDateParts);
                 $objPagePostType = self::_getPagePostType();
-
+	            _mizzou_log($objPagePostType,'objPagePostType',false,array('line'=>__LINE__,'file'=>__FILE__));
                 $strPageTitle .= ' ' . $objPagePostType->label;
                 _mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with',false,array('line'=>__LINE__,'file'=>__FILE__));
             } else {
