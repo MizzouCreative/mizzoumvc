@@ -129,7 +129,7 @@ class Content {
         if(FALSE !== $aryOptions['include_pagination'] && $aryOptions['include_pagination'] instanceof WP_Query){
             $aryPaginationArgs = array('wp_query'=>$aryOptions['include_pagination']);
             unset($aryOptions['include_pagination']);
-            if(('' != $aryPaginationOptions = $objSite->option('pagination'))){
+            if(('' != $aryPaginationOptions = $objSite->pagination)){
                 $aryPaginationArgs = array_merge($aryPaginationArgs,$aryPaginationOptions);
             }
 
