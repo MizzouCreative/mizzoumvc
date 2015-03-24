@@ -46,7 +46,7 @@ class Pagination extends Base{
 
 		        $this->aryOptions = array_merge($this->aryDefaults,$aryArgs);
 
-		        $this->add_data('MidPoint',round($this->aryOptions['pagination_width'],0,PHP_ROUND_HALF_DOWN));
+		        $this->add_data('MidPoint',round(($this->aryOptions['pagination_width']/2),0,PHP_ROUND_HALF_DOWN));
 
 		        $this->_determineLowerAndUpperLimits();
 		        $this->_determineHrefPattern();
