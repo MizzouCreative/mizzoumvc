@@ -437,21 +437,24 @@ function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
     global $menu,$submenu,$wp_post_types;
 
     if(isset($aryArgs['single'])){
-        $strSingle = $aryArgs['single'];
-        $strPlural = (isset($aryArgs['plural'])) ? $aryArgs['plural'] : $aryArgs['single'].'s';
 
-        $menu[5][0] = $strPlural;
-        $submenu['edit.php'][5][0] = 'All ' . $strPlural;
-        $submenu['edit.php'][10][0] = 'Add ' . $strSingle;
+	    if(!isset($aryArgs['plural'])) $aryArgs['plural'] = $aryArgs['single'] . 's';
 
-		mizzouChangeLabelsonDefaultPostTypeFrontEnd($strSingle,$strPlural);
+        $menu[5][0] = $aryArgs['plural'];
+        $submenu['edit.php'][5][0] = 'All ' . $aryArgs['plural'];
+        $submenu['edit.php'][10][0] = 'Add ' . $aryArgs['single'];
+
+		mizzouChangeLabelsonDefaultPostTypeFrontEnd($aryArgs);
 	}
 }
 
-function mizzouChangeLabelsonDefaultPostTypeFrontEnd($strSingle,$strPlural)
+function mizzouChangeLabelsonDefaultPostTypeFrontEnd($aryArgs)
 {
 	global $wp_post_types;
-	$aryLabels = mizzouCreatePostTypeLabels($strSingle,$strPlural);
+	/**
+	 * @todo we've made an assumption that we will always have single and plural
+	 */
+	$aryLabels = mizzouCreatePostTypeLabels($aryArgs['single'],$aryArgs['plural']);
 
 	$objPostLabels = &$wp_post_types['post']->labels;
 
