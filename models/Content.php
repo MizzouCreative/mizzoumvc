@@ -762,6 +762,9 @@ class Content {
         $strPostType = get_query_var('post_type');
         if(is_array($strPostType)){
             $strPostType = reset($strPostType);
+        } elseif(''==$strPostType){
+	        //still empty, let's try get_post_type
+	        $strPostType = get_post_type();
         }
 
         if('' != $strPostType){
