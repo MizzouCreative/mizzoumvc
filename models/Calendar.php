@@ -52,6 +52,12 @@ class Calendar extends AbstractTranslator {
 	    $objReturn->StartYear       = date('Y',$objReturn->Start);
 	    $objReturn->EndYear         = date('Y',$objReturn->End);
 
+	    if(isset($this->aryOptions['excerpt_length'] ) && is_integer($this->aryOptions['excerpt_length'])){
+			$objReturn->Excerpt = $this->_calculateExcerpt($objReturn->DescriptionText,$this->aryOptions['excerpt_length']);
+	    } else {
+		    $objReturn->Excerpt = $objReturn->DescriptionText;
+	    }
+
         return $objReturn;
     }
 
@@ -73,5 +79,17 @@ class Calendar extends AbstractTranslator {
 		}
 
 		return $strMonth;
+	}
+
+	protected function _calculateExcerpt($strDescription='',$intLength=0)
+	{
+		if($strDescription != '' && $intLength > 0 && strlen($strDescription) > $intLength){
+			$strDescription = wordwrap($strDescription,$intLength);
+			if(FALSE !== $intPos = strpos($strDescription,"\n")){
+				$strDescription = substr($strDescription,0,$intPos);
+			}
+		}
+
+		return $strDescription;
 	}
 }
