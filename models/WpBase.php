@@ -25,7 +25,9 @@
  */
 class WpBase
 {
-    protected $aryDefaults = array(
+	protected $strPostType = 'post';
+
+	protected $aryDefaults = array(
         'post_type'         => '',
         'count'             => -1,
         'taxonomy'          => '',
@@ -53,13 +55,12 @@ class WpBase
 
     public $strPostPrefix = null;
 
-    protected $strPostType = 'post';
-
     public function __construct($strPostPreFix = null)
     {
         $this->_setDefaults();
         $this->_setPermalink();
         $this->setPostPrefix($strPostPreFix);
+	    $this->aryDefaults['post_type'] = $this->strPostType;
     }
 
 
@@ -76,7 +77,7 @@ class WpBase
          * argument value and converts it to posts_per_page before calling wp_query.
          */
         $aryArgs = array(
-            'post_type'     =>  $aryOptions['post_type'],
+            'post_type'     => $aryOptions['post_type'],
             'posts_per_page'   =>  $aryOptions['count'],
             'orderby'       =>  $aryOptions['order_by'],
             'order'         =>  $aryOptions['order_direction']
