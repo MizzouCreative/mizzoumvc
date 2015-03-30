@@ -132,7 +132,7 @@ class WpBase
             $aryReturn = $this->convertPosts($objQuery->posts,$aryOptions);
 
         }
-
+		_mizzou_log($aryReturn,'items ill pass back to the controller',false,array('line'=>__LINE__,'file'=>__FILE__));
         return $aryReturn;
     }
 
