@@ -557,7 +557,7 @@ class MizzouPost extends PostBase
                     }
 
 	                if(is_string($strTaxPermalink = get_term_link($objTaxTerm))){
-		                $objTaxonomyClone->add_data('permalink',$strTaxPermalink);
+		                $objTaxTermClone->add_data('permalink',$strTaxPermalink);
 	                }
 
 
