@@ -415,6 +415,7 @@ class MizzouPost extends PostBase
     /**
      * Reformats the Month to AP style date format based on the timestamp of the post
      * @return string AP style formatted month
+     * @todo this is at least the third place this *exact* same code appears.  We need to consolidate to ONE source
      */
     private function _getAPMonth()
     {
@@ -554,6 +555,12 @@ class MizzouPost extends PostBase
                         );
                         $objTaxTermClone->add_data('url',vsprintf($this->aryOptions['taxonomies']['url_pattern'],$aryURLParts));
                     }
+
+	                if(is_string($strTaxPermalink = get_term_link($objTaxTerm))){
+		                $objTaxonomyClone->add_data('permalink',$strTaxPermalink);
+	                }
+
+
 
                     $aryTaxonomyTerms[] = $objTaxTermClone;
                 }
