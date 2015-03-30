@@ -28,7 +28,6 @@ if(isset($arySiteCalendarOptions['method']) && isset($arySiteCalendarOptions['te
 	$aryData['Events'] = $aryReturn['events'];
 } else {
 	_mizzou_log($arySiteCalendarOptions,'you asked me to get calendar items, but it doesnt appear you gave me the data i need.',false,array('line'=>__LINE__,'file'=>__FILE__));
-	_mizzou_log($objSite,'objSite since the options are blank');
 	$aryData['Events'] = array();
 }
 
