@@ -46,6 +46,9 @@ class Calendar extends AbstractTranslator {
 	    $objReturn->EndMonth        = date('F',$objReturn->End);
 	    $objReturn->EndAPMonth      = $this->_getAPMonth(($objReturn->EndMonth));
 	    $objReturn->StartDay        = date('j',$objReturn->Start);
+	    $objReturn->StartDayofTheWeek= date('l',$objReturn->Start);
+	    $objReturn->EndDay          = date('j',$objReturn->End);
+	    $objReturn->EndDayofTheWeek = date('l',$objReturn->End);
 	    $objReturn->StartYear       = date('Y',$objReturn->Start);
 	    $objReturn->EndYear         = date('Y',$objReturn->End);
 
