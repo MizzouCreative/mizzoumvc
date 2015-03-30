@@ -123,16 +123,16 @@ class WpBase
             $aryArgs = array_merge($aryArgs,$aryOptions['passthru']);
         }
 
-        _mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+        //_mizzou_log($aryArgs,'the full args before we run wp_query',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
 
         $objQuery =  new WP_Query($aryArgs);
 
         if (isset($objQuery->posts) && count($objQuery->posts) > 0){
-            _mizzou_log($aryOptions,'options after I ran wp_query and before I convert the posts',false,array('line'=>__LINE__,'file'=>__FILE__));
+            //_mizzou_log($aryOptions,'options after I ran wp_query and before I convert the posts',false,array('line'=>__LINE__,'file'=>__FILE__));
             $aryReturn = $this->convertPosts($objQuery->posts,$aryOptions);
 
         }
-		_mizzou_log($aryReturn,'items ill pass back to the controller',false,array('line'=>__LINE__,'file'=>__FILE__));
+		//_mizzou_log($aryReturn,'items ill pass back to the controller',false,array('line'=>__LINE__,'file'=>__FILE__));
         return $aryReturn;
     }
 
