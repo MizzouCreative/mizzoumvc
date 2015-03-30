@@ -347,6 +347,10 @@ function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
         $aryOptions['labels'] = mizzouCreatePostTypeLabels($strPostTypeName);
     }
 
+	/**
+	 * @todo should we do a recursive merge here so that the extending theme can add options (like supports) without
+	 * having to completely overwrite that piece?
+	 */
     $aryPostTypeOptions = array_merge($aryPostTypeOptions,$aryOptions);
 
     register_post_type($strPostTypeName,$aryPostTypeOptions);
