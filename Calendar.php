@@ -14,13 +14,20 @@
 require_once 'models/Calendar.php';
 
 $objSite = new Site();
-$objCalendar = new Calendar();
+$arySiteCalendarOptions = $objSite->option('calendar');
 
-$aryOptions = array(
-    'method'=>'department',
-    'term'  =>'4581'
-);
+//do we need to include the excerpt_length option when creating our calendar object?
+$aryCalendarOptions = (isset($arySiteCalendarOptions['excerpt_length'])) ? array('excerpt_length'=>$arySiteCalendarOptions['excerpt_length']) : array();
 
-$aryReturn = $objCalendar->retrieveCalendarItems($aryOptions);
-$aryData['Events'] = $aryReturn['events'];
+$objCalendar = new Calendar($aryCalendarOptions);
+
+if(isset($arySiteCalendarOptions['method']) && isset($arySiteCalendarOptions['term'])){
+	$aryOptions = $arySiteCalendarOptions;
+	unset($aryOptions['excerpt_length']);
+	$aryReturn = $objCalendar->retrieveCalendarItems($aryOptions);
+	$aryData['Events'] = $aryReturn['events'];
+} else {
+	$aryData['Events'] = array();
+}
+
 Content::render('calendar',$aryData);
