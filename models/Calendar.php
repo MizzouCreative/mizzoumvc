@@ -41,9 +41,9 @@ class Calendar extends AbstractTranslator {
         $objReturn->DescriptionText = (string)$objEvent->description_text;
         $objReturn->Start           = strtotime((string)$objEvent->event_instances[0]->event_instance->start);
         $objReturn->End             = strtotime((string)$objEvent->event_instances[0]->event_instance->end);
-	    $objReturn->StartMonth      = date('M',$objReturn->Start);
+	    $objReturn->StartMonth      = date('F',$objReturn->Start);
 	    $objReturn->StartAPMonth    = $this->_getAPMonth($objReturn->StartMonth);
-	    $objReturn->EndMonth        = date('M',$objReturn->End);
+	    $objReturn->EndMonth        = date('F',$objReturn->End);
 	    $objReturn->EndAPMonth      = $this->_getAPMonth(($objReturn->EndMonth));
 	    $objReturn->StartDay        = date('j',$objReturn->Start);
 	    $objReturn->StartYear       = date('Y',$objReturn->Start);
