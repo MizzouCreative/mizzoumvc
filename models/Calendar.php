@@ -54,9 +54,7 @@ class Calendar extends AbstractTranslator {
 
 	    if(isset($this->aryOptions['excerpt_length'] ) && is_numeric($this->aryOptions['excerpt_length']) && is_int($intLength = intval($this->aryOptions['excerpt_length']))){
 			$objReturn->Excerpt = $this->_calculateExcerpt($objReturn->DescriptionText,$intLength);
-
-	    } else {
-		    _mizzou_log($this->aryOptions,'options inside calendar object',false,array('line'=>__LINE__,'file'=>__FILE__));
+		} else {
 		    $objReturn->Excerpt = $objReturn->DescriptionText;
 	    }
 
