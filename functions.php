@@ -226,6 +226,7 @@ class a11y_walker extends A11yPageWalker {
  * @global type $wp_query
  * @return type
  * @todo documentation
+ * @deprecated
  */
 function pagination_nav() {
 	global $wp_query;
