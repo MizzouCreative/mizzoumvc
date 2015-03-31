@@ -513,7 +513,7 @@ class Content {
                  */
                 $objQueried = get_queried_object();
                 if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
-                    $strPageTitle = $objQueried->name . ' ' . $strPageTitle;
+                    $strPageTitle = ($strPageTitle == '') ? $objQueried->name : $objQueried->name . ' ' . $strPageTitle;
                 }
             }
 
