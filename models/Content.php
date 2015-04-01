@@ -24,6 +24,7 @@ class Content {
         'include_header'    =>true,
         'include_footer'    =>true,
         'return'            =>false,
+	    'bypass_init'       =>false,
     );
 
     /**
@@ -86,34 +87,19 @@ class Content {
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
         /**
-         * @todo refactor to remove pre-twig code
          * @todo why are we setting $aryViewVariables to $aryData instead of just using $aryData?
          */
         $aryViewVariables               = $aryData;
-        $strEditPostLink                = '';
-        $boolIncludeNoIndex             = false;
-        $boolIncludeSidebar             = false;
-        $boolIncludeImageAboveHeader    = false;
-
-
-        //$aryViewVariables['EditPostLink']           = $strEditPostLink;
-        //$aryViewVariables['IncludeNoIndex']         = $boolIncludeNoIndex;
-        //$aryViewVariables['IncludeSidebar']         = $boolIncludeSidebar;
-        //$aryViewVariables['IncludeImageAboveHeader']= $boolIncludeImageAboveHeader;
-
 
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
-        //_mizzou_log($aryOptions,'aryOptions after I merged');
-        //extract($aryData);
-
-
 
         /**
          * @todo don't like this since it creates a direct dependency, but we need data from the Site model in order
          * to know what to pass/not pass to the view. Dependency injection via render method? or
          */
         if(!isset($aryData['objSite']) || !is_object($aryData['objSite'])){
-            if(self::$intCounter == 0){
+            //if this is the first run-through and we havent asked to bypass init (shortcodes, usually)
+	        if(self::$intCounter == 0 && !$aryOptions['bypass_init']){
                 $objSite = new Site();
             } else {
                 /**
@@ -184,69 +170,19 @@ class Content {
 
         });*/
 
-        self::$objViewEngine->addFilter($objTwigDebug);
+	    /**
+	     * @todo all this stuff with the template engine needs to be moved out of here
+	     */
+	    self::$objViewEngine->addFilter($objTwigDebug);
         self::$objViewEngine->addFilter($objTwigSanitize);
 
         //do we need the EditPostLink?
-        if((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()){
+        if(((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()) && !$aryOptions['bypass_init']){
             $strEditPostLink = ' ' . $strPostLink;
             $aryViewVariables['EditPostLink'] = $strEditPostLink;
         }
 
-        /**
-         * Page specific checks...
-         * @todo this is specific to IPP and needs to be removed
 
-        if(is_page() && isset($objMainPost)){
-            /**
-             * @wp-hack
-             * hack. we only want the sidebar on specific pages. change this into a function that determines if a sidebar is actually
-             * needed
-
-            if(in_array($objMainPost->slug,self::$aryIncludeSidebarPages)){
-                $boolIncludeSidebar = true;
-                $aryViewVariables['IncludeSidebar'] = $boolIncludeSidebar;
-            }
-
-            if($objMainPost->image != ''){
-                $boolIncludeImageAboveHeader = true;
-                $aryViewVariables['IncludeImageAboveHeader'] = $boolIncludeImageAboveHeader;
-            }
-        }*/
-
-        /**
-         * This one is a bit of a bugger...
-         * If we have access to the MainPost object AND either noindex or nolink is set and ON
-         * OR
-         * we're on a 404 page
-         * then
-         * we want to include the meta element for robots to not index the page
-         * @todo moved to the header controller. Delete
-         * @deprecated
-         *
-
-        if(
-            is_404()
-            || (
-                isset($objMainPost)
-                && (
-                    (isset($objMainPost->noindex) && $objMainPost->noindex == 'on')
-                    ||
-                    (isset($objMainPost->nolink) && $objMainPost->nolink == 'on')
-                )
-            )
-        ) {
-            $boolIncludeNoIndex = true;
-            $aryViewVariables['IncludeNoIndex'] = $boolIncludeNoIndex;
-        }*/
-
-        /**
-         * @todo this needs to be moved either into a theme option or config file
-         * deprecated?
-         *
-         */
-        $intSpanWidth = ($boolIncludeSidebar) ? 8 : 12;
-        $aryViewVariables['SpanWidth'] = $intSpanWidth;
 
         /**
          * For now, we want to make both the $objSite-> members and direct variables available to designers. Eventually
@@ -271,20 +207,6 @@ class Content {
 
         $aryViewVariables['objSite'] = $objSite;
 
-        //outerView needs breadcrumbs and inner view data
-        /**
-         * @todo the breadcrumbs plugin needs to be converted to a Model with a matching view
-         * @todo How do we tell twig to include a subview?
-         */
-        //get the contents for the breadcrumbs
-        /**
-        if($objSite->IncludeBreadcrumbs){
-            $strBreadCrumbs = $objSite->_captureOutput('breadcrumbs');
-        } else {
-            $strBreadCrumbs = '';
-        }*/
-
-
         /**
          * @todo i dont like this one bit.  The situation we have is that it's possible for a controller to override
          * what the page title is, instead of us determining the page title.  But we also have methods here (specifically
@@ -294,17 +216,18 @@ class Content {
          */
         //$strPageTitle = (isset($strPageTitle)) ? $strPageTitle : '';
         //$strPageTitle = self::_getPageTitle();
-        if(!isset($aryViewVariables['PageTitle']) && count(self::$intCounter == 0)){
+        if(!isset($aryViewVariables['PageTitle']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
             $aryViewVariables['PageTitle'] = self::_getPageTitle();
         }
 
-        if(!isset($aryData['RootAncestor']) && self::$intCounter == 0){
+        if(!isset($aryData['RootAncestor']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
             $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null,$aryViewVariables['PageTitle']);
         }
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
          * other CPTs, then we need to include Next & Previous page links
-         * @todo this shouldnt be in the Content model, should it? At a minimum, the Previous and Next should be options
+         * @deprecated this has been moved into the Pagination model.
+         * @todo delete
          */
         if((is_home() || is_archive()) && $aryOptions['include_pagination']){
             $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
@@ -315,16 +238,6 @@ class Content {
             $aryViewVariables['PaginationNext'] = $strPaginationNext;
             $aryViewVariables['PaginationPrevious'] = $strPaginationPrevious;
         }
-
-        /**
-         * Also temporary
-         * @todo dont let this go to production
-         * @todo this should be moved into the header controller
-         */
-        /**
-        if(!isset($aryViewVariables['HeadTitle'])){
-            $aryViewVariables['HeadTitle']= self::_getHeaderTitle($aryViewVariables['PageTitle'],$objSite->Name);
-        }*/
 
 
         /**
@@ -338,62 +251,11 @@ class Content {
         }
 
         self::$objView = self::$objViewEngine->loadTemplate($strInnerViewFileName);
-        //_mizzou_log(self::$objViewEngine->getTemplateClass($strInnerViewFileName),'what is the template class for ' . $strInnerViewFileName);
-
-        //now we need to start getting everyhing
-
-        //_mizzou_log($strInnerView,'attempting to get: ');
-        //get contents from the inner view
-        /**
-        if(!$aryOptions['override_outerview']){
-            if(file_exists($strInnerView)){
-                ob_start();
-                require_once $strInnerView;
-                $strInnerViewContent = ob_get_contents();
-                ob_end_clean();
-            } else {
-                $strInnerViewContent = '<p>Unable to retrieve inner view.</p>';
-            }
-        }*/
-
-
-
-        /**
-         * @todo captureContents is in the site model so we need to expand it to allow for storage of this type of data
-
-        $strSearchFormContents = $objSite->SearchForm;
-        $aryViewVariables['strSearchFormContents'] = $objSite->SearchForm;
-        $strWpFooterContents = $objSite->wpFooter;
-        $aryViewVariables['strWpFooterContents'] = $objSite->wpFooter;
-        */
-        //start actual output
-
-        // replaces get_header();
-        //require_once $strViewsPath.'header.html';
-        /**
-         * @todo replace with a require to the sidebar view
-         */
-        /**
-        if($boolIncludeSidebar) {
-            get_sidebar();
-        }*/
-        /**
-        if($aryOptions['override_outerview']){
-            require_once $strInnerView;
-        } else {
-            require_once $strViewsPath . 'outerView.php';
-        }
-
-
-        // replaces get_footer();
-        //require_once $strViewsPath . 'footer.html';
-        require_once $strThemePath . 'footer.html';
-        */
 
         /**
          * Now we need the data from our menu model
          */
-        if(!isset($aryData['Menu']) && self::$intCounter == 0){
+        if(!isset($aryData['Menu']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
             if(self::$intCounter == 0){
                 $aryViewVariables['Menu'] = new Menu($aryViewVariables);
             } else {
@@ -401,8 +263,8 @@ class Content {
             }
         }
 
-        //increment our internal counter
-        ++self::$intCounter;
+        //increment our internal counter, but only if we havent instructed it to bypass init
+        if(!$aryOptions['bypass_init']) ++self::$intCounter;
 
         if($aryOptions['return']){
             return self::$objView->render($aryViewVariables);
