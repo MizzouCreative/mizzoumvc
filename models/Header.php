@@ -139,7 +139,7 @@ class Header extends Subview {
 			$strHeaderTitle = $this->_determineHeaderTitle();
 		}
 
-		$this->add_data('HeaderTitle',$strHeaderTitle);
+		$this->add_data('HeadTitle',$strHeaderTitle);
 	}
 
 	/**
