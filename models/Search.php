@@ -1,15 +1,13 @@
 <?php
 /**
- * 
+ * Queries the GSA for search terms
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 class Search extends Base {
@@ -36,7 +34,12 @@ class Search extends Base {
         $this->add_data('SearchParams',$this->_prepQueryParams());
     }
 
-    public function getSearchResults()
+	/**
+	 * Retrieves the search result markup from the GSA
+	 *
+	 * @return string search result markup from the GSA
+	 */
+	public function getSearchResults()
     {
         /**
          * If they didnt give us anything to search for then no need to do anything
@@ -53,14 +56,24 @@ class Search extends Base {
         }
     }
 
-    protected function _prepQueryString()
+	/**
+	 * Prepares the URL to be used to query the GSA
+	 *
+	 * @return string Full URL to the GSA
+	 */
+	protected function _prepQueryString()
     {
         $strFullURL = $this->aryInternalData['objSite']->option('search_url').http_build_query($this->SearchParams);
         _mizzou_log($strFullURL,'full URL for searching',false,array('file'=>__FILE__,'line'=>__LINE__));
         return $strFullURL;
     }
 
-    protected function _prepQueryParams()
+	/**
+	 * Creates an array of search parameters that will be used in the construction of the URL to query the GSA
+	 *
+	 * @return array query parameters
+	 */
+	protected function _prepQueryParams()
     {
         /*
          * let's copy the default params we need (collection/site, front_end, etc) from our site options into our storage
@@ -92,7 +105,13 @@ class Search extends Base {
         return $arySearchParams;
     }
 
-    protected function _prepSearchTerms($mxdSearchTerms)
+	/**
+	 * Preps the search terms
+	 *
+	 * @param $mxdSearchTerms search terms
+	 * @return string search terms
+	 */
+	protected function _prepSearchTerms($mxdSearchTerms)
     {
 
         $strSearchTerms = (is_array($mxdSearchTerms)) ? implode(' ',$mxdSearchTerms) : $mxdSearchTerms;

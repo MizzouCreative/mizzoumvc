@@ -1,15 +1,13 @@
 <?php
 /**
- * 
+ * Performs an autosearch based on the URL structure of a 404 page
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 require_once 'Search.php';
