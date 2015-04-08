@@ -124,59 +124,13 @@ class Content {
             _mizzou_log($aryOptions['include_pagination'],'you said you wanted to do pagination, but you didnt give me a WP_Query object',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
 
-        self::$objViewEngine = self::_initializeViewEngine();
-
-        /**
-         * @todo remove the twig debug filter before going to production
-         */
-        $objTwigDebug = new Twig_SimpleFilter('var_export',function($string){
-           return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
-        });
-
-        $objTwigSanitize = new Twig_SimpleFilter('sanitize',function($strString){
-            return sanitize_title_with_dashes($strString);
-        });
-
-        /**
-         * @todo this needs to be moved out of here into somewhere else.  But where?
-         */
-        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
-            //_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
-            //_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
-            if(is_array($mxdControllerName)){
-                $aryControllerNameParts = $mxdControllerName;
-            } elseif(is_string($mxdControllerName)){
-                $aryControllerNameParts = explode(' ',trim($mxdControllerName));
-            } else {
-                /**
-                 * @todo should this be changed to a try catch with an exception?
-                 * We're expecting a string (or an array), so getting something else WOULD be an exception
-                 */
-                _mizzou_log($mxdControllerName,'what the heck... what were we given instead of the name for a controller?',false,array('FUNC'=>__FUNCTION__,'line'=>__LINE__,'file'=>__FILE__));
-                $aryControllerNameParts = array();
-            }
-            $strControllerName = implode('-',$aryControllerNameParts) . '.php';
-
-            if(count($aryData) != 0){
-                extract($aryData);
-            }
-
-            if('' != $strController = locate_template($strControllerName)){
-                require_once $strController;
-            }
-        }));
-
-        /*$objTwigController = new Twig_SimpleFunction('controller',function($strName){
-
-        });*/
 
 	    /**
-	     * @todo all this stuff with the template engine needs to be moved out of here
+	     * Load up the template rendering engine
 	     */
-	    self::$objViewEngine->addFilter($objTwigDebug);
-        self::$objViewEngine->addFilter($objTwigSanitize);
+	    self::_initializeViewEngine();
 
-        //do we need the EditPostLink?
+		//do we need the EditPostLink?
         if(((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()) && !$aryOptions['bypass_init']){
             $strEditPostLink = ' ' . $strPostLink;
             $aryViewVariables['EditPostLink'] = $strEditPostLink;
@@ -274,7 +228,7 @@ class Content {
 
     }
 
-    protected function _determineRootAncestor($objMainPost=null,$strPageTitle='')
+    protected static function _determineRootAncestor($objMainPost=null,$strPageTitle='')
     {
         $strReturn = '';
 
@@ -316,7 +270,7 @@ class Content {
     /**
      * @return string
      */
-    protected function _getPageTitle()
+    protected static function _getPageTitle()
     {
         if('' == self::$strPageTitle){
             self::_determinePageTitle();
@@ -330,7 +284,7 @@ class Content {
      * @todo sub-page support, category/taxonomy support and pagination support
      * @todo shouldnt this be moved into the Header model?
      */
-    protected function _determinePageTitle()
+    protected static function _determinePageTitle()
     {
         $strPageTitle = '';
         if(is_archive()){
@@ -402,7 +356,7 @@ class Content {
      * @return array
      * @deprecated
      */
-    protected function _determinePagePath($strPageTitle,$strSiteName='')
+    protected static function _determinePagePath($strPageTitle,$strSiteName='')
     {
         $aryPath = array();
 
@@ -527,7 +481,7 @@ class Content {
     /**
      * @return string
      */
-    protected function _getDateArchiveType()
+    protected static function _getDateArchiveType()
     {
         if('' == self::$strDateArchiveType){
             self::_determineDateArchiveType();
@@ -539,7 +493,7 @@ class Content {
     /**
      *
      */
-    protected function _determineDateArchiveType()
+    protected static function _determineDateArchiveType()
     {
         $strDateArchiveType = '';
 
@@ -560,7 +514,7 @@ class Content {
      * @return string
      * @deprecated moved into Header model @see Header()
      */
-    protected function _getHeaderTitle($strPageTitle,$strSiteName)
+    protected static function _getHeaderTitle($strPageTitle,$strSiteName)
     {
         _mizzou_log(null,'deprecated function called!',true,array('func'=>__FUNCTION__,'file'=>basename(__FILE__)));
         if('' == self::$strHeaderTitle){
@@ -575,7 +529,7 @@ class Content {
      * @param $strSiteName
      * @deprecated moved into Header model @see Header()
      */
-    protected function _determineHeaderTitle($strPageTitle,$strSiteName)
+    protected static function _determineHeaderTitle($strPageTitle,$strSiteName)
     {
         _mizzou_log(null,'deprecated function called!',true,array('func'=>__FUNCTION__,'file'=>basename(__FILE__)));
         $aryTitleParts = array();
@@ -606,9 +560,10 @@ class Content {
     }
 
     /**
-     * @return null
+     * Returns the post type of the page/post we are currently rendering
+     * @return string
      */
-    protected function _getPagePostType()
+    protected static function _getPagePostType()
     {
         if(is_null(self::$objPagePostType)){
             self::_determinePagePostType();
@@ -618,9 +573,9 @@ class Content {
     }
 
     /**
-     *
+     * Determines the post type of the current page we are dealing with
      */
-    protected function _determinePagePostType()
+    protected static function _determinePagePostType()
     {
         //$strPostType = get_post_type();
 
@@ -652,9 +607,12 @@ class Content {
     }
 
     /**
+     * Adjusts the labels on the default post type
+     *
      * @param $strPostType
+     * @todo I believe this is deprecated, and is now being handled by an extending theme
      */
-    protected function _adjustPostTypeLabels($strPostType)
+    protected static function _adjustPostTypeLabels($strPostType)
     {
         /**
          * For the love of God, wordpress... why do you have such a hard-on for global variables????!?!#@#@!~$!@
@@ -683,7 +641,7 @@ class Content {
     /**
      * @deprecated
      */
-    protected function _includeTaxonomyMenu()
+    protected static function _includeTaxonomyMenu()
     {
         $aryPubMenu = array();
         global $wp_query; //stoopid wordpress globals
@@ -704,7 +662,7 @@ class Content {
      * @todo should this be here? We now have a direct dependency on a TWIG object. What if we want to change template
      * systems?
      */
-    protected function _initializeViewLoader()
+    protected static function _initializeViewLoader()
     {
         $aryViewDirectories = array();
         $strParentThemePath = get_template_directory().DIRECTORY_SEPARATOR;
@@ -724,7 +682,10 @@ class Content {
 
     }
 
-    protected function _initializeViewEngine()
+	/**
+	 * Loads the template rendering engine
+	 */
+	protected static function _initializeViewEngine()
     {
         $objTELoader = self::_initializeViewLoader();
         $strCacheLocation = self::_determineViewCacheLocation();
@@ -736,11 +697,17 @@ class Content {
             'auto_reload'=>true,
             'autoescape'=>false,
         );
-        return new Twig_Environment($objTELoader,$aryTEOptions);
+	    self::$objViewEngine = Twig_Environment($objTELoader,$aryTEOptions);
+	    self::_loadVEFilters();
+	    self::_loadVEFunctions();
+	}
 
-    }
-
-    protected function _determineViewCacheLocation()
+	/**
+	 * Determines where we need to store the cache from our template rendering engine
+	 *
+	 * @return string cache location
+	 */
+	protected static function _determineViewCacheLocation()
     {
         $strViewCacheLocation = '';
 
@@ -775,4 +742,62 @@ class Content {
             return $strViewCacheLocation;
         }
     }
+
+	/**
+	 * Registers functions with the template rendering engine
+	 * @todo this really needs to be somewhere else instead of in the Content class
+	 */
+	protected static function _loadVEFunctions()
+	{
+		/**
+		 * @todo this needs to be moved out of here into somewhere else.  But where?
+		 */
+		self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
+			//_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+			//_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+			if(is_array($mxdControllerName)){
+				$aryControllerNameParts = $mxdControllerName;
+			} elseif(is_string($mxdControllerName)){
+				$aryControllerNameParts = explode(' ',trim($mxdControllerName));
+			} else {
+				/**
+				 * @todo should this be changed to a try catch with an exception?
+				 * We're expecting a string (or an array), so getting something else WOULD be an exception
+				 */
+				_mizzou_log($mxdControllerName,'what the heck... what were we given instead of the name for a controller?',false,array('FUNC'=>__FUNCTION__,'line'=>__LINE__,'file'=>__FILE__));
+				$aryControllerNameParts = array();
+			}
+			$strControllerName = implode('-',$aryControllerNameParts) . '.php';
+
+			if(count($aryData) != 0){
+				extract($aryData);
+			}
+
+			if('' != $strController = locate_template($strControllerName)){
+				require_once $strController;
+			}
+		}));
+	}
+
+	/**
+	 * Registers filters with the template rendering engine
+	 */
+	protected static function _loadVEFilters()
+	{
+		$objTwigDebug = new Twig_SimpleFilter('var_export',function($string){
+			return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
+		});
+
+		$objTwigSanitize = new Twig_SimpleFilter('sanitize',function($strString){
+			return sanitize_title_with_dashes($strString);
+		});
+
+		/**
+		 * @todo all this stuff with the template engine needs to be moved out of here
+		 */
+		self::$objViewEngine->addFilter($objTwigDebug);
+		self::$objViewEngine->addFilter($objTwigSanitize);
+
+
+	}
 }
