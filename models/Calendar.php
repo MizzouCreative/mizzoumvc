@@ -81,6 +81,13 @@ class Calendar extends AbstractTranslator {
 		return $strMonth;
 	}
 
+	/**
+	 * Creates an excerpt from an event description by truncating the description at $intLength length
+	 * @param string $strDescription
+	 * @param int $intLength maximum length of description before we truncate
+	 *
+	 * @return string
+	 */
 	protected function _calculateExcerpt($strDescription='',$intLength=0)
 	{
 		if($strDescription != '' && $intLength > 0 && strlen($strDescription) > $intLength){
