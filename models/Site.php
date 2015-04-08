@@ -37,7 +37,10 @@ class Site extends Base {
         'config_file'       => 'config.ini',
     );
 
-    protected $arySiteOptions = array();
+	/**
+	 * @var array stores options that are loaded in from config.ini
+	 */
+	protected $arySiteOptions = array();
 
     public function __construct($aryOptions = array())
     {
