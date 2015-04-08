@@ -40,7 +40,13 @@ class FourOhFour extends Search{
         parent::__construct($aryData);
     }
 
-    protected function _prepSearchTerms($strRequestURI)
+	/**
+	 * Takes the 404'd url and breaks it apart to determine the search terms passed to the GSA
+	 *
+	 * @param Search $strRequestURI
+	 * @return string search terms
+	 */
+	protected function _prepSearchTerms($strRequestURI)
     {
         $aryReplace = array_fill(0,count($this->aryIgnore),' ');
 
