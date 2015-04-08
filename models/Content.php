@@ -182,7 +182,7 @@ class Content {
          * other CPTs, then we need to include Next & Previous page links
          * @deprecated this has been moved into the Pagination model.
          * @todo delete
-         */
+
         if((is_home() || is_archive()) && $aryOptions['include_pagination']){
             $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
             $strPaginationPrevious = get_previous_posts_link('Newer Entries &raquo;');
@@ -191,7 +191,7 @@ class Content {
 
             $aryViewVariables['PaginationNext'] = $strPaginationNext;
             $aryViewVariables['PaginationPrevious'] = $strPaginationPrevious;
-        }
+        }*/
 
 
         /**
@@ -358,7 +358,8 @@ class Content {
      */
     protected static function _determinePagePath($strPageTitle,$strSiteName='')
     {
-        $aryPath = array();
+        _mizzou_log(null,'deprecated function called',true,array('func'=>__FUNCTION__,'file'=>__FILE__));
+	    $aryPath = array();
 
         if(is_null($strPageTitle)){
             $strPageTitle = self::_determinePageTitle();
@@ -614,7 +615,8 @@ class Content {
      */
     protected static function _adjustPostTypeLabels($strPostType)
     {
-        /**
+	    _mizzou_log(null,'deprecated function called',true,array('func'=>__FUNCTION__,'file'=>__FILE__));
+	    /**
          * For the love of God, wordpress... why do you have such a hard-on for global variables????!?!#@#@!~$!@
          */
         global $wp_post_types;
@@ -643,7 +645,8 @@ class Content {
      */
     protected static function _includeTaxonomyMenu()
     {
-        $aryPubMenu = array();
+	    _mizzou_log(null,'deprecated function called',true,array('func'=>__FUNCTION__,'file'=>__FILE__));
+	    $aryPubMenu = array();
         global $wp_query; //stoopid wordpress globals
         $aryWPQuery = $wp_query->query;
         if(isset($aryWPQuery['post_type'])) unset($aryWPQuery['post_type']);
