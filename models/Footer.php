@@ -1,14 +1,14 @@
 <?php
 /**
  * 
- * TL;DR description 
+ * Retrieves relevant data that needs to be displayed in the footer
  *
- * @package 
- * @subpackage 
- * @category 
- * @category 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category theme
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2014 Curators of the University of Missouri
  */
 
 class Footer extends Subview {
@@ -20,11 +20,17 @@ class Footer extends Subview {
 
 	}
 
+	/**
+	 * Sets copyright (current) year
+	 */
 	protected function _setCopyRightYear()
 	{
 		$this->add_data('CopyrightYear',date('Y'));
 	}
 
+	/**
+	 * Captures and stores the output of wp_footer
+	 */
 	protected function _setWpFooter()
 	{
 		$this->add_data('wpFooter',$this->_captureOutput('wp_footer'));
