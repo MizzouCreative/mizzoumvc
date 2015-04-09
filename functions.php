@@ -329,6 +329,11 @@ function mizzouCreateLabels($strType,$strBaseWord,$strBaseWordPlural='')
     return array_merge($aryBaseLabels,$aryAdditionalLabels);
 }
 
+/**
+ * @param $strPostTypeName
+ * @param array $aryOptions
+ * @todo add an option so that you can pass in a singular label name that we can then pass over to @link mizzouCreatePostTypeLabels()
+ */
 function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
 {
     $aryPostTypeOptions = array(
