@@ -700,7 +700,7 @@ class Content {
             'auto_reload'=>true,
             'autoescape'=>false,
         );
-	    self::$objViewEngine = Twig_Environment($objTELoader,$aryTEOptions);
+	    self::$objViewEngine = new Twig_Environment($objTELoader,$aryTEOptions);
 	    self::_loadVEFilters();
 	    self::_loadVEFunctions();
 	}
