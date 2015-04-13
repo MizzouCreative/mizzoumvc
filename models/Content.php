@@ -256,6 +256,9 @@ class Content {
             }
         } elseif(is_front_page()) {
             $strReturn = "Home";
+        } elseif(is_tax() || is_tag() || is_category()){
+			global $wp_query;
+	        _mizzou_log($wp_query,'the wp_query to figure out how to get the root ancestor when viewing a taxonomy archive',false,array('line'=>__LINE__,'file'=>__FILE__));
         } else {
             //what other situations do we have besides a page and everything else?
             if(FALSE !== $strPostType = get_post_type()){
