@@ -258,8 +258,19 @@ class Content {
             $strReturn = "Home";
         } elseif(is_tax() || is_tag() || is_category()){
 			global $wp_query;
-	        _mizzou_log($wp_query,'the wp_query to figure out how to get the root ancestor when viewing a taxonomy archive',false,array('line'=>__LINE__,'file'=>__FILE__));
-        } else {
+	        if(isset($wp_query->taxonomy)){
+				$objTaxonomy = get_taxonomy($wp_query->taxonomy);
+		        if(false !== $objTaxonomy && isset($objTaxonomy->label) && '' != $objTaxonomy->label){
+			        $strReturn = $objTaxonomy->label;
+		        } else {
+			        $strMsg = 'trying to get the label for taxonomy '. $wp_query->taxonomy .'but the label isnt set or is empty in the taxonomy object';
+			        _mizzou_log($objTaxonomy,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__));
+		        }
+		    } else {
+		        $strMsg = 'we\'re on a taxonomy archive page, yet taxonomy property isnt set in wp_query';
+		        _mizzou_log($wp_query,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__));
+	        }
+	    } else {
             //what other situations do we have besides a page and everything else?
             if(FALSE !== $strPostType = get_post_type()){
                 $objPostType = get_post_type_object($strPostType);
