@@ -258,17 +258,17 @@ class Content {
             $strReturn = "Home";
         } elseif(is_tax() || is_tag() || is_category()){
 			global $wp_query;
-	        if(isset($wp_query->query_vars->taxonomy)){
-				$objTaxonomy = get_taxonomy($wp_query->query_vars->taxonomy);
+	        if(isset($wp_query->query_vars['taxonomy'])){
+				$objTaxonomy = get_taxonomy($wp_query->query_vars['taxonomy']);
 		        if(false !== $objTaxonomy && isset($objTaxonomy->label) && '' != $objTaxonomy->label){
 			        $strReturn = $objTaxonomy->label;
 		        } else {
-			        $strMsg = 'trying to get the label for taxonomy '. $wp_query->query_vars->taxonomy .'but the label isnt set or is empty in the taxonomy object';
+			        $strMsg = 'trying to get the label for taxonomy '. $wp_query->query_vars['taxonomy'] .'but the label isnt set or is empty in the taxonomy object';
 			        _mizzou_log($objTaxonomy,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__));
 		        }
 		    } else {
 		        $strMsg = 'we\'re on a taxonomy archive page, yet taxonomy property isnt set in wp_query';
-		        _mizzou_log($wp_query,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__));
+		        _mizzou_log($wp_query->query_vars,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__));
 	        }
 	    } else {
             //what other situations do we have besides a page and everything else?
