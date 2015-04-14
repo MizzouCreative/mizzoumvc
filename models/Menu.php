@@ -32,7 +32,10 @@ class Menu extends Base {
     public function __construct($aryContext)
     {
         if(isset($aryContext['objSite'])){
-            $this->add_data('objSite',$aryContext['objSite']);
+	        /**
+	         * @todo do we REALLY need to store the entire Site object?
+	         */
+	        $this->add_data('objSite',$aryContext['objSite']);
 
             if(isset($aryContext['objMainPost'])){
                 $this->add_data('objMainPost',$aryContext['objMainPost']);
