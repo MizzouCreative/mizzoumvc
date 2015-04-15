@@ -10,7 +10,7 @@
 #}
 {% extends 'baseView.twig' %}
 {% block content %}
-    <h1>Search</h1>
+    <h1>{{ PageTitle }}</h1>
     {%  if SearchResults is not empty %}
     {{ SearchResults }}
     {% else %}
