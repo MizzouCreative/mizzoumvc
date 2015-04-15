@@ -8,7 +8,7 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
 #}
-    <form class="search-form" action="{{ objSite.siteURL }}search/" method="get" role="search">
+    <form class="search-form" action="{{ objSite.URL }}/search/" method="get" role="search">
         <div class="search-container">
             <input class="search-field" name="q" type="text" onfocus="this.value=''" value="{{ SearchTerms | e }}" title="Search {{ objSite.Name }}"/>
             <input class="search-button" name="sa" type="submit" value="Search" title="Submit Search"/>
