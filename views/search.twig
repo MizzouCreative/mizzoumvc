@@ -11,7 +11,7 @@
 {% extends 'baseView.twig' %}
 {% block content %}
     <h1>{{ PageTitle }}</h1>
-    {% if PageTitle != 'Search' %}
+    {% if PageTitle == 'Page not found' %}
         <p>Oops &#8230; that page does not exist. Here are the closest matches we could find.</p>
     {% endif %}
     {%  if SearchResults is not empty %}
