@@ -164,7 +164,7 @@ class Header extends Subview {
 		 * we want to inject the $wp variable into the aryContext array that is passed in on initialization
 		 */
 		global $wp;
-		$this->add_data('CurrentPageUrl',home_url(add_query_arg(array(),$wp->request)));
+		$this->add_data('CurrentPageUrl',home_url(add_query_arg(array(),$wp->request)).'/');
 	}
 
 	/**

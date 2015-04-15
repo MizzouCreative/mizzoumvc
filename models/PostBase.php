@@ -38,6 +38,7 @@ class PostBase extends Base
             _mizzou_log($mxdPost,$strLogMsg,false,array('func'=>__FUNCTION__));
             $this->add_error($strLogMsg);
             $objPost = null;
+	        return null;
         }
 
         $this->objOriginalPost = $objPost;
