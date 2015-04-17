@@ -22,8 +22,8 @@ $aryCalendarOptions = (isset($arySiteCalendarOptions['excerpt_length'])) ? array
 /**
  * @todo this is a hack.  push these changes back up to the Abstract class for the Calendar
  */
-$strOldTimeZone = date_default_timezone_get();
-date_default_timezone_set('America/Chicago');
+//$strOldTimeZone = date_default_timezone_get();
+//date_default_timezone_set('America/Chicago');
 $objCalendar = new Calendar($aryCalendarOptions);
 
 if(isset($arySiteCalendarOptions['method']) && isset($arySiteCalendarOptions['term'])){
@@ -35,5 +35,5 @@ if(isset($arySiteCalendarOptions['method']) && isset($arySiteCalendarOptions['te
 	_mizzou_log($arySiteCalendarOptions,'you asked me to get calendar items, but it doesnt appear you gave me the data i need.',false,array('line'=>__LINE__,'file'=>__FILE__));
 	$aryData['Events'] = array();
 }
-date_default_timezone_set($strOldTimeZone);
+//date_default_timezone_set($strOldTimeZone);
 Content::render('calendar',$aryData);
