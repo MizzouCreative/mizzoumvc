@@ -73,11 +73,11 @@ function mzuMVCTemplateOverride($strTemplate)
 					$aryFiles[] = $strCurrentAction;
 					mzuMVCPrintData('here are the controllers we will look for in the framework',$aryFiles);
 					$boolFound = false;
-					$strNewTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
+					//$strNewTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
 					while((list($intKey,$strFileName) = each($aryFiles)) && !$boolFound){
-						$strNewTemplate = $strNewTemplatePath.$strFileName.'.php';
+						$strNewTemplate = MIZZOUMVC_ROOT_PATH.$strFileName.'.php';
 						mzuMVCPrintData('full path to the file im going to look for',$strNewTemplate);
-						if(file_exists($strNewTemplate)){
+						if(is_readable($strNewTemplate)){
 							$strTemplate = $strNewTemplate;
 							$boolFound = true;
 						}
