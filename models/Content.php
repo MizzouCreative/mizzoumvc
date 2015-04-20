@@ -696,6 +696,13 @@ class Content {
 
         $aryViewDirectories[] = $strParentThemePath;
 
+        /**
+         * Last include the path to the framework, if it was defined
+         */
+        if(defined('MIZZOUMVC_ROOT_PATH')) {
+            $aryViewDirectories[] = MIZZOUMVC_ROOT_PATH;
+        }
+
         foreach($aryViewDirectories as $intDirectoryKey=>$strDirectory){
             $aryViewDirectories[$intDirectoryKey] = $strDirectory.'views'.DIRECTORY_SEPARATOR;
         }
@@ -778,7 +785,9 @@ class Content {
 		self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
 			//_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
 			//_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
-			if(is_array($mxdControllerName)){
+			$strController = '';
+
+            if(is_array($mxdControllerName)){
 				$aryControllerNameParts = $mxdControllerName;
 			} elseif(is_string($mxdControllerName)){
 				$aryControllerNameParts = explode(' ',trim($mxdControllerName));
@@ -796,7 +805,17 @@ class Content {
 				extract($aryData);
 			}
 
-			if('' != $strController = locate_template($strControllerName)){
+            if('' == $strController = locate_template(($strControllerName)) && defined('MIZZOUMVC_ROOT_PATH')){
+                _mizzou_log(null,'we didnt find a controller in a parent or child theme. gonna look in the plugin framework',false,array('line'=>__LINE__,'file'=>__FILE__));
+                //ok, we didnt find a controller in a parent or child theme, what about the plugin?
+                if(is_readable(MIZZOUMVC_ROOT_PATH.$strControllerName)){
+                    $strController = MIZZOUMVC_ROOT_PATH.$strControllerName;
+                } else {
+                    _mizzou_log(MIZZOUMVC_ROOT_PATH.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
+                }
+            }
+
+			if('' != $strController){
 				require_once $strController;
 			}
 		}));
