@@ -344,7 +344,7 @@ function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
             'title',
             'editor',
             'thumbnail',
-            'revision',
+            'revisions',
          ),
     );
 

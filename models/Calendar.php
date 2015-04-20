@@ -21,6 +21,22 @@ class Calendar extends AbstractTranslator {
 
     public function __construct($aryOptions=array())
     {
+        /**
+         * @todo this functionality should PROBABLY be pushed back up to the AbstractClass, but we'll leave here for now
+         */
+        if(isset($aryOptions['calendar_exception_email']) && !defined('CALENDAR_EXCEPTION_EMAIL')){
+            define('CALENDAR_EXCEPTION_EMAIL',$aryOptions['calendar_exception_email']);
+            unset($aryOptions['calendar_exception_email']);
+        }
+
+        /**
+         * @todo same as above
+         */
+        if(isset($aryOptions['calendar_exception_log']) && !defined('CALENDAR_EXCEPTION_LOG')){
+            define('CALENDAR_EXCEPTION_LOG',$aryOptions['calendar_exception_log']);
+            unset($aryOptions['calendar_exception_log']);
+        }
+
         parent::__construct($aryOptions);
     }
 
