@@ -711,12 +711,13 @@ class Content {
     {
         $objTELoader = self::_initializeViewLoader();
         $strCacheLocation = self::_determineViewCacheLocation();
+        $boolAutoReload = (defined('WP_DEBUG')) ? WP_DEBUG : false;
         /**
          * @todo move this into an options setting?
          */
         $aryTEOptions = array(
             'cache'=>$strCacheLocation,
-            'auto_reload'=>true,
+            'auto_reload'=>$boolAutoReload,
             'autoescape'=>false,
         );
 	    self::$objViewEngine = new Twig_Environment($objTELoader,$aryTEOptions);
