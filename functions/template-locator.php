@@ -26,6 +26,8 @@ function mzuMVCTemplateOverride($strTemplate)
 {
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE){
         mzuMVCPrintData('The current theme is compatible with the MizzouMVC framework',MIZZOUMVC_COMPATIBLE);
+    } else {
+        mzuMVCPrintData('The current theme is not compatible with the MizzouMVC Framework',false);
     }
 	mzuMVCPrintData('template file as given to us by wordpress',$strTemplate);
 	//what template did wordpress match to?
