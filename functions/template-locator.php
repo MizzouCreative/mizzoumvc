@@ -98,6 +98,7 @@ function mzuMVCTemplateOverride($strTemplate)
             }
         }
     }
+    return $strTemplate;
 }
 
 function mzuMVCPrintData($strMsg,$mxdData)
