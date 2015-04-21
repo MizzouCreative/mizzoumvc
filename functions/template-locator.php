@@ -24,7 +24,9 @@ Author URI: http://missouri.edu/
 add_filter('template_include','mzuMVCTemplateOverride');
 function mzuMVCTemplateOverride($strTemplate)
 {
-
+    if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE){
+        mzuMVCPrintData('The current theme is compatible with the MizzouMVC framework',MIZZOUMVC_COMPATIBLE);
+    }
 	mzuMVCPrintData('template file as given to us by wordpress',$strTemplate);
 	//what template did wordpress match to?
 	$strFoundTemplateFile = basename($strTemplate,'.php');
