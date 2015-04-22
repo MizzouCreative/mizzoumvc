@@ -387,9 +387,21 @@ class Site extends Base {
     protected function _loadOptions()
     {
         //load up the framework options
-
+        $aryOptions = $this->_loadOptionsFile(MIZZOUMVC_ROOT_PATH.'config.ini');
         //load up any options from the parent theme
-        $aryOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
+        $arySiteOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
+
+        /**
+         * @todo this needs to be refactored.  We're repeating the same @#$#$ steps
+         */
+        foreach($arySiteOptions as $mxdSiteKey => $mxdSiteVal){
+            if(isset($aryOptions[$mxdSiteKey]) && is_array($mxdSiteVal)){
+                $aryOptions[$mxdSiteKey] = array_merge($aryOptions[$mxdSiteKey],$mxdSiteVal);
+            } else {
+                $aryOptions[$mxdSiteKey] = $mxdSiteVal;
+            }
+        }
+
         //do we have a child site we are working with?
         if($this->aryData['ActiveThemePath'] != $this->aryData['ParentThemePath']){
             $aryChildOptions = $this->_loadOptionsFile($this->aryData['ActiveThemePath'].$this->aryOptions['config_file']);
