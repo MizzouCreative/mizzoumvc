@@ -36,8 +36,8 @@ function mzuMVCTemplateOverride($strTemplate)
         if (1 === preg_match($strPattern, $strFoundTemplateFile, $aryMatches)) {
             $strAction = $aryMatches[0];
             mzuMVCPrintData('just the action', $strAction);
-            //if the found file is front-page, it is the same as home
-            if ($strAction == 'front') $strAction = 'home';
+            //if the found file is front-page, we'll need to call is_front_page
+            if ($strAction == 'front') $strAction .= '_page';
             $strFunctionToCall = 'is_' . $strAction;
             mzuMVCPrintData('the function we\'ll try to call', $strFunctionToCall);
             if (!is_callable($strFunctionToCall) || !call_user_func($strFunctionToCall)) {
