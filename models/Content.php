@@ -270,7 +270,9 @@ class Content {
 		        $strMsg = 'we\'re on a taxonomy archive page, yet taxonomy property isnt set in wp_query';
 		        _mizzou_log($wp_query->query_vars,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__));
 	        }
-	    } else {
+	    } elseif(is_404()){
+            $strReturn = 'Error 404, Page Not Found';
+        } else {
             //what other situations do we have besides a page and everything else?
             if(FALSE !== $strPostType = get_post_type()){
                 $objPostType = get_post_type_object($strPostType);
