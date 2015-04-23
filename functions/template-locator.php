@@ -106,5 +106,5 @@ function mzuMVCTemplateOverride($strTemplate)
 
 function mzuMVCPrintData($strMsg,$mxdData)
 {
-	echo '<p>',$strMsg,'</p>',PHP_EOL,'<pre>',var_export($mxdData,true),PHP_EOL,'</pre>',PHP_EOL;
+	//echo '<p>',$strMsg,'</p>',PHP_EOL,'<pre>',var_export($mxdData,true),PHP_EOL,'</pre>',PHP_EOL;
 }
