@@ -57,6 +57,14 @@ function mzuMVCTemplateOverride($strTemplate)
 
                 if (false !== $strMatchedAction = array_search(true, $aryOverLap)) {
                     mzuMVCPrintData('our current action state', $strMatchedAction);
+
+                    if('is_page' == $strMatchedAction){
+                        //it's possible that if we are on a page, then it has been assigned a specific template file
+                        if(is_page_template(basename($strTemplate))){
+                            mzuMVCPrintData('this was a page assigned to a specific template',null);
+                        }
+                    }
+
                     if (1 === preg_match($strActionPattern, $strMatchedAction, $aryMatchedAction)) {
                         $strCurrentAction = $aryMatchedAction[1];
                         $aryFiles = array();
