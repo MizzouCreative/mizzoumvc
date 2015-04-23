@@ -57,44 +57,39 @@ function mzuMVCTemplateOverride($strTemplate)
 
                 if (false !== $strMatchedAction = array_search(true, $aryOverLap)) {
                     mzuMVCPrintData('our current action state', $strMatchedAction);
-
-                    if('is_page' == $strMatchedAction){
-                        //it's possible that if we are on a page, then it has been assigned a specific template file
-                        if(is_page_template(basename($strTemplate))){
-                            mzuMVCPrintData('this was a page assigned to a specific template',null);
-                        }
-                    }
-
-                    if (1 === preg_match($strActionPattern, $strMatchedAction, $aryMatchedAction)) {
-                        $strCurrentAction = $aryMatchedAction[1];
-                        $aryFiles = array();
-                        switch ($strCurrentAction) {
-                            case 'home':
-                                $aryFiles[] = 'front-page';
-                                break;
-                            case 'single':
-                            case 'archive':
-                                if ($wp_query->query_vars['post_type'] != '') {
-                                    $aryFiles[] = $strCurrentAction . '-' . $wp_query->query_vars['post_type'];
-                                }
-                                break;
-                        }
-
-                        $aryFiles[] = $strCurrentAction;
-                        mzuMVCPrintData('here are the controllers we will look for in the framework', $aryFiles);
-                        $boolFound = false;
-                        //$strNewTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
-                        while ((list($intKey, $strFileName) = each($aryFiles)) && !$boolFound) {
-                            $strNewTemplate = MIZZOUMVC_ROOT_PATH . $strFileName . '.php';
-                            mzuMVCPrintData('full path to the file im going to look for', $strNewTemplate);
-                            if (is_readable($strNewTemplate)) {
-                                $strTemplate = $strNewTemplate;
-                                $boolFound = true;
+                    //it's possible that if we are on a page it has been assigned a specific template
+                    if('is_page' != $strMatchedAction || !is_page_template(basename($strTemplate))){
+                        if (1 === preg_match($strActionPattern, $strMatchedAction, $aryMatchedAction)) {
+                            $strCurrentAction = $aryMatchedAction[1];
+                            $aryFiles = array();
+                            switch ($strCurrentAction) {
+                                case 'home':
+                                    $aryFiles[] = 'front-page';
+                                    break;
+                                case 'single':
+                                case 'archive':
+                                    if ($wp_query->query_vars['post_type'] != '') {
+                                        $aryFiles[] = $strCurrentAction . '-' . $wp_query->query_vars['post_type'];
+                                    }
+                                    break;
                             }
-                        }
 
-                    } else {
-                        //strange, we didnt match...
+                            $aryFiles[] = $strCurrentAction;
+                            mzuMVCPrintData('here are the controllers we will look for in the framework', $aryFiles);
+                            $boolFound = false;
+                            //$strNewTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
+                            while ((list($intKey, $strFileName) = each($aryFiles)) && !$boolFound) {
+                                $strNewTemplate = MIZZOUMVC_ROOT_PATH . $strFileName . '.php';
+                                mzuMVCPrintData('full path to the file im going to look for', $strNewTemplate);
+                                if (is_readable($strNewTemplate)) {
+                                    $strTemplate = $strNewTemplate;
+                                    $boolFound = true;
+                                }
+                            }
+
+                        } else {
+                            //strange, we didnt match...
+                        }
                     }
                 } else {
                     //weird, we dont have ANY states?
