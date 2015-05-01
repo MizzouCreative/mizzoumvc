@@ -24,7 +24,7 @@ add_action('admin_menu','mizzoumvcRegisterAdminMenu');
 add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 
 function mizzoumvcRegisterAdminMenu(){
-    add_options_page('MizzouMVC','MizzouMCV Settings','manage_options','mizzoumvc','mizzoumvcAdminMenuTest');
+    add_options_page('MizzouMVC Settings','MizzouMVC','manage_options','mizzoumvc','mizzoumvcAdminMenuTest');
 }
 
 function mizzoumvcRegisterThemeAdminMenu(){
