@@ -20,22 +20,23 @@ define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 
-add_action('network_admin_menu','mizzoumvcRegisterAdminMenu');
 add_action('admin_menu','mizzoumvcRegisterAdminMenu');
 add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 
 function mizzoumvcRegisterAdminMenu(){
-    add_menu_page('MizzouMVC','MizzouMCV','manage_options','mizzoumvc','mizzoumvcAdminMenuTest',''/* icon location */,'61.1');
+    add_options_page('MizzouMVC','MizzouMCV Settings','manage_options','mizzoumvc','mizzoumvcAdminMenuTest');
 }
 
 function mizzoumvcRegisterThemeAdminMenu(){
-    add_submenu_page('mizzoumvc','Theme Settings','Theme Settings','manage_options','mizzoumvc-theme','mizzoumvcAdminSubPageTest');
+    if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE){
+        add_theme_page('Theme Settings','Theme Settings','edit_theme_options','mizzoumvc-theme','mizzoumvcThemeSettings');
+    }
 }
 
 function mizzoumvcAdminMenuTest(){
-    echo 'MizzouMVC Admin Test';
+    echo 'MizzouMVC Settings Test';
 }
 
-function mizzoumvcAdminSubPageTest(){
-    echo 'MizzouMVC Admin Subpage Test';
+function mizzoumvcThemeSettings(){
+    echo 'MizzouMVC Theme Settings Test';
 }
