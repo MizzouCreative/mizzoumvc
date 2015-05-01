@@ -22,8 +22,14 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 
 add_action('network_admin_menu','mizzoumvcRegisterAdminMenu');
 add_action('admin_menu','mizzoumvcRegisterAdminMenu');
+add_action('admin_menu','mizzoumvcRegisterAdminMenu');
+
 function mizzoumvcRegisterAdminMenu(){
     add_menu_page('MizzouMVC','MizzouMCV','manage_options','mizzoumvc','mizzoumvcAdminMenuTest',''/* icon location */,'61.1');
+}
+
+function mizzoumvcRegisterThemeAdminMenu(){
+    add_submenu_page('mizzoumvc','Theme Settings','Theme Settings','manage_options','mizzoumvc-theme','mizzoumvcAdminSubPageTest');
 }
 
 function mizzoumvcAdminMenuTest(){
