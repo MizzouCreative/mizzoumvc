@@ -94,7 +94,7 @@ function mizzou_setup(){
     remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
     add_action('wp_enqueue_scripts','mizzouRegisterScripts');
-
+    _mizzou_log(null,'in init. getting ready to call Set Up Initial Options',false,array('line'=>__LINE__,'file'=>__FILE__));
     mizzouSetUpInitialOptions();
     
 }
@@ -493,6 +493,7 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
 
 function mizzouSetUpInitialOptions()
 {
+    _mizzou_log(null,'Set Up Initial Options fired!',array('line'=>__LINE__,'file'=>__FILE__));
     /**
      * @todo we should use config.ini as defaults that we want to have added into the settings area of the admin interface
      */
