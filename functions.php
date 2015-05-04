@@ -506,6 +506,7 @@ function mizzouSetUpInitialOptions()
             'post_title' => 'Search',
             'post_content'=>'',
             'post_status'=> 'publish',
+            'post_type' => 'mizzoumvc-settings',
         ),true);
 
         _mizzou_log($intSearchSettingsPost,'return from wp insert post',array('line'=>__LINE__,'file'=>__FILE__));
