@@ -487,7 +487,31 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
             $objQuery->query_vars['posts_per_page'] = -1;
         }
     }
+}
 
+function mizzouSetUpInitialOptions()
+{
+    /**
+     * @todo we should use config.ini as defaults that we want to have added into the settings area of the admin interface
+     */
+    //we only want to do this is the search settings post isnt already there
+    if(null === get_page_by_title('search',OBJECT,'mizzoumvc-settings')){
+        if(!is_wp_error($intSearchSettingsPost = wp_insert_post(array(
+            'post_title' => 'Search',
+            'post_content'=>'',
+            'post_status'=> 'publish',
+        ),true))){
+            //@todo once we're pulling from config.ini, loop through there instead
+            add_post_meta($intSearchSettingsPost,'url','http://search.missouri.edu/search?',true);
+            add_post_meta($intSearchSettingsPost,'site','default_collection',true);
+            add_post_meta($intSearchSettingsPost,'proxystylesheet','wc_basic',true);
+            add_post_meta($intSearchSettingsPost,'client','wc_standard',true);
+            add_post_meta($intSearchSettingsPost,'output','xml_no_dtd',true);
+            add_post_meta($intSearchSettingsPost,'sitesearch',$_SERVER['SERVER_NAME'],true);
+        }
+
+
+    }
 }
 
 /**
