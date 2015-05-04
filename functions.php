@@ -499,12 +499,18 @@ function mizzouSetUpInitialOptions()
      */
     //we only want to do this is the search settings post isnt already there
     $mxdObjPost = get_page_by_title('search',OBJECT,'mizzoumvc-settings');
+    _mizzou_log($mxdObjPost,'return from get page by title',array('line'=>__LINE__,'file'=>__FILE__));
     if( is_null($mxdObjPost) ){
-        if(!is_wp_error($intSearchSettingsPost = wp_insert_post(array(
+
+        $intSearchSettingsPost = wp_insert_post(array(
             'post_title' => 'Search',
             'post_content'=>'',
             'post_status'=> 'publish',
-        ),true))){
+        ),true);
+
+        _mizzou_log($intSearchSettingsPost,'return from wp insert post',array('line'=>__LINE__,'file'=>__FILE__));
+
+        if(!is_wp_error( $intSearchSettingsPost ) && is_numeric($intSearchSettingsPost)){
             //@todo once we're pulling from config.ini, loop through there instead
             add_post_meta($intSearchSettingsPost,'url','http://search.missouri.edu/search?',true);
             add_post_meta($intSearchSettingsPost,'site','default_collection',true);
