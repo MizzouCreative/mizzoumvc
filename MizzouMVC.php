@@ -69,7 +69,7 @@ function mizzouMVCRegisterSettingsCPT()
         ),
         'rewrite'=>false,
         'query_var'=>false,
-        'label' => mizzouCreatePostTypeLabels('Setting'),
+        'labels' => mizzouCreatePostTypeLabels('Setting'),
 
 
     ));
