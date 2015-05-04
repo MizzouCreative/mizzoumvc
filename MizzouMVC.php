@@ -24,11 +24,17 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 //add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
 
+/**
+ * @deprecated
+ */
 function mizzoumvcRegisterAdminMenu()
 {
     add_options_page('MizzouMVC Settings','MizzouMVC','manage_options','mizzoumvc','mizzoumvcAdminMenuTest');
 }
 
+/**
+ * @deprecated
+ */
 function mizzoumvcRegisterThemeAdminMenu()
 {
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE){
@@ -36,11 +42,17 @@ function mizzoumvcRegisterThemeAdminMenu()
     }
 }
 
+/**
+ * @deprecated
+ */
 function mizzoumvcAdminMenuTest()
 {
     echo 'MizzouMVC Settings Test';
 }
 
+/**
+ * @deprecated
+ */
 function mizzoumvcThemeSettings()
 {
     echo 'MizzouMVC Theme Settings Test';
@@ -56,21 +68,19 @@ function mizzouMVCShouldWeRegisterSettingsCPT()
 function mizzouMVCRegisterSettingsCPT()
 {
     mizzouRegisterPostType('mizzoumvc-settings',array(
-        'public'=>false,
-        'has_archive'=>false,
-        'show_ui'=>true,
-        'show_in_nav_menus'=>true,
-        'show_in_menu'=>'themes.php',
-        'menu_position'=>null,
-        'supports'=>array(
-            'title',
-            'custom-fields',
-            'page-attributes'
+        'public'            =>false,
+        'has_archive'       =>false,
+        'show_ui'           =>true,
+        'show_in_nav_menus' =>true,
+        'show_in_menu'      =>'themes.php',
+        'menu_position'     =>null,
+        'supports'          =>array(
+                'title',
+                'custom-fields',
+                'page-attributes'
         ),
-        'rewrite'=>false,
-        'query_var'=>false,
-        'labels' => mizzouCreatePostTypeLabels('Setting'),
-
-
+        'rewrite'           =>false,
+        'query_var'         =>false,
+        'labels'            => mizzouCreatePostTypeLabels('Setting'),
     ));
 }
