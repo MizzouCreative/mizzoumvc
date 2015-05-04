@@ -512,6 +512,8 @@ function mizzouSetUpInitialOptions()
             add_post_meta($intSearchSettingsPost,'client','wc_standard',true);
             add_post_meta($intSearchSettingsPost,'output','xml_no_dtd',true);
             add_post_meta($intSearchSettingsPost,'sitesearch',$_SERVER['SERVER_NAME'],true);
+        } else {
+            _mizzou_log($intSearchSettingsPost,'we were expecting it to not be a wordpress error. is it?',array('line'=>__LINE__,'file'=>__FILE__));
         }
     } else {
         _mizzou_log($mxdObjPost,'we should have received a null but we didnt',false,array('line'=>__LINE__,'file'=>__FILE__));
