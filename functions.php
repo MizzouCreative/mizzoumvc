@@ -495,7 +495,7 @@ function mizzouSetUpInitialOptions()
      * @todo we should use config.ini as defaults that we want to have added into the settings area of the admin interface
      */
     //we only want to do this is the search settings post isnt already there
-    if(null === get_page_by_title('search',OBJECT,'mizzoumvc-settings')){
+    if(null === $objPost = get_page_by_title('search',OBJECT,'mizzoumvc-settings')){
         if(!is_wp_error($intSearchSettingsPost = wp_insert_post(array(
             'post_title' => 'Search',
             'post_content'=>'',
@@ -508,6 +508,8 @@ function mizzouSetUpInitialOptions()
             add_post_meta($intSearchSettingsPost,'client','wc_standard',true);
             add_post_meta($intSearchSettingsPost,'output','xml_no_dtd',true);
             add_post_meta($intSearchSettingsPost,'sitesearch',$_SERVER['SERVER_NAME'],true);
+        } else {
+            _mizzou_log($objPost,'we should have received a null but we didnt',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
 
 
