@@ -387,6 +387,16 @@ class Site extends Base {
     protected function _loadOptions()
     {
         //load up the framework options
+        $objWpBase = new WpBase();
+        $arySettingsPages = $objWpBase->retrieveContent(array(
+            'post_type'=>'mizzoumvc-settings',
+            'include_meta'=>true,
+            'include_image'=>false,
+            ));
+
+        _mizzou_log($arySettingsPages,'settings as retrieved from wp',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+
         $aryOptions = $this->_loadOptionsFile(MIZZOUMVC_ROOT_PATH.'config.ini');
         //load up any options from the parent theme
         $arySiteOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);

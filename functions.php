@@ -493,13 +493,13 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
 
 function mizzouSetUpInitialOptions()
 {
-    _mizzou_log(null,'Set Up Initial Options fired!',array('line'=>__LINE__,'file'=>__FILE__));
+
     /**
      * @todo we should use config.ini as defaults that we want to have added into the settings area of the admin interface
      */
     //we only want to do this is the search settings post isnt already there
     $mxdObjPost = get_page_by_title('search',OBJECT,'mizzoumvc-settings');
-    _mizzou_log($mxdObjPost,'return from get page by title',array('line'=>__LINE__,'file'=>__FILE__));
+
     if( is_null($mxdObjPost) ){
 
         $intSearchSettingsPost = wp_insert_post(array(
