@@ -94,7 +94,7 @@ function mizzou_setup(){
     remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
     add_action('wp_enqueue_scripts','mizzouRegisterScripts');
-    _mizzou_log(null,'in init. getting ready to call Set Up Initial Options',false,array('line'=>__LINE__,'file'=>__FILE__));
+    //_mizzou_log(null,'in init. getting ready to call Set Up Initial Options',false,array('line'=>__LINE__,'file'=>__FILE__));
     mizzouSetUpInitialOptions();
     
 }
@@ -509,7 +509,7 @@ function mizzouSetUpInitialOptions()
             'post_type' => 'mizzoumvc-settings',
         ),true);
 
-        _mizzou_log($intSearchSettingsPost,'return from wp insert post',array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log($intSearchSettingsPost,'return from wp insert post',array('line'=>__LINE__,'file'=>__FILE__));
 
         if(!is_wp_error( $intSearchSettingsPost ) && is_numeric($intSearchSettingsPost)){
             //@todo once we're pulling from config.ini, loop through there instead
@@ -520,10 +520,10 @@ function mizzouSetUpInitialOptions()
             add_post_meta($intSearchSettingsPost,'output','xml_no_dtd',true);
             add_post_meta($intSearchSettingsPost,'sitesearch',$_SERVER['SERVER_NAME'],true);
         } else {
-            _mizzou_log($intSearchSettingsPost,'we were expecting it to not be a wordpress error. is it?',array('line'=>__LINE__,'file'=>__FILE__));
+            //_mizzou_log($intSearchSettingsPost,'we were expecting it to not be a wordpress error. is it?',array('line'=>__LINE__,'file'=>__FILE__));
         }
     } else {
-        _mizzou_log($mxdObjPost,'we should have received a null but we didnt',false,array('line'=>__LINE__,'file'=>__FILE__));
+       // _mizzou_log($mxdObjPost,'we should have received a null but we didnt',false,array('line'=>__LINE__,'file'=>__FILE__));
     }
 }
 
