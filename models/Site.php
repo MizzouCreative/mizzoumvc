@@ -387,6 +387,7 @@ class Site extends Base {
     protected function _loadOptions()
     {
         //load up the framework options
+        $aryOption = array();
         $objWpBase = new WpBase();
         $arySettingsPages = $objWpBase->retrieveContent(array(
             'post_type'=>'mizzoumvc-settings',
@@ -397,16 +398,23 @@ class Site extends Base {
 
 
         foreach($arySettingsPages as $objSettingsPage){
-            _mizzou_log($objSettingsPage->getAllCustomData(),'custom data for ' . $objSettingsPage->title,false,array('line'=>__LINE__,'file'=>__FILE__));
+            /**
+             * @todo
+             * 1. Do we want to make the key the same as the title (name)? Or should we make it the slug?
+             * 2. Should we check to see if we already have a settings page with the same name (which would be a reason
+             *    to use slug instead of name)? and if so, merge?
+             */
+            $aryOptions[$objSettingsPage->title] = $objSettingsPage->getAllCustomData();
         }
 
+        /**
         $aryOptions = $this->_loadOptionsFile(MIZZOUMVC_ROOT_PATH.'config.ini');
         //load up any options from the parent theme
         $arySiteOptions = $this->_loadOptionsFile($this->aryData['ParentThemePath'].$this->aryOptions['config_file']);
 
         /**
          * @todo this needs to be refactored.  We're repeating the same @#$#$ steps
-         */
+         *//*
         foreach($arySiteOptions as $mxdSiteKey => $mxdSiteVal){
             if(isset($aryOptions[$mxdSiteKey]) && is_array($mxdSiteVal)){
                 $aryOptions[$mxdSiteKey] = array_merge($aryOptions[$mxdSiteKey],$mxdSiteVal);
@@ -429,8 +437,8 @@ class Site extends Base {
             } else {
                 $aryOptions[$mxdChildKey] = $mxChildVal;
             }
-        }
-
+        }*/
+        _mizzou_log($aryOptions,'all of our custom options',false,array('line'=>__LINE__,'file'=>__FILE__));
         // add each option so it can be accessed directly.
         foreach($aryOptions as $mxdOptionKey => $mxdOptionVal){
             if(!isset($this->aryData[$mxdOptionKey])){
