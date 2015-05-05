@@ -105,6 +105,11 @@ class MizzouPost extends PostBase
 
     }
 
+    public function getAllCustomData()
+    {
+        return $this->aryCustomData;
+    }
+
     /**
      * @return string the name of the current post's parent
      */
