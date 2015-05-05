@@ -25,6 +25,13 @@ class Base {
     protected  $aryOriginalCustomData   = array();
 
     /**
+     * stores the reformatted custom data
+     *
+     * @var array
+     */
+    protected $aryCustomData = array();
+
+    /**
      * holds the original post object as give to us by wordpress
      * @var null
      */
