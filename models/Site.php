@@ -394,8 +394,11 @@ class Site extends Base {
             'include_image'=>false,
             ));
 
-        _mizzou_log($arySettingsPages,'settings as retrieved from wp',false,array('line'=>__LINE__,'file'=>__FILE__));
 
+
+        foreach($arySettingsPages as $objSettingsPage){
+            _mizzou_log($objSettingsPage->getAllCustomData(),'custom data for ' . $objSettingsPage->title,false,array('line'=>__LINE__,'file'=>__FILE__));
+        }
 
         $aryOptions = $this->_loadOptionsFile(MIZZOUMVC_ROOT_PATH.'config.ini');
         //load up any options from the parent theme
