@@ -198,7 +198,7 @@ class MizzouPost extends PostBase
                 if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
                 $strNewKey = $aryMatch[1];
                 if(!isset($this->aryData[$strNewKey])){
-                    $this->aryData[$strNewKey] = array();
+                    $this->aryData[$strNewKey] = $this->aryCustomData[$strNewKey] = array();
                 } elseif (!is_array($this->aryData[$strNewKey])){
                     if(in_array($strNewKey,$this->aryBaseKeys)){
                         /**
@@ -224,7 +224,7 @@ class MizzouPost extends PostBase
                         //add an s to the key
                         $strNewKey .= 's';
                         //now check to see if the altered key hasnt been set up.
-                        if(!isset($this->aryData[$strNewKey])) $this->aryData[$strNewKey] = array();
+                        if(!isset($this->aryData[$strNewKey])) $this->aryData[$strNewKey] = $this->aryCustomData[$strNewKey] = array();
                     } else {
                         /**
                          * ok we have a situation where there is already a key set up for the group name, but it isnt an
@@ -235,13 +235,13 @@ class MizzouPost extends PostBase
                             . "name needs to become. Fixing it for you, but you should really go back and rename the key.";
                         _mizzou_log($strNewKey,$strLogMsg,false,array('func'=>__FUNCTION__));
                         $strTempData = $this->aryData[$strNewKey];
-                        $this->aryData[$strNewKey] = array($strTempData);
+                        $this->aryData[$strNewKey] = $this->aryCustomData[$strNewKey] = array($strTempData);
                     }
                 }
 
 
                 if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty'] && trim($this->aryOriginalCustomData[$strKeyInGroup][0]) != '')){
-                    $this->aryData[$strNewKey][] = $this->aryOriginalCustomData[$strKeyInGroup][0];
+                    $this->aryData[$strNewKey][] = $this->aryCustomData[$strNewKey][]  = $this->aryOriginalCustomData[$strKeyInGroup][0];
                 }
             }
         }
@@ -350,7 +350,7 @@ class MizzouPost extends PostBase
                 }
 
                 if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty']) && '' != trim($mxdVal[0])){
-                    $this->aryData[$strKey] = $mxdVal[0];
+                    $this->aryData[$strKey] = $this->aryCustomData[$strKey] = $mxdVal[0];
                 }
             }
         }
