@@ -404,7 +404,7 @@ class Site extends Base {
              * 2. Should we check to see if we already have a settings page with the same name (which would be a reason
              *    to use slug instead of name)? and if so, merge?
              */
-            $aryOptions[$objSettingsPage->title] = $objSettingsPage->getAllCustomData();
+            $aryOptions[$objSettingsPage->slug] = $objSettingsPage->getAllCustomData();
         }
 
         /**
