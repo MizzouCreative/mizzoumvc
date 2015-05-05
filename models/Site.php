@@ -454,6 +454,7 @@ class Site extends Base {
 
         //load up a flattened collection of options
         $this->_loadFlattenedOptions($aryOptions);
+        _mizzou_log($this,'our Site object after dealing with the options',false,array('line'=>__LINE__,'file'=>__FILE__));
     }
 
     /**
