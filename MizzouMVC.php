@@ -54,6 +54,7 @@ function mizzouMVCRegisterSettingsCPT()
 
 function mizzouSetUpInitialOptions()
 {
+    _mizzou_log(null,'intial setup options fired!',false,array('func'=>__FUNCTION__,'line'=>__LINE__,'file'=>__FILE__));
     $strConfigFile = dirname(__FILE__).'config.ini';
     //if we can get to our config file and parse it, add a settings page for each grouping
     if(file_exists($strConfigFile) && FALSE != $arySettings = parse_ini_file($strConfigFile,true)){
