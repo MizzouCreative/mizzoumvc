@@ -95,7 +95,7 @@ function mizzou_setup(){
 
     add_action('wp_enqueue_scripts','mizzouRegisterScripts');
     //_mizzou_log(null,'in init. getting ready to call Set Up Initial Options',false,array('line'=>__LINE__,'file'=>__FILE__));
-    mizzouSetUpInitialOptions();
+    //mizzouSetUpInitialOptions();
     
 }
 
