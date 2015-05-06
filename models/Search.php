@@ -24,7 +24,13 @@ class Search extends Base {
              * @todo besides logging an error message, what else should we do?
              */
         } else {
-            $this->aryInternalData['objSite'] = $aryData['objSite'];
+            $arySearchOptions = $aryData['objSite']->search;
+            unset($aryData['objSite']);
+            $this->aryInternalData['search_url'] = $arySearchOptions['url'];
+            unset($arySearchOptions['url']);
+            $this->aryInternalData['search_parameters'] = $arySearchOptions;
+
+
         }
 
         if(isset($aryData['arySearchParams'])){
@@ -63,7 +69,7 @@ class Search extends Base {
 	 */
 	protected function _prepQueryString()
     {
-        $strFullURL = $this->aryInternalData['objSite']->option('search_url').http_build_query($this->SearchParams);
+        $strFullURL = $this->aryInternalData['search_url'].http_build_query($this->SearchParams);
         _mizzou_log($strFullURL,'full URL for searching',false,array('file'=>__FILE__,'line'=>__LINE__));
         return $strFullURL;
     }
@@ -79,7 +85,7 @@ class Search extends Base {
          * let's copy the default params we need (collection/site, front_end, etc) from our site options into our storage
          * array that we'll pass back
          */
-        $arySearchParams = $this->aryInternalData['objSite']->search_parameters;
+        $arySearchParams = $this->aryInternalData['search_parameters'];
 
 
         //did they use s or q?
