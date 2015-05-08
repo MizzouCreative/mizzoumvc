@@ -102,7 +102,7 @@ function mizzouMVCPluginActivation()
 function mizzouAddManagerRole()
 {
     //we dont want to add the manager role if it already exists
-    if(is_null(get_role('manager'))){
+    if(is_null($objManager = get_role('manager'))){
         $aryNewCaps = array(
             'edit_users',
             'list_users',
@@ -124,6 +124,7 @@ function mizzouAddManagerRole()
         } else {
             //what happened?
         }
-        _mizzou_log($objManagerRole,'our manager role',false,array('line'=>__LINE__,'file'=>__FILE__));
+    } else {
+        _mizzou_log($objManager,'our manager role object',false,array('line'=>__LINE__,'file'=>__FILE__));
     }
 }
