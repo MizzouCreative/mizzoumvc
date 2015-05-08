@@ -60,7 +60,8 @@ function mizzouSetUpInitialOptions()
     if(file_exists($strConfigFile) && FALSE != $arySettings = parse_ini_file($strConfigFile,true)){
         foreach($arySettings as $strGroupSettingsKey => $arySettingsVals){
             //we only want to add the post if it doesnt already exist
-            if(is_null($mxdSettingsObject = get_page_by_title($strGroupSettingsKey,OBJECT,'mizzoumvc-settings'))){
+            //why page_by_path? because we're getting what should end up being the slug as the settings page key
+            if(is_null($mxdSettingsObject = get_page_by_path($strGroupSettingsKey,OBJECT,'mizzoumvc-settings'))){
                 $intSettingsPost = wp_insert_post(array(
                     'post_title' => ucwords(str_replace('-',' ',$strGroupSettingsKey)),
                     'post_content'=>'',
