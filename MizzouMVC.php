@@ -96,8 +96,31 @@ function mizzouMVCPluginActivation()
 
 }
 
+/**
+ * @todo lets move this into the Manager class?
+ */
 function mizzouAddManagerRole()
 {
+    $aryNewCaps = array(
+        'edit_users',
+        'list_users',
+        'promote_users',
+        'create_users',
+        'add_users',
+        'delete_users',
+    );
+
+    //get the editor role so we can clone it
     $objEditorRole = get_role('editor');
-    _mizzou_log($objEditorRole,'the default editor role',false,array('line'=>__LINE__,'file'=>__FILE__));
+    //create our new role with the same caps as editor
+    $objManagerRole = add_role('manager','Manager',$objEditorRole->capabilities);
+    if(!is_null($objManagerRole) && $objManagerRole instanceof WP_Role){
+        //now let's add on our extra caps
+        foreach($aryNewCaps as $strNewCap){
+            $objManagerRole->add_cap($strNewCap);
+        }
+    } else {
+        //what happened?
+    }
+    _mizzou_log($objManagerRole,'our manager role',false,array('line'=>__LINE__,'file'=>__FILE__));
 }
