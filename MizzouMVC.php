@@ -23,7 +23,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 //add_action('admin_menu','mizzoumvcRegisterAdminMenu');
 //add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
-register_activation_hook(__FILE__,'mizzouSetUpInitialOptions');
+register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
 function mizzouMVCShouldWeRegisterSettingsCPT()
 {
@@ -87,4 +87,17 @@ function mizzouSetUpInitialOptions()
             }
         }
     }
+}
+
+function mizzouMVCPluginActivation()
+{
+    mizzouSetUpInitialOptions();
+    mizzouAddManagerRole();
+
+}
+
+function mizzouAddManagerRole()
+{
+    $objEditorRole = get_role('editor');
+    _mizzou_log($objEditorRole,'the default editor role',false,array('line'=>__LINE__,'file'=>__FILE__));
 }
