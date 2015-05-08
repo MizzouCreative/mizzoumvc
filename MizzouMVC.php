@@ -101,6 +101,12 @@ function mizzouMVCPluginActivation()
  */
 function mizzouAddManagerRole()
 {
+    //this next section is here for development. once completed, it can be removed
+    if(!is_null(get_role('manager'))){
+        remove_role('manager');
+    }
+
+
     //we dont want to add the manager role if it already exists
     if(is_null($objManager = get_role('manager'))){
         $aryNewCaps = array(
@@ -110,6 +116,7 @@ function mizzouAddManagerRole()
             'create_users',
             'add_users',
             'delete_users',
+            'remove_users',
         );
 
         //get the editor role so we can clone it
