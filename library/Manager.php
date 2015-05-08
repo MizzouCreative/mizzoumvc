@@ -58,8 +58,14 @@ class Manager {
                 //pass through done intentionally
             case "promote_user":
                 if(!isset($aryArgs[0]) || (isset($aryArgs[0]) && $aryArgs[0] != $intUserId)){
-                    //$aryCapabilities[] = 'do_not_allow';
-
+                    if(isset($aryArgs[0])){
+                        $objUserToAdjust = new WP_User(absint($aryArgs[0]));
+                        if($objUserToAdjust->has_cap('administrator') && !current_user_can('administrator')){
+                            $aryCapabilities[] = 'do_not_allow';
+                        }
+                    } else {
+                        $aryCapabilities[] = 'do_not_allow';
+                    }
                 }
 
                 break;
