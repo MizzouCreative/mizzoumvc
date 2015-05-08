@@ -41,7 +41,7 @@ class Manager {
 
     public function mapCapabilities($aryCapabilities,$strCurrentCapability,$intUserId,$aryArgs)
     {
-
+        /**
         $aryDebug = array(
             'capabilities'=>$aryCapabilities,
             'current_cap'=>$strCurrentCapability,
@@ -50,6 +50,8 @@ class Manager {
         );
 
         _mizzou_log($aryDebug,'all the args we were just given',false,array('file'=>__FILE__,'line'=>__LINE__,'func'=>__FUNCTION__));
+        */
+
 
         switch($strCurrentCapability){
             case "edit_user":
@@ -59,18 +61,35 @@ class Manager {
             case "promote_user":
                 if(!isset($aryArgs[0]) || (isset($aryArgs[0]) && $aryArgs[0] != $intUserId)){
                     if(isset($aryArgs[0])){
-                        $objUserToAdjust = new WP_User(absint($aryArgs[0]));
-                        if($objUserToAdjust->has_cap('administrator') && !current_user_can('administrator')){
+                        if(!$this->_canTheyEditThisPerson($aryArgs[0])){
                             $aryCapabilities[] = 'do_not_allow';
                         }
                     } else {
                         $aryCapabilities[] = 'do_not_allow';
                     }
                 }
-
                 break;
+            case 'delete_user':
+                //pass through done intentionally
+            case 'delete_users':
+                if(isset($aryArgs[0])){
+                    if(!$this->_canTheyEditThisPerson($aryArgs[0])){
+                        $aryCapabilities[] = 'do_now_allow';
+                    }
+                }
         }
 
         return $aryCapabilities;
+    }
+
+    protected function _canTheyEditThisPerson($intID)
+    {
+        $boolReturn = true;
+        $objUserToEdit = new WP_User(absint($intID));
+        if($objUserToEdit->has_cap('administrator') && !current_user_can('administrator')){
+            $boolReturn = false;
+        }
+
+        return $boolReturn;
     }
 }
