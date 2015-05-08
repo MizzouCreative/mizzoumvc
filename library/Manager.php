@@ -22,12 +22,18 @@ class Manager {
     /**
      * If the current user is not an administrator, remove the administrator role from the roles list
      *
+     * If they are not a manager, then they shouldnt be able to add a new user as an administrator
+     *
+     * @todo should they be able to add another manager?
+     *
      * @param $aryRoles
+     * @return $aryRoles
      */
     public function removeAdministrator($aryRoles)
     {
         if(isset($aryRoles['administrator']) && !current_user_can('administrator')){
             unset($aryRoles['administrator']);
+            //unset($aryRoles['manager']);
         }
 
         return $aryRoles;
