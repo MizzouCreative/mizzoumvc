@@ -16,7 +16,7 @@ class Manager {
     public function __construct()
     {
         add_filter('editable_roles',array(&$this,'removeAdministrator'));
-        add_filter('map_meta_cap',array(&$this,'mapCapabilities',10,4));
+        add_filter('map_meta_cap',array(&$this,'mapCapabilities'),10,4);
     }
 
     /**
