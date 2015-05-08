@@ -29,6 +29,8 @@ class Manager {
         if(isset($aryRoles['administrator']) && !current_user_can('administrator')){
             unset($aryRoles['administrator']);
         }
+
+        return $aryRoles;
     }
 
     public function mapCapabilities($aryCapabilities,$strCurrentCapability,$intUserId,$aryArgs)
