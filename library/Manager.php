@@ -41,10 +41,16 @@ class Manager {
 
     public function mapCapabilities($aryCapabilities,$strCurrentCapability,$intUserId,$aryArgs)
     {
-        _mizzou_log($aryCapabilities,'list of capabilities',false,array('line'=>__LINE__,'file'=>__FILE__));
-        _mizzou_log($strCurrentCapability,'current capability',false,array('line'=>__LINE__,'file'=>__FILE__));
-        _mizzou_log($intUserId,'user id',false,array('line'=>__LINE__,'file'=>__FILE__));
-        _mizzou_log($aryArgs,'aryArgs',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+        $aryDebug = array(
+            'capabilities'=>$aryCapabilities,
+            'current_cap'=>$strCurrentCapability,
+            'user_id'=>$intUserId,
+            'aryArgs'=>$aryArgs,
+        );
+
+        _mizzou_log($aryDebug,'all the args we were just given',false,array('file'=>__FILE__,'line'=>__LINE__,'func'=>__FUNCTION__));
+
         switch($strCurrentCapability){
             case "edit_user":
                 //pass through done intentionally
