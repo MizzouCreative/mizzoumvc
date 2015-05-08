@@ -33,6 +33,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'Pagination.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'A11yPageWalker.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'DynamicHook.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'Manager.php';
 
 /**
  * @todo which of these can we remove?
@@ -96,6 +97,7 @@ function mizzou_setup(){
     add_action('wp_enqueue_scripts','mizzouRegisterScripts');
     //_mizzou_log(null,'in init. getting ready to call Set Up Initial Options',false,array('line'=>__LINE__,'file'=>__FILE__));
     //mizzouSetUpInitialOptions();
+    $objManager = new Manager();
     
 }
 
