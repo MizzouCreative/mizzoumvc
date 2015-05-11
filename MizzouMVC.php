@@ -88,7 +88,7 @@ function mizzouSetUpInitialOptions()
                     //if so, lets add them
                     foreach($aryDiffKeys as $strCustomSettingKey){
                         if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$arySettingsVals[$strCustomSettingKey],true))){
-                            mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
+                            _mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
                             _mizzou_log($arySettingsVals[$strCustomSettingKey],'we were trying to add the key ' . $strCustomSettingKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
                         }
                     }
