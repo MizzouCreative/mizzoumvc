@@ -83,8 +83,11 @@ function mizzouSetUpInitialOptions()
                 if(!is_wp_error($intSettingsPost) && ctype_digit($intSettingsPost)){
                     //now get all of the custom meta data for this post
                     $aryCustomMeta = get_post_custom($intSettingsPost);
+                    _mizzou_log($arySettingsVals,'setting options for group ' . $strGroupSettingsKey );
+                    _mizzou_log($aryCustomMeta,'custom meta data for post ' . $intSettingsPost,false,array('line'=>__LINE__,'file'=>__FILE__));
                     //see if there are any keys in the config file that werent already in the settings page
                     $aryDiffKeys = array_diff_key($arySettingsVals,$aryCustomMeta);
+                    _mizzou_log($aryDiffKeys,'result from aryDiffKeys',false,array('line'=>__LINE__,'file'=>__FILE__));
                     //if so, lets add them
                     foreach($aryDiffKeys as $strCustomSettingKey){
                         if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$arySettingsVals[$strCustomSettingKey],true))){
