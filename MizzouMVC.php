@@ -89,10 +89,10 @@ function mizzouSetUpInitialOptions()
                     $aryDiffKeys = array_diff_key($arySettingsVals,$aryCustomMeta);
                     _mizzou_log($aryDiffKeys,'result from aryDiffKeys',false,array('line'=>__LINE__,'file'=>__FILE__));
                     //if so, lets add them
-                    foreach($aryDiffKeys as $strCustomSettingKey){
-                        if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$arySettingsVals[$strCustomSettingKey],true))){
+                    foreach($aryDiffKeys as $strCustomSettingKey=>$mxdCustomSettingVal){
+                        if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$mxdCustomSettingVal,true))){
                             _mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
-                            _mizzou_log($arySettingsVals[$strCustomSettingKey],'we were trying to add the key ' . $strCustomSettingKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
+                            _mizzou_log($mxdCustomSettingVal,'we were trying to add the key ' . $strCustomSettingKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
                         }
                     }
                 }
