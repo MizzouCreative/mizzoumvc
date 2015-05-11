@@ -54,9 +54,49 @@ function mizzouMVCRegisterSettingsCPT()
 
 function mizzouSetUpInitialOptions()
 {
-    _mizzou_log(null,'intial setup options fired!',false,array('func'=>__FUNCTION__,'line'=>__LINE__,'file'=>__FILE__));
-    $strConfigFile = dirname(__FILE__).DIRECTORY_SEPARATOR.'config.ini';
     //if we can get to our config file and parse it, add a settings page for each grouping
+    // @todo should config.ini be an option some where?
+    $arySettingsFiles = array(
+        //plugin config.ini
+        dirname(__FILE__).DIRECTORY_SEPARATOR.'config.ini',
+        //theme config.ini
+        get_stylesheet_directory().DIRECTORY_SEPARATOR.'config.ini',
+    );
+
+    foreach($arySettingsFiles as $strSettingsFile){
+        if(count($arySettings = mizzouMVCLoadOptionsFile($strSettingsFile)) > 0){
+            foreach($arySettings as $strGroupSettingsKey => $arySettingsVals){
+                //why page_by_path? because we're getting what should end up being the slug as the settings page key
+                if(is_null($objSettingsPost = get_page_by_path($strGroupSettingsKey,OBJECT,'mizzoumvc-settings'))){
+                    //we dont have a settings page, so let's create one for this group
+                    $intSettingsPost = wp_insert_post(array(
+                        'post_title' => ucwords(str_replace('-',' ',$strGroupSettingsKey)),
+                        'post_content'=>'',
+                        'post_status'=>'publish',
+                        'post_type' => 'mizzoumvc-settings',
+                    ),true);
+                } else {
+                    $intSettingsPost = $objSettingsPost->ID;
+                }
+
+                //let's make double sure we have a post id
+                if(!is_wp_error($intSettingsPost) && ctype_digit($intSettingsPost)){
+                    //now get all of the custom meta data for this post
+                    $aryCustomMeta = get_post_custom($intSettingsPost);
+                    //see if there are any keys in the config file that werent already in the settings page
+                    $aryDiffKeys = array_diff_key($arySettingsVals,$aryCustomMeta);
+                    //if so, lets add them
+                    foreach($aryDiffKeys as $strCustomSettingKey){
+                        if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$arySettingsVals[$strCustomSettingKey],true))){
+                            mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
+                            _mizzou_log($arySettingsVals[$strCustomSettingKey],'we were trying to add the key ' . $strCustomSettingKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /*
     if(file_exists($strConfigFile) && FALSE != $arySettings = parse_ini_file($strConfigFile,true)){
         foreach($arySettings as $strGroupSettingsKey => $arySettingsVals){
             //we only want to add the post if it doesnt already exist
@@ -73,8 +113,7 @@ function mizzouSetUpInitialOptions()
                     if(is_array($arySettingsVals)){
                         foreach($arySettingsVals as $strSettingsKey => $mxdSettingsVal){
                             if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strSettingsKey,$mxdSettingsVal,true))){
-                                _mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
-                                _mizzou_log($mxdSettingsVal,'we were trying to add the key ' . $strSettingsKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
+                                _
                             }
                         }
                     } else {
@@ -87,7 +126,19 @@ function mizzouSetUpInitialOptions()
                 }
             }
         }
+    }*/
+}
+
+function mizzouMVCLoadOptionsFile($strFile)
+{
+    $aryReturn = array();
+    if(is_readable($strFile)){
+        if(false !== $arySettings = parse_ini_file($strFile,true)){
+            $aryReturn = $arySettings;
+        }
     }
+
+    return $aryReturn;
 }
 
 function mizzouMVCPluginActivation()
