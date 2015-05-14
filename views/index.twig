@@ -10,5 +10,15 @@
 #}
 {% extends 'baseView.twig' %}
 {% block content %}
-<div>This is the index template</div>
+    <div id="content">
+        <h1>{{ PageTitle }}</h1>
+        <div id="article">
+            {% if objMainPost is not empty %}
+                {{ objMainPost.content }}
+            {% else %}
+                <div>I'm afraid I have nothing to show you.</div>
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock %}
