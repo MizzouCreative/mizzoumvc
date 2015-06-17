@@ -57,6 +57,7 @@ class Site extends Base {
         $this->add_data('ChildThemePath',$this->_getChildThemePath());
         $this->add_data('ActiveThemePath',$this->_getActiveThemePath());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
+        $this->add_data('IsChild',is_child_theme());
         /**
          * @todo Should this data be moved into the Header model?
          * @deprecated moved to Menu model
