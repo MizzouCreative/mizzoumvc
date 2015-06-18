@@ -60,7 +60,10 @@ class Menu extends Base {
             //we're done with context, so lets kill it since it is likely pretty big
             unset($aryContext);
 
-            if( '' != $aryStaticMenus = $this->aryData['objSite']->option('static_menus')){
+            $arySiteOptions = $this->aryData['objSite']->{site-wide};
+            $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
+            if(count($aryStaticMenuKeys) > 0){
+                $aryStaticMenus = array_intersect_key($arySiteOptions,array_flip($aryStaticMenuKeys));
                 $this->_retrieveStaticMenus($aryStaticMenus);
                 if(isset($this->aryData['Primary']) && ($this->aryData['objSite']->option('inject_primary'))){
                     $this->_injectPrimaryMenu();
