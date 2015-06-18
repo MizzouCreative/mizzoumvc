@@ -61,9 +61,12 @@ class Menu extends Base {
             unset($aryContext);
 
             $arySiteOptions = $this->aryData['objSite']->{site-wide};
+            _mizzou_log($arySiteOptions,'site-wide site options',false,array('file'=>__FILE__,'line'=>__LINE__));
             $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
+            _mizzou_log($aryStaticMenuKeys,'static menu keys that we found in preg_grep',false,array('file'=>__FILE__,'line'=>__LINE__));
             if(count($aryStaticMenuKeys) > 0){
                 $aryStaticMenus = array_intersect_key($arySiteOptions,array_flip($aryStaticMenuKeys));
+                _mizzou_log($aryStaticMenus,'our array of static menus',false,array('file'=>__FILE__,'line'=>__LINE__));
                 $this->_retrieveStaticMenus($aryStaticMenus);
                 if(isset($this->aryData['Primary']) && ($this->aryData['objSite']->option('inject_primary'))){
                     $this->_injectPrimaryMenu();
