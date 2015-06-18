@@ -60,7 +60,7 @@ class Menu extends Base {
             //we're done with context, so lets kill it since it is likely pretty big
             unset($aryContext);
 
-            $arySiteOptions = $this->aryData['objSite']->{site-wide};
+            $arySiteOptions = $this->aryData['objSite']->{'site-wide'};
             _mizzou_log($arySiteOptions,'site-wide site options',false,array('file'=>__FILE__,'line'=>__LINE__));
             $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
             _mizzou_log($aryStaticMenuKeys,'static menu keys that we found in preg_grep',false,array('file'=>__FILE__,'line'=>__LINE__));
