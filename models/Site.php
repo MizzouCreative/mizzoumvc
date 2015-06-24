@@ -58,16 +58,30 @@ class Site extends Base {
         $this->add_data('ActiveThemePath',$this->_getActiveThemePath());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('IsChild',is_child_theme());
+        $this->add_data('IsMultisite',(defined('MULTISITE') && MULTISITE) ? MULTISITE : false);
         /**
-         * @todo Should this data be moved into the Header model?
-         * @deprecated moved to Menu model
+         * Now we need to see if we are in a multisite situation
          */
-        //$this->add_data('AudienceMenu',$this->_getAudienceMenu());
-        /**
-         * @todo Should this data be moved into the Header model?
-         * @deprecated moved to Menu model
-         */
-        //$this->add_data('PrimaryMenu',$this->_getPrimaryMenu());
+        if($this->IsMultisite){
+            //are we on the parent site, or a sub site?
+            if('1' != get_current_blog_id()){
+                switch_to_blog(1);
+                $strParentSiteName = $this->_getSiteName();
+                $strParentSiteURL = $this->_getSiteHomeURL();
+                //and let's load up the options from the Parent site
+                $this->_loadOptions();
+
+            } else {
+                //ok we're on the parent site, so we'll reuse values
+                $strParentSiteName = $this->Name;
+                $strParentSiteURL = $this->URL;
+            }
+
+            $this->add_data('ParentName',$strParentSiteName);
+            $this->add_data('ParentURL',$strParentSiteURL);
+
+            restore_current_blog();
+        }
 
         /**
          * @todo if we are doing this on the constructor, and making it a publicly available member, then why does
@@ -75,7 +89,14 @@ class Site extends Base {
          */
         //$this->getPageList();
         $this->getLastModifiedDate();
-        $this->_loadOptions();
+
+        /**
+         * If we arent in a multisite, or if we are but are in a child site, go load up the options
+         */
+        if(!$this->IsMultisite || ($this->IsMultisite && '1' != get_current_blog_id())){
+            $this->_loadOptions();
+        }
+
     }
 
     /**
@@ -385,17 +406,8 @@ class Site extends Base {
      * Loads options from the parent and child config.ini files
      * return void
      */
-    protected function _loadOptions($boolRetrieveParent=false)
+    protected function _loadOptions()
     {
-        if($boolRetrieveParent){
-            switch_to_blog(1);
-        } else {
-            if(defined('MULTISITE') && MULTISITE && '1' != get_current_blog_id()){
-                $this->_loadOptions(true);
-            }
-        }
-
-
 
         //load up the framework options
         $aryOptions = array();
@@ -463,9 +475,6 @@ class Site extends Base {
         //load up a flattened collection of options
         $this->_loadFlattenedOptions($aryOptions);
         //_mizzou_log($this,'our Site object after dealing with the options',false,array('line'=>__LINE__,'file'=>__FILE__));
-        if($boolRetrieveParent){
-            restore_current_blog();
-        }
     }
 
     /**
