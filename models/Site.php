@@ -398,7 +398,7 @@ class Site extends Base {
 
 
         //load up the framework options
-        $aryOption = array();
+        $aryOptions = array();
         $objWpBase = new WpBase();
         $arySettingsPages = $objWpBase->retrieveContent(array(
             'post_type'=>'mizzoumvc-settings',
