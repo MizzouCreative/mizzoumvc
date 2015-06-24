@@ -385,8 +385,18 @@ class Site extends Base {
      * Loads options from the parent and child config.ini files
      * return void
      */
-    protected function _loadOptions()
+    protected function _loadOptions($boolRetrieveParent=false)
     {
+        if($boolRetrieveParent){
+            switch_to_blog(1);
+        } else {
+            if(defined('MULTISITE') && MULTISITE && '1' != get_current_blog_id()){
+                $this->_loadOptions(true);
+            }
+        }
+
+
+
         //load up the framework options
         $aryOption = array();
         $objWpBase = new WpBase();
@@ -442,20 +452,20 @@ class Site extends Base {
         _mizzou_log($aryOptions,'all of our custom options',false,array('line'=>__LINE__,'file'=>__FILE__));
         // add each option so it can be accessed directly.
         foreach($aryOptions as $mxdOptionKey => $mxdOptionVal){
-            if(!isset($this->aryData[$mxdOptionKey])){
-                $this->add_data($mxdOptionKey,$mxdOptionVal);
-            } else {
-                //well, something isn't right. we shouldnt have an option with a key that already exists
-                /**
-                 * @todo log it? Warning?
-                 */
+            if(isset($this->aryData[$mxdOptionKey])){
+                _mizzou_log($this->aryData[$mxdOptionKey],'looks like we are going to overwrite option' . $mxdOptionKey . '. This is the original value',false,array('line'=>__LINE__,'file'=>__FILE__));
+                _mizzou_log($mxdOptionVal,'this is the new value for option ' . $mxdOptionKey,false,array('line'=>__LINE__,'file'=>__FILE__));
             }
 
+            $this->add_data($mxdOptionKey,$mxdOptionVal);
         }
 
         //load up a flattened collection of options
         $this->_loadFlattenedOptions($aryOptions);
         //_mizzou_log($this,'our Site object after dealing with the options',false,array('line'=>__LINE__,'file'=>__FILE__));
+        if($boolRetrieveParent){
+            restore_current_blog();
+        }
     }
 
     /**
