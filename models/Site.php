@@ -465,8 +465,13 @@ class Site extends Base {
         // add each option so it can be accessed directly.
         foreach($aryOptions as $mxdOptionKey => $mxdOptionVal){
             if(isset($this->aryData[$mxdOptionKey])){
-                _mizzou_log($this->aryData[$mxdOptionKey],'looks like we are going to overwrite option' . $mxdOptionKey . '. This is the original value',false,array('line'=>__LINE__,'file'=>__FILE__));
-                _mizzou_log($mxdOptionVal,'this is the new value for option ' . $mxdOptionKey,false,array('line'=>__LINE__,'file'=>__FILE__));
+                //if the old value is an array, and the new value is an array, merge the two
+                if(is_array($this->aryData[$mxdOptionKey]) && is_array($mxdOptionVal)){
+                    $mxdOptionVal = array_merge($this->aryData[$mxdOptionKey],$mxdOptionVal);
+                } else {
+                    _mizzou_log($this->aryData[$mxdOptionKey],'looks like we are going to overwrite option' . $mxdOptionKey . '. This is the original value',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    _mizzou_log($mxdOptionVal,'this is the new value for option ' . $mxdOptionKey,false,array('line'=>__LINE__,'file'=>__FILE__));
+                }
             }
 
             $this->add_data($mxdOptionKey,$mxdOptionVal);
