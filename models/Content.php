@@ -807,7 +807,7 @@ class Content {
 				extract($aryData);
 			}
 
-            if('' == $strController = locate_template($strControllerName) && defined('MIZZOUMVC_ROOT_PATH')){
+            if(defined('MIZZOUMVC_ROOT_PATH') && '' == $strController = locate_template($strControllerName)){
                 _mizzou_log(null,'we didnt find a controller in a parent or child theme. gonna look in the plugin framework',false,array('line'=>__LINE__,'file'=>__FILE__));
                 //ok, we didnt find a controller in a parent or child theme, what about the plugin?
                 if(is_readable(MIZZOUMVC_ROOT_PATH.$strControllerName)){
@@ -816,7 +816,7 @@ class Content {
                     _mizzou_log(MIZZOUMVC_ROOT_PATH.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
                 }
             }
-            _mizzou_log($strController = locate_template($strControllerName),'direct return from locate_template',false,array('file'=>__FILE__,'line'=>__LINE__));
+            //_mizzou_log($strController = locate_template($strControllerName),'direct return from locate_template',false,array('file'=>__FILE__,'line'=>__LINE__));
             _mizzou_log($strController,'the controller name before we try to require it',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
 			if('' != $strController){
 				require_once $strController;
