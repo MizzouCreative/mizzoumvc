@@ -70,7 +70,7 @@ class Site extends Base {
                 $strParentSiteURL = $this->_getSiteHomeURL();
                 //and let's load up the options from the Parent site
                 $this->_loadOptions();
-
+                restore_current_blog();
             } else {
                 //ok we're on the parent site, so we'll reuse values
                 $strParentSiteName = $this->Name;
@@ -80,7 +80,7 @@ class Site extends Base {
             $this->add_data('ParentName',$strParentSiteName);
             $this->add_data('ParentURL',$strParentSiteURL);
 
-            restore_current_blog();
+
         }
 
         /**
