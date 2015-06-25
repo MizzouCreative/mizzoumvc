@@ -807,7 +807,7 @@ class Content {
 				extract($aryData);
 			}
 
-            if('' == $strController = locate_template(($strControllerName)) && defined('MIZZOUMVC_ROOT_PATH')){
+            if('' == $strController = locate_template($strControllerName) && defined('MIZZOUMVC_ROOT_PATH')){
                 _mizzou_log(null,'we didnt find a controller in a parent or child theme. gonna look in the plugin framework',false,array('line'=>__LINE__,'file'=>__FILE__));
                 //ok, we didnt find a controller in a parent or child theme, what about the plugin?
                 if(is_readable(MIZZOUMVC_ROOT_PATH.$strControllerName)){
