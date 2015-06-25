@@ -69,7 +69,7 @@ class Site extends Base {
                 $strParentSiteName = $this->_getSiteName();
                 $strParentSiteURL = $this->_getSiteHomeURL();
                 //and let's load up the options from the Parent site
-                $this->_loadOptions();
+                $this->_loadOptions();//get the parent options
                 restore_current_blog();
             } else {
                 //ok we're on the parent site, so we'll reuse values
@@ -92,11 +92,12 @@ class Site extends Base {
 
         /**
          * If we arent in a multisite, or if we are but are in a child site, go load up the options
-         */
+
         if(!$this->IsMultisite || ($this->IsMultisite && '1' != get_current_blog_id())){
             $this->_loadOptions();
-        }
+        }*/
 
+        $this->_loadOptions();
     }
 
     /**
