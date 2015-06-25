@@ -46,7 +46,7 @@ class Menu extends Base {
             }
 
 
-            if('' != $aryMenuOptions = $this->aryData['objSite']->menu_options){
+            if('' != $aryMenuOptions = $aryContext['objSite']->menu_options){
                // _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 unset($aryMenuOptions['inject_primary']);//we dont need this one for wp_nav_menu
                 $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
@@ -57,16 +57,21 @@ class Menu extends Base {
             if(isset($aryContext['menuName'])){
                 $this->aryMenuOptions['menu'] = $aryContext['menuName'];
             }
+
+            //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
+            $arySiteOptions = $aryContext['objSite']->{'site-wide'};
             //we're done with context, so lets kill it since it is likely pretty big
+
+            _mizzou_log($arySiteOptions,'site wide options from objSite',false,array('file'=>__FILE__,'line'=>__LINE__));
             unset($aryContext);
 
-            $arySiteOptions = $this->aryData['objSite']->{'site-wide'};
-            _mizzou_log($arySiteOptions,'site-wide site options',false,array('file'=>__FILE__,'line'=>__LINE__));
+
+
             $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
-            _mizzou_log($aryStaticMenuKeys,'static menu keys that we found in preg_grep',false,array('file'=>__FILE__,'line'=>__LINE__));
+
             if(count($aryStaticMenuKeys) > 0){
                 $aryStaticMenus = array_intersect_key($arySiteOptions,array_flip($aryStaticMenuKeys));
-                _mizzou_log($aryStaticMenus,'our array of static menus',false,array('file'=>__FILE__,'line'=>__LINE__));
+
                 $this->_retrieveStaticMenus($aryStaticMenus);
                 if(isset($this->aryData['Primary']) && ($this->aryData['objSite']->option('inject_primary'))){
                     $this->_injectPrimaryMenu();
