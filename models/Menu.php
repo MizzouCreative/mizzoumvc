@@ -35,7 +35,7 @@ class Menu extends Base {
 	        /**
 	         * @todo do we REALLY need to store the entire Site object?
 	         */
-	        $this->add_data('objSite',$aryContext['objSite']);
+	        //$this->add_data('objSite',$aryContext['objSite']);
 
             if(isset($aryContext['objMainPost'])){
                 $this->add_data('objMainPost',$aryContext['objMainPost']);
@@ -60,9 +60,12 @@ class Menu extends Base {
 
             //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
             $arySiteOptions = $aryContext['objSite']->{'site-wide'};
-            //we're done with context, so lets kill it since it is likely pretty big
 
-            _mizzou_log($arySiteOptions,'site wide options from objSite',false,array('file'=>__FILE__,'line'=>__LINE__));
+
+            $this->add_data('inject_primary',$aryContext['objSite']->option('inject_primary'));
+            //for use in self::_determineListElementType
+            $this->add_data('items_wrap',$aryContext['objSite']->option('items_wrap'));
+            //we're done with context, so lets kill it since it is likely pretty big
             unset($aryContext);
 
 
@@ -73,7 +76,10 @@ class Menu extends Base {
                 $aryStaticMenus = array_intersect_key($arySiteOptions,array_flip($aryStaticMenuKeys));
 
                 $this->_retrieveStaticMenus($aryStaticMenus);
-                if(isset($this->aryData['Primary']) && ($this->aryData['objSite']->option('inject_primary'))){
+                /**
+                 * @todo we need to document that if they want to inject the primary menu, the option has to be 'yes'
+                 */
+                if(isset($this->aryData['Primary']) && 'yes' == $this->inject_primary){
                     $this->_injectPrimaryMenu();
                 }
             }
@@ -154,7 +160,7 @@ class Menu extends Base {
     protected function _determineListElementType()
     {
         $strReturn = 'ul';//wordpress default for menus
-        if('' != $strItemsWrap = $this->aryData['objSite']->option('items_wrap')){
+        if('' != $strItemsWrap = $this->items_wrap){
             if(1 === preg_match($this->strPatternItemsWrap,$strItemsWrap,$aryMatches)){
                 $strReturn = $aryMatches[1];
             }
