@@ -15,6 +15,10 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
+/**
+ * @todo let's check to see if the memory is low and then increase if needed
+ */
+ini_set('memory_limit', '128M');
 define('MIZZOUMVC_ROOT_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';
