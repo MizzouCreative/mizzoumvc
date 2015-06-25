@@ -816,7 +816,7 @@ class Content {
                     _mizzou_log(MIZZOUMVC_ROOT_PATH.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
                 }
             }
-
+            _mizzou_log($strController,'the controller name before we try to require it',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
 			if('' != $strController){
 				require_once $strController;
 			}
