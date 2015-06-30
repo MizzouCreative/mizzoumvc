@@ -349,14 +349,22 @@ class MizzouPost extends PostBase
     {
         $intPrefixLen = strlen($aryOptions['meta_prefix']);
         foreach($this->aryOriginalCustomData as $strKey=>$mxdVal){
-            if(0 !== strpos($strKey,'_')){ //we dont need the interal custom data keys=>vals
+            $boolPersonType = false;
+	        if($strKey == 'person_type'){
+	            $boolPersonType = true;
+		        _mizzou_log(null,'ok,we\'re dealing with the person type meta data now.',false,array('line'=>__LINE__,'file'=>__FILE__));
+            }
+	        if(0 !== strpos($strKey,'_')){ //we dont need the interal custom data keys=>vals
                 //is it a serialized value that we need to unserialize?
                 if(is_serialized($mxdVal[0])){
+	                if($boolPersonType) _mizzou_log($mxdVal[0],'person type data is serialized. pre unserialize',false,array('line'=>__LINE__,'file'=>__FILE__));
                     $mxdVal[0] = unserialize($mxdVal[0]);
+	                if($boolPersonType) _mizzou_log($mxdVal[0],'person type data is serialized. POST unserialize',false,array('line'=>__LINE__,'file'=>__FILE__));
                 }
 
                 if(0 !== $intPrefixLen && 0 === strpos($strKey,$aryOptions['meta_prefix'])){
                     $strKey = substr($strKey,$intPrefixLen);
+	                if($boolPersonType) _mizzou_log($strKey,'our person type key post key reformat',false,array('line'=>__LINE__,'file'=>__FILE__));
                 }
 
                 if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty']) && '' != trim($mxdVal[0])){
