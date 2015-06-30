@@ -370,9 +370,9 @@ class MizzouPost extends PostBase
                 if(!$aryOptions['suppress_empty']
                    || (
 		                $aryOptions['suppress_empty'] && (
-			                (is_string($mxdVal[0] && '' != trim($mxdVal[0])))
+			                (is_string($mxdVal[0]) && '' != trim($mxdVal[0]))
 			                ||
-			                (is_array($mxdVal[0]) && count($mxdVal[0]))
+			                (is_array($mxdVal[0]) && count($mxdVal[0]) > 0)
 		                )
 	                   )
                     ) //end if
