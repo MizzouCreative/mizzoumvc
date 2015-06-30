@@ -367,7 +367,16 @@ class MizzouPost extends PostBase
 	                if($boolPersonType) _mizzou_log($strKey,'our person type key post key reformat',false,array('line'=>__LINE__,'file'=>__FILE__));
                 }
 
-                if(!$aryOptions['suppress_empty'] || ($aryOptions['suppress_empty']) && '' != trim($mxdVal[0])){
+                if(!$aryOptions['suppress_empty']
+                   || (
+		                $aryOptions['suppress_empty'] && (
+			                (is_string($mxdVal[0] && '' != trim($mxdVal[0])))
+			                ||
+			                (is_array($mxdVal[0]) && count($mxdVal[0]))
+		                )
+	                   )
+                    ) //end if
+                {
                     $this->aryData[$strKey] = $this->aryCustomData[$strKey] = $mxdVal[0];
                 }
             }
