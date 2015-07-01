@@ -256,7 +256,7 @@ class WpBase
 		        $aryMizzouPostOptions['taxonomies'] = $aryOptions['taxonomies'];
 	        }
 //_mizzou_log($aryMizzouPostOptions,'collection of options Ill pass into MizzouPost',false,array('line'=>__LINE__,'file'=>__FILE__));
-	        $objMizzouPost = new MizzouPost($objPost,$aryMizzouPostOptions);
+	        $objMizzouPost = $this->_newPostInstance($objPost,$aryMizzouPostOptions);
 
 	        /**
 	         * Do we need to include an attachment URL?
@@ -382,6 +382,16 @@ class WpBase
         $this->strArchivePermalink = get_post_type_archive_link($this->strPostType);
     }
 
-
+    /**
+     * Here so child classes can override it
+     *
+     * @param WP_Post $objPost
+     * @param array $aryOptions
+     * @return MizzouPost
+     */
+    protected function _newPostInstance($objPost,$aryOptions)
+    {
+        return new MizzouPost($objPost,$aryOptions);
+    }
 }
 ?>
