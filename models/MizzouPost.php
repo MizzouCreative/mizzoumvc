@@ -347,6 +347,7 @@ class MizzouPost extends PostBase
      */
     private function _reformatMetaData($aryOptions)
     {
+        _mizzou_log($aryOptions['meta_prefix'],'the meta_prefix',false,array('line'=>__LINE__,'file'=>__FILE__));
         $intPrefixLen = strlen($aryOptions['meta_prefix']);
         foreach($this->aryOriginalCustomData as $strKey=>$mxdVal){
             $boolPersonType = false;
