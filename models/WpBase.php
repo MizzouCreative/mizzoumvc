@@ -402,10 +402,10 @@ class WpBase
     private function _instantiateNewPost($objPost,$aryOptions)
     {
         $objNewPost = $this->_newPostInstance($objPost,$aryOptions);
-        if(is_subclass_of($objNewPost,'MizzouPost')){
+        if(is_subclass_of($objNewPost,'MizzouPost') || is_a($objNewPost,'MizzouPost')){
             return $objNewPost;
         } else {
-            $strMsg = 'object returned from self::_newPostInstance must be a child instance of MizzouPost. Halting further execution.';
+            $strMsg = 'object returned from self::_newPostInstance must be an instance of MizzouPost or a child instance of MizzouPost. Halting further execution.';
             _mizzou_log($objNewPost,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
             exit('check the logs');
         }
