@@ -256,8 +256,8 @@ class WpBase
 		        $aryMizzouPostOptions['taxonomies'] = $aryOptions['taxonomies'];
 	        }
 //_mizzou_log($aryMizzouPostOptions,'collection of options Ill pass into MizzouPost',false,array('line'=>__LINE__,'file'=>__FILE__));
-	        $objMizzouPost = $this->_newPostInstance($objPost,$aryMizzouPostOptions);
-
+	        $objMizzouPost = $this->_instantiateNewPost($objPost,$aryMizzouPostOptions);
+            
 	        /**
 	         * Do we need to include an attachment URL?
 	         * @todo can we do something to combine this with the include_attachments area below?
@@ -393,5 +393,23 @@ class WpBase
     {
         return new MizzouPost($objPost,$aryOptions);
     }
+
+    /**
+     * @param mixed $objPost WP_Post or integer post id
+     * @param array $aryOptions
+     * @return MizzouPost or derived child
+     */
+    private function _instantiateNewPost($objPost,$aryOptions)
+    {
+        $objNewPost = $this->_newPostInstance($objPost,$aryOptions);
+        if(is_subclass_of($objNewPost,'MizzouPost')){
+            return $objNewPost;
+        } else {
+            $strMsg = 'object returned from self::_newPostInstance must be a child instance of MizzouPost. Halting further execution.';
+            _mizzou_log($objNewPost,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
+            exit('check the logs');
+        }
+    }
+
 }
 ?>
