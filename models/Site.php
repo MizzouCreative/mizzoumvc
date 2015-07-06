@@ -462,7 +462,7 @@ class Site extends Base {
                 $aryOptions[$mxdChildKey] = $mxChildVal;
             }
         }*/
-        _mizzou_log($aryOptions,'all of our custom options',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log($aryOptions,'all of our custom options',false,array('line'=>__LINE__,'file'=>__FILE__));
         // add each option so it can be accessed directly.
         foreach($aryOptions as $mxdOptionKey => $mxdOptionVal){
             if(isset($this->aryData[$mxdOptionKey])){
