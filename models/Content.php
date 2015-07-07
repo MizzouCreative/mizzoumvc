@@ -876,6 +876,8 @@ class Content {
                     }
 
                     $strReturn = substr($strMonth,0,$intTruncLen) . '.';
+                } else {
+                    $strReturn = $strMonth;
                 }
             }
 
