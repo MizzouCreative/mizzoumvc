@@ -865,6 +865,8 @@ class Content {
                 $strMonth = date('F',$intTimeStamp);
             }
 
+            _mizzou_log($strMonth,'do we have a month at this point? apmonth filter',false,array('line'=>__LINE__,'file'=>__FILE__));
+
             if(!is_null($strMonth)){
                 if(strlen($strMonth) > 5){ //stoopid september... grumble, grumble
                     if($strMonth == 'September'){
