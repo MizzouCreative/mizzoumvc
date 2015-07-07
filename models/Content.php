@@ -843,7 +843,7 @@ class Content {
         $objTwigAPMonth = new Twig_SimpleFilter('apmonth',function($mxdDate){
             $intTimeStamp = null;
             $strMonth = null;
-            $strReturn = $mxdDate;
+            $strReturn = 'couldnt convert month';
             _mizzou_log($mxdDate,'date data handed to apmonth twig filter. it is of type ' . gettype($mxdDate) ,false,array('line'=>__LINE__,'file'=>__FILE__));
 
             if(is_string($mxdDate)){
