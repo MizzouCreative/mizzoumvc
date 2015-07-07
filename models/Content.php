@@ -837,11 +837,54 @@ class Content {
 			return sanitize_title_with_dashes($strString);
 		});
 
+        /**
+         * Given a timestamp, a string formatted date, or a full month, we'll convert it to an AP-style month
+         */
+        $objTwigAPMonth = new Twig_SimpleFilter('apmonth',function($mxdDate){
+            $intTimeStamp = null;
+            $strMonth = null;
+            $strReturn = $mxdDate;
+            if(is_string($mxdDate)){
+                //we have some time of string representation of a date
+                $aryCalendarInfo = cal_info(0);
+                //do we have a full month?
+                if(in_array($mxdDate,$aryCalendarInfo['months'])){
+                    //ok we have our month
+                    $strMonth = $mxdDate;
+                } else {
+                    $intTimeStamp = strtotime($mxdDate);
+                }
+            } elseif(is_numeric($mxdDate)) {
+                //we'll assume they gave us a timestamp
+                $intTimeStamp = $mxdDate;
+            }
+
+            if(!is_null($intTimeStamp) && false !== $intTimeStamp){
+                $strMonth = date('F',$intTimeStamp);
+            }
+
+            if(!is_null($strMonth)){
+                if(strlen($strMonth) > 5){ //stoopid september... grumble, grumble
+                    if($strMonth == 'September'){
+                        $intTruncLen = 4;
+                    } else {
+                        $intTruncLen = 3;
+                    }
+
+                    $strReturn = substr($strMonth,0,$intTruncLen) . '.';
+                }
+            }
+
+            return $strReturn;
+
+        });
+
 		/**
 		 * @todo all this stuff with the template engine needs to be moved out of here
 		 */
 		self::$objViewEngine->addFilter($objTwigDebug);
 		self::$objViewEngine->addFilter($objTwigSanitize);
+        self::$objViewEngine->addFilter($objTwigAPMonth);
 
 
 	}
