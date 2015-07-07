@@ -844,6 +844,8 @@ class Content {
             $intTimeStamp = null;
             $strMonth = null;
             $strReturn = $mxdDate;
+            _mizzou_log($mxdDate,'date data handed to apmonth twig filter. it is of type ' . gettype($mxdDate) ,false,array('line'=>__LINE__,'file'=>__FILE__));
+
             if(is_string($mxdDate)){
                 //we have some time of string representation of a date
                 $aryCalendarInfo = cal_info(0);
