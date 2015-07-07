@@ -843,8 +843,7 @@ class Content {
         $objTwigAPMonth = new Twig_SimpleFilter('apmonth',function($mxdDate){
             $intTimeStamp = null;
             $strMonth = null;
-            $strReturn = 'couldnt convert month';
-            _mizzou_log($mxdDate,'date data handed to apmonth twig filter. it is of type ' . gettype($mxdDate) ,false,array('line'=>__LINE__,'file'=>__FILE__));
+            $strReturn = $mxdDate;
 
             if(is_string($mxdDate)){
                 //we have some time of string representation of a date
@@ -864,8 +863,6 @@ class Content {
             if(!is_null($intTimeStamp) && false !== $intTimeStamp){
                 $strMonth = date('F',$intTimeStamp);
             }
-
-            _mizzou_log($strMonth,'do we have a month at this point? apmonth filter',false,array('line'=>__LINE__,'file'=>__FILE__));
 
             if(!is_null($strMonth)){
                 if(strlen($strMonth) > 5){ //stoopid september... grumble, grumble
