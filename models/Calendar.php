@@ -37,6 +37,12 @@ class Calendar extends AbstractTranslator {
             unset($aryOptions['calendar_exception_log']);
         }
 
+        /**
+         * now we need to strip out any of the options that have been passed in that arent keys in the default
+         */
+
+        $aryOptions = array_intersect_key($aryOptions,$this->aryOptions);
+
         parent::__construct($aryOptions);
     }
 
