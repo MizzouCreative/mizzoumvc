@@ -65,8 +65,13 @@ class Calendar extends AbstractTranslator {
         $objReturn->End             = strtotime((string)$objEvent->event_instances[0]->event_instance->end);
 	    $objReturn->StartMonth      = date('F',$objReturn->Start);
 	    $objReturn->StartAPMonth    = $this->_getAPMonth($objReturn->StartMonth);
+        /**
+         * @todo should probably add a time format option to the AbstractTranslator
+         */
+        $objReturn->StartTime       = date('g:i a',$objReturn->Start);
 	    $objReturn->EndMonth        = date('F',$objReturn->End);
 	    $objReturn->EndAPMonth      = $this->_getAPMonth(($objReturn->EndMonth));
+        $objReturn->EndTime         = date('g:i a',$objReturn->End);
 	    $objReturn->StartDay        = date('j',$objReturn->Start);
 	    $objReturn->StartDayofTheWeek= date('l',$objReturn->Start);
 	    $objReturn->EndDay          = date('j',$objReturn->End);
