@@ -201,7 +201,8 @@ class MizzouPost extends PostBase
         //loop through each match, pull out the group component and add it the group array
         foreach($aryMetaGroupKeys as $strKeyInGroup){
                 if(1 === preg_match($strFullPattern,$strKeyInGroup,$aryMatch)){
-                $strNewKey = $aryMatch[1];
+                    _mizzou_log($aryMatch,'we have a pregmatch on ' . $strKeyInGroup.'. here is the match',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    $strNewKey = $aryMatch[1];
                 if(!isset($this->aryData[$strNewKey])){
                     $this->aryData[$strNewKey] = $this->aryCustomData[$strNewKey] = array();
                 } elseif (!is_array($this->aryData[$strNewKey])){
