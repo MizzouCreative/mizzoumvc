@@ -500,7 +500,7 @@ function embedGoogleMap( $aryMatches ) {
     parse_str($query['query'], $qvars);
     $width = isset($qvars['w']) ? $qvars['w'] : 600;
     $height = isset($qvars['w']) ? $qvars['h'] : 450;
-    $strEmbed = '<iframe width="'.$width.'" height="'.$height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$aryMatches[0].'"></iframe>';
+    $strEmbed = '<iframe width="'.$width.'" height="'.$height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$aryMatches[0].'&output=embed"></iframe>';
     return apply_filters( 'embed_g_map', $strEmbed );
 }
 
