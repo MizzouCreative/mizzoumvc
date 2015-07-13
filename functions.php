@@ -99,7 +99,7 @@ function mizzou_setup(){
     //mizzouSetUpInitialOptions();
     $objManager = new Manager();
 
-    wp_embed_register_handler( 'google_map', '#http://maps\.google\.com/maps(.*)#i', 'embedGoogleMap' );
+    wp_embed_register_handler( 'google_map', '#https?://(maps|www)?\.google\.com/maps(.*)#i', 'embedGoogleMap' );
     
 }
 
