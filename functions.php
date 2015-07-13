@@ -98,6 +98,8 @@ function mizzou_setup(){
     //_mizzou_log(null,'in init. getting ready to call Set Up Initial Options',false,array('line'=>__LINE__,'file'=>__FILE__));
     //mizzouSetUpInitialOptions();
     $objManager = new Manager();
+
+    wp_embed_register_handler( 'google_map', '#http://maps\.google\.com/maps(.*)#i', 'embedGoogleMap' );
     
 }
 
@@ -491,6 +493,15 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
             $objQuery->query_vars['posts_per_page'] = -1;
         }
     }
+}
+
+function embedGoogleMap( $aryMatches ) {
+    $query = parse_url($aryMatches[0]);
+    parse_str($query['query'], $qvars);
+    $width = isset($qvars['w']) ? $qvars['w'] : 600;
+    $height = isset($qvars['w']) ? $qvars['h'] : 450;
+    $strEmbed = '<iframe width="'.$width.'" height="'.$height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$aryMatches[0].'"></iframe>';
+    return apply_filters( 'embed_g_map', $strEmbed );
 }
 
 /**
