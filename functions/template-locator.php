@@ -39,7 +39,15 @@ function mzuMVCTemplateOverride($strTemplate)
             $strAction = $aryMatches[0];
             _mizzou_log($strAction,'just the action',false, array('line'=>__LINE__,'file'=>__FILE__) );
             //if the found file is front-page, we'll need to call is_front_page
-            if ($strAction == 'front') $strAction .= '_page';
+            switch ($strAction){
+                case 'front':
+                    $strAction .= '_page';
+                    break;
+                case 'taxonomy':
+                    $strAction = 'tax';
+                    break;
+            }
+
             $strFunctionToCall = 'is_' . $strAction;
             _mizzou_log($strFunctionToCall,'the function we\'ll try to call', false, array('line'=>__LINE__,'file'=>__FILE__));
             if (!is_callable($strFunctionToCall) || !call_user_func($strFunctionToCall)) {
