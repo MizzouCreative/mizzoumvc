@@ -24,6 +24,7 @@ Author URI: http://missouri.edu/
 add_filter('template_include','mzuMVCTemplateOverride');
 function mzuMVCTemplateOverride($strTemplate)
 {
+    _mizzou_log(null,'template override function called',false,array('line'=>__LINE__,'file'=>__FILE__));
     //we only want to change the template if it is a compatible theme
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE) {
 
