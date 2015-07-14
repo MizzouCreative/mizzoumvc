@@ -106,7 +106,7 @@ function mzuMVCTemplateOverride($strTemplate)
     return $strTemplate;
 }
 
-function _mizzou_log($strMsg,$mxdData)
-{
+//function _mizzou_log($strMsg,$mxdData)
+//{
 	//echo '<p>',$strMsg,'</p>',PHP_EOL,'<pre>',var_export($mxdData,true),PHP_EOL,'</pre>',PHP_EOL;
-}
+//}
