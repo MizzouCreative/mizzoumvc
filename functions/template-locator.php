@@ -25,19 +25,19 @@ add_filter('template_include','mzuMVCTemplateOverride');
 function mzuMVCTemplateOverride($strTemplate)
 {
     //echo 'template override called.';exit;
-    _mizzou_log(null,'template override function called',false,array('line'=>__LINE__,'file'=>__FILE__));
+    //_mizzou_log(null,'template override function called',false,array('line'=>__LINE__,'file'=>__FILE__));
     //we only want to change the template if it is a compatible theme
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE) {
 
-        _mizzou_log($strTemplate,'template file as given to us by wordpress', false, array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log($strTemplate,'template file as given to us by wordpress', false, array('line'=>__LINE__,'file'=>__FILE__));
         //what template did wordpress match to?
         $strFoundTemplateFile = basename($strTemplate, '.php');
-        _mizzou_log($strFoundTemplateFile,'just the filename',false, array('line'=>__LINE__,'file'=>__FILE__) );
+        //_mizzou_log($strFoundTemplateFile,'just the filename',false, array('line'=>__LINE__,'file'=>__FILE__) );
         //we want the main state, not a sub
         $strPattern = '/^(\w+)/';
         if (1 === preg_match($strPattern, $strFoundTemplateFile, $aryMatches)) {
             $strAction = $aryMatches[0];
-            _mizzou_log($strAction,'just the action',false, array('line'=>__LINE__,'file'=>__FILE__) );
+            //_mizzou_log($strAction,'just the action',false, array('line'=>__LINE__,'file'=>__FILE__) );
             //if the found file is front-page, we'll need to call is_front_page
             switch ($strAction){
                 case 'front':
@@ -49,24 +49,24 @@ function mzuMVCTemplateOverride($strTemplate)
             }
 
             $strFunctionToCall = 'is_' . $strAction;
-            _mizzou_log($strFunctionToCall,'the function we\'ll try to call', false, array('line'=>__LINE__,'file'=>__FILE__));
+            //_mizzou_log($strFunctionToCall,'the function we\'ll try to call', false, array('line'=>__LINE__,'file'=>__FILE__));
             if (!is_callable($strFunctionToCall) || !call_user_func($strFunctionToCall)) {
                 //so either we have an action that isn't callable, or it was and returned false
                 global $wp_query;
 
                 //_mizzou_log('contents of wp_query', $wp_query);
                 $aryWPQueryClassVars = get_object_vars($wp_query);
-                _mizzou_log($aryWPQueryClassVars,'contents of aryWPQueryClassVars',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                //_mizzou_log($aryWPQueryClassVars,'contents of aryWPQueryClassVars',false, array('line'=>__LINE__,'file'=>__FILE__) );
                 $strActionPattern = '/^is_(\w+)/';
                 $aryIsKeys = preg_grep($strActionPattern, array_keys($aryWPQueryClassVars));
-                _mizzou_log($aryIsKeys,'matched is_* keys',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                //_mizzou_log($aryIsKeys,'matched is_* keys',false, array('line'=>__LINE__,'file'=>__FILE__) );
 
                 $aryOverLap = array_intersect_key($aryWPQueryClassVars, array_flip($aryIsKeys));
 
-                _mizzou_log($aryOverLap,'our overlap data',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                //_mizzou_log($aryOverLap,'our overlap data',false, array('line'=>__LINE__,'file'=>__FILE__) );
 
                 if (false !== $strMatchedAction = array_search(true, $aryOverLap)) {
-                    _mizzou_log( $strMatchedAction,'our current action state',false, array('line'=>__LINE__,'file'=>__FILE__));
+                    //_mizzou_log( $strMatchedAction,'our current action state',false, array('line'=>__LINE__,'file'=>__FILE__));
                     //it's possible that if we are on a page it has been assigned a specific template
                     if('is_page' != $strMatchedAction || !is_page_template(basename($strTemplate))){
                         if (1 === preg_match($strActionPattern, $strMatchedAction, $aryMatchedAction)) {
@@ -85,12 +85,12 @@ function mzuMVCTemplateOverride($strTemplate)
                             }
 
                             $aryFiles[] = $strCurrentAction;
-                            _mizzou_log($aryFiles,'here are the controllers we will look for in the framework',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                            //_mizzou_log($aryFiles,'here are the controllers we will look for in the framework',false, array('line'=>__LINE__,'file'=>__FILE__) );
                             $boolFound = false;
                             //$strNewTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
                             while ((list($intKey, $strFileName) = each($aryFiles)) && !$boolFound) {
                                 $strNewTemplate = MIZZOUMVC_ROOT_PATH . $strFileName . '.php';
-                                _mizzou_log($strNewTemplate,'full path to the file im going to look for',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                                //_mizzou_log($strNewTemplate,'full path to the file im going to look for',false, array('line'=>__LINE__,'file'=>__FILE__) );
                                 if (is_readable($strNewTemplate)) {
                                     $strTemplate = $strNewTemplate;
                                     $boolFound = true;
@@ -107,7 +107,7 @@ function mzuMVCTemplateOverride($strTemplate)
                 }
 
             } else {
-                _mizzou_log(null,'the file matches the action so need to intervene',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                //_mizzou_log(null,'the file matches the action so need to intervene',false, array('line'=>__LINE__,'file'=>__FILE__) );
             }
         }
     }
