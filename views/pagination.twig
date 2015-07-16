@@ -1,0 +1,24 @@
+{#
+ * 
+ * 
+ * @package WordPress
+ * @subpackage truman.missouri.edu-part_deux
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
+#}
+
+{% if Pagination is not empty and Pagination.paged %}
+    <div class="page-wrap">
+        <ul>
+            {% for PageItem in Pagination.pages %}
+                <li{% if PageItem.class is not empty %} class="{{ PageItem.class }}"{% endif %}>
+                    {% if PageItem.href is not empty %}<a href="{{ PageItem.href }}">{% endif %}
+                        {{ PageItem.text }}
+                        {% if PageItem.href is not empty %}</a>{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
