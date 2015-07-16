@@ -637,6 +637,7 @@ class Content {
     protected static function _adjustPostTypeLabels($strPostType)
     {
 	    _mizzou_log(null,'deprecated function called',true,array('func'=>__FUNCTION__,'file'=>__FILE__));
+        return;
 	    /**
          * For the love of God, wordpress... why do you have such a hard-on for global variables????!?!#@#@!~$!@
          */
