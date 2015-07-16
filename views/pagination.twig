@@ -8,9 +8,11 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
 #}
-
 {% if Pagination is not empty and Pagination.paged %}
-    <div class="page-wrap">
+    {% if PaginationClass is empty %}
+        {% set PaginationClass = 'page-wrap' %}
+    {% endif %}
+    <div class="{{ PaginationClass }}">
         <ul>
             {% for PageItem in Pagination.pages %}
                 <li{% if PageItem.class is not empty %} class="{{ PageItem.class }}"{% endif %}>
