@@ -169,8 +169,9 @@ class MizzouPost extends PostBase
 
     public function _setAncestors()
     {
-        $aryAncestors = get_post_ancestors($this->aryData['ID']);
-        foreach($aryAncestors as $intAncestor){
+        $aryAncestors = array();
+        //_mizzou_log($aryAncestors,'list of post ancestors for post ' . $this->aryData['ID'],false,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
+        foreach(get_post_ancestors($this->aryData['ID']) as $intAncestor){
             $aryAncestors[$intAncestor] = get_the_title($intAncestor);
         }
 
