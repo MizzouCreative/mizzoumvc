@@ -14,14 +14,13 @@
 
 class Breadcrumbs extends Base {
 
-
+    protected $aryCrumbs;
 
     public function __construct($strPageTitle, $aryAncestors = array(), $aryOptions = array())
     {
-        $aryPagePath = array();
 
         if(count($aryAncestors) > 0 ){
-            $aryPagePath[] = $this->_createNewMember($strPageTitle,'');
+            $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
             foreach($aryAncestors as $intID => $strName){
                 $aryAncestors[] = array(
                     'name'  => $strPageTitle,
@@ -41,8 +40,8 @@ class Breadcrumbs extends Base {
             }
 
             if(is_single()){
-                $aryPagePath[] = $this->_createNewMember($strPageTitle,'');
-                $aryPagePath[] = $this->_createNewMember($strPostTypeName,$strPostTypeURL);
+                $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
+                $this->aryCrumbs[] = $this->_createNewMember($strPostTypeName,$strPostTypeURL);
             } else {
                 //now we've got all of the other types of archives...
                 if(is_date()){
@@ -52,7 +51,7 @@ class Breadcrumbs extends Base {
                     $strMonth = get_the_time('M');
                     $strMonthURL = '';
 
-                    switch($this->_determineDateArchiveType()){
+                    switch($strDateArchiveType = $this->_determineDateArchiveType()){
                         case 'day':
                             $aryPagePath[] = $this->_createNewMember(get_the_time('d'),'');
                             $strMonthURL = get_month_link($strYear,$strMonth);
@@ -64,23 +63,51 @@ class Breadcrumbs extends Base {
                              * format
                              */
                             $objDate = DateTime::createFromFormat('!m',$strMonth);
-                            $aryPagePath[] = $this->_createNewMember($objDate->format('F'),$strMonthURL);
+                            $this->aryCrumbs[] = $this->_createNewMember($objDate->format('F'),$strMonthURL);
                             //if we started with month, we wont have year set yet
                             if('' == $strYearURL) $strYearURL = get_year_link($strYear);
                             //pass-through done intentionally
                         case 'year':
-                            $aryPagePath[] = $this->_createNewMember($strYear,$strYearURL);
+                            $this->aryCrumbs[] = $this->_createNewMember($strYear,$strYearURL);
                             break;
                         default:
                             _mizzou_log($strDateArchiveType,'we are in a date archive, but if failed day, month and year checks',false,array('func'=>__FUNCTION__));
                             break;
                     }
                 } elseif(is_tax() || is_tag() || is_category()){
+                    //we SHOULD have both term and taxonomy, but lets make sure
+                    if('' != $strTerm = get_query_var('term') && '' != $strTaxonomy = get_query_var('taxonomy') ){
+                        //now lets get our taxonomy object and our term object
+                        /**
+                         * Wait, why do we need the tax object? we aren't doing anything with it, are we?
+                         */
+                        //$objTaxonomy = get_taxonomy($strTaxonomy);
+                        if(false !== $objTerm = get_term_by('slug',$strTerm,$strTaxonomy)){
+                            $this->aryCrumbs[] = $this->_createNewMember($objTerm->name,'');
+                        } else {
+                            _mizzou_log($strTerm,'despite having the term and the taxonomy, get_term_by came back false. Here is the term.',false, array('line'=>__LINE__,'file'=>__FILE__));
+                            _mizzou_log($strTaxonomy,'get_term_by came back false. Here is the taxonomy.',false, array('line'=>__LINE__,'file'=>__FILE__));
+                        }
+                    } else {
+                        global $wp_query;
+                        _mizzou_log($wp_query,'we\'re in a taxonomy archive of some type, but both term and taxonomy came back empty. Here is wp_query',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    }
 
                 }
+
+                $this->aryCrumbs[] = $this->_createNewMember($strPostTypeName,$strPostTypeURL);
             }
 
+        } elseif(is_page()) {
+            // do we need to do anything else with pages?
+        } else {
+            //any other situations?
         }
+
+        //this is where we need to add the site url and site name?
+
+        //and last, assign our internal to crumbs
+        $this->add_data('crumbs',$this->aryCrumbs);
     }
 
     protected function _createNewMember($strName,$strURL)
