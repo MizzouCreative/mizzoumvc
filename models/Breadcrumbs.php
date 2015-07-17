@@ -105,7 +105,7 @@ class Breadcrumbs extends Base {
         }
 
         //this is where we need to add the site url and site name?
-
+        $this->aryCrumbs[] = $this->_createNewMember('Home','/');
         //and last, assign our internal to crumbs
         $this->add_data('crumbs',$this->aryCrumbs);
     }
