@@ -97,7 +97,8 @@ class Breadcrumbs extends Base {
             }
 
         } elseif(is_page()) {
-            // do we need to do anything else with pages?
+            // this would be a page with no ancestors
+            $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
         } else {
             //any other situations?
         }
