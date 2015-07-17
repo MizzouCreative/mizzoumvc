@@ -25,6 +25,7 @@ class Content {
         'include_footer'    =>true,
         'return'            =>false,
 	    'bypass_init'       =>false,
+        'include_breadcrumbs'=>false,
     );
 
     /**
@@ -124,7 +125,6 @@ class Content {
             _mizzou_log($aryOptions['include_pagination'],'you said you wanted to do pagination, but you didnt give me a WP_Query object',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
 
-
 	    /**
 	     * Load up the template rendering engine
 	     */
@@ -177,6 +177,17 @@ class Content {
         if(!isset($aryData['RootAncestor']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
             $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null,$aryViewVariables['PageTitle']);
         }
+
+        /**
+         * Now that we have page title, and the mainpost, if applicable, should have determined its ancestors, lets see
+         * if we need breadcrumbs
+         */
+
+        if(false !== $aryOptions['include_breadcrumbs']){
+            $aryAncestors = (isset($aryData['objMainPost'])) ? $aryData['objMainPost']->retrieveAncestors() : array();
+            $aryViewVariables['Breadcrumbs'] = new Breadcrumbs($aryViewVariables['PageTitle'],$aryAncestors);
+        }
+
         /**
          * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
          * other CPTs, then we need to include Next & Previous page links
