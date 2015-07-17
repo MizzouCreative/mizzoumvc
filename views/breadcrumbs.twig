@@ -1,0 +1,27 @@
+{#
+ * 
+ * 
+ * @package WordPress
+ * @subpackage Wordpress MVC
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
+#}
+{% if Breadcrumbs is defined and Breadcrumbs.crumbs | length > 0 %}
+<div id="breadcrumb">
+    <ul>
+    {% for Crumb in Breadcrumbs.crumbs %}
+        <li{% if loop.first %} class="bread-home"{% endif %}>
+            {% if Crumb.URL is not empty %}
+            <a href="{{ Crumb.URL }}">
+            {% endif %}
+            {{ Crumb.name }}
+            {% if Crumb.URL is not empty %}
+            </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
