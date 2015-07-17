@@ -104,6 +104,8 @@ class Breadcrumbs extends Base {
         }
 
         //this is where we need to add the site url and site name?
+        $strHomeText = (isset($aryOptions['home_text'])) ? $aryOptions['home_text'] : 'Home';
+        $strHomeUrl = (isset($aryOptions['home_url'])) ? $aryOptions['home_url'] : "/";
         $this->aryCrumbs[] = $this->_createNewMember('Home','/');
         //and last, assign our internal to crumbs
         $this->add_data('crumbs',array_reverse($this->aryCrumbs));
