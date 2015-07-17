@@ -19,7 +19,7 @@ class Breadcrumbs extends Base {
     public function __construct($strPageTitle, $aryAncestors = array(), $aryOptions = array())
     {
 
-        //_mizzou_log(func_get_args(),'init in breadcrumbs, all params given to us',false,array('line'=>__LINE__,'file'=>__FILE__));
+        _mizzou_log(func_get_args(),'init in breadcrumbs, all params given to us',false,array('line'=>__LINE__,'file'=>__FILE__));
         if(count($aryAncestors) > 0 ){
             $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
             foreach($aryAncestors as $intID => $strName){
