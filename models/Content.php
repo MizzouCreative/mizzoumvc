@@ -91,7 +91,8 @@ class Content {
          * @todo why are we setting $aryViewVariables to $aryData instead of just using $aryData?
          */
         $aryViewVariables               = $aryData;
-
+        //we need a copy of the original passed in options
+        $aryPassedOptions = $aryOptions;
         $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
 
         /**
@@ -121,7 +122,7 @@ class Content {
             }
 
             $aryViewVariables['Pagination'] = new Pagination($aryPaginationArgs);
-        } elseif(!($aryOptions['include_pagination'] instanceof WP_Query)){
+        } elseif(false !== $aryOptions['include_pagination'] && !($aryOptions['include_pagination'] instanceof WP_Query)){
             _mizzou_log($aryOptions['include_pagination'],'you said you wanted to do pagination, but you didnt give me a WP_Query object',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
 
@@ -180,12 +181,19 @@ class Content {
 
         /**
          * Now that we have page title, and the mainpost, if applicable, should have determined its ancestors, lets see
-         * if we need breadcrumbs
+         * if we need breadcrumbs. ok, either include_breadcrumbs has been set to true, OR a site wide option has been
+         * set to true/yes/on AND an individual controller didnt indicate an override to turn it back off
          */
 
-        if(false !== $aryOptions['include_breadcrumbs']){
+        if(false !== $aryOptions['include_breadcrumbs']
+            || (
+                isset($objSite->{site-wide}->include_breadcrumbs) && in_array($objSite->{site-wide}->include_breadcrumbs,array('yes','on','true'))
+                && (!isset($aryPassedOptions['include_breadcrumbs']) || false !== $aryPassedOptions['include_breadcrumbs'])
+                )
+        ){
             $aryAncestors = (isset($aryData['objMainPost'])) ? $aryData['objMainPost']->retrieveAncestors() : array();
-            $aryViewVariables['Breadcrumbs'] = new Breadcrumbs($aryViewVariables['PageTitle'],$aryAncestors);
+            $aryBreadcrumbOptions = (isset($objSite->breadcrumbs)) ? $objSite->breadcrumbs : array();
+            $aryViewVariables['Breadcrumbs'] = new Breadcrumbs($aryViewVariables['PageTitle'],$aryAncestors,$aryBreadcrumbOptions);
         }
 
         /**
