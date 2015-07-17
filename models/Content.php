@@ -184,7 +184,9 @@ class Content {
          * if we need breadcrumbs. ok, either include_breadcrumbs has been set to true, OR a site wide option has been
          * set to true/yes/on AND an individual controller didnt indicate an override to turn it back off
          */
-
+        _mizzou_log($aryOptions['include_breadcrumbs'],'include_breadcrumbs option',false,array('line'=>__LINE__,'file'=>__FILE__));
+        _mizzou_log($aryPassedOptions['include_breadcrumbs'],'include_breadcrumbs passed in option',false,array('line'=>__LINE__,'file'=>__FILE__));
+        _mizzou_log($objSite->{site-wide}->include_breadcrumbs,'include_breadcrumbs from site model',false,array('line'=>__LINE__,'file'=>__FILE__));
         if(false !== $aryOptions['include_breadcrumbs']
             || (
                 isset($objSite->{site-wide}->include_breadcrumbs) && in_array($objSite->{site-wide}->include_breadcrumbs,array('yes','on','true'))
