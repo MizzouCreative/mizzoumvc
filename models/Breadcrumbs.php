@@ -103,10 +103,25 @@ class Breadcrumbs extends Base {
             //any other situations?
         }
 
+        //ok, we either have an array of items we need to inject between home and the regular breadcrumbs, or we have been given just text and a URL
+        if((isset($aryOptions['inject_post_home']) && is_array($aryOptions['inject_post_home'])) || isset($aryOptions['inject_post_home_text'])){
+            //if we have an array, lets set that, otherwise start with empty
+            $aryInject = (isset($aryOptions['inject_post_home']) && is_array($aryOptions['inject_post_home'])) ? $aryOptions['inject_post_home'] : array();
+            //if we have an empty array, then we probably have just been given text and url
+            if(count($aryInject) == 0 && isset($aryOptions['inject_post_home_text'])){
+                $strInjectURL = (isset($aryOptions['inject_post_home_url'])) ? $aryOptions['inject_post_home_url'] : '';
+                $aryInject[] = array('text'=>$aryOptions['inject_post_home_text'],'url'=>$strInjectURL);
+            }
+
+            foreach($aryInject as $aryCrumbInject){
+                $this->aryCrumbs[] = $this->_createNewMember($aryCrumbInject['text'],$aryCrumbInject['url']);
+            }
+        }
+
         //this is where we need to add the site url and site name?
         $strHomeText = (isset($aryOptions['home_text'])) ? $aryOptions['home_text'] : 'Home';
         $strHomeUrl = (isset($aryOptions['home_url'])) ? $aryOptions['home_url'] : "/";
-        $this->aryCrumbs[] = $this->_createNewMember('Home','/');
+        $this->aryCrumbs[] = $this->_createNewMember($strHomeText,$strHomeUrl);
         //and last, assign our internal to crumbs
         $this->add_data('crumbs',array_reverse($this->aryCrumbs));
     }
