@@ -394,8 +394,12 @@ class MizzouPost extends PostBase
     {
         if($this->post_type == 'attachment' && $this->aryOptions['permalink'] == 'download'){
             $strPermalink = wp_get_attachment_url($this->ID);
+        } elseif('page' == $this->post_type) {
+            $strPermalink = get_page_link($this->ID);
+        } elseif('post' != $this->post_type){
+			$strPermalink = get_post_permalink($this->ID);
         } else {
-            $strPermalink = get_permalink($this->ID);
+	        $strPermalink = get_permalink($this->ID);
         }
         $this->add_data('permalink',$strPermalink);
     }
