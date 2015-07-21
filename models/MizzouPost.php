@@ -412,9 +412,13 @@ class MizzouPost extends PostBase
 		     * the correct structure. This assumes that the post type name matches the rewrite defined in register_post_type.
 		     * we should check the rewrite value in the post type
 		     */
+		    _mizzou_log($this->post_type,'our permalink is not pretty. here is our post type',false,array('line'=>__LINE__,'file'=>__FILE__));
 		    $objPostType = get_post_type_object($this->post_type);
+		    _mizzou_log($objPostType,'our post type object',false,array('line'=>__LINE__,'file'=>__FILE__));
 		    if(!is_null($objPostType)){
 			    $strRewrite = (isset($objPostType->rewrite) && '' != $objPostType->rewrite && $objPostType->rewrite != $this->post_type) ? $objPostType->rewrite : $this->post_type;
+		    } else {
+			    $strRewrite = $this->post_type;
 		    }
 		    $strPermalink = home_url('/'.$strRewrite.'/'.$this->slug.'/');
 	    }
