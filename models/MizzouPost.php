@@ -401,6 +401,24 @@ class MizzouPost extends PostBase
         } else {
 	        $strPermalink = get_permalink($this->ID);
         }
+
+	    if(false !== strpos($strPermalink,'?post_type')){
+		    /**
+		     * we're mostly likely in a multisite situation on a child site and retrieving a post from the parent. In that
+		     * instant, it makes the custom post type permalink match the permalink structure for the default post.  That's
+		     * why the previous structure above is broken out into attachment, page, not post and everything else.  However
+		     * that means that for a custom post type in a multisite, while in a child retrieving data from a parent, the
+		     * link returned from get_post_permalink ends up being ?post_type=%s&p=%d. If so, we'll convert it back to
+		     * the correct structure. This assumes that the post type name matches the rewrite defined in register_post_type.
+		     * we should check the rewrite value in the post type
+		     */
+		    $objPostType = get_post_type_object($this->post_type);
+		    if(!is_null($objPostType)){
+			    $strRewrite = (isset($objPostType->rewrite) && '' != $objPostType->rewrite && $objPostType->rewrite != $this->post_type) ? $objPostType->rewrite : $this->post_type;
+		    }
+		    $strPermalink = home_url('/'.$strRewrite.'/'.$this->slug.'/');
+	    }
+
         $this->add_data('permalink',$strPermalink);
     }
 
