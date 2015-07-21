@@ -418,6 +418,8 @@ class MizzouPost extends PostBase
 		    if(!is_null($objPostType)){
 			    $strRewrite = (isset($objPostType->rewrite) && '' != $objPostType->rewrite && $objPostType->rewrite != $this->post_type) ? $objPostType->rewrite : $this->post_type;
 		    } else {
+			    global $wp_post_types;
+			    _mizzou_log($wp_post_types,'our post type came back null. here is the global post types data',false,array('line'=>__LINE__,'file'=>__FILE__));
 			    $strRewrite = $this->post_type;
 		    }
 		    $strPermalink = home_url('/'.$strRewrite.'/'.$this->slug.'/');
