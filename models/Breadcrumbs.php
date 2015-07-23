@@ -19,15 +19,15 @@ class Breadcrumbs extends Base {
     public function __construct($strPageTitle, $aryAncestors = array(), $aryOptions = array())
     {
 
-        _mizzou_log(func_get_args(),'init in breadcrumbs, all params given to us',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log(func_get_args(),'init in breadcrumbs, all params given to us',false,array('line'=>__LINE__,'file'=>__FILE__));
         if(count($aryAncestors) > 0 ){
-	        _mizzou_log(count($aryAncestors),'aryAncestors is more than 0',false,array('line'=>__LINE__,'file'=>__FILE__));
+	        //_mizzou_log(count($aryAncestors),'aryAncestors is more than 0',false,array('line'=>__LINE__,'file'=>__FILE__));
 	        $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
             foreach($aryAncestors as $intID => $strName){
                 $this->aryCrumbs[] = $this->_createNewMember($strName,get_permalink($intID));
             }
         } elseif(is_archive() || is_single()) {
-	        _mizzou_log(null,'we\'re dealing with either an archive or single',false,array('line'=>__LINE__,'file'=>__FILE__));
+	        //_mizzou_log(null,'we\'re dealing with either an archive or single',false,array('line'=>__LINE__,'file'=>__FILE__));
             //what post type are we dealing with?
             $strPostType = get_post_type();
             $objPostType = get_post_type_object($strPostType);
@@ -40,11 +40,11 @@ class Breadcrumbs extends Base {
             }
 
             if(is_single()){
-	            _mizzou_log(null,'we\'re dealing with a single',false,array('line'=>__LINE__,'file'=>__FILE__));
+	            //_mizzou_log(null,'we\'re dealing with a single',false,array('line'=>__LINE__,'file'=>__FILE__));
 	            $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
                 $this->aryCrumbs[] = $this->_createNewMember($strPostTypeName,$strPostTypeURL);
             } else {
-	            _mizzou_log(null,'we\'re dealing with an archive',false,array('line'=>__LINE__,'file'=>__FILE__));
+	            //_mizzou_log(null,'we\'re dealing with an archive',false,array('line'=>__LINE__,'file'=>__FILE__));
                 //now we've got all of the other types of archives...
                 if(is_date()){
                     //set up some defaults
@@ -77,7 +77,7 @@ class Breadcrumbs extends Base {
                             break;
                     }
                 } elseif(is_tax() || is_tag() || is_category()){
-	                _mizzou_log(null,'we\'re dealing with a taxonomy of some sorts',false,array('line'=>__LINE__,'file'=>__FILE__));
+	                //_mizzou_log(null,'we\'re dealing with a taxonomy of some sorts',false,array('line'=>__LINE__,'file'=>__FILE__));
                     //we SHOULD have both term and taxonomy, but lets make sure
                     if('' != $strTerm = get_query_var('term') && '' != $strTaxonomy = get_query_var('taxonomy') ){
                         //now lets get our taxonomy object and our term object
@@ -102,7 +102,7 @@ class Breadcrumbs extends Base {
             }
 
         } elseif(is_page() && !is_front_page()) {
-	        _mizzou_log(null,'we\'re dealing with a page that has no ancestors',false,array('line'=>__LINE__,'file'=>__FILE__));
+	        //_mizzou_log(null,'we\'re dealing with a page that has no ancestors',false,array('line'=>__LINE__,'file'=>__FILE__));
             // this would be a page with no ancestors
             $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
         } else {
@@ -129,7 +129,7 @@ class Breadcrumbs extends Base {
         $strHomeUrl = (isset($aryOptions['home_url'])) ? $aryOptions['home_url'] : "/";
         $this->aryCrumbs[] = $this->_createNewMember($strHomeText,$strHomeUrl);
         //and last, assign our internal to crumbs
-	    _mizzou_log($this->aryCrumbs,'array of crumbs NOT reversed',false,array('line'=>__LINE__,'file'=>__FILE__));
+	    //_mizzou_log($this->aryCrumbs,'array of crumbs NOT reversed',false,array('line'=>__LINE__,'file'=>__FILE__));
         $this->add_data('crumbs',array_reverse($this->aryCrumbs));
     }
 
