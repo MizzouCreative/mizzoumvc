@@ -26,7 +26,7 @@ class Breadcrumbs extends Base {
                 $this->aryCrumbs[] = $this->_createNewMember($strName,get_permalink($intID));
             }
         } elseif(is_archive() || is_single()) {
-            //what post type are we dealng with?
+            //what post type are we dealing with?
             $strPostType = get_post_type();
             $objPostType = get_post_type_object($strPostType);
             $strPostTypeName = $objPostType->labels->name;
@@ -123,6 +123,7 @@ class Breadcrumbs extends Base {
         $strHomeUrl = (isset($aryOptions['home_url'])) ? $aryOptions['home_url'] : "/";
         $this->aryCrumbs[] = $this->_createNewMember($strHomeText,$strHomeUrl);
         //and last, assign our internal to crumbs
+	    _mizzou_log($this->aryCrumbs,'array of crumbs NOT reversed',false,array('line'=>__LINE__,'file'=>__FILE__));
         $this->add_data('crumbs',array_reverse($this->aryCrumbs));
     }
 
