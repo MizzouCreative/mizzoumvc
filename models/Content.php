@@ -87,7 +87,11 @@ class Content {
      */
     public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
     {
-        /**
+	    /**
+	     * @todo We need to reorg into things to do during init, so we can bypass them if bypass_init is set to true
+	     */
+
+	    /**
          * @todo why are we setting $aryViewVariables to $aryData instead of just using $aryData?
          */
         $aryViewVariables               = $aryData;
@@ -114,7 +118,10 @@ class Content {
             $objSite = $aryData['objSite'];
         }
 
-        if(FALSE !== $aryOptions['include_pagination'] && $aryOptions['include_pagination'] instanceof WP_Query){
+	    /**
+	     * if they have indicated they want to include pagination, and given us an instance of WP_Query *AND* we aren't bypassing init
+	     */
+	    if(FALSE !== $aryOptions['include_pagination'] && $aryOptions['include_pagination'] instanceof WP_Query && !$aryOptions['bypass_init']){
             $aryPaginationArgs = array('wp_query'=>$aryOptions['include_pagination']);
             unset($aryOptions['include_pagination']);
             if(('' != $aryPaginationOptions = $objSite->pagination)){
@@ -187,12 +194,12 @@ class Content {
         _mizzou_log($aryOptions['include_breadcrumbs'],'include_breadcrumbs option',false,array('line'=>__LINE__,'file'=>__FILE__));
         _mizzou_log($aryPassedOptions['include_breadcrumbs'],'include_breadcrumbs passed in option',false,array('line'=>__LINE__,'file'=>__FILE__));
         _mizzou_log($objSite->option('include_breadcrumbs'),'include_breadcrumbs from site model',false,array('line'=>__LINE__,'file'=>__FILE__));
-        if(false !== $aryOptions['include_breadcrumbs']
+        if(!$aryOptions['bypass_init'] && (false !== $aryOptions['include_breadcrumbs']
             || (
                 in_array($objSite->option('include_breadcrumbs'),array('yes','on','true'))
                 && (!isset($aryPassedOptions['include_breadcrumbs']) || false !== $aryPassedOptions['include_breadcrumbs'])
                 )
-        ){
+	        )){
             $aryAncestors = (isset($aryData['objMainPost'])) ? $aryData['objMainPost']->retrieveAncestors() : array();
             $aryBreadcrumbOptions = (isset($objSite->breadcrumbs)) ? $objSite->breadcrumbs : array();
             $aryViewVariables['Breadcrumbs'] = new Breadcrumbs($aryViewVariables['PageTitle'],$aryAncestors,$aryBreadcrumbOptions);
