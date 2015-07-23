@@ -101,7 +101,7 @@ class Breadcrumbs extends Base {
                 $this->aryCrumbs[] = $this->_createNewMember($strPostTypeName,$strPostTypeURL);
             }
 
-        } elseif(is_page()) {
+        } elseif(is_page() && !is_front_page()) {
 	        _mizzou_log(null,'we\'re dealing with a page that has no ancestors',false,array('line'=>__LINE__,'file'=>__FILE__));
             // this would be a page with no ancestors
             $this->aryCrumbs[] = $this->_createNewMember($strPageTitle,'');
