@@ -64,16 +64,21 @@ class Breadcrumbs extends Base {
                              * $strMonth is the numeric representation of our month (e.g. 06), but we'll want it in text
                              * format
                              */
-                            $objDate = DateTime::createFromFormat('!m',$strMonth);
-                            $this->aryCrumbs[] = $this->_createNewMember($objDate->format('F'),$strMonthURL);
-                            //if we started with month, we wont have year set yet
-                            if('' == $strYearURL) $strYearURL = get_year_link($strYear);
+                            if(false !== $objDate = DateTime::createFromFormat('!m',$strMonth)){
+	                            $objDate = DateTime::createFromFormat('!m',$strMonth);
+	                            $this->aryCrumbs[] = $this->_createNewMember($objDate->format('F'),$strMonthURL);
+	                            //if we started with month, we wont have year set yet
+	                            if('' == $strYearURL) $strYearURL = get_year_link($strYear);
+                            } else {
+	                            _mizzou_log($strMonth,'DateTime::createFromFormat failed. what month were we using?',false,array('line'=>__LINE__,'file'=>__FILE__));
+                            }
+
                             //pass-through done intentionally
                         case 'year':
                             $this->aryCrumbs[] = $this->_createNewMember($strYear,$strYearURL);
                             break;
                         default:
-                            _mizzou_log($strDateArchiveType,'we are in a date archive, but if failed day, month and year checks',false,array('func'=>__FUNCTION__));
+                            _mizzou_log($strDateArchiveType,'we are in a date archive, but it failed day, month and year checks',false,array('func'=>__FUNCTION__));
                             break;
                     }
                 } elseif(is_tax() || is_tag() || is_category()){
