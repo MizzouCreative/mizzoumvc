@@ -13,12 +13,12 @@
 
 class A11yPageWalker extends Walker_Page {
 
-    function start_lvl(&$output, $depth)
+    function start_lvl(&$output, $depth, $aryArgs = array())
     {
         $strIndent = str_repeat("\t", $depth);
         $output .= PHP_EOL.$strIndent.'<ol class="children">'.PHP_EOL;
     }
-    function end_lvl(&$output, $depth)
+    function end_lvl(&$output, $depth, $aryArgs = array())
     {
         $strIndent = str_repeat("\t", $depth);
         $output .= $strIndent.'</ol>'.PHP_EOL;
