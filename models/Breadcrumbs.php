@@ -50,7 +50,7 @@ class Breadcrumbs extends Base {
                     //set up some defaults
                     $strYear = get_the_time('Y');
                     $strYearURL = '';
-                    $strMonth = get_the_time('M');
+                    $strMonth = get_the_time('m');
                     $strMonthURL = '';
 
                     switch($strDateArchiveType = $this->_determineDateArchiveType()){
