@@ -10,6 +10,7 @@
  * @uses 
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
+ * @uses MIZZOUMVC_ROOT_PATH
  */
 
 class TemplateInjector {
@@ -90,7 +91,7 @@ class TemplateInjector {
 		if('page' == $post->post_type && !isset($this->aryTemplates[basename($strTemplate)])){
 			$strTemplateFile = get_post_meta($post->ID,'_wp_page_template',true);
 			if(isset($this->aryTemplates[$strTemplateFile])){
-				$strTemplate = dirname(__FILE__).DIRECTORY_SEPARATOR.$strTemplateFile;
+				$strTemplate = MIZZOUMVC_ROOT_PATH.$strTemplateFile;
 			}
 		}
 		_mizzou_log($strTemplate,'template we\'re going to give back to wordpress',false,array('file'=>__FILE__,'line'=>__LINE__));
