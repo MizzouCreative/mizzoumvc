@@ -28,7 +28,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 //add_action('admin_menu','mizzoumvcRegisterAdminMenu');
 //add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
-//add_action('plugins_loaded',array('TemplateInjector','getInstance'));
+add_action('plugins_loaded',array('TemplateInjector','getInstance'));
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
 function mizzouMVCShouldWeRegisterSettingsCPT()
