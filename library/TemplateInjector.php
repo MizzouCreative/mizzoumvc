@@ -64,6 +64,7 @@ class TemplateInjector {
 
 	public function registerTemplates($aryAttributes)
 	{
+		_mizzou_log($aryAttributes,'what arguments were we given?',false,array('line'=>__LINE__,'file'=>__FILE__));
 		//create unique key for theme cache
 		$strCacheKey = 'page_templates-' . md5(get_theme_root()) . '/' . get_stylesheet();
 		//retrieve the current cache of templates
@@ -73,7 +74,7 @@ class TemplateInjector {
 		wp_cache_delete($strCacheKey,'themes');
 
 		$aryTemplates = array_merge($aryTemplates,$this->aryTemplates);
-
+		_mizzou_log($aryTemplates,'new list of templates',false,array('line'=>__LINE__,'file'=>__FILE__));
 		wp_cache_add($strCacheKey,$aryTemplates,'themes',1800);
 
 		return $aryAttributes;
