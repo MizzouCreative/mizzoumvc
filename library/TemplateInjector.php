@@ -80,7 +80,7 @@ class TemplateInjector {
 
 	}
 
-	public function viewTemplates($strTemplate)
+	public function viewTemplate($strTemplate)
 	{
 		global $post;
 		$strTemplateFile = get_post_meta($post->ID,'_wp_page_template',true);
