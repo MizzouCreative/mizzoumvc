@@ -77,6 +77,8 @@ class TemplateInjector {
 		_mizzou_log($aryTemplates,'new list of templates',false,array('line'=>__LINE__,'file'=>__FILE__));
 		wp_cache_add($strCacheKey,$aryTemplates,'themes',1800);
 
+		_mizzou_log( wp_get_theme()->get_page_templates(),'list of templates from wordpress after redoing the cache',false,array('line'=>__LINE__,'file'=>__FILE__));
+
 		return $aryAttributes;
 
 	}
