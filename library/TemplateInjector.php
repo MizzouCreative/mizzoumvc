@@ -85,13 +85,17 @@ class TemplateInjector {
 
 	public function viewTemplate($strTemplate)
 	{
-		global $post;
 		_mizzou_log($strTemplate,'template given to us by wordpress',false,array('file'=>__FILE__,'line'=>__LINE__));
-		$strTemplateFile = get_post_meta($post->ID,'_wp_page_template',true);
-		_mizzou_log($strTemplateFile,'template assigned to this page',false,array('file'=>__FILE__,'line'=>__LINE__));
-		if(isset($this->aryTemplates[$strTemplate])){
-			$strTemplate = dirname(__FILE__).DIRECTORY_SEPARATOR.$strTemplate;
+		global $post;
+		if('page' == $post->post_type && !isset($this->aryTemplates[basename($strTemplate)])){
+			$strTemplateFile = get_post_meta($post->ID,'_wp_page_template',true);
+			if(isset($this->aryTemplates[$strTemplateFile])){
+				$strTemplate = dirname(__FILE__).DIRECTORY_SEPARATOR.$strTemplateFile;
+			}
 		}
+		_mizzou_log($strTemplate,'template we\'re going to give back to wordpress',false,array('file'=>__FILE__,'line'=>__LINE__));
+
+		_mizzou_log($strTemplateFile,'template assigned to this page',false,array('file'=>__FILE__,'line'=>__LINE__));
 
 		return $strTemplate;
 	}
