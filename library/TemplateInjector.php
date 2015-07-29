@@ -1,31 +1,32 @@
 <?php
 /**
- * 
+ * Allows for theme templates from the framework to be selectable and used by Pages
+ *
+ * As of this time, we only have one theme template (Search) but this can be expanded. Heavily inspired by
+ * @see http://www.wpexplorer.com/wordpress-page-templates-plugin/
  *
  * @package 
  * @subpackage 
  * @since 
  * @category 
  * @category 
- * @uses 
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  * @uses MIZZOUMVC_ROOT_PATH
+ * @todo see if there is some way to parse our own controllers for Template Name, and then add them to our list of
+ * templates. Similar to this: http://pastie.org/10071582
  */
 
 class TemplateInjector {
-	/**
-	 * @var Unique Identifier
-	 */
-	protected $strPluginSlug;
 
 	/**
-	 * @var Reference to an instance of this class
+	 * @var TemplateInjector instance of this class
 	 */
 	private static $objInstance = null;
 
 	/**
 	 * @var Array of templates that we need to inject
+	 * file.php => Template Name to use
 	 */
 	protected $aryTemplates = array(
 		'search.php'    => 'mvzSearch',
@@ -37,14 +38,17 @@ class TemplateInjector {
 
 		if(count($this->aryTemplates) > 0){
 			//inject templates into attributes metabox
-			add_filter('page_attributes_dropdown_pages_args',array($this,'registerTemplates'));
+			add_filter('page_attributes_dropdown_pages_args',array($this,'injectTemplates'));
 			//inject templates into the page cache
-			add_filter('wp_insert_post_data',array($this,'registerTemplates'));
+			add_filter('wp_insert_post_data',array($this,'injectTemplates'));
 			//return our template+path if a page has been assigned to it
 			add_filter('template_include',array($this,'viewTemplate'));
 		}
 	}
 
+	/**
+	 * If a theme has overridden one of our templates, remove it from the listing
+	 */
 	protected function _removeOverriddenTemplates()
 	{
 		foreach($this->aryTemplates as $strFile => $strTemplate){
@@ -54,6 +58,9 @@ class TemplateInjector {
 		}
 	}
 
+	/**
+	 * @return TemplateInjector
+	 */
 	public static function getInstance()
 	{
 		if(null == self::$objInstance){
@@ -63,43 +70,48 @@ class TemplateInjector {
 		return self::$objInstance;
 	}
 
-	public function registerTemplates($aryAttributes)
+	/**
+	 * Injects our theme templates into Wordpress' list of theme templates
+	 *
+	 * @param $aryAttributes
+	 *
+	 * @return array
+	 */
+	public function injectTemplates($aryAttributes)
 	{
-		_mizzou_log($aryAttributes,'what arguments were we given?',false,array('line'=>__LINE__,'file'=>__FILE__));
 		//create unique key for theme cache
 		$strCacheKey = 'page_templates-' . md5(get_theme_root() . '/' . get_stylesheet());
-		//retrieve the current cache of templates
+		//retrieve the current list of templates
 		$aryTemplates = wp_get_theme()->get_page_templates();
-		_mizzou_log($aryTemplates,'list of templates from wordpress',false,array('line'=>__LINE__,'file'=>__FILE__));
 		//remove the old cache
 		wp_cache_delete($strCacheKey,'themes');
-
+		//merge our templates in with the originals
 		$aryTemplates = array_merge($aryTemplates,$this->aryTemplates);
-		_mizzou_log($aryTemplates,'new list of templates',false,array('line'=>__LINE__,'file'=>__FILE__));
+		//rebuild the cache with our newly added templates
 		wp_cache_add($strCacheKey,$aryTemplates,'themes',1800);
-
-		_mizzou_log( wp_get_theme()->get_page_templates(),'list of templates from wordpress after redoing the cache',false,array('line'=>__LINE__,'file'=>__FILE__));
 
 		return $aryAttributes;
 
 	}
 
+	/**
+	 * If the page has been assigned to our template, returns the full path to the template file
+	 *
+	 * @param string $strTemplate
+	 *
+	 * @return string
+	 */
 	public function viewTemplate($strTemplate)
 	{
-		_mizzou_log($strTemplate,'template given to us by wordpress',false,array('file'=>__FILE__,'line'=>__LINE__));
 		global $post;
+
 		if('page' == $post->post_type && !isset($this->aryTemplates[basename($strTemplate)])){
 			$strTemplateFile = get_post_meta($post->ID,'_wp_page_template',true);
 			if(isset($this->aryTemplates[$strTemplateFile])){
 				$strTemplate = MIZZOUMVC_ROOT_PATH.$strTemplateFile;
 			}
 		}
-		_mizzou_log($strTemplate,'template we\'re going to give back to wordpress',false,array('file'=>__FILE__,'line'=>__LINE__));
-
-		_mizzou_log($strTemplateFile,'template assigned to this page',false,array('file'=>__FILE__,'line'=>__LINE__));
 
 		return $strTemplate;
 	}
-
-
 }
