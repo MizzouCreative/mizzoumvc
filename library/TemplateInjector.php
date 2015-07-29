@@ -66,7 +66,7 @@ class TemplateInjector {
 	{
 		_mizzou_log($aryAttributes,'what arguments were we given?',false,array('line'=>__LINE__,'file'=>__FILE__));
 		//create unique key for theme cache
-		$strCacheKey = 'page_templates-' . md5(get_theme_root()) . '/' . get_stylesheet();
+		$strCacheKey = 'page_templates-' . md5(get_theme_root() . '/' . get_stylesheet());
 		//retrieve the current cache of templates
 		$aryTemplates = wp_get_theme()->get_page_templates();
 		_mizzou_log($aryTemplates,'list of templates from wordpress',false,array('line'=>__LINE__,'file'=>__FILE__));
