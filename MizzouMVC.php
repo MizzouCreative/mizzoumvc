@@ -23,16 +23,16 @@ define('MIZZOUMVC_ROOT_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'TemplateInjector.php';
-//require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'YoutubeEmbed.php';
+//require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'IframeEmbed.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 
 //add_action('admin_menu','mizzoumvcRegisterAdminMenu');
 //add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
 add_action('plugins_loaded',array('TemplateInjector','getInstance'));
-//add_action('init',array('YoutubeEmbed','getInstance'));
+add_action('init',array('IframeEmbed','getInstance'),10,3);
 //add_filter('embed_oembed_html','mizzouMVCYoutube',10,3);
-add_filter('oembed_dataparse','mizzouMVCYoutube',10,3);
+//add_filter('oembed_dataparse','mizzouMVCYoutube',10,3);
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
 function mizzouMVCYoutube($strReturn,$objData,$strUrl)
