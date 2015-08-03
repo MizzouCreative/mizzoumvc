@@ -35,6 +35,15 @@ add_action('init',array('IframeEmbed','getInstance'),10,3);
 //add_filter('oembed_dataparse','mizzouMVCYoutube',10,3);
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
+/**
+ * @param $strReturn
+ * @param $objData
+ * @param $strUrl
+ *
+ * @return string
+ *
+ * @deprecated
+ */
 function mizzouMVCYoutube($strReturn,$objData,$strUrl)
 {
 	_mizzou_log($strReturn,'current contents of strReturn before preg_match',false,array('line'=>__LINE__,'file'=>__FILE__));
