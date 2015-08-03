@@ -39,8 +39,8 @@ function mizzouMVCYoutube($strReturn,$objData,$strUrl)
 {
 	_mizzou_log($strReturn,'current contents of strReturn before preg_match',false,array('line'=>__LINE__,'file'=>__FILE__));
 
-	if(1 === preg_match('/^<iframe (.*)\/>$/',$strReturn,$aryMatches) && isset($objData->title) && '' != $objData->title){
-		$strReturn = '<iframe title="'.$objData->title.'" ' . $aryMatches[1].'/>';
+	if(1 === preg_match('/^<iframe (.*)><\/iframe>$/',$strReturn,$aryMatches) && isset($objData->title) && '' != $objData->title){
+		$strReturn = '<iframe title="'.$objData->title.'" ' . $aryMatches[1].'></iframe>';
 	}
 
 	_mizzou_log($strReturn,'contents of strReturn after preg_match',false,array('line'=>__LINE__,'file'=>__FILE__));
