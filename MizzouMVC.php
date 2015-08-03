@@ -31,7 +31,8 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
 add_action('plugins_loaded',array('TemplateInjector','getInstance'));
 //add_action('init',array('YoutubeEmbed','getInstance'));
-add_filter('embed_oembed_html','mizzouMVCYoutube',10,3);
+//add_filter('embed_oembed_html','mizzouMVCYoutube',10,3);
+add_filter('oembed_dataparse','mizzouMVCYoutube',10,3);
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
 function mizzouMVCYoutube($strReturn,$strURL,$aryArgs)
