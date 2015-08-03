@@ -31,13 +31,13 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
 add_action('plugins_loaded',array('TemplateInjector','getInstance'));
 //add_action('init',array('YoutubeEmbed','getInstance'));
-add_filter('oembed_dataparse','mizzouMVCYoutube');
+add_filter('embed_oembed_html','mizzouMVCYoutube');
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
-function mizzouMVCYoutube($strReturn,$objData,$strURL)
+function mizzouMVCYoutube($strReturn,$strURL,$aryArgs)
 {
 	_mizzou_log($strReturn,'current contents of strReturn',false,array('line'=>__LINE__,'file'=>__FILE__));
-	_mizzou_log($objData,'current contents of objData',false,array('line'=>__LINE__,'file'=>__FILE__));
+	_mizzou_log($aryArgs,'current contents of aryArgs',false,array('line'=>__LINE__,'file'=>__FILE__));
 	_mizzou_log($strURL,'current contents of strUrl',false,array('line'=>__LINE__,'file'=>__FILE__));
 
 	return $strReturn;
