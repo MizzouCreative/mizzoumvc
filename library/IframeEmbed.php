@@ -17,11 +17,13 @@ class IframeEmbed {
 
 	public function __construct()
 	{
-		add_filter('oembed_dataparse',array($this,'injectTitleAttribute'));
+		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
+		add_filter('oembed_dataparse',array(self::$objInstance,'injectTitleAttribute'));
 	}
 
 	public function getInstance()
 	{
+		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
 		if(null === self::$objInstance){
 			self::$objInstance = new IframeEmbed();
 		}
@@ -40,12 +42,16 @@ class IframeEmbed {
 	 */
 	public function injectTitleAttribute($strReturn,$objData,$strUrl)
 	{
+		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
 		if(1 === preg_match('/^<iframe (.*)><\/iframe>$/',$strReturn,$aryMatches) && isset($objData->title) && '' != $objData->title){
 
 			//this is so that if the title has " contained it wont cause an issue
 			$strTitle = htmlentities($objData->title,ENT_QUOTES,'UTF-8');
 
 			$strReturn = '<iframe title="'.$strTitle.'" ' . $aryMatches[1].'></iframe>';
+		} else {
+			_mizzou_log($strReturn,'either regex failed or title was empty. here is strReturn',false,array('line'=>__LINE__,'file'=>__FILE__));
+			_mizzou_log($objData,'either regex failed or title was empty. here is objData',false,array('line'=>__LINE__,'file'=>__FILE__));
 		}
 
 		return $strReturn;
