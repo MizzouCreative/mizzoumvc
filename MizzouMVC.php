@@ -35,11 +35,17 @@ add_action('plugins_loaded',array('TemplateInjector','getInstance'));
 add_filter('oembed_dataparse','mizzouMVCYoutube',10,3);
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
-function mizzouMVCYoutube($strReturn,$strURL,$aryArgs)
+function mizzouMVCYoutube($strReturn,$objData,$strUrl)
 {
-	_mizzou_log($strReturn,'current contents of strReturn',false,array('line'=>__LINE__,'file'=>__FILE__));
-	_mizzou_log($aryArgs,'current contents of aryArgs',false,array('line'=>__LINE__,'file'=>__FILE__));
-	_mizzou_log($strURL,'current contents of strUrl',false,array('line'=>__LINE__,'file'=>__FILE__));
+	_mizzou_log($strReturn,'current contents of strReturn before preg_match',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+	if(1 === preg_match('/^<iframe (.*)\/>$/',$strReturn,$aryMatches) && isset($objData->title) && '' != $objData->title){
+		$strReturn = '<iframe title="'.$objData->title.'" ' . $aryMatches[1].'/>';
+	}
+
+	_mizzou_log($strReturn,'contents of strReturn after preg_match',false,array('line'=>__LINE__,'file'=>__FILE__));
+	_mizzou_log($objData,'current contents of objData',false,array('line'=>__LINE__,'file'=>__FILE__));
+	_mizzou_log($strUrl,'current contents of strUrl',false,array('line'=>__LINE__,'file'=>__FILE__));
 
 	return $strReturn;
 }
