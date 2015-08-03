@@ -512,7 +512,7 @@ function embedGoogleMap( $aryMatches ) {
         $strEmbedLink = $aryMatches[0];
     }
 
-    $strEmbed = '<iframe width="'.$width.'" height="'.$height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$strEmbedLink.'&output=embed"></iframe>';
+    $strEmbed = '<iframe title="Map" width="'.$width.'" height="'.$height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$strEmbedLink.'&output=embed"></iframe>';
     return apply_filters( 'embed_g_map', $strEmbed );
 }
 
