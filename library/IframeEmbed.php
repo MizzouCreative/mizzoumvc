@@ -1,6 +1,7 @@
 <?php
 /**
- * 
+ * Injects a title attribute into an iframe of an oembed item using the title attribute from the data object returned
+ * from the oembed service
  *
  * @package 
  * @subpackage 
@@ -17,13 +18,11 @@ class IframeEmbed {
 
 	public function __construct()
 	{
-		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
 		add_filter('oembed_dataparse',array($this,'injectTitleAttribute'),10,3);
 	}
 
 	public function getInstance()
 	{
-		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
 		if(null === self::$objInstance){
 			self::$objInstance = new IframeEmbed();
 		}
@@ -42,7 +41,6 @@ class IframeEmbed {
 	 */
 	public function injectTitleAttribute($strReturn,$objData,$strUrl)
 	{
-		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
 		if(1 === preg_match('/^<iframe (.*)><\/iframe>$/',$strReturn,$aryMatches) && isset($objData->title) && '' != $objData->title){
 
 			//this is so that if the title has " contained it wont cause an issue
