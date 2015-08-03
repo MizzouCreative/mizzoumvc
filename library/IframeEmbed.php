@@ -18,7 +18,7 @@ class IframeEmbed {
 	public function __construct()
 	{
 		_mizzou_log(__FUNCTION__,'function called',false,array('line'=>__LINE__,'file'=>__FILE__));
-		add_filter('oembed_dataparse',array(self::$objInstance,'injectTitleAttribute'));
+		add_filter('oembed_dataparse',array($this,'injectTitleAttribute'));
 	}
 
 	public function getInstance()
