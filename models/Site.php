@@ -233,13 +233,18 @@ class Site extends Base {
     }
 
     /**
-     * Returns the site's Home URL as defined in Wordpress settings
+     * Returns the site's Home URL as defined in Wordpress settings. Always contains trailing /
      * @return string site's home url
      */
     private function _getSiteHomeURL()
     {
         //return home_url();
-        return $this->_getSiteOption('home');
+        $strHomeURL = $this->_getSiteOption('home');
+        // we could preg_match but that's generally slower than strpos
+        if(0 !== strpos(strrev($strHomeURL),'/')){
+            $strHomeURL .= '/';
+        }
+        return $strHomeURL;
     }
 
     /**
