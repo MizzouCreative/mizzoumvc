@@ -505,7 +505,7 @@ function embedGoogleMap( $aryMatches ) {
     $width = isset($qvars['w']) ? $qvars['w'] : 600;
     $height = isset($qvars['w']) ? $qvars['h'] : 450;
 
-    $strShareLinkPattern =  '/https?:\/\/(?:maps|www)?\.google\.com\/maps\/place\/(.*)\//';
+    $strShareLinkPattern =  '/https?:\/\/(?:maps|www)?\.google\.com\/maps\/place\/([^\/]+)\//';
     if(false !== preg_match($strShareLinkPattern,$aryMatches[0],$aryURLMatch)){
         $strEmbedLink = 'https://maps.google.com/maps?&amp;q='.$aryURLMatch[1];
     } else {
