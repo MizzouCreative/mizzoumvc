@@ -9,6 +9,7 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  *
+ * @uses class WpBase()
  * @uses home_url()
  * @uses get_bloginfo()
  * @uses get_template_directory_uri()
@@ -21,6 +22,8 @@
  *
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
+
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FrameworkSettingsSettings.php';
 
 /**
  * Stores basic information used across the site.
@@ -37,6 +40,8 @@ class Site extends Base {
         'config_file'       => 'config.ini',
     );
 
+    protected $objFramework = null;
+
 	/**
 	 * @var array stores options that are loaded in from config.ini
 	 */
@@ -45,6 +50,11 @@ class Site extends Base {
     public function __construct($aryOptions = array())
     {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
+
+        /**
+         * @todo replace this with injecting an instance of the FrameworkSettings class.
+         */
+        $this->objFrameworkSettings = FrameworkSettings::getInstance();
 
         $this->add_data('CopyrightYear',date('Y'));
         $this->add_data('Name',$this->_getSiteName());
