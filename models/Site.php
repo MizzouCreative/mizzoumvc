@@ -600,9 +600,12 @@ class Site extends Base {
                     $arySettings[$strNewKey] = array($strTempData);
                 }
 
-                $this->aryData[$strNewKey][] = $arySettings[$strKeyInGroup];
+                $arySettings[$strNewKey][] = $arySettings[$strKeyInGroup];
+                //remove the old key->val
                 unset($arySettings[$strKeyInGroup]);
             }
         }
+
+        return $arySettings;
     }
 }
