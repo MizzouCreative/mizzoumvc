@@ -23,7 +23,7 @@
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
 
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FrameworkSettingsSettings.php';
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FrameworkSettings.php';
 
 /**
  * Stores basic information used across the site.
@@ -40,12 +40,14 @@ class Site extends Base {
         'config_file'       => 'config.ini',
     );
 
-    protected $objFramework = null;
+    protected $objFrameworkSettings = null;
 
 	/**
 	 * @var array stores options that are loaded in from config.ini
 	 */
 	protected $arySiteOptions = array();
+
+    protected $strCollapseSettingsPattern = '([a-zA-Z]*)_?\d';
 
     public function __construct($aryOptions = array())
     {
@@ -490,6 +492,10 @@ class Site extends Base {
                 }
             }
 
+            if($this->objFrameworkSettings->flatten_groups){
+                $mxdOptionVal = $this->_consolidateGroups($mxdOptionVal);
+            }
+
             $this->add_data($mxdOptionKey,$mxdOptionVal);
         }
 
@@ -549,5 +555,54 @@ class Site extends Base {
     public function option($strOption)
     {
         return (isset($this->arySiteOptions[$strOption])) ? $this->arySiteOptions[$strOption] : '';
+    }
+
+    /**
+     * Consolidates grouped settings into an array
+     * For any setting where the key/field is named <field>_#, it will consolidate the values into an array keyed
+     * as <field>. Example
+     *
+     * address_1
+     * address_2
+     * address_3
+     *
+     * Will becomes an array 'address' containing the values from the three fields
+     * @param array $arySettings
+     */
+    protected function _consolidateGroups($arySettings)
+    {
+        foreach($arySettings as $mxdKey=>$mxdVal){
+            if(is_array($mxdVal)){
+                $arySettings[$mxdKey] = $this->_consolidateGroups($mxdVal);
+            }
+        }
+
+        //find all of the field keys that match our pattern
+        $aryMetaGroupKeys = preg_grep($this->strCollapseSettingsPattern,array_keys($arySettings));
+        _mizzou_log($aryMetaGroupKeys,'matches i found from the grep');
+        //loop through each match, pull out the group component and add it the group array
+        foreach($aryMetaGroupKeys as $strKeyInGroup){
+            if(1 === preg_match($this->strCollapseSettingsPattern,$strKeyInGroup,$aryMatch)){
+                _mizzou_log($aryMatch,'we have a pregmatch on ' . $strKeyInGroup.'. here is the match',false,array('line'=>__LINE__,'file'=>__FILE__));
+                $strNewKey = $aryMatch[1];
+                if(!isset($arySettings[$strNewKey])){
+                    $arySettings[$strNewKey] = array();
+                } elseif (!is_array($arySettings[$strNewKey])){
+                    /**
+                     * ok we have a situation where there is already a key set up for the group name, but it isnt an
+                     * array. Most likely we have something like "address" and then "address2". so, let's take the data
+                     * that is currently there and store it, create a new array, and then add that data back in
+                     */
+                    $strLogMsg = "looks like you have a meta field group but the first item is named what the group "
+                        . "name needs to become. Fixing it for you, but you should really go back and rename the key.";
+                    _mizzou_log($strNewKey,$strLogMsg,false,array('func'=>__FUNCTION__));
+                    $strTempData = $arySettings[$strNewKey];
+                    $arySettings[$strNewKey] = array($strTempData);
+                }
+
+                $this->aryData[$strNewKey][] = $arySettings[$strKeyInGroup];
+                unset($arySettings[$strKeyInGroup]);
+            }
+        }
     }
 }
