@@ -47,7 +47,7 @@ class Site extends Base {
 	 */
 	protected $arySiteOptions = array();
 
-    protected $strCollapseSettingsPattern = '/(.*)_?\d$/';
+    protected $strCollapseSettingsPattern = '/(.+)\d$/';
 
     public function __construct($aryOptions = array())
     {
@@ -585,6 +585,15 @@ class Site extends Base {
             if(1 === preg_match($this->strCollapseSettingsPattern,$strKeyInGroup,$aryMatch)){
                 _mizzou_log($aryMatch,'we have a pregmatch on ' . $strKeyInGroup.'. here is the match',false,array('line'=>__LINE__,'file'=>__FILE__));
                 $strNewKey = $aryMatch[1];
+                /**
+                 * ok, we want to match any key that ends in a number, but we DONT want - or _ in the new key name. so
+                 * if the new key ends in one of those two characters, grab the piece before either of those characters
+                 * and make it the new key name
+                 * @todo revisit $this->strCollapseSettingsPattern and see if you can refine it more
+                 */
+                if(1===preg_match('/(.+)[-_]$/',$strNewKey,$aryTrailingMatch)){
+                    $strNewKey = $aryTrailingMatch[1];
+                }
                 if(!isset($arySettings[$strNewKey])){
                     $arySettings[$strNewKey] = array();
                 } elseif (!is_array($arySettings[$strNewKey])){
