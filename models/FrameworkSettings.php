@@ -70,7 +70,7 @@ class FrameworkSettings {
      * @return mixed
      */
     public function get($mxdProperty){
-        if($this->is_set($mxdProperty)){
+        if(isset($this->aryData[$mxdProperty])){
             return $this->aryData[$mxdProperty];
         } else {
             //return $this->strDataNotFoundMessage;
