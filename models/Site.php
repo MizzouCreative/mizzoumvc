@@ -47,7 +47,7 @@ class Site extends Base {
 	 */
 	protected $arySiteOptions = array();
 
-    protected $strCollapseSettingsPattern = '([a-zA-Z]*)_?\d';
+    protected $strCollapseSettingsPattern = '/([a-zA-Z]*)_?\d/';
 
     public function __construct($aryOptions = array())
     {
