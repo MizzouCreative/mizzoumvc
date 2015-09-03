@@ -568,6 +568,7 @@ class Site extends Base {
      *
      * Will becomes an array 'address' containing the values from the three fields
      * @param array $arySettings
+     * @return array
      */
     protected function _consolidateGroups($arySettings)
     {
