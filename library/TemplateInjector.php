@@ -30,6 +30,7 @@ class TemplateInjector {
 	 */
 	protected $aryTemplates = array(
 		'search.php'    => 'mvzSearch',
+        'Calendar.php'  => 'mvzCalendar',
 	);
 
 	private function __construct()
