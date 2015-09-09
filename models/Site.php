@@ -49,14 +49,14 @@ class Site extends Base {
 
     protected $strCollapseSettingsPattern = '/(.+)\d$/';
 
-    public function __construct($aryOptions = array())
+    public function __construct(FrameworkSettings $objFrameWorkSettings, $aryOptions = array())
     {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
         /**
          * @todo replace this with injecting an instance of the FrameworkSettings class.
          */
-        $this->objFrameworkSettings = FrameworkSettings::getInstance();
+        $this->objFrameworkSettings = $objFrameWorkSettings;
 
         $this->add_data('CopyrightYear',date('Y'));
         $this->add_data('Name',$this->_getSiteName());
