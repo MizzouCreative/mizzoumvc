@@ -10,6 +10,8 @@
  * @uses 
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
+ *
+ * @todo We have a lot of overlap here with class Base().  Can we extend that class instead of duplicating the methods?
  */
 
 class FrameworkSettings {
@@ -19,18 +21,9 @@ class FrameworkSettings {
     private $strSettingsFileName = 'framework-settings.ini';
     protected $aryData = array();
 
-    private function __construct()
+    public function __construct()
     {
         $this->_loadOptions();
-    }
-
-    public static function getInstance()
-    {
-        if(is_null(self::$objInstance)){
-            self::$objInstance = new FrameworkSettings();
-        }
-
-        return self::$objInstance;
     }
 
     public function setting($strSetting)
@@ -80,7 +73,7 @@ class FrameworkSettings {
 
     /**
      * Safely runs parse_ini_file on $strPath
-     * @param $strPath config.ini location
+     * @param $strPath *.ini location
      * @return array options loaded in from the config.ini file, or empty array if failure
      */
     protected function _loadOptionsFile($strPath)
