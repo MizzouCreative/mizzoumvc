@@ -714,6 +714,7 @@ class Content {
      *
      * @todo should this be here? We now have a direct dependency on a TWIG object. What if we want to change template
      * systems?
+     * @deprecated
      */
     protected static function _initializeViewLoader()
     {
@@ -807,6 +808,7 @@ class Content {
 	/**
 	 * Registers functions with the template rendering engine
 	 * @todo this really needs to be somewhere else instead of in the Content class
+     * @deprecated
 	 */
 	protected static function _loadVEFunctions()
 	{
