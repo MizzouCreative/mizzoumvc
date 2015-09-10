@@ -38,6 +38,8 @@ class Site extends Base {
         'menu_format'       => '<ul id="%1$s" class="%1$s %2$s">%3$s</ul>',
         'pagelist_exclude'  => array(),
         'config_file'       => 'config.ini',
+        'parent_path'       => null,
+        'child_path'        => null,
     );
 
     protected $objFrameworkSettings = null;
@@ -53,10 +55,21 @@ class Site extends Base {
     {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
-        /**
-         * @todo replace this with injecting an instance of the FrameworkSettings class.
-         */
         $this->objFrameworkSettings = $objFrameWorkSettings;
+
+        if(isset($this->aryOptions['parent_path']) && !is_null($this->aryOptions['parent_path'])){
+            $strParentPath =  $this->aryOptions['parent_path'];
+        } else {
+            $strParentPath = $this->_getParentThemePath();
+            _mizzou_log($aryOptions,'Site initiated but parent_path not present',false,array('line'=>__LINE__,'file'=>__FILE__));
+        }
+
+        if(isset($this->aryOptions['child_path']) && !is_null($this->aryOptions['child_path'])){
+            $strChildPath = $this->aryOptions['child_path'];
+        } else {
+            $strChildPath = $this->_getChildThemePath();
+            _mizzou_log($aryOptions,'Site initiated but child_path not present',false,array('line'=>__LINE__,'file'=>__FILE__));
+        }
 
         $this->add_data('CopyrightYear',date('Y'));
         $this->add_data('Name',$this->_getSiteName());
@@ -65,8 +78,8 @@ class Site extends Base {
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
         //$this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
-        $this->add_data('ParentThemePath',$this->_getParentThemePath());
-        $this->add_data('ChildThemePath',$this->_getChildThemePath());
+        $this->add_data('ParentThemePath',$strParentPath);
+        $this->add_data('ChildThemePath',$strChildPath);
         $this->add_data('ActiveThemePath',$this->_getActiveThemePath());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('IsChild',is_child_theme());
