@@ -11,7 +11,7 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-
+namespace MizzouMVC\controllers;
 abstract class Main {
 
     protected $objSite = null;
@@ -64,10 +64,7 @@ abstract class Main {
             }
         }
 
-        /**
-         * @todo do we still need to pass aryContext to main if we've already merged it into RenderData?
-         */
-        $this->main($aryContext);
+        $this->main();
     }
 
     protected function _init(Site $objSite=null)
@@ -101,9 +98,6 @@ abstract class Main {
 
     /**
      * @param $strInnerViewFileName
-     * @param $aryData
-     * @param array $aryOptions
-     * @todo do we need to pass in aryData if we've stored it in this->aryRenderData ?
      */
     public function render($strInnerViewFileName)
     {
@@ -129,6 +123,6 @@ abstract class Main {
         return filter_var($mxdVal,FILTER_VALIDATE_BOOLEAN);
     }
 
-    public abstract function main($aryContext);
+    public abstract function main();
 
 }
