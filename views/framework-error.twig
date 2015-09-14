@@ -1,0 +1,24 @@
+{#
+ * Generic framework error indication
+ *
+ * If we hit an error that is really going to throw things off, we can set the view to this one to tell the dev to go
+ * check the logs.
+ *
+ * @package WordPress
+ * @subpackage Wordpress MVC
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
+#}
+{% extends 'baseView.twig' %}
+{% block content %}
+    <div id="content">
+        <h1>{{ PageTitle }}</h1>
+        <div id="article">
+            <p>We've encountered an error that really messes things up.  The developer needs to go check the logs.</p>
+            <p>If you're the developer, make sure you've enabled WP_DEBUG and WP_DEBUG_LOG.</p>
+        </div>
+    </div>
+
+{% endblock %}
