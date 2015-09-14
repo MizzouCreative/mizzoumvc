@@ -9,7 +9,7 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  */
-
+namespace MizzouMVC\models;
 /**
  * This assumes that both files are in the same directory
  */

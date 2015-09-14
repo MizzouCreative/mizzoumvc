@@ -12,6 +12,7 @@
 * @copyright 2015 Curators of the University of Missouri
 * @dependency objSite model
  */
+namespace MizzouMVC\models;
 class Header extends Subview {
 
 

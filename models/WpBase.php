@@ -12,7 +12,7 @@
  * @uses comments_template()
  * @todo move function calls out of this view
  */
-
+namespace MizzouMVC\models;
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
 
 

@@ -11,6 +11,7 @@
 * @uses $_wp_additional_image_sizes
 * @version 201212211512 
 */
+namespace MizzouMVC\models;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'PostBase.php';
 
 /**

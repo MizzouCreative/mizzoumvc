@@ -17,12 +17,11 @@
  * @uses A11yPageWalker
  * @uses wp_list_pages()
  *
- * @todo some dependcencies need to be addressed.
  * @todo there are a couple of methods that seem outside the scope of the class
  *
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
-
+namespace MizzouMVC\models;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FrameworkSettings.php';
 
 /**

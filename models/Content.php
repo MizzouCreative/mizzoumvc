@@ -10,9 +10,9 @@
  *
  * ASSUMES that Base.php and Site.php classes have already been included
  *
- * @todo rename to Framework to better reflect it's purpose?
+ * @todo is this really a model?  or is it more part of the library or application?
  */
-
+namespace MizzouMVC\models;
 class Content {
     /**
      * @var array default options used by the render method
