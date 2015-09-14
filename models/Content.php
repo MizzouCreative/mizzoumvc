@@ -18,40 +18,13 @@ class Content {
      * @var array default options used by the render method
      */
     protected static $aryDefaultOptions = array(
-        'include_sidebars'  => false,
-        'override_outerview'=>false,
         'include_pagination'=>false,
-        'include_header'    =>true,
-        'include_footer'    =>true,
         'return'            =>false,
-	    'bypass_init'       =>false,
+        'bypass_init'       =>false,
         'include_breadcrumbs'=>false,
     );
 
-    /**
-     * @var array list of pages that should include a sidebar
-     * @todo this is completely specific to IPP and needs to be moved back down to the child theme and then sent back up
-     * via the theme options class
-     */
-    protected static $aryIncludeSidebarPages = array(
-        'about',
-        'strategic-plan',
-        'annual-reports',
-        'contact',
-        'staff',
-        'policy-research-scholars',
-        'graduate-research-assistants'
-    );
 
-    /**
-     * @var array
-     */
-    protected static $arySiteSiteMembers = array('URL','Name');
-
-    /**
-     * @var string
-     */
-    protected static $strDateArchiveType = '';
 
     /**
      * @var string
@@ -85,142 +58,74 @@ class Content {
      * @param array $aryOptions
      * @return void
      */
-    public static function render($strInnerViewFileName,$aryData,$aryOptions=array())
+    public static function render($strInnerViewFileName,$aryData, Twig_Environment $objViewEngine, Site $objSite=null, $aryOptions=array())
     {
-	    /**
-	     * @todo We need to reorg into things to do during init, so we can bypass them if bypass_init is set to true
-	     */
-
-	    /**
-         * @todo why are we setting $aryViewVariables to $aryData instead of just using $aryData?
-         */
-        $aryViewVariables               = $aryData;
-        //we need a copy of the original passed in options
+	    //we need a copy of the original passed in options
         $aryPassedOptions = $aryOptions;
-        $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
+        $aryOptions = array_merge(self::aryDefaultOptions,$aryOptions);
 
-        /**
-         * @todo don't like this since it creates a direct dependency, but we need data from the Site model in order
-         * to know what to pass/not pass to the view. Dependency injection via render method? or
-         */
-        if(!isset($aryData['objSite']) || !is_object($aryData['objSite'])){
-            //if this is the first run-through and we havent asked to bypass init (shortcodes, usually)
-	        if(self::$intCounter == 0 && !$aryOptions['bypass_init']){
-                $objSite = new Site();
+        if(!$aryOptions['bypass_init']){
+            if(is_null($objSite)){
+                //we HAVE to Site if we arent skipping init stuff
+                $strInnerViewFileName = 'framework-error';
+                $aryData['Error'] = '';
             } else {
+                //edit post link
+                if('' != $objSite->{'site-wide'}['include_edit_link'] && self::_mixedToBool($objSite->{'site-wide'}['include_edit_link'])){
+                    if(((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link())){
+                        $aryData['EditLink'] = $strPostLink;
+                    }
+                }
+
+                //Pagination
+                if($aryOptions['include_pagination']){
+                    global $wp_query;
+                    $aryPaginationArgs = array('wp_query'=>$wp_query);
+                    if('' != $aryPaginationOptions = $objSite->pagination){
+                        $aryPaginationArgs = array_merge($aryPaginationArgs,$aryPaginationOptions);
+                    }
+
+                    $aryData['Pagination'] = new Pagination($aryPaginationArgs);
+                }
+
+                //page title?
+                if(!isset($aryData['PageTitle'])){
+                    $aryData['PageTitle'] = self::_determinePageTitle();
+                }
+
+                //root ancestor?
+                if(!isset($aryData['RootAncestor'])){
+                    $aryData['RootAncestor'] = self::_determineRootAncestor((isset($aryData['MainPost'])) ? $aryData['MainPost'] : null,$aryData['PageTitle']);
+                }
+
+                //breadcrumbs
                 /**
-                 * Somehow we've called Content more than once and still dont have an objSite in site.
-                 * @todo clean this up
+                 * ok, we could either have the site-wide option set to true and the controller did nothing, or the site wide option could be set to true but
+                 * a controller overrode to false, OR the site-wide option could be set to false, and a controller overrode to true
                  */
-                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but objSite still hasnt been created',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
+                if(
+                    (
+                        '' != $objSite->{'site-wide'}['include_breadcrumbs']
+                        && self::_mixedToBool($objSite->{'site-wide'}['include_breadcrumbs'])
+                        && (!isset($aryPassedOptions['include_breadcrumbs']) || $aryPassedOptions['include_breadcrumbs']))
+                    ||
+                    ($aryOptions['include_breadcrumbs'])
+                ){
+                    $aryAncestors = (isset($aryData['MainPost'])) ? $aryData['MainPost']->retrieveAncestors() : array();
+                    $aryBreadcrumbOptions = (isset($objSite->breadcrumbs) && '' != $objSite->breadcrumbs) ? $objSite->breadcrumbs : array();
+                    $aryData['Breadcrumbs'] = new Breadcrumbs($aryData['PageTitle'],$aryAncestors,$aryBreadcrumbOptions);
+                }
+
+                //menu?
+                if(!isset($aryData['Menu'])){
+                    $aryData['Menu'] = new Menu($aryData);
+                }
+
+                //We need to pass Site down to the view
+                $aryData['Site'] = $objSite;
+
             }
-        } else {
-            $objSite = $aryData['objSite'];
         }
-
-	    /**
-	     * if they have indicated they want to include pagination, and given us an instance of WP_Query *AND* we aren't bypassing init
-	     */
-	    if(FALSE !== $aryOptions['include_pagination'] && $aryOptions['include_pagination'] instanceof WP_Query && !$aryOptions['bypass_init']){
-            $aryPaginationArgs = array('wp_query'=>$aryOptions['include_pagination']);
-            unset($aryOptions['include_pagination']);
-            if(('' != $aryPaginationOptions = $objSite->pagination)){
-                $aryPaginationArgs = array_merge($aryPaginationArgs,$aryPaginationOptions);
-            }
-
-            $aryViewVariables['Pagination'] = new Pagination($aryPaginationArgs);
-        } elseif(false !== $aryOptions['include_pagination'] && !($aryOptions['include_pagination'] instanceof WP_Query)){
-            _mizzou_log($aryOptions['include_pagination'],'you said you wanted to do pagination, but you didnt give me a WP_Query object',false,array('line'=>__LINE__,'file'=>__FILE__));
-        }
-
-	    /**
-	     * Load up the template rendering engine
-	     */
-	    self::_initializeViewEngine();
-
-		//do we need the EditPostLink?
-        if(((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link()) && !$aryOptions['bypass_init']){
-            $strEditPostLink = ' ' . $strPostLink;
-            $aryViewVariables['EditPostLink'] = $strEditPostLink;
-        }
-
-
-
-        /**
-         * For now, we want to make both the $objSite-> members and direct variables available to designers. Eventually
-         * we'll decide one way or the other
-         * @todo do we want to replicate this functionality in twig?
-         */
-
-        foreach($objSite->currentPublicMembers() as $strSiteKey){
-            $strSiteVariable = '';
-            if(in_array($strSiteKey,self::$arySiteSiteMembers)) {
-                $strSiteVariable = 'Site'.$strSiteKey;
-            } else {
-                $strSiteVariable = $strSiteKey;
-            }
-
-            $aryViewVariables[$strSiteVariable] = $objSite->{$strSiteKey};
-
-            $strSiteVariable = 'str'.$strSiteVariable;
-
-            $$strSiteVariable = $objSite->{$strSiteKey};
-        }
-
-        $aryViewVariables['objSite'] = $objSite;
-
-        /**
-         * @todo i dont like this one bit.  The situation we have is that it's possible for a controller to override
-         * what the page title is, instead of us determining the page title.  But we also have methods here (specifically
-         * self::_getHeaderTitle() and self::_determineHeaderTitle() that need the page title whether or not it has been
-         * determined manually, or overridden. Going to need to think on this a bit...
-         * the page title
-         */
-        //$strPageTitle = (isset($strPageTitle)) ? $strPageTitle : '';
-        //$strPageTitle = self::_getPageTitle();
-        if(!isset($aryViewVariables['PageTitle']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
-            $aryViewVariables['PageTitle'] = self::_getPageTitle();
-        }
-
-        if(!isset($aryData['RootAncestor']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
-            $aryViewVariables['RootAncestor'] = self::_determineRootAncestor((isset($aryData['objMainPost'])) ? $aryData['objMainPost'] : null,$aryViewVariables['PageTitle']);
-        }
-
-        /**
-         * Now that we have page title, and the mainpost, if applicable, should have determined its ancestors, lets see
-         * if we need breadcrumbs. ok, either include_breadcrumbs has been set to true, OR a site wide option has been
-         * set to true/yes/on AND an individual controller didnt indicate an override to turn it back off
-         */
-        _mizzou_log($aryOptions['include_breadcrumbs'],'include_breadcrumbs option',false,array('line'=>__LINE__,'file'=>__FILE__));
-        _mizzou_log($aryPassedOptions['include_breadcrumbs'],'include_breadcrumbs passed in option',false,array('line'=>__LINE__,'file'=>__FILE__));
-        _mizzou_log($objSite->option('include_breadcrumbs'),'include_breadcrumbs from site model',false,array('line'=>__LINE__,'file'=>__FILE__));
-        if(!$aryOptions['bypass_init'] && (false !== $aryOptions['include_breadcrumbs']
-            || (
-                in_array($objSite->option('include_breadcrumbs'),array('yes','on','true'))
-                && (!isset($aryPassedOptions['include_breadcrumbs']) || false !== $aryPassedOptions['include_breadcrumbs'])
-                )
-	        )){
-            $aryAncestors = (isset($aryData['objMainPost'])) ? $aryData['objMainPost']->retrieveAncestors() : array();
-            $aryBreadcrumbOptions = (isset($objSite->breadcrumbs)) ? $objSite->breadcrumbs : array();
-            $aryViewVariables['Breadcrumbs'] = new Breadcrumbs($aryViewVariables['PageTitle'],$aryAncestors,$aryBreadcrumbOptions);
-        }
-
-        /**
-         * If we're on the home page (which is where the blog posts are listed), or we are on an archive page for any
-         * other CPTs, then we need to include Next & Previous page links
-         * @deprecated this has been moved into the Pagination model.
-         * @todo delete
-
-        if((is_home() || is_archive()) && $aryOptions['include_pagination']){
-            $strPaginationNext = get_next_posts_link('&laquo; Previous Entries ');
-            $strPaginationPrevious = get_previous_posts_link('Newer Entries &raquo;');
-            if(is_null($strPaginationNext)) $strPaginationNext = '';
-            if(is_null($strPaginationPrevious)) $strPaginationPrevious = '';
-
-            $aryViewVariables['PaginationNext'] = $strPaginationNext;
-            $aryViewVariables['PaginationPrevious'] = $strPaginationPrevious;
-        }*/
-
 
         /**
          * check the view name to see if we've been given the full name w/ extension, or just the file name
@@ -232,27 +137,16 @@ class Content {
             $strInnerViewFileName .= '.twig';
         }
 
-        self::$objView = self::$objViewEngine->loadTemplate($strInnerViewFileName);
+        self::$objView = $objViewEngine->loadTemplate($strInnerViewFileName);
 
-        /**
-         * Now we need the data from our menu model
-         */
-        if(!isset($aryData['Menu']) && self::$intCounter == 0 && !$aryOptions['bypass_init']){
-            if(self::$intCounter == 0){
-                $aryViewVariables['Menu'] = new Menu($aryViewVariables);
-            } else {
-                _mizzou_log($aryData,'Content has been called ' . self::$intCounter . ' times but Menu still hasnt been created',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-            }
+        $strReturn = self::$objView->render($aryData);
+
+        if(!$aryOptions['return']){
+            echo $strReturn;
+            $strReturn = null;
         }
 
-        //increment our internal counter, but only if we havent instructed it to bypass init
-        if(!$aryOptions['bypass_init']) ++self::$intCounter;
-
-        if($aryOptions['return']){
-            return self::$objView->render($aryViewVariables);
-        } else {
-            echo self::$objView->render($aryViewVariables);
-        }
+        return $strReturn;
 
     }
 
@@ -708,218 +602,10 @@ class Content {
         }
     }
 
-    /**
-     * Initializes Template engines filesystem loader
-     * @return Twig_Loader_Filesystem
-     *
-     * @todo should this be here? We now have a direct dependency on a TWIG object. What if we want to change template
-     * systems?
-     * @deprecated
-     */
-    protected static function _initializeViewLoader()
+    protected static function _mixedToBool($mxdVal)
     {
-        $aryViewDirectories = array();
-        $strParentThemePath = get_template_directory().DIRECTORY_SEPARATOR;
-        $strChildThemePath = get_stylesheet_directory().DIRECTORY_SEPARATOR;
-
-        if($strChildThemePath != $strParentThemePath){
-            $aryViewDirectories[] = $strChildThemePath;
-        }
-
-        $aryViewDirectories[] = $strParentThemePath;
-
-        /**
-         * Last include the path to the framework, if it was defined
-         */
-        if(defined('MIZZOUMVC_ROOT_PATH')) {
-            $aryViewDirectories[] = MIZZOUMVC_ROOT_PATH;
-        }
-
-        foreach($aryViewDirectories as $intDirectoryKey=>$strDirectory){
-            $aryViewDirectories[$intDirectoryKey] = $strDirectory.'views'.DIRECTORY_SEPARATOR;
-        }
-
-        return new Twig_Loader_Filesystem($aryViewDirectories);
-
+        return filter_var($mxdVal,FILTER_VALIDATE_BOOLEAN);
     }
 
-	/**
-	 * Loads the template rendering engine
-	 */
-	protected static function _initializeViewEngine()
-    {
-        $objTELoader = self::_initializeViewLoader();
-        $strCacheLocation = self::_determineViewCacheLocation();
-        $boolAutoReload = (defined('WP_DEBUG')) ? WP_DEBUG : false;
-        /**
-         * @todo move this into an options setting?
-         */
-        $aryTEOptions = array(
-            'cache'=>$strCacheLocation,
-            'auto_reload'=>$boolAutoReload,
-            'autoescape'=>false,
-        );
-	    self::$objViewEngine = new Twig_Environment($objTELoader,$aryTEOptions);
-	    self::_loadVEFilters();
-	    self::_loadVEFunctions();
-	}
 
-	/**
-	 * Determines where we need to store the cache from our template rendering engine
-	 *
-	 * @return string cache location
-	 */
-	protected static function _determineViewCacheLocation()
-    {
-        $strViewCacheLocation = '';
-
-        if(defined('VIEW_CACHE_LOCATION')){
-            $strViewCacheLocation = VIEW_CACHE_LOCATION;
-        } else {
-            //let's see if we have a cache directory
-            $strParentThemePath = get_template_directory().DIRECTORY_SEPARATOR;
-            $strPossibleCacheLocation = $strParentThemePath.'cache'.DIRECTORY_SEPARATOR;
-            if(!is_dir($strPossibleCacheLocation) && !file_exists($strPossibleCacheLocation)){
-                //we need to make a directory
-                if(mkdir($strPossibleCacheLocation,'0755')){
-                    $strViewCacheLocation = $strPossibleCacheLocation;
-                }
-            } elseif(!is_writable($strPossibleCacheLocation)) {
-                //it exists but we cant write to it...
-                if(chmod($strPossibleCacheLocation,'0755')){
-                    $strViewCacheLocation = $strPossibleCacheLocation;
-                }
-            } else {
-                $strViewCacheLocation = $strPossibleCacheLocation;
-            }
-
-        }
-
-        if(''==$strViewCacheLocation){
-            /**
-             * @todo we need a more elegant way of handling this
-             */
-            echo 'view cache location is not available or is not writeable. I can\'t continue until you fix this. ';exit;
-        } else {
-            return $strViewCacheLocation;
-        }
-    }
-
-	/**
-	 * Registers functions with the template rendering engine
-	 * @todo this really needs to be somewhere else instead of in the Content class
-     * @deprecated
-	 */
-	protected static function _loadVEFunctions()
-	{
-		/**
-		 * @todo this needs to be moved out of here into somewhere else.  But where?
-		 */
-		self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
-			_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
-			//_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
-			$strController = '';
-
-            if(is_array($mxdControllerName)){
-				$aryControllerNameParts = $mxdControllerName;
-			} elseif(is_string($mxdControllerName)){
-				$aryControllerNameParts = explode(' ',trim($mxdControllerName));
-			} else {
-				/**
-				 * @todo should this be changed to a try catch with an exception?
-				 * We're expecting a string (or an array), so getting something else WOULD be an exception
-				 */
-				_mizzou_log($mxdControllerName,'what the heck... what were we given instead of the name for a controller?',false,array('FUNC'=>__FUNCTION__,'line'=>__LINE__,'file'=>__FILE__));
-				$aryControllerNameParts = array();
-			}
-			$strControllerName = implode('-',$aryControllerNameParts) . '.php';
-            _mizzou_log($strControllerName,'the controller name before we run locate template',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
-			if(count($aryData) != 0){
-				extract($aryData);
-			}
-
-            if(defined('MIZZOUMVC_ROOT_PATH') && '' == $strController = locate_template($strControllerName)){
-                _mizzou_log(null,'we didnt find a controller in a parent or child theme. gonna look in the plugin framework',false,array('line'=>__LINE__,'file'=>__FILE__));
-                //ok, we didnt find a controller in a parent or child theme, what about the plugin?
-                if(is_readable(MIZZOUMVC_ROOT_PATH.$strControllerName)){
-                    $strController = MIZZOUMVC_ROOT_PATH.$strControllerName;
-                } else {
-                    _mizzou_log(MIZZOUMVC_ROOT_PATH.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
-                }
-            }
-            //_mizzou_log($strController = locate_template($strControllerName),'direct return from locate_template',false,array('file'=>__FILE__,'line'=>__LINE__));
-            _mizzou_log($strController,'the controller name before we try to require it',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
-			if('' != $strController){
-				require_once $strController;
-			}
-		}));
-	}
-
-	/**
-	 * Registers filters with the template rendering engine
-	 */
-	protected static function _loadVEFilters()
-	{
-		$objTwigDebug = new Twig_SimpleFilter('var_export',function($string){
-			return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
-		});
-
-		$objTwigSanitize = new Twig_SimpleFilter('sanitize',function($strString){
-			return sanitize_title_with_dashes($strString);
-		});
-
-        /**
-         * Given a timestamp, a string formatted date, or a full month, we'll convert it to an AP-style month
-         */
-        $objTwigAPMonth = new Twig_SimpleFilter('apmonth',function($mxdDate){
-            $intTimeStamp = null;
-            $strMonth = null;
-            $strReturn = $mxdDate;
-
-            if(is_string($mxdDate)){
-                //we have some time of string representation of a date
-                $aryCalendarInfo = cal_info(0);
-                //do we have a full month?
-                if(in_array($mxdDate,$aryCalendarInfo['months'])){
-                    //ok we have our month
-                    $strMonth = $mxdDate;
-                } else {
-                    $intTimeStamp = strtotime($mxdDate);
-                }
-            } elseif(is_numeric($mxdDate)) {
-                //we'll assume they gave us a timestamp
-                $intTimeStamp = $mxdDate;
-            }
-
-            if(!is_null($intTimeStamp) && false !== $intTimeStamp){
-                $strMonth = date('F',$intTimeStamp);
-            }
-
-            if(!is_null($strMonth)){
-                if(strlen($strMonth) > 5){ //stoopid september... grumble, grumble
-                    if($strMonth == 'September'){
-                        $intTruncLen = 4;
-                    } else {
-                        $intTruncLen = 3;
-                    }
-
-                    $strReturn = substr($strMonth,0,$intTruncLen) . '.';
-                } else {
-                    $strReturn = $strMonth;
-                }
-            }
-
-            return $strReturn;
-
-        });
-
-		/**
-		 * @todo all this stuff with the template engine needs to be moved out of here
-		 */
-		self::$objViewEngine->addFilter($objTwigDebug);
-		self::$objViewEngine->addFilter($objTwigSanitize);
-        self::$objViewEngine->addFilter($objTwigAPMonth);
-
-
-	}
 }
