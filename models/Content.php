@@ -68,6 +68,7 @@ class Content {
             if(is_null($objSite)){
                 //we HAVE to Site if we arent skipping init stuff
                 $strInnerViewFileName = 'framework-error';
+                $aryData['PageTitle'] = 'Error Encountered';
                 _mizzou_log(null,'you didnt instruct me to bypass init but you also didnt include the Site object',true,array('line'=>__LINE__,'file'=>__FILE__));
             } else {
                 //edit post link
