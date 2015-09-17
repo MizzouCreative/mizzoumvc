@@ -12,6 +12,8 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 namespace MizzouMVC\controllers;
+use MizzouMVC\library\Loader;
+
 abstract class Main {
 
     protected $objSite = null;
@@ -19,6 +21,7 @@ abstract class Main {
     protected $strChildThemePath = null;
     protected $strFrameworkPath = null;
     protected $objViewEngine = null;
+    protected $objLoader = null;
 
     protected $aryRenderData = array();
 
@@ -91,9 +94,11 @@ abstract class Main {
 
         $this->objViewEngine = ViewEngineLoader::getViewEngine($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
         /**
-         * @todo we need to pass Site down into the view, but I'd rather not store multiple copies.  Is this the best method
+         * @todo we need to pass Site down into the view, but I'd rather not store multiple copies.  Is this the best method?
          */
         $this->aryRenderData['Site'] = & $this->objSite;
+
+        $this->objLoader = new Loader($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
     }
 
     /**
@@ -123,6 +128,15 @@ abstract class Main {
         return filter_var($mxdVal,FILTER_VALIDATE_BOOLEAN);
     }
 
+    public function load($strClass)
+    {
+        $aryArgs = array();
+        if(func_num_args() > 1){
+            $aryArgs = func_get_args();
+            $strClass = array_shift($aryArgs);
+        }
+        return $this->objLoader->load($strClass,$aryArgs);
+    }
     public abstract function main();
 
 }
