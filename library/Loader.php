@@ -30,7 +30,7 @@ class Loader {
         }
     }
 
-    public function load($strClass)
+    public function load($strClass,$aryArgs=array())
     {
         /*
          * first lets see if they gave us the file instead of the class. if so, we'll assume they named the file the same
@@ -48,7 +48,11 @@ class Loader {
         if(file_exists($strFullPath)){
             require_once $strFullPath;
             if(class_exists($strClass,false)){
-                return new $strClass;
+                if(count($aryArgs) > 0){
+                    return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID));
+                } else {
+                    return new $strClass;
+                }
             } else {
                 _mizzou_log($strClass,'the class name you gave me doesnt exist. make sure the namespace is correct',false,array('line'=>__LINE__,'file'=>__FILE__));
             }
