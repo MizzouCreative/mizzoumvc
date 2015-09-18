@@ -22,7 +22,7 @@
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
 namespace MizzouMVC\models;
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FrameworkSettings.php';
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'.DIRECTORY_SEPARATOR.'FrameworkSettings.php';
 
 /**
  * Stores basic information used across the site.
