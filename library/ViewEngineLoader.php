@@ -126,18 +126,18 @@ class ViewEngineLoader {
 
     protected function _loadViewEngineFilters()
     {
-        $objTwigDebug = new Twig_SimpleFilter('var_export',function($string){
+        $objTwigDebug = new \Twig_SimpleFilter('var_export',function($string){
             return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
         });
 
-        $objTwigSanitize = new Twig_SimpleFilter('sanitize',function($strString){
+        $objTwigSanitize = new \Twig_SimpleFilter('sanitize',function($strString){
             return sanitize_title_with_dashes($strString);
         });
 
         /**
          * Given a timestamp, a string formatted date, or a full month, we'll convert it to an AP-style month
          */
-        $objTwigAPMonth = new Twig_SimpleFilter('apmonth',function($mxdDate){
+        $objTwigAPMonth = new \Twig_SimpleFilter('apmonth',function($mxdDate){
             $intTimeStamp = null;
             $strMonth = null;
             $strReturn = $mxdDate;
@@ -187,7 +187,7 @@ class ViewEngineLoader {
 
     protected function _loadViewEngineFunctions()
     {
-        self::$objViewEngine->addFunction('subview',new Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
+        self::$objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
             //_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             //_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $strController = '';
