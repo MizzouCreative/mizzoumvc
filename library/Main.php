@@ -36,6 +36,7 @@ abstract class Main {
     public function __construct(array $aryContext=array())
     {
 
+        _mizzou_log(null,'Main constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
         /**
          * If we have context, we'll need to pass it down into the next view
          */
@@ -72,6 +73,7 @@ abstract class Main {
 
     protected function _init(Site $objSite=null)
     {
+        _mizzou_log(null,'Main init called',false,array('line'=>__LINE__,'file'=>__FILE__));
         if(defined('MIZZOUMVC_ROOT_PATH')){
             $this->strFrameworkPath = MIZZOUMVC_ROOT_PATH;
         } else {
