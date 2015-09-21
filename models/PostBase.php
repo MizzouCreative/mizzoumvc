@@ -21,7 +21,7 @@ class PostBase extends Base
 
     public function __construct($mxdPost)
     {
-        if(is_object($mxdPost) && $mxdPost instanceof WP_Post){
+        if(is_object($mxdPost) && $mxdPost instanceof \WP_Post){
             $objPost = $mxdPost;
         } elseif(is_numeric($mxdPost)){
             if(null == $objPost = get_post($mxdPost)){
