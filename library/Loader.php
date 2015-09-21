@@ -64,6 +64,7 @@ class Loader {
 
     protected function _determinePath($aryClassParts)
     {
+        _mizzou_log($aryClassParts,'the class parts to the file we need',false,array('line'=>__LINE__,'file'=>__FILE__));
         $strFullPath = '';
 
         $strEndPiece = end($aryClassParts);
