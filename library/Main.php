@@ -12,7 +12,9 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 namespace MizzouMVC\controllers;
-use MizzouMVC\library\Loader as Loader;
+use MizzouMVC\library\Loader;
+use MizzouMVC\models\Site;
+use MizzouMVC\library\FrameworkSettings;
 
 abstract class Main {
 
