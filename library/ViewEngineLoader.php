@@ -43,7 +43,7 @@ class ViewEngineLoader {
 
         //initiate our view engine
         //$this->objViewEngine = new Twig_Environment($this->objViewEngineEnvironmentLoader,$aryViewEngineOptions);
-        self::$objViewEngine = new Twig_Environment(new Twig_Loader_Filesystem($this->_determineViewDirectories()),$aryViewEngineOptions);
+        self::$objViewEngine = new \Twig_Environment(new \Twig_Loader_Filesystem($this->_determineViewDirectories()),$aryViewEngineOptions);
         //load up our custom view filters
         $this->_loadViewEngineFilters();
         //load up our custom view functions
