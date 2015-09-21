@@ -41,6 +41,10 @@ abstract class Main {
 
         _mizzou_log(null,'Main constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
         /**
+         * @todo blarg.  We shouldnt have to set objSite to null, just in case we actually have.  rethink the logic here.
+         */
+        $objSite = null;
+        /**
          * If we have context, we'll need to pass it down into the next view
          */
         if(count($aryContext) > 0 ){
@@ -65,8 +69,6 @@ abstract class Main {
                     $this->aryRenderData['Site'] = & $aryContext['objSite'];
                 }
 
-            } else {
-                $objSite = null;
             }
         }
 
