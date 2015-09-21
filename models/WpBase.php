@@ -207,7 +207,7 @@ class WpBase
 
     public function convertPost($objPost,$aryOptions = array())
     {
-        if( ( is_object( $objPost ) && $objPost instanceof WP_Post) || is_numeric($objPost) ){
+        if( ( is_object( $objPost ) && $objPost instanceof \WP_Post) || is_numeric($objPost) ){
 	        //_mizzou_log($aryOptions,'aryOptions given to wpBase',false,array('func'=>__FUNCTION__));
 	        $aryOptions = array_merge($this->aryDefaults,$aryOptions);
 
