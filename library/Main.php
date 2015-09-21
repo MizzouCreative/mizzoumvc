@@ -62,11 +62,12 @@ abstract class Main {
                     $this->aryRenderData['Site'] = & $aryContext['objSite'];
                 }
 
-                $this->_init($objSite);
             } else {
-                $this->_init();
+                $objSite = null;
             }
         }
+
+        $this->_init($objSite);
 
         $this->main();
     }
