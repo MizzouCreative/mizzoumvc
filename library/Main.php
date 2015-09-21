@@ -107,6 +107,7 @@ abstract class Main {
         $this->aryRenderData['Site'] = & $this->objSite;
 
         $this->objLoader = new Loader($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
+        _mizzou_log($this->objLoader,'just finished creating loader',false,array('line'=>__LINE__,'file'=>__FILE__));
     }
 
     /**
