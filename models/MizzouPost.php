@@ -277,7 +277,7 @@ class MizzouPost extends PostBase
      * @param WP_Post $objPost
      * @todo how is the functionality here different from @see _cloneObject? can we consolidate these two?
      */
-    private function _setMembers(WP_Post $objPost)
+    private function _setMembers(\WP_Post $objPost)
     {
         $aryPostMembers = get_object_vars($objPost);
         $intPrefixLen = strlen($this->strPostPrefix);
