@@ -496,7 +496,7 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
 	    /**
 	     * @todo, make sure ->query_vars['post_type'] is set before doing an in_array
 	     */
-	    if(!is_admin() && $objQuery->is_main_query() && (in_array($objQuery->query_vars['post_type'],$aryPostTypes)|| $objQuery->is_tax)){
+	    if(!is_admin() && $objQuery->is_main_query() && ((isset($objQuery->query_vars['post_type']) && in_array($objQuery->query_vars['post_type'],$aryPostTypes))|| $objQuery->is_tax)){
             $objQuery->query_vars['posts_per_page'] = -1;
         }
     }
