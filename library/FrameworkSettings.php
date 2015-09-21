@@ -13,7 +13,7 @@
  *
  * @todo We have a lot of overlap here with class Base().  Can we extend that class instead of duplicating the methods?
  */
-
+namespace MizzouMVC\library;
 class FrameworkSettings {
 
     private static $objInstance = null;
