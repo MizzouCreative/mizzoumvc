@@ -50,7 +50,7 @@ class Site extends Base {
 
     protected $strCollapseSettingsPattern = '/(.+)\d$/';
 
-    public function __construct(FrameworkSettings $objFrameWorkSettings, $aryOptions = array())
+    public function __construct(\MizzouMVC\library\FrameworkSettings $objFrameWorkSettings, $aryOptions = array())
     {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
 
