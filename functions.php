@@ -59,6 +59,8 @@ function mizzou_setup(){
     add_filter('query_vars','mizzou_add_URL_query_vars');
     add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
     add_filter('edit_tag_link', 'edit_tag_link_new_window');
+    add_filter('the_generator','mizzouRemoveGenerator');
+    add_filter('redirect_canonical','mizzouBlockUserEnumeration', 10,2);
 
     /**
      * Completely disable pingback support
@@ -517,6 +519,24 @@ function embedGoogleMap( $aryMatches ) {
 
     $strEmbed = '<iframe title="Map" class="map-embed" width="'.$width.'" height="'.$height.'" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="'.$strEmbedLink.'&output=embed"></iframe>';
     return apply_filters( 'embed_g_map', $strEmbed );
+}
+
+function mizzouBlockUserEnumeration($strRedirectionURL, $strRequestedURL)
+{
+    if (1 === preg_match('/\?author=([\d]*)/', $strRequestedURL)) {
+        $strRedirectionURL = false;
+    }
+
+    return $strRedirectionURL;
+}
+
+/**
+ * Removes the wordpress version number from EVERYTHING
+ * @return string empty
+ */
+function mizzouRemoveGenerator()
+{
+    return '';
 }
 
 /**
