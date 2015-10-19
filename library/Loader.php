@@ -53,7 +53,10 @@ class Loader {
             require_once $strFullPath;
             if(class_exists($strClass,false)){
                 if(count($aryArgs) > 0){
-                    return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID));
+	                /**
+	                 * @todo what should we do about the prefix for invalid/numeric variables? should it be a theme/framework setting?
+	                 */
+	                return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID,'mzmvc'));
                 } else {
                     return new $strClass;
                 }
