@@ -53,6 +53,7 @@ class Loader {
             require_once $strFullPath;
             if(class_exists($strClass,false)){
                 if(count($aryArgs) > 0){
+	                _mizzou_log($aryArgs,'arguments before extractment',false,array('line'=>__LINE__,'file'=>__FILE__));
 	                /**
 	                 * @todo what should we do about the prefix for invalid/numeric variables? should it be a theme/framework setting?
 	                 */
