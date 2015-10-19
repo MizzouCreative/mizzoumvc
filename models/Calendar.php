@@ -22,7 +22,8 @@ class Calendar extends AbstractTranslator {
 
     public function __construct($aryOptions=array())
     {
-        /**
+        _mizzou_log(func_get_args(),'options handed to __construct',false,array('line'=>__LINE__,'file'=>__FILE__));
+	    /**
          * @todo this functionality should PROBABLY be pushed back up to the AbstractClass, but we'll leave here for now
          */
         if(isset($aryOptions['calendar_exception_email']) && !defined('CALENDAR_EXCEPTION_EMAIL')){
