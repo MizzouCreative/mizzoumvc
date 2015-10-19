@@ -21,7 +21,7 @@ class Loader {
     protected $strParentThemePath = null;
     protected $strChildThemePath = null;
 
-    public function _construct($strFramework,$strParentTheme,$strChildTheme=null)
+    public function __construct($strFramework,$strParentTheme,$strChildTheme=null)
     {
         _mizzou_log(null,'loader constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
         _mizzou_log(func_get_args(),'all the args passed to constructor',false,array('line'=>__LINE__,'file'=>__FILE__));
