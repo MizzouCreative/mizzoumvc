@@ -142,7 +142,9 @@ abstract class Main {
         $aryArgs = array();
         if(func_num_args() > 1){
             $aryArgs = func_get_args();
+	        _mizzou_log($aryArgs,'list of args before I shift the class name',false,array('line'=>__LINE__,'file'=>__FILE__));
             $strClass = array_shift($aryArgs);
+	        _mizzou_log($aryArgs,'list of args after I shifted the class name',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
         return $this->objLoader->load($strClass,$aryArgs);
     }
