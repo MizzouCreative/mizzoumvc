@@ -102,6 +102,7 @@ abstract class Main {
         }
 
         $this->objViewEngine = ViewEngineLoader::getViewEngine($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
+	    _mizzou_log(get_class($this->objViewEngine),'what is objViewEngine?');
         /**
          * @todo we need to pass Site down into the view, but I'd rather not store multiple copies.  Is this the best method?
          */
