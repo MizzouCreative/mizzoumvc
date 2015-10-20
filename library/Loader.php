@@ -57,7 +57,9 @@ class Loader {
 	                /**
 	                 * @todo what should we do about the prefix for invalid/numeric variables? should it be a theme/framework setting?
 	                 */
-	                return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID,'mzmvc'));
+	                //return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID,'mzmvc'));
+	                $objReflect = new \ReflectionClass($strClass);
+	                return $objReflect->newInstanceArgs($aryArgs);
                 } else {
                     return new $strClass;
                 }
