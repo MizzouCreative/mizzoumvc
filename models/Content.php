@@ -58,7 +58,7 @@ class Content {
      * @param array $aryOptions
      * @return void
      */
-    public static function render($strInnerViewFileName,$aryData, Twig_Environment $objViewEngine, Site $objSite=null, $aryOptions=array())
+    public static function render($strInnerViewFileName,$aryData, \Twig_Environment $objViewEngine, Site $objSite=null, $aryOptions=array())
     {
 	    //we need a copy of the original passed in options
         $aryPassedOptions = $aryOptions;
