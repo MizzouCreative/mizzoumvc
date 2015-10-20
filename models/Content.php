@@ -62,7 +62,7 @@ class Content {
     {
 	    //we need a copy of the original passed in options
         $aryPassedOptions = $aryOptions;
-        $aryOptions = array_merge(self::aryDefaultOptions,$aryOptions);
+        $aryOptions = array_merge(self::$aryDefaultOptions,$aryOptions);
 
         if(!$aryOptions['bypass_init']){
             if(is_null($objSite)){
