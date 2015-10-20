@@ -55,7 +55,7 @@ class Calendar extends AbstractTranslator {
      */
     protected function _translateEvent($objEvent)
     {
-        $objReturn = new stdClass();
+        $objReturn = new \stdClass();
         $objReturn->Id              = $objEvent->id;
         $objReturn->Title           = (string)$objEvent->title;
         $objReturn->Description     = (string)$objEvent->description;
