@@ -15,7 +15,8 @@ namespace MizzouMVC\library;
 class ViewEngineLoader {
 
     protected $objViewEngineEnvironmentLoader = null;
-    protected static $objViewEngine = null;
+    protected $objViewEngine = null;
+	protected static $objInstance = null;
     protected $strFrameworkDir = null;
     protected $strThemeDir = null;
     protected $strChildThemeDir = null;
@@ -43,7 +44,7 @@ class ViewEngineLoader {
 
         //initiate our view engine
         //$this->objViewEngine = new Twig_Environment($this->objViewEngineEnvironmentLoader,$aryViewEngineOptions);
-        self::$objViewEngine = new \Twig_Environment(new \Twig_Loader_Filesystem($this->_determineViewDirectories()),$aryViewEngineOptions);
+        $this->objViewEngine = new \Twig_Environment(new \Twig_Loader_Filesystem($this->_determineViewDirectories()),$aryViewEngineOptions);
         //load up our custom view filters
         $this->_loadViewEngineFilters();
         //load up our custom view functions
@@ -58,10 +59,12 @@ class ViewEngineLoader {
      */
     public static function getViewEngine($strFrameworkDir,$strThemeDir,$strChildThemeDir=null)
     {
-        if(is_null(self::$objViewEngine)){
-            $objViewEngineLoader = new ViewEngineLoader($strFrameworkDir,$strThemeDir,$strChildThemeDir);
-        }
-        return self::$objViewEngine;
+        if(is_null(self::$objInstance) || is_null(self::$objInstance->objViewEngine)){
+            self::$objInstance = new ViewEngineLoader($strFrameworkDir,$strThemeDir,$strChildThemeDir);
+	    }
+
+	    //return self::$objViewEngine;
+	    return self::$objInstance->objViewEngine;
     }
 
     protected function _determineViewDirectories()
@@ -180,14 +183,14 @@ class ViewEngineLoader {
         });
 
 
-        self::$objViewEngine->addFilter($objTwigDebug);
-        self::$objViewEngine->addFilter($objTwigSanitize);
-        self::$objViewEngine->addFilter($objTwigAPMonth);
+        $this->objViewEngine->addFilter($objTwigDebug);
+        $this->$objViewEngine->addFilter($objTwigSanitize);
+        $this->$objViewEngine->addFilter($objTwigAPMonth);
     }
 
     protected function _loadViewEngineFunctions()
     {
-        self::$objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
+        $this->$objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
             //_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             //_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $strController = '';
