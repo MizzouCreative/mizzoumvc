@@ -72,7 +72,7 @@ abstract class Main {
 
             }
         }
-
+		_mizzou_log($objSite,'what is objSite before we call init?',false,array('line'=>__LINE__,'file'=>__FILE__));
         $this->_init($objSite);
 
         $this->main();
