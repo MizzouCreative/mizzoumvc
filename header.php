@@ -37,18 +37,15 @@
  *
  */
 namespace MizzouMVC\controllers;
-use MizzouMVC\models\Header as HeaderModel;
-use MizzouMVC\controllers\Main;
 
 class Header extends Main {
 
 	public function main()
 	{
-		$objHeader = new HeaderModel($this->aryRenderData);
+		$objHeader = $this->load('MizzouMVC\models\header');
 		$this->aryRenderData = array_merge($this->aryRenderData,$objHeader->getTemplateData());
 		$this->render('header');
 	}
 }
 
-$aryContext = isset($aryContext) ? $aryContext : array();
-$objHeader = new \Header($aryContext);
+$objHeader = new Header(isset($aryContext) ? $aryContext : array());
