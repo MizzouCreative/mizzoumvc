@@ -42,7 +42,7 @@ class Header extends Main {
 
 	public function main()
 	{
-		$objHeader = $this->load('MizzouMVC\models\Header');
+		$objHeader = $this->load('MizzouMVC\models\Header',$this->aryRenderData);
 		$this->aryRenderData = array_merge($this->aryRenderData,$objHeader->getTemplateData());
 		$this->render('header');
 	}
