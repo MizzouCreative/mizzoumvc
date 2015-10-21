@@ -48,7 +48,7 @@ class ViewEngineLoader {
         //load up our custom view filters
         $this->_loadViewEngineFilters();
         //load up our custom view functions
-        $this->_loadViewEngineFunctions();
+        $this->_loadViewEngineFunctions($this->strFrameworkDir);
     }
 
     /**
@@ -188,9 +188,9 @@ class ViewEngineLoader {
         $this->objViewEngine->addFilter($objTwigAPMonth);
     }
 
-    protected function _loadViewEngineFunctions()
+    protected function _loadViewEngineFunctions($strFrameWorkDir)
     {
-        $this->objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
+        $this->objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()) use ($strFrameWorkDir){
             //_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             //_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $strController = '';
@@ -213,13 +213,13 @@ class ViewEngineLoader {
                 extract($aryData);
             }
 
-            if(!is_null($this->strFrameworkDir) && '' == $strController = locate_template($strControllerName)){
+            if(!is_null($strFrameWorkDir) && '' == $strController = locate_template($strControllerName)){
                 //_mizzou_log(null,'we didnt find a controller in a parent or child theme. gonna look in the plugin framework',false,array('line'=>__LINE__,'file'=>__FILE__));
                 //ok, we didnt find a controller in a parent or child theme, what about the plugin?
-                if(is_readable($this->strFrameworkDir.$strControllerName)){
-                    $strController = $this->strFrameworkDir.$strControllerName;
+                if(is_readable($strFrameWorkDir.$strControllerName)){
+                    $strController = $strFrameWorkDir.$strControllerName;
                 } else {
-                    _mizzou_log($this->strFrameworkDir.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    _mizzou_log($strFrameWorkDir.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
                 }
             }
             //_mizzou_log($strController = locate_template($strControllerName),'direct return from locate_template',false,array('file'=>__FILE__,'line'=>__LINE__));
