@@ -184,8 +184,8 @@ class ViewEngineLoader {
 
 
         $this->objViewEngine->addFilter($objTwigDebug);
-        $this->$objViewEngine->addFilter($objTwigSanitize);
-        $this->$objViewEngine->addFilter($objTwigAPMonth);
+        $this->objViewEngine->addFilter($objTwigSanitize);
+        $this->objViewEngine->addFilter($objTwigAPMonth);
     }
 
     protected function _loadViewEngineFunctions()
