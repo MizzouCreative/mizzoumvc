@@ -190,7 +190,7 @@ class ViewEngineLoader {
 
     protected function _loadViewEngineFunctions()
     {
-        $this->$objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
+        $this->objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()){
             //_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             //_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $strController = '';
