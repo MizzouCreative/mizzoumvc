@@ -48,4 +48,4 @@ class Header extends Main {
 	}
 }
 
-$objHeader = new Header(isset($aryContext) ? $aryContext : array());
+$objHeader = new Header((isset($aryContext) ? $aryContext : array()));
