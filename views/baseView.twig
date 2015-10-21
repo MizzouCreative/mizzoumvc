@@ -15,9 +15,9 @@
  *  - strInnerViewContent
  *
 #}
-{{ subview('header',_context) }}
+{% include 'header.twig' %}
 {% block content %}{% endblock %}
 {% block sidebar %}
     {% include 'sidebar.twig' %}
 {% endblock %}
-{{ subview('footer',_context) }}
+{% include 'footer.twig' %}
