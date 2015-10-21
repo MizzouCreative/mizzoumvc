@@ -36,7 +36,19 @@
  *  -> LastModifiedDate (also accessible as $strModifiedDate)
  *
  */
+namespace MizzouMVC\controllers;
+use MizzouMVC\models\Header as HeaderModel;
+use MizzouMVC\controllers\Main;
 
-$objHeader = new Header($aryContext);
-$aryData = array_merge($aryContext,$objHeader->getTemplateData());
-Content::render('header',$aryData,array('include_header'=>false,'include_footer'=>false));
+class Header extends Main {
+
+	public function main()
+	{
+		$objHeader = new HeaderModel($this->aryRenderData);
+		$this->aryRenderData = array_merge($this->aryRenderData,$objHeader->getTemplateData());
+		$this->render('header');
+	}
+}
+
+$aryContext = isset($aryContext) ? $aryContext : array();
+$objHeader = new \Header($aryContext);
