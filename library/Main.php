@@ -26,6 +26,8 @@ abstract class Main {
     protected $strFrameworkPath = null;
     protected $objViewEngine = null;
     protected $objLoader = null;
+	protected $boolIncludeHeader = true;
+	protected $boolIncludeFooter = true;
 
     protected $aryRenderData = array();
 
@@ -108,11 +110,28 @@ abstract class Main {
 	    _mizzou_log(get_class($this->objViewEngine),'what is objViewEngine?');
         /**
          * @todo we need to pass Site down into the view, but I'd rather not store multiple copies.  Is this the best method?
+         * @todo redo Header and Footer to use Site instead of objSite
          */
-        $this->aryRenderData['Site'] = & $this->objSite;
+        $this->aryRenderData['Site'] = $this->aryRenderData['objSite'] = & $this->objSite;
 
         $this->objLoader = new Loader($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
         _mizzou_log($this->objLoader,'just finished creating loader',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+	    if($this->boolIncludeHeader){
+		    /**
+		     * @todo lets see about redoing Header so that we dont have to pass EVERYTHING down to it
+		     */
+		    $objHeader = $this->load('MizzouMVC\models\Header',$this->aryRenderData);
+		    $this->aryRenderData = array_merge($this->aryRenderData,$objHeader->getTemplateData());
+		}
+
+	    if($this->boolIncludeFooter){
+		    /**
+		     * @todo lets see about redoing Footer so that we dont have to pass EVERYTHING down to it
+		     */
+		    $objFooter = $this->load('MizzouMVC\models\Footer',$this->aryRenderData);
+		    $this->aryRenderData = array_merge($this->aryRenderData,$objFooter->getTemplateData());
+	    }
     }
 
     /**
