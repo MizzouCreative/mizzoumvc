@@ -143,6 +143,8 @@ abstract class Main {
 
         if($this->aryRenderOptions['return']){
             return $strReturn;
+        } else {
+	        unset($strReturn);
         }
     }
 
