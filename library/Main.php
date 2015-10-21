@@ -61,13 +61,16 @@ abstract class Main {
              * use the data stored in it instead of looking those values up again
              */
             if(
-                ( isset($aryContext['objSite']) && $objSite = $aryContext['objSite'] instanceof Site )
+                ( isset($aryContext['objSite']) && $aryContext['objSite'] instanceof Site )
                 ||
-                ( isset($aryContext['Site']) && $objSite = $aryContext['Site'] instanceof Site )
+                ( isset($aryContext['Site']) && $aryContext['Site'] instanceof Site )
             ){
                 if(isset($aryContext['objSite'])){
                     _mizzou_log(null,'DEPRECATED CODE: you\'re still using the name \'objSite\' somewhere in a view',false,array('line'=>__LINE__,'file'=>__FILE__));
                     $this->aryRenderData['Site'] = & $aryContext['objSite'];
+	                $objSite = $aryContext['objSite'];
+                } else {
+	                $objSite = $aryContext['Site'];
                 }
 
             }
