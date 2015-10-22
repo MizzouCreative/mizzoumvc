@@ -200,7 +200,7 @@ abstract class Main {
 
 	protected function _loadRoutedController($strController)
 	{
-		_mizzou_log(locate_template($strController.'.php'),'located template',false,array('line'=>__LINE__,'file'=>__FILE__));
+		_mizzou_log(mzuMVCTemplateOverride($strController.'.php'),'located template from our function',false,array('line'=>__LINE__,'file'=>__FILE__));
 	}
 
 	public abstract function main();
