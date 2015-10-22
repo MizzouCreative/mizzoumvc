@@ -201,13 +201,29 @@ abstract class Main {
 	protected function _loadRoutedController($strController)
 	{
 		$strControllerFileName = $strController.'.php';
-		if('' == $strLocatedController = locate_template($strControllerFileName)){
-			$strLocatedController = $this->strFrameworkPath.$strControllerFileName;
+		if('' != $strLocatedController = locate_template($strControllerFileName)){
+			/**
+			 * We need to search in the file for its namespace
+			 * @todo this seems HORRIBLY inefficient.  Surely there's a way to say i need this file, what is this file's
+			 * declared namespace?
+			 * Maybe this is why they suggest that your directory structure match your namespace structure?
+			 */
+			_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
+			$strFile = file_get_contents($strLocatedController);
+			preg_match('/^namespace\ ([\w\\\\]+);$/im',$strFile,$aryMatches);
+			_mizzou_log($aryMatches,'did we find a namespace?',false,array('line'=>__LINE__,'file'=>__FILE__));
+			unset($strFile);
+			$strNameSpacedController = $aryMatches[1].$strController;
+		} else {
+			/**
+			 * If it isnt in a theme, then we know its ours
+			 */
+			$strNameSpacedController = 'MizzouMVC\controllers\\'.$strController;
 		}
-		_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
-		$strFile = file_get_contents($strLocatedController);
-		preg_match('/^namespace\ ([\w\\\\]+);$/im',$strFile,$aryMatches);
-		_mizzou_log($aryMatches,'did we find a namespace?',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+		_mizzou_log($strNameSpacedController,'our found namespaced controller',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+		return $strNameSpacedController;
 
 	}
 
