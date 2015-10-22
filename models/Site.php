@@ -596,7 +596,7 @@ class Site extends Base {
         //loop through each match, pull out the group component and add it the group array
         foreach($aryMetaGroupKeys as $strKeyInGroup){
             if(1 === preg_match($this->strCollapseSettingsPattern,$strKeyInGroup,$aryMatch)){
-                _mizzou_log($aryMatch,'we have a pregmatch on ' . $strKeyInGroup.'. here is the match',false,array('line'=>__LINE__,'file'=>__FILE__));
+                //_mizzou_log($aryMatch,'we have a pregmatch on ' . $strKeyInGroup.'. here is the match',false,array('line'=>__LINE__,'file'=>__FILE__));
                 $strNewKey = $aryMatch[1];
                 /**
                  * ok, we want to match any key that ends in a number, but we DONT want - or _ in the new key name. so
