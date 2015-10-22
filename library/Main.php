@@ -121,6 +121,7 @@ abstract class Main {
 		    /**
 		     * @todo lets see about redoing Header so that we dont have to pass EVERYTHING down to it
 		     */
+		    $this->_loadHeader();
 		    $objHeader = $this->load('MizzouMVC\models\Header',$this->aryRenderData);
 		    $this->aryRenderData = array_merge($this->aryRenderData,$objHeader->getTemplateData());
 		}
@@ -129,6 +130,7 @@ abstract class Main {
 		    /**
 		     * @todo lets see about redoing Footer so that we dont have to pass EVERYTHING down to it
 		     */
+		    $this->_loadFooter();
 		    $objFooter = $this->load('MizzouMVC\models\Footer',$this->aryRenderData);
 		    $this->aryRenderData = array_merge($this->aryRenderData,$objFooter->getTemplateData());
 	    }
@@ -174,6 +176,33 @@ abstract class Main {
         }
         return $this->objLoader->load($strClass,$aryArgs);
     }
-    public abstract function main();
+
+	/**
+	 * Returns all of the data currently being stored in preparation for handing to the templates
+	 *
+	 * Mostly used by the header and footer controllers
+	 *
+	 * @return array All data to be handed to the templates
+	 */
+	public function getTemplateData()
+	{
+		return $this->aryRenderData;
+	}
+
+	protected function _loadHeader()
+	{
+		$this->_loadRoutedController('header');
+	}
+	protected function _loadFooter()
+	{
+		$this->_loadRoutedController('footer');
+	}
+
+	protected function _loadRoutedController($strController)
+	{
+		_mizzou_log(locate_template($strController.'.php'),'located template',false,array('line'=>__LINE__,'file'=>__FILE__));
+	}
+
+	public abstract function main();
 
 }
