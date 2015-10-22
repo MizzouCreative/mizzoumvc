@@ -200,7 +200,15 @@ abstract class Main {
 
 	protected function _loadRoutedController($strController)
 	{
-		_mizzou_log(mzuMVCTemplateOverride($strController.'.php'),'located template from our function',false,array('line'=>__LINE__,'file'=>__FILE__));
+		$strControllerFileName = $strController.'.php';
+		if('' == $strLocatedController = locate_template($strControllerFileName)){
+			$strLocatedController = $this->strFrameworkPath.$strControllerFileName;
+		}
+		_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
+		$strFile = file_get_contents($strLocatedController);
+		preg_match('/^namespace\ ([\w\\\\]+);$/im',$strFile,$aryMatches);
+		_mizzou_log($aryMatches,'did we find a namespace?',false,array('line'=>__LINE__,'file'=>__FILE__));
+
 	}
 
 	public abstract function main();
