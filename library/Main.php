@@ -42,7 +42,7 @@ abstract class Main {
     public function __construct(array $aryContext=array())
     {
 
-        _mizzou_log(null,'Main constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log(null,'Main constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
         /**
          * @todo blarg.  We shouldnt have to set objSite to null, just in case we actually have.  rethink the logic here.
          */
@@ -77,7 +77,7 @@ abstract class Main {
 
             }
         }
-		_mizzou_log($objSite,'what is objSite before we call init?',false,array('line'=>__LINE__,'file'=>__FILE__));
+		//_mizzou_log($objSite,'what is objSite before we call init?',false,array('line'=>__LINE__,'file'=>__FILE__));
         $this->_init($objSite);
 
         $this->main();
@@ -85,7 +85,7 @@ abstract class Main {
 
     protected function _init(Site $objSite=null)
     {
-        _mizzou_log(null,'Main init called',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log(null,'Main init called',false,array('line'=>__LINE__,'file'=>__FILE__));
         if(defined('MIZZOUMVC_ROOT_PATH')){
             $this->strFrameworkPath = MIZZOUMVC_ROOT_PATH;
         } else {
@@ -107,7 +107,7 @@ abstract class Main {
         }
 
         $this->objViewEngine = ViewEngineLoader::getViewEngine($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
-	    _mizzou_log(get_class($this->objViewEngine),'what is objViewEngine?');
+	    //_mizzou_log(get_class($this->objViewEngine),'what is objViewEngine?');
         /**
          * @todo we need to pass Site down into the view, but I'd rather not store multiple copies.  Is this the best method?
          * @todo redo Header and Footer to use Site instead of objSite
@@ -168,9 +168,9 @@ abstract class Main {
         $aryArgs = array();
         if(func_num_args() > 1){
             $aryArgs = func_get_args();
-	        _mizzou_log($aryArgs,'list of args before I shift the class name',false,array('line'=>__LINE__,'file'=>__FILE__));
+	        //_mizzou_log($aryArgs,'list of args before I shift the class name',false,array('line'=>__LINE__,'file'=>__FILE__));
             $strClass = array_shift($aryArgs);
-	        _mizzou_log($aryArgs,'list of args after I shifted the class name',false,array('line'=>__LINE__,'file'=>__FILE__));
+	        //_mizzou_log($aryArgs,'list of args after I shifted the class name',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
         return $this->objLoader->load($strClass,$aryArgs);
     }
