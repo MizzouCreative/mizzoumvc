@@ -229,4 +229,19 @@ class ViewEngineLoader {
             }
         }));
     }
+
+	/**
+	 * Prevent unserializing of the instance
+	 *
+	 * @return void
+	 */
+	private function __wakeup(){}
+
+	/**
+	 * Prevent cloning of the instance
+	 *
+	 * @return void
+	 */
+	private function __clone(){}
+
 }
