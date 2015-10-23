@@ -305,7 +305,7 @@ abstract class Main {
 			$boolFound = false;
 			$intCounter = 0;
 			if(false != $rscHandle = fopen($strLocatedController,'r')){
-				while(false != $strLine = fgets($rscHandle) && !$boolFound){
+				while(false !== ($strLine = fgets($rscHandle)) && !$boolFound){
 					_mizzou_log($intCounter,'counter',false,array('line'=>__LINE__,'file'=>__FILE__));
 					_mizzou_log($strLine,'line from our file',false,array('line'=>__LINE__,'file'=>__FILE__));
 					if(1 ==$boolMatched = preg_match('/^namespace\ ([\w\\\\]+);$/im',$strLine,$aryMatches)){
