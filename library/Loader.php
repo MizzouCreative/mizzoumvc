@@ -91,7 +91,7 @@ class Loader {
             if('child' == $strSecond){
                 $strFullPath = $this->strChildThemePath;
             } else {
-                $strFullPath = $this->strParentThemePath . $strNext . DIRECTORY_SEPARATOR;
+                $strFullPath = $this->strParentThemePath . $strSecond . DIRECTORY_SEPARATOR;
             }
         }
 
