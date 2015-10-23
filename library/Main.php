@@ -121,10 +121,6 @@ abstract class Main {
 
         $this->objLoader = new Loader($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
         //_mizzou_log($this->objLoader,'just finished creating loader',false,array('line'=>__LINE__,'file'=>__FILE__));
-
-		if($this->boolLoadSurroundingViewData){
-			$this->_loadSurroundingViewData();
-		}
     }
 
     /**
@@ -132,7 +128,11 @@ abstract class Main {
      */
     public function render($strInnerViewFileName)
     {
-        $strReturn = Content::render($strInnerViewFileName,$this->aryRenderData,$this->objViewEngine,$this->objSite,$this->aryRenderOptions);
+	    if($this->boolLoadSurroundingViewData){
+		    $this->_loadSurroundingViewData();
+	    }
+
+	    $strReturn = Content::render($strInnerViewFileName,$this->aryRenderData,$this->objViewEngine,$this->objSite,$this->aryRenderOptions);
 
         if($this->aryRenderOptions['return']){
             return $strReturn;
