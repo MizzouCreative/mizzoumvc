@@ -28,6 +28,11 @@ abstract class Main {
     protected $objLoader = null;
 	protected $boolIncludeHeader = true;
 	protected $boolIncludeFooter = true;
+	/**
+	 * @var bool should the controller load up the data for the other views (usually header and footer)? If this is set
+	 * to false, boolIncludeHeader and boolIncludeFooter are ignored
+	 */
+	protected $boolLoadSurroundingViewData = true;
 
     protected $aryRenderData = array();
 
@@ -117,23 +122,9 @@ abstract class Main {
         $this->objLoader = new Loader($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
         //_mizzou_log($this->objLoader,'just finished creating loader',false,array('line'=>__LINE__,'file'=>__FILE__));
 
-	    if($this->boolIncludeHeader){
-		    /**
-		     * @todo lets see about redoing Header so that we dont have to pass EVERYTHING down to it
-		     */
-		    $this->_loadHeader();
-		    $objHeader = $this->load('MizzouMVC\models\Header',$this->aryRenderData);
-		    $this->aryRenderData = array_merge($this->aryRenderData,$objHeader->getTemplateData());
+		if($this->boolLoadSurroundingViewData){
+			$this->_loadSurroundingViewData();
 		}
-
-	    if($this->boolIncludeFooter){
-		    /**
-		     * @todo lets see about redoing Footer so that we dont have to pass EVERYTHING down to it
-		     */
-		    $this->_loadFooter();
-		    $objFooter = $this->load('MizzouMVC\models\Footer',$this->aryRenderData);
-		    $this->aryRenderData = array_merge($this->aryRenderData,$objFooter->getTemplateData());
-	    }
     }
 
     /**
@@ -165,7 +156,14 @@ abstract class Main {
         return filter_var($mxdVal,FILTER_VALIDATE_BOOLEAN);
     }
 
-    public function load($strClass)
+	/**
+	 * Loads and returns a class
+	 *
+	 * @param $strClass string class name
+	 *
+	 * @return object requested class
+	 */
+	public function load($strClass)
     {
         $aryArgs = array();
         if(func_num_args() > 1){
@@ -189,16 +187,111 @@ abstract class Main {
 		return $this->aryRenderData;
 	}
 
-	protected function _loadHeader()
+	/**
+	 * Loads up template data from related views (typically header and footer).  If you have other views that need to be
+	 * loaded regularly, then extend this class (Main) with an abstract child, overriding (extending) this method to include
+	 * your controller that needs to be called
+	 *
+	 * example
+	 *
+	 * protected function _loadSurroundingViewData()
+	 * {
+	 *      parent::_loadSurroundingViewData();
+	 *      if($this->boolIncludeMyOtherController){
+	 *          $this->_retrieveControllerData(controllerName);
+	 *
+	 *      }
+	 *
+	 * }
+	 */
+	protected function _loadSurroundingViewData()
 	{
-		$this->_loadRoutedController('header');
-	}
-	protected function _loadFooter()
-	{
-		$this->_loadRoutedController('footer');
+		/**
+		 * Yeah, I know we already checked previously, but I'm paranoid.  :P
+		 */
+		if($this->boolLoadSurroundingViewData){
+			if($this->boolIncludeHeader){
+				$this->_retrieveHeaderControllerData();
+			}
+
+			if($this->boolIncludeFooter){
+				$this->_retrieveFooterControllerData();
+			}
+		}
 	}
 
-	protected function _loadRoutedController($strController)
+	/**
+	 * Header controller and model need certain pieces of data that we should already have gathered.
+	 */
+	protected function _retrieveHeaderControllerData()
+	{
+		$aryData = array();
+		$aryData['Site'] = $this->objSite;
+
+		if(isset($this->aryRenderData['MainPost'])){
+			$aryData['MainPost'] = $this->aryRenderData['MainPost'];
+		}
+
+		if(isset($this->aryRenderData['objPostType'])){
+			$aryData['objPostType'] = $this->aryRenderData['objPostType'];
+		}
+
+		if(isset($this->aryRenderData['PageTitle'])){
+			$aryData['PageTitle'] = $this->aryRenderData['PageTitle'];
+		}
+
+		$this->_retrieveControllerData('header',$aryData);
+	}
+
+	/**
+	 * Here just so it can be overriden if necessary
+	 */
+	protected function _retrieveFooterControllerData()
+	{
+		$this->_retrieveControllerData('footer');
+	}
+
+	/**
+	 * Requests a new instance of the controller and then merges its template data with our current template data
+	 *
+	 * @param $strController string controller name
+	 */
+	protected function _retrieveControllerData($strController,$aryData=array())
+	{
+		$objController = $this->_loadRoutableController($strController,$aryData);
+		$this->aryRenderData = array_merge($this->aryRenderData,$objController->getTemplateData());
+	}
+
+	/**
+	 * Looks up the namespace of the controller and requests a new instance of the class
+	 *
+	 * Assumption: the controller relys on current RenderData
+	 *
+	 * @param $strController string requested controller name
+	 *
+	 * @return object
+	 */
+	protected function _loadRoutableController($strController,$aryData=array())
+	{
+		$strNameSpacedController = $this->_determineControllerNameSpace($strController);
+		return $this->load($strNameSpacedController,$aryData);
+	}
+
+	/**
+	 * Attempts to discover the namespace of the given controller to be used with the @see load() method
+	 *
+	 * Assumptions:
+	 *  - The classname is lowercase to match the controller file name (since wordpress assumes all template files to
+	 *    be lowercase)
+	 *  - If wordpress is unable to locate the controller (template) file via locate_template, that the requested
+	 *    controller is in the MizzouMVC framework, and will have a namespace of MizzouMVC\controllers\
+	 *  - The requested controller, if coming from a theme, will have a namespace. If not, the namespace is assumed to be root
+	 *
+	 * @param $strController string controller name
+	 *
+	 * @return string Fully qualified namespace of controller
+	 */
+	protected function _determineControllerNameSpace($strController)
 	{
 		$strControllerFileName = $strController.'.php';
 		if('' != $strLocatedController = locate_template($strControllerFileName)){
@@ -209,11 +302,22 @@ abstract class Main {
 			 * Maybe this is why they suggest that your directory structure match your namespace structure?
 			 */
 			_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
-			$strFile = file_get_contents($strLocatedController);
-			preg_match('/^namespace\ ([\w\\\\]+);$/im',$strFile,$aryMatches);
-			_mizzou_log($aryMatches,'did we find a namespace?',false,array('line'=>__LINE__,'file'=>__FILE__));
-			unset($strFile);
-			$strNameSpacedController = $aryMatches[1].$strController;
+			$boolFound = false;
+			if(false != $rscHandle = fopen($strLocatedController,'r')){
+				while(false != $strLine = fgetc($rscHandle) && !$boolFound){
+					if(1 == preg_match('/^namespace\ ([\w\\\\]+);$/im',$strLine,$aryMatches)){
+						$strNameSpacedController = $aryMatches[1] . $strController;
+						$boolFound = true;
+					}
+				}
+
+				fclose($rscHandle);
+			}
+
+			if(!$boolFound){
+				//we have to assume that the controller doesnt have a namespace
+				$strNameSpacedController = $strController;
+			}
 		} else {
 			/**
 			 * If it isnt in a theme, then we know its ours
@@ -227,6 +331,10 @@ abstract class Main {
 
 	}
 
+	/**
+	 * Main processing area for extending controllers
+	 * @return mixed
+	 */
 	public abstract function main();
 
 }
