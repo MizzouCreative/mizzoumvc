@@ -303,14 +303,19 @@ abstract class Main {
 			 */
 			_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
 			$boolFound = false;
+			$intCounter = 0;
 			if(false != $rscHandle = fopen($strLocatedController,'r')){
 				while(false != $strLine = fgets($rscHandle) && !$boolFound){
-					if(1 == preg_match('/^namespace\ ([\w\\\\]+);$/im',$strLine,$aryMatches)){
+					_mizzou_log($intCounter,'counter',false,array('line'=>__LINE__,'file'=>__FILE__));
+					_mizzou_log($strLine,'line from our file',false,array('line'=>__LINE__,'file'=>__FILE__));
+					if(1 ==$boolMatched = preg_match('/^namespace\ ([\w\\\\]+);$/im',$strLine,$aryMatches)){
 						$strNameSpacedController = $aryMatches[1] . "\\" . $strController;
 						$boolFound = true;
 					}
+					_mizzou_log($boolMatched,'match for counter line ' . $intCounter .'?',false,array('line'=>__LINE__,'file'=>__FILE__));
+					++$intCounter;
 				}
-
+				unset($intCounter);
 				fclose($rscHandle);
 			}
 
