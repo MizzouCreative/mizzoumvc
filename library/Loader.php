@@ -90,13 +90,15 @@ class Loader {
             //not, then it'll be the "parent" path
             if('child' == $strSecond){
                 $strFullPath = $this->strChildThemePath;
+	            $strNext = next($aryClassParts);
             } else {
-                $strFullPath = $this->strParentThemePath . $strSecond . DIRECTORY_SEPARATOR;
+                $strFullPath = $this->strParentThemePath;
+	            $strNext = $strSecond;
             }
         }
 
         //ok, now we have our root start
-        $strNext = next($aryClassParts);
+        //$strNext = next($aryClassParts);
         if('controllers' != $strNext){
             //ok, add the strNext, then loop through the remainder of the pieces
             while(list($intKey,$strNext) = each($aryClassParts)){
