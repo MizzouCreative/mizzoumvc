@@ -310,7 +310,6 @@ abstract class Main {
 						$strNameSpacedController = $aryMatches[1] . "\\" . $strController;
 						$boolFound = true;
 					}
-					_mizzou_log($boolMatched,'match for counter line ' . $intCounter .'?',false,array('line'=>__LINE__,'file'=>__FILE__));
 				}
 
 				fclose($rscHandle);
