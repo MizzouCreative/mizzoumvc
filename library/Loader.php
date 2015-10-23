@@ -84,6 +84,7 @@ class Loader {
 
         if('MizzouMVC' == $strFirst){
             $strFullPath = $this->strFrameworkPath;
+	        $strNext = next($aryClassParts);
         } else {
             $strSecond = next($aryClassParts);
             //the first part then will be the project root. The second part COULD be the parent/child indicator, but if
