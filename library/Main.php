@@ -304,7 +304,7 @@ abstract class Main {
 			_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
 			$boolFound = false;
 			if(false != $rscHandle = fopen($strLocatedController,'r')){
-				while(false != $strLine = fgetc($rscHandle) && !$boolFound){
+				while(false != $strLine = fgets($rscHandle) && !$boolFound){
 					if(1 == preg_match('/^namespace\ ([\w\\\\]+);$/im',$strLine,$aryMatches)){
 						$strNameSpacedController = $aryMatches[1] . "\\" . $strController;
 						$boolFound = true;
