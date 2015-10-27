@@ -28,6 +28,7 @@ abstract class Main {
     protected $objLoader = null;
 	protected $boolIncludeHeader = true;
 	protected $boolIncludeFooter = true;
+	protected $objPagePostType = null;
 	/**
 	 * @var bool should the controller load up the data for the other views (usually header and footer)? If this is set
 	 * to false, boolIncludeHeader and boolIncludeFooter are ignored
@@ -129,7 +130,18 @@ abstract class Main {
     public function render($strInnerViewFileName)
     {
 	    if($this->boolLoadSurroundingViewData){
+		    /**
+		     * @todo flesh out this assumption
+		     *
+		     * we're going to assume that if they DONT want the surrounding view data (header/footer) then they probably
+		     * don't need the page title to be determined for them.  And we only need to do it if it isnt already set
+		     */
+		    if(!isset($this->aryRenderData['PageTitle'])){
+			    $this->renderData('PageTitle',$this->_determinePageTitle());
+		    }
 		    $this->_loadSurroundingViewData();
+
+
 	    }
 
 	    $strReturn = Content::render($strInnerViewFileName,$this->aryRenderData,$this->objViewEngine,$this->objSite,$this->aryRenderOptions);
@@ -330,6 +342,121 @@ abstract class Main {
 
 		return $strNameSpacedController;
 
+	}
+
+	protected function _determinePageTitle()
+	{
+		$strPageTitle = '';
+		if(is_archive()){
+			global $wp_query;
+			//_mizzou_log(post_type_archive_title(null,false),'we know we have an archive, here is the post_type_archive_title');
+			if(is_date()){
+				if(!isset($this->aryRenderData['DateArchiveType'])){
+					$this->renderData('DateArchiveType',$this->_determineDateArchiveType());
+				}
+
+				//_mizzou_log($strDateArchiveType,'our archive date type');
+				$aryDateParts = array();
+				$strDatePattern = '';
+				switch ($this->aryRenderData['DateArchiveType']){
+					case 'day':
+						$aryDateParts[] = get_the_time('d');
+						$strDatePattern = ' %s,';
+					case 'month':
+						/**
+						 * since it is possible that the day is already in the array, we need to make sure that month
+						 * is pushed onto the beginning of the array no matter what, hence the array_unshift
+						 */
+						array_unshift($aryDateParts,get_the_time('F'));
+						$strDatePattern = '%s'.$strDatePattern;
+					case 'year':
+						$aryDateParts[] = get_the_time('Y');
+						$strDatePattern .= ' %d';
+						break;
+				}
+
+				//_mizzou_log($strDatePattern,'our date pattern');
+				//_mizzou_log($aryDateParts,'our date parts');
+
+				$strPageTitle = vsprintf($strDatePattern,$aryDateParts);
+				if(is_null($this->objPagePostType)){
+					$this->objPagePostType = $this->_determinePagePostType();
+				}
+				//_mizzou_log($objPagePostType,'objPagePostType',false,array('line'=>__LINE__,'file'=>__FILE__));
+				$strPageTitle .= ' ' . $this->objPagePostType->labels->name;
+				//_mizzou_log($strPageTitle,'we have a date archive. this is the date formatted title weve come up with',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+			} else {
+				$strPageTitle = post_type_archive_title(null,false);
+				_mizzou_log($strPageTitle,'we are a non-dated archive. this is what was returned from post_type_archive_title');
+				/**
+				 * If it isn't a dated archive, has it been filtered by a taxonomy?
+				 */
+				$objQueried = get_queried_object();
+				if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
+					$strPageTitle = ($strPageTitle == '') ? $objQueried->name : $objQueried->name . ' ' . $strPageTitle;
+				}
+			}
+
+			//now, are we in the midst of pagination?
+			_mizzou_log($wp_query,'wp_query is paged set?',false,array('line'=>__LINE__,'file'=>__FILE__));
+			if(isset($wp_query->query_vars['paged']) && $wp_query->query_vars['paged'] != 0){
+				$strPageTitle .= ', Page ' . $wp_query->query_vars['paged'];
+			}
+		} else {
+			$strPageTitle = wp_title('',false);
+		}
+		_mizzou_log($strPageTitle,'page title as determined',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
+		return trim($strPageTitle);
+	}
+
+	protected function _determineDateArchiveType()
+	{
+		$strDateArchiveType = '';
+
+		if(is_day()){
+			$strDateArchiveType = 'day';
+		} elseif(is_month()){
+			$strDateArchiveType = 'month';
+		} elseif(is_year()){
+			$strDateArchiveType = 'year';
+		}
+
+		return $strDateArchiveType;
+	}
+
+	/**
+	 * Determines the post type of the current page we are dealing with
+	 */
+	protected function _determinePagePostType()
+	{
+		//$strPostType = get_post_type();
+
+		/**
+		 * the normal method failed so fall back to a secondary method
+		 * @todo should we just do this method all the time instead of using it when get_post_type fails?
+		 */
+		$strPostType = get_query_var('post_type');
+		if(is_array($strPostType)){
+			$strPostType = reset($strPostType);
+		} elseif(''==$strPostType){
+			//still empty, let's try get_post_type
+			$strPostType = get_post_type();
+		}
+
+		if('' != $strPostType){
+			//self::_adjustPostTypeLabels($strPostType);
+			return get_post_type_object($strPostType);
+		} else {
+			/**
+			 * @todo we need to do something else here besides log. We have functionality further down the line that
+			 * depends on the PostType being determined.
+			 *
+			 * HOWEVER, there are perfectly valid scenarios where we dont have a post type. Front Page is one, Search
+			 */
+			global $wp_query;
+			_mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
+		}
 	}
 
 	/**
