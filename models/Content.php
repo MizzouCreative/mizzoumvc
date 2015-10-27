@@ -424,6 +424,7 @@ class Content {
     }
 
     /**
+     * @deprecated
      * @return string
      */
     protected static function _getDateArchiveType()
@@ -436,7 +437,7 @@ class Content {
     }
 
     /**
-     *
+     * @deprecated
      */
     protected static function _determineDateArchiveType()
     {
@@ -507,6 +508,7 @@ class Content {
     /**
      * Returns the post type of the page/post we are currently rendering
      * @return string
+     * @deprecated
      */
     protected static function _getPagePostType()
     {
@@ -519,6 +521,7 @@ class Content {
 
     /**
      * Determines the post type of the current page we are dealing with
+     * @deprecated moved into Main()
      */
     protected static function _determinePagePostType()
     {
