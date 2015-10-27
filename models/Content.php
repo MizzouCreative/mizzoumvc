@@ -78,6 +78,10 @@ class Content {
                     }
                 }
 
+	            /**
+	             * @deprecated
+	             * @todo remove
+	             */
                 //Pagination
                 if($aryOptions['include_pagination']){
                     global $wp_query;
