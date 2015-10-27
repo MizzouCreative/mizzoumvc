@@ -20,15 +20,16 @@ use MizzouMVC\models\Content;
 
 abstract class Main {
 
-    protected $objSite = null;
-    protected $strParentThemePath = null;
-    protected $strChildThemePath = null;
-    protected $strFrameworkPath = null;
-    protected $objViewEngine = null;
-    protected $objLoader = null;
-	protected $boolIncludeHeader = true;
-	protected $boolIncludeFooter = true;
-	protected $objPagePostType = null;
+    protected $objSite              = null;
+    protected $strParentThemePath   = null;
+    protected $strChildThemePath    = null;
+    protected $strFrameworkPath     = null;
+    protected $objViewEngine        = null;
+    protected $objLoader            = null;
+	protected $boolIncludeHeader    = true;
+	protected $boolIncludeFooter    = true;
+	protected $boolIncludePagination= false;
+	protected $objPagePostType      = null;
 	/**
 	 * @var bool should the controller load up the data for the other views (usually header and footer)? If this is set
 	 * to false, boolIncludeHeader and boolIncludeFooter are ignored
@@ -139,6 +140,8 @@ abstract class Main {
 		    if(!isset($this->aryRenderData['PageTitle'])){
 			    $this->renderData('PageTitle',$this->_determinePageTitle());
 		    }
+
+
 		    $this->_loadSurroundingViewData();
 
 
@@ -222,6 +225,10 @@ abstract class Main {
 		 * Yeah, I know we already checked previously, but I'm paranoid.  :P
 		 */
 		if($this->boolLoadSurroundingViewData){
+			if($this->boolIncludePagination){
+				$this->_retrievePaginationModel();
+			}
+
 			if($this->boolIncludeHeader){
 				$this->_retrieveHeaderControllerData();
 			}
@@ -230,6 +237,21 @@ abstract class Main {
 				$this->_retrieveFooterControllerData();
 			}
 		}
+	}
+
+	protected function _retrievePaginationModel()
+	{
+		global $wp_query;
+		$aryOptions = array('wp_query'=>$wp_query);
+		if('' != $this->objSite->pagination && is_array($this->objSite->pagination)){
+			$aryOptions = array_merge($aryOptions,$this->objSite->pagination);
+		}
+
+		/*
+		 * so how do we deal with a theme wanting to use their own pagination model?
+		 * @todo set up an option for Pagination class?
+		 */
+		$this->renderData('Pagination',$this->load('MizzouMVC\models\Pagination',$aryOptions));
 	}
 
 	/**
