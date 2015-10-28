@@ -191,7 +191,7 @@ class Pagination extends Base{
 
 		$aryOptions = array_merge($aryDefaults,$aryOptions);
 
-		$objPage = new stdClass();
+		$objPage = new \stdClass();
 
 		if($aryOptions['text'] == ''){
 			//no text give, so we probably we want to use the page
