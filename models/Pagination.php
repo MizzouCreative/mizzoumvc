@@ -12,6 +12,7 @@
  * @copyright 2015 Curators of the University of Missouri
  */
 namespace MizzouMVC\models;
+use \WP_Query;
 class Pagination extends Base{
     public $paged = false;
 	protected $wpPaged = null;
@@ -53,6 +54,8 @@ class Pagination extends Base{
 		        $this->_buildPagination();
 	        }
 		} else {
+	        _mizzou_log(isset($aryArgs['wp_query']),'is wp_query set in the array?',false,array('line'=>__LINE__,'file'=>__FILE__));
+	        _mizzou_log((isset($aryArgs['wp_query'])) ? $aryArgs['wp_query'] instanceof WP_Query : 'wp_query is not set','is wp_query an instance of WP_Query?',false,array('line'=>__LINE__,'file'=>__FILE__));
             _mizzou_log($aryArgs,'You either didnt set wp_query, or what you gave us wasnt wp_query',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
     }
