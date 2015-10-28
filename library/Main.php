@@ -251,6 +251,8 @@ abstract class Main {
 		 * so how do we deal with a theme wanting to use their own pagination model?
 		 * @todo set up an option for Pagination class?
 		 */
+		$objPagination = $this->load('MizzouMVC\models\Pagination',$aryOptions);
+		_mizzou_log($objPagination,'what did we get back for pagination?',false,array('line'=>__LINE__,'file'=>__FILE__));
 		$this->renderData('Pagination',$this->load('MizzouMVC\models\Pagination',$aryOptions));
 	}
 
