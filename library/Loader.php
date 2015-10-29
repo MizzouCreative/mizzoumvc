@@ -47,7 +47,21 @@ class Loader {
 
         $aryClassParts = explode('\\',$strClass);
 
-        $strFullPath = $this->_determinePath($aryClassParts) . end($aryClassParts) . '.php';
+	    $strFileName = end($aryClassParts);
+
+	    /**
+	     * Wordpress uses hyphens in file names to designate template parts.  But we cant use a hyphen in class names
+	     * @todo make sure the documentation notes that controllers with hyphens in the file name must make the class
+	     * name the same except with underscores
+	     */
+	    if(1 == preg_match('/\\\\controllers\\\\/',$strClass)){
+			$strFileName = str_replace('_','-',$strFileName);
+	    }
+
+	    $strFileName .= '.php';
+
+
+        $strFullPath = $this->_determinePath($aryClassParts) . $strFileName;
 
         if(file_exists($strFullPath)){
             require_once $strFullPath;
