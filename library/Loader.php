@@ -51,11 +51,25 @@ class Loader {
 
 	    /**
 	     * Wordpress uses hyphens in file names to designate template parts.  But we cant use a hyphen in class names
-	     * @todo make sure the documentation notes that controllers with hyphens in the file name must make the class
-	     * name the same except with underscores
+	     * @todo make sure the documentation notes controllers that need hyphens in the file name (e.g. single-person.php)
+         * need to use underscores in the classname.  In those instances where they want to use underscores in the file
+         * name/classname and not have them converted to hyphens will need to use double underscores
+         * page_publications__by__author will convert to page-publications__by__author.php
 	     */
 	    if(1 == preg_match('/\\\\controllers\\\\/',$strClass)){
-			$strFileName = str_replace('_','-',$strFileName);
+			//$strFileName = str_replace('_','-',$strFileName);
+            /**
+             * so it gets more interesting.  we have situations like the following:
+             * page-publications_by_author.php
+             * If we make the class name page_publications_by_author, then by doing a simple str replace, we'll end up
+             * with a file name of page-publications-by-author.php which wont work. We could do a class name of
+             * page_publicationsByAuthor which matches a file name of page-publicationsByAuthor, but not everyone is a
+             * fan of camel case.  So, we'll allow double underscores to be untouched
+             * Class name: page_publications__by__author
+             * File name: page-publications__by__author.php
+             */
+
+            $strFileName = preg_replace('/(?=(_(?!_)))((?<!_)_)/', '-',$strClass);
 	    }
 
 	    $strFileName .= '.php';
