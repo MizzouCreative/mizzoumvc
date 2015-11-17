@@ -69,7 +69,7 @@ class Loader {
              * File name: page-publications__by__author.php
              */
 
-            $strFileName = preg_replace('/(?=(_(?!_)))((?<!_)_)/', '-',$strClass);
+            $strFileName = preg_replace('/(?=(_(?!_)))((?<!_)_)/', '-',$strFileName);
 	    }
 
 	    $strFileName .= '.php';
