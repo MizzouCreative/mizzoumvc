@@ -13,6 +13,7 @@
  */
 namespace MizzouMVC\controllers;
 use MizzouMVC\library\Loader;
+use MizzouMVC\models\Menu;
 use MizzouMVC\models\Site;
 use MizzouMVC\library\FrameworkSettings;
 use MizzouMVC\library\ViewEngineLoader;
@@ -130,7 +131,8 @@ abstract class Main {
      */
     public function render($strInnerViewFileName)
     {
-	    if($this->boolLoadSurroundingViewData){
+
+        if($this->boolLoadSurroundingViewData){
 		    /**
 		     * @todo flesh out this assumption
 		     *
@@ -147,6 +149,14 @@ abstract class Main {
 
 	    }
 
+        /**
+         * We have to load the Menu object AFTER we load the Header object since it might have created/changed values we need
+         */
+        if($this->boolLoadSurroundingViewData || (isset($this->aryRenderData['menuName']) && '' !== $this->aryRenderData['menuName'])){
+            $this->_loadMenu();
+        }
+
+
 	    $strReturn = Content::render($strInnerViewFileName,$this->aryRenderData,$this->objViewEngine,$this->objSite,$this->aryRenderOptions);
 
         if($this->aryRenderOptions['return']){
@@ -154,6 +164,17 @@ abstract class Main {
         } else {
 	        unset($strReturn);
         }
+    }
+
+    protected function _loadMenu(){
+        _mizzou_log(__FUNCTION__,'just loaded the function',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //Menu class HAS to have Site. it also can take MainPost, PageTitle and menuName
+        $aryPossibleKeys = array('MainPost','PageTitle','menuName');
+
+        $aryOptions = array_intersect_key($this->aryRenderData,array_flip($aryPossibleKeys));
+
+        $this->renderData('Menu', new Menu($this->objSite,$aryOptions));
+
     }
 
     protected function renderOption($mxdKey,$mxdValue)
