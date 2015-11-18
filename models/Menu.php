@@ -29,16 +29,16 @@ class Menu extends Base {
 
     protected $strPatternItemsWrap = '/^<((o|u)l)/';
 
-    public function __construct($aryContext)
+    public function __construct(\MizzouMVC\models\Site $objSite, $aryContext)
     {
-        if(isset($aryContext['objSite'])){
+        if(isset($objSite)){
 	        /**
 	         * @todo do we REALLY need to store the entire Site object?
 	         */
 	        //$this->add_data('objSite',$aryContext['objSite']);
 
-            if(isset($aryContext['objMainPost'])){
-                $this->add_data('objMainPost',$aryContext['objMainPost']);
+            if(isset($aryContext['MainPost'])){
+                $this->add_data('objMainPost',$aryContext['MainPost']);
             }
 
             if(isset($aryContext['PageTitle']) && $aryContext['PageTitle'] != ''){
@@ -46,7 +46,7 @@ class Menu extends Base {
             }
 
 
-            if('' != $aryMenuOptions = $aryContext['objSite']->menu_options){
+            if('' != $aryMenuOptions = $objSite->menu_options){
                // _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 unset($aryMenuOptions['inject_primary']);//we dont need this one for wp_nav_menu
                 $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
@@ -59,14 +59,14 @@ class Menu extends Base {
             }
 
             //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
-            $arySiteOptions = $aryContext['objSite']->{'site-wide'};
+            $arySiteOptions = $objSite->{'site-wide'};
 
 
-            $this->add_data('inject_primary',$aryContext['objSite']->option('inject_primary'));
+            $this->add_data('inject_primary',$objSite->option('inject_primary'));
             //for use in self::_determineListElementType
-            $this->add_data('items_wrap',$aryContext['objSite']->option('items_wrap'));
-            //we're done with context, so lets kill it since it is likely pretty big
-            unset($aryContext);
+            $this->add_data('items_wrap',$objSite->option('items_wrap'));
+            //we're done with context and objSite, so lets kill it since it is likely pretty big
+            unset($aryContext,$objSite);
 
 
 
