@@ -65,7 +65,18 @@ function mzuMVCTemplateOverride($strTemplate)
 
                 //_mizzou_log($aryOverLap,'our overlap data',false, array('line'=>__LINE__,'file'=>__FILE__) );
 
-                if (false !== $strMatchedAction = array_search(true, $aryOverLap)) {
+                $aryMatchedActions = array_keys($aryOverLap,true,true);
+
+                if(count($aryMatchedActions) > 1){
+                    if(false !== $intPreviewKey = array_search('is_preview',$aryMatchedActions)){
+                        unset($aryMatchedActions[$intPreviewKey]);
+                    } else {
+                        _mizzou_log($aryMatchedActions,'we have more than one matched action but it isnt is_preview',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    }
+                }
+
+                if (count($aryMatchedActions) > 0) {
+                    $strMatchedAction = reset($aryMatchedActions);
                     //_mizzou_log( $strMatchedAction,'our current action state',false, array('line'=>__LINE__,'file'=>__FILE__));
                     //it's possible that if we are on a page it has been assigned a specific template
                     if('is_page' != $strMatchedAction || !is_page_template(basename($strTemplate))){
