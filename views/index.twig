@@ -13,8 +13,8 @@
     <div id="content">
         <h1>{{ PageTitle }}</h1>
         <div id="article">
-            {% if objMainPost is not empty %}
-                {{ objMainPost.content }}
+            {% if MainPost is not empty %}
+                {{ MainPost.content }}
             {% else %}
                 <div>I'm afraid I have nothing to show you.</div>
             {% endif %}
