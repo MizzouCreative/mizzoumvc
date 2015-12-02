@@ -75,6 +75,9 @@ class Site extends Base {
         $this->add_data('URL',$this->_getSiteHomeURL());
         $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
+        /**
+         * @todo why was this removed here and moved to the header model?
+         */
         //$this->add_data('ActiveStylesheet',$this->_getActiveStylesheet());
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
         $this->add_data('ParentThemePath',$strParentPath);
