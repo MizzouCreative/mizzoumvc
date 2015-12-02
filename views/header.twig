@@ -19,7 +19,7 @@
  *  - contents of wp_head: strWpHeaderContents
  *  - whether or not to include <meta> robots: boolIncludeNoIndex
  *
- *  objSite contains
+ *  Site contains
  *  -> CopyrightYear (also accessible as strCopyrightYear)
  *  -> Name (also accessible as strSiteName)
  *  -> URL (also accessible as strSiteURL)
@@ -31,10 +31,6 @@
  *  -> PrimaryMenu (also accessible as strPrimaryMenu)
  *  -> AudienceMenu (also accessible as strAudienceMenu)
  *  -> LastModifiedDate (also accessible as strModifiedDate)
- *
- *
- * @todo move strSearchFormContents to an include in the baseView.twig view? Or leave here, but make it an include?
- * @todo Shouldnt tracking code be moved into the theme options and then accessed via objTheme object?
 ##}
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +38,7 @@
     <meta charset="UTF-8">
 
     <title>{{ HeadTitle }}</title>
-    <meta name="apple-mobile-web-app-title" content="{{ objSite.Name }}" />
+    <meta name="apple-mobile-web-app-title" content="{{ Site.Name }}" />
 {% if IncludeNoIndex %}
     <meta name="ROBOTS" content="NOINDEX,NOARCHIVE">
 {% endif %}
@@ -50,7 +46,7 @@
     <!--[if ! lte IE 7]><!-->
     <link href="{{ ActiveStylesheet }}" rel="stylesheet">
     <!--<![endif]-->
-    <link rel="shortcut icon" href="{{ objSite.ActiveThemeURL }}favicon.ico" />
+    <link rel="shortcut icon" href="{{ Site.ActiveThemeURL }}favicon.ico" />
 
     {{ wpHead | raw}}
 
