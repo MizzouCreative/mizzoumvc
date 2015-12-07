@@ -111,6 +111,9 @@ abstract class Main {
         } else {
             $this->strParentThemePath = get_template_directory() . DIRECTORY_SEPARATOR;
             $this->strChildThemePath = get_stylesheet_directory() . DIRECTORY_SEPARATOR;
+            /**
+             * @todo is there a reason we arent using our Loader object here?
+             */
             $this->objSite = new Site(new FrameworkSettings(),array('parent_path'=>$this->strParentThemePath,'child_path'=>$this->strChildThemePath));
         }
 
