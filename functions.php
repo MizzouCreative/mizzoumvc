@@ -14,13 +14,6 @@
  * @version 201303281326
  */
 
-/**
- * We're using wordpress' get_template_part here so that our config file is loaded from a child theme, if available.
- * Otherwise, it'll fall back to the one in the framework which is set to search all of missouri.edu
- * @deprecated we're loading in options via config.ini now, so need to try including a config.php file
- * @todo delete
- */
-get_template_part('config');
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'Base.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'Site.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'models'.DIRECTORY_SEPARATOR.'Content.php';
