@@ -24,13 +24,15 @@ class Search extends Base {
              * @todo besides logging an error message, what else should we do?
              */
         } else {
-            $arySearchOptions = $aryData['search_options'];
-            unset($aryData['search_options']);
-            $this->aryInternalData['search_url'] = $arySearchOptions['url'];
-            unset($arySearchOptions['url']);
-            $this->aryInternalData['search_parameters'] = $arySearchOptions;
-
-
+            if(is_array($aryData['search_options'])){
+                $arySearchOptions = $aryData['search_options'];
+                unset($aryData['search_options']);
+                $this->aryInternalData['search_url'] = $arySearchOptions['url'];
+                unset($arySearchOptions['url']);
+                $this->aryInternalData['search_parameters'] = $arySearchOptions;
+            } else {
+                $this->add_error('search options is not an array!');
+            }
         }
 
         if(isset($aryData['arySearchParams'])){
