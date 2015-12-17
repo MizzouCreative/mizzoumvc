@@ -20,25 +20,14 @@ namespace MizzouMVC\controllers;
 class FourOhFour extends Main {
     public function main()
     {
-        $this->renderData('strRequestURI',$_SERVER['REQUEST_URI']);
-        $obj404 = $this->load('MizzouMVC\models\FourOhFour',$this->aryRenderData);
+        $arySearchData = array();
+        $arySearchData['search_options'] = $this->objSite->search;
+        $arySearchData['strRequestURI'] = $_SERVER['REQUEST_URI'];
+        $obj404 = $this->load('MizzouMVC\models\FourOhFour',$arySearchData);
         //$obj404 = new Model404($this->aryRenderData);
         $this->renderData('SearchResults',$obj404->getSearchResults());
         $this->render('search');
     }
 }
 
-$objController = new FourOhFour();
-
-/**
-$aryData = array();
-$aryData['strRequestURI'] = $_SERVER['REQUEST_URI'];
-$aryData['objSite'] = new Site();
-
-$obj404 = new FourOhFour($aryData);
-
-
-$aryData['SearchResults'] = $obj404->getSearchResults();
-_mizzou_log($obj404->isError(),'is search returning an error?',false,array('line'=>__LINE__,'file'=>__FILE__));
-Content::render('search',$aryData);
-*/
+new FourOhFour();
