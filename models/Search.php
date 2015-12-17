@@ -17,15 +17,15 @@ class Search extends Base {
 
     function __construct($aryData)
     {
-        if(!isset($aryData['objSite'])){
+        if(!isset($aryData['search_options'])){
             // #FAIL
-            $this->add_error('I need objSite to get search parameter options');
+            $this->add_error('I need the search options');
             /**
              * @todo besides logging an error message, what else should we do?
              */
         } else {
-            $arySearchOptions = $aryData['objSite']->search;
-            unset($aryData['objSite']);
+            $arySearchOptions = $aryData['search_options'];
+            unset($aryData['search_options']);
             $this->aryInternalData['search_url'] = $arySearchOptions['url'];
             unset($arySearchOptions['url']);
             $this->aryInternalData['search_parameters'] = $arySearchOptions;
