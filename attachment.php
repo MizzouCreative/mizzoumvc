@@ -9,9 +9,18 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-global $wp_query;
-$aryData = array();
-$objWpBase = new WpBase();
+namespace MizzouMVC\controllers;
 
-$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
-Content::render('attachment',$aryData);
+class Attachment extends Main
+{
+    public function main()
+    {
+        global $post;
+        $objWpBase = $this->load('MizzouMVC\models\WpBase');
+        $this->renderData('MainPost',$objWpBase->convertPost($post));
+
+        $this->render('single');
+    }
+}
+
+new Attachment();
