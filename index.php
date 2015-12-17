@@ -12,6 +12,16 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
+namespace MizzouMVC\controllers;
 
-Content::render('index',array());
+class Index extends Main
+{
+    public function main()
+    {
+        global $post;
+        $this->aryRenderData['MainPost'] = $this->load('MizzouMVC\models\MizzouPost',$post);
+        $this->render('index');
+    }
+}
 
+new Index();

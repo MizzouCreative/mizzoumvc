@@ -10,7 +10,16 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-global $post;
-$aryData = array();
-$aryData['objMainPost'] = new MizzouPost($post);
-Content::render('single',$aryData);
+namespace MizzouMVC\controllers;
+
+class Single extends Main
+{
+    public function main()
+    {
+        global $post;
+        $this->aryRenderData['MainPost'] = $this->load('MizzouMVC\models\MizzouPost',$post);
+        $this->render('single');
+    }
+}
+
+new Single();

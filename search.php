@@ -12,36 +12,35 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
+namespace MizzouMVC\controllers;
 
+class Search extends Main
+{
+    public function main()
+    {
+        if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s'] != '')) {
+            $arySearchData = array();
+            $arySearchData['arySearchParams'] = $_GET;
+            if(isset($this->objSite->search) && is_array($this->objSite->search)){
+                $arySearchData['search_options'] = $this->objSite->search;
+                $objSearch = $this->load('MizzouMVC\models\Search',$arySearchData);
+                $this->renderData('SearchResults',$objSearch->getSearchResults());
+                if('' != $objSearch->SearchTerms){
+                    $this->renderData('SearchTerms',htmlentities($objSearch->SearchTerms,ENT_QUOTES,'UTF-8',false));
+                    $this->renderData('PageTitle','Search Results for ' . $this->aryRenderData['SearchTerms']);
+                }
 
-$aryData = array();
-$objSite = new Site();
+                if($objSearch->isError()){
+                    _mizzou_log($objSearch->error_messages,'error messages from objSearch',false,array('file'=>__FILE__,'line'=>__LINE__));
+                }
+            } else {
+                _mizzou_log($this->objSite,'trying to do a search, but search options are missing',false,array('line'=>__LINE__,'file'=>__FILE__));
+            }
 
+        }
 
-/**
-* Doesnt matter if s or q has been used as the search parameter, we want to use either to invoke a gsa search
-*/
-if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s'] != '')) {
-    require_once 'models/Search.php';
-    $arySearchData = array();
-    $arySearchData['arySearchParams'] = $_GET;
-
-    $arySearchData['objSite'] = $objSite;
-    $objSearch = new Search($arySearchData);
-
-    $aryData['SearchResults'] = $objSearch->getSearchResults();
-    _mizzou_log($aryData['SearchResults'],'search results',false,array('file'=>__FILE__,'line'=>__LINE__));
-
-    if($objSearch->SearchTerms != ''){
-        $aryData['SearchTerms'] = htmlentities($objSearch->SearchTerms,ENT_QUOTES,'UTF-8',false);
-        $aryData['PageTitle'] = 'Search results for ' . $aryData['SearchTerms'];
-
-    }
-
-    if($objSearch->isError()){
-        _mizzou_log($objSearch->error_messages,'error messages from objSearch',false,array('file'=>__FILE__,'line'=>__LINE__));
+        $this->render('search');
     }
 }
 
-$aryData['objSite'] = $objSite;
-Content::render('search',$aryData);
+new Search();
