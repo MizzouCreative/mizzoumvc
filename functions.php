@@ -514,13 +514,15 @@ function embedGoogleMap( $aryMatches ) {
     return apply_filters( 'embed_g_map', $strEmbed );
 }
 
-function mizzouBlockUserEnumeration($strRedirectionURL, $strRequestedURL)
-{
-    if (1 === preg_match('/\?author=([\d]*)/', $strRequestedURL)) {
-        $strRedirectionURL = false;
-    }
+if(!function_exists('mizzouBlockUserEnumeration')){
+    function mizzouBlockUserEnumeration($strRedirectionURL, $strRequestedURL)
+    {
+        if (1 === preg_match('/\?author=([\d]*)/', $strRequestedURL)) {
+            $strRedirectionURL = false;
+        }
 
-    return $strRedirectionURL;
+        return $strRedirectionURL;
+    }
 }
 
 /**
