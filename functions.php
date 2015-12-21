@@ -525,13 +525,15 @@ if(!function_exists('mizzouBlockUserEnumeration')){
     }
 }
 
-/**
- * Removes the wordpress version number from EVERYTHING
- * @return string empty
- */
-function mizzouRemoveGenerator()
-{
-    return '';
+if(!function_exists('mizzouRemoveGenerator')){
+    /**
+     * Removes the wordpress version number from EVERYTHING
+     * @return string empty
+     */
+    function mizzouRemoveGenerator()
+    {
+        return '';
+    }
 }
 
 /**
