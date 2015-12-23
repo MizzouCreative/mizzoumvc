@@ -361,7 +361,7 @@ abstract class Main {
 			 * declared namespace?
 			 * Maybe this is why they suggest that your directory structure match your namespace structure?
 			 */
-			_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
+			//_mizzou_log($strLocatedController,'located controller',false,array('line'=>__LINE__,'file'=>__FILE__));
 			$boolFound = false;
 
 			if(false != $rscHandle = fopen($strLocatedController,'r')){
@@ -386,7 +386,7 @@ abstract class Main {
 			$strNameSpacedController = 'MizzouMVC\controllers\\'.$strController;
 		}
 
-		_mizzou_log($strNameSpacedController,'our found namespaced controller',false,array('line'=>__LINE__,'file'=>__FILE__));
+		//_mizzou_log($strNameSpacedController,'our found namespaced controller',false,array('line'=>__LINE__,'file'=>__FILE__));
 
 		return $strNameSpacedController;
 
