@@ -93,11 +93,6 @@ class Content {
                     $aryData['Pagination'] = new Pagination($aryPaginationArgs);
                 }
 
-                //page title?
-                if(!isset($aryData['PageTitle'])){
-                    $aryData['PageTitle'] = self::_determinePageTitle();
-                }
-
                 //root ancestor?
                 if(!isset($aryData['RootAncestor'])){
                     $aryData['RootAncestor'] = self::_determineRootAncestor((isset($aryData['MainPost'])) ? $aryData['MainPost'] : null,$aryData['PageTitle']);
