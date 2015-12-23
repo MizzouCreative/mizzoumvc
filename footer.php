@@ -16,7 +16,7 @@ class Footer extends Main {
     {
         $this->boolLoadSurroundingViewData = false;
 	    $objFooter = $this->load('MizzouMVC\models\Footer',$this->aryRenderData);
-        $this->aryRenderData = array_merge($this->aryRenderData,$objFooter->getTemplateData);
+        $this->aryRenderData = array_merge($this->aryRenderData,$objFooter->getTemplateData());
         $this->render('footer');
     }
 }
