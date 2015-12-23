@@ -101,14 +101,14 @@ class Content {
                     $aryData['Breadcrumbs'] = new Breadcrumbs($aryData['PageTitle'],$aryAncestors,$aryBreadcrumbOptions);
                 }
 
-                //menu?
-                if(!isset($aryData['Menu'])){
-                    $aryData['Menu'] = new Menu($aryData);
+                //We need to pass Site down to the view, if it isnt already in there
+                if(!isset($aryData['Site'])){
+                    if(isset($aryData['objSite'])){
+                        $aryData['Site'] = & $aryData['objSite'];
+                    } else {
+                        $aryData['Site'] = $objSite;
+                    }
                 }
-
-                //We need to pass Site down to the view
-                $aryData['Site'] = $objSite;
-
             }
         }
 
