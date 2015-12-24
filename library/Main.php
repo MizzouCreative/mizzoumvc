@@ -170,7 +170,7 @@ abstract class Main {
     }
 
     protected function _loadMenu(){
-        _mizzou_log(__FUNCTION__,'just loaded the function',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log(__FUNCTION__,'just loaded the function',false,array('line'=>__LINE__,'file'=>__FILE__));
         //Menu class HAS to have Site. it also can take MainPost, PageTitle and menuName
         $aryPossibleKeys = array('MainPost','PageTitle','menuName');
 
