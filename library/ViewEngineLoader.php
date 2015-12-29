@@ -49,6 +49,8 @@ class ViewEngineLoader {
         $this->_loadViewEngineFilters();
         //load up our custom view functions
         $this->_loadViewEngineFunctions($this->strFrameworkDir);
+        //load up our custom tests
+        $this->_loadTests();
     }
 
     /**
@@ -228,6 +230,15 @@ class ViewEngineLoader {
                 require_once $strController;
             }
         }));
+    }
+
+    protected function _loadTests()
+    {
+        $objNumericTest = new \Twig_SimpleTest('numeric',function($mxdVal){
+           return is_numeric($mxdVal);
+        });
+
+        $this->objViewEngine->addTest($objNumericTest);
     }
 
 	/**
