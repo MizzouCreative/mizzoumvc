@@ -46,9 +46,18 @@ abstract class Main {
         'include_breadcrumbs'=>false,
     );
 
+    public $post = null;
+    public $wp_query = null;
+
 
     public function __construct(array $aryContext=array())
     {
+
+        global $post;
+        global $wp_query;
+
+        $this->post = $post;
+        $this->wp_query = $wp_query;
 
         //_mizzou_log(null,'Main constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
         /**
@@ -85,7 +94,7 @@ abstract class Main {
 
             }
         }
-		//_mizzou_log($objSite,'what is objSite before we call init?',false,array('line'=>__LINE__,'file'=>__FILE__));
+
         $this->_init($objSite);
 
         $this->main();
@@ -506,6 +515,17 @@ abstract class Main {
 			_mizzou_log($wp_query,'WARNING: We were unable to determine the post type we are dealing with. Here is wp_query',true);
 		}
 	}
+
+    /**
+     * Wrapper function for the ACF-specific function get_field_object
+     * @param string $strName
+     * @return array
+     * @uses get_field_object() which is an Advanced Custom Fields specific function
+     */
+    protected function _retrieveFieldObject($strName)
+    {
+        return get_field_object($strName);
+    }
 
 	/**
 	 * Main processing area for extending controllers
