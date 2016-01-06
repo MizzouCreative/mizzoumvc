@@ -9,6 +9,9 @@
  * @category model
  * @author Charlie Triplett, Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
+ *
+ * @todo this class needs to be renamed.  it doesn't have anything to do with A11y.  it just changes the markup from using
+ * a <ul> element to a <ol> element,  that's it
  */
 namespace MizzouMVC\library;
 class A11yPageWalker extends \Walker_Page {
