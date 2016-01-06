@@ -22,6 +22,8 @@
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
 namespace MizzouMVC\models;
+use MizzouMVC\library\Loader;
+
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'.DIRECTORY_SEPARATOR.'FrameworkSettings.php';
 
 /**
@@ -180,6 +182,9 @@ class Site extends Base {
      */
     public function getPageList($aryExclude = array())
     {
+        _mizzou_log(null,'deprecated code called',true,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
+        $objLoader = new MizouMVC\library\Loader(MIZZOUMVC_ROOT_PATH,$this->ParentThemePath,$this->ChildThemePath);
+
         //if the pagelist hasnt been set, or if they have requested a different exclusion list
         if(!$this->is_set('PageList') || $this->aryOptions['pagelist_exclude'] !== $aryExclude) {
             $this->aryOptions['pagelist_exclude'] = $aryExclude;
@@ -187,7 +192,7 @@ class Site extends Base {
                 'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
                 'title_li'		=> '',
                 'exclude'      	=> implode(',',$aryExclude),
-                'walker' 		=> new MizzouMVC\library\A11yPageWalker(), /* @todo how should we deal with this dependency? */
+                'walker' 		=> $objLoader->load('MizzouMVC\library\A11yPageWalker'), /* @todo how should we deal with this dependency? */
                 'echo'          => false,
             );
             //_mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
