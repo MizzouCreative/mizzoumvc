@@ -628,7 +628,7 @@ if(!function_exists('_mizzou_log')){
       
       if($boolBackTrace && $boolBackTraced){
           ob_start();
-          array_walk(debug_backtrace(),create_function('$a,$b','print "{$a[\'function\']}()(".basename($a[\'file\']).":{$a[\'line\']}); ";'));
+          array_walk(debug_backtrace(),create_function('$a,$b','print "{$a[\'function\']}()(".basename($a[\'file\']).":{$a[\'line\']}); ".PHP_EOL;'));
           $strBackTrace = ob_get_clean();
           
           $strMessage .= PHP_EOL.'Contents of backtrace:'.PHP_EOL.$strBackTrace.PHP_EOL;
