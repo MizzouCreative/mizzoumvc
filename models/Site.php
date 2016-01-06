@@ -187,7 +187,7 @@ class Site extends Base {
                 'depth'        	=> 4, // if it's a top level page, we only want to see the major sections
                 'title_li'		=> '',
                 'exclude'      	=> implode(',',$aryExclude),
-                'walker' 		=> new A11yPageWalker(), /* @todo how should we deal with this dependency? */
+                'walker' 		=> new MizzouMVC\library\A11yPageWalker(), /* @todo how should we deal with this dependency? */
                 'echo'          => false,
             );
             //_mizzou_log($aryPageListOptions,'aryPageListOptions',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
