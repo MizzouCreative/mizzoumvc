@@ -10,8 +10,8 @@
  * @author Charlie Triplett, Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  */
-
-class A11yPageWalker extends Walker_Page {
+namespace MizzouMVC\library;
+class A11yPageWalker extends \Walker_Page {
 
     function start_lvl(&$output, $depth = 0, $aryArgs = array())
     {
