@@ -183,7 +183,7 @@ class Site extends Base {
     public function getPageList($aryExclude = array())
     {
         _mizzou_log(null,'deprecated code called',true,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
-        $objLoader = new MizouMVC\library\Loader(MIZZOUMVC_ROOT_PATH,$this->ParentThemePath,$this->ChildThemePath);
+        $objLoader = new Loader(MIZZOUMVC_ROOT_PATH,$this->ParentThemePath,$this->ChildThemePath);
 
         //if the pagelist hasnt been set, or if they have requested a different exclusion list
         if(!$this->is_set('PageList') || $this->aryOptions['pagelist_exclude'] !== $aryExclude) {
