@@ -627,9 +627,11 @@ if(!function_exists('_mizzou_log')){
       }
       
       if($boolBackTrace && $boolBackTraced){
-          $aryBackTrace = debug_backtrace();
+          ob_start();
+          array_walk(debug_backtrace(),create_function('$a,$b','print "{$a[\'function\']}()(".basename($a[\'file\']).":{$a[\'line\']}); ";'));
+          $strBackTrace = ob_get_clean();
           
-          $strMessage .= PHP_EOL.'Contents of backtrace:'.PHP_EOL.var_export($aryBackTrace,true).PHP_EOL;          
+          $strMessage .= PHP_EOL.'Contents of backtrace:'.PHP_EOL.$strBackTrace.PHP_EOL;
       }
 
       $strMessage .= PHP_EOL;
