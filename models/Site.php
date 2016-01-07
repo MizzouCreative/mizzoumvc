@@ -52,6 +52,15 @@ class Site extends Base {
 
     protected $strCollapseSettingsPattern = '/(.+)\d$/';
 
+    protected $aryStringsToConvertToBool = array(
+        'yes',
+        'no',
+        'on',
+        'off',
+        'true',
+        'false',
+    );
+
     public function __construct(\MizzouMVC\library\FrameworkSettings $objFrameWorkSettings, $aryOptions = array())
     {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
@@ -637,5 +646,16 @@ class Site extends Base {
         }
 
         return $arySettings;
+    }
+
+    public function add_data($mxdKey,$mxdData)
+    {
+        if(isset($this->objFrameworkSettings->convert_string_booleans) && true === $this->objFrameworkSettings->convert_string_booleans){
+            if(is_string($mxdData) && in_array($mxdData,$this->aryStringsToConvertToBool)){
+                $mxdData = filter_var($mxdData, FILTER_VALIDATE_BOOLEAN);
+            }
+        }
+
+        parent::add_data($mxdKey,$mxdData);
     }
 }
