@@ -46,7 +46,7 @@ class Menu extends Base {
             }
 
 
-            if('' != $aryMenuOptions = $objSite->menu_options){
+            if('' != $aryMenuOptions = $objSite->{'menu-options'}){
                // _mizzou_log($aryMenuOptions,'menu options is set and here is what it contains',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                 unset($aryMenuOptions['inject_primary']);//we dont need this one for wp_nav_menu
                 $this->aryMenuOptions = array_merge($this->aryDefaultMenuOptions,$aryMenuOptions);
