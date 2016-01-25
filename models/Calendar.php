@@ -128,4 +128,24 @@ class Calendar extends AbstractTranslator {
 
 		return $strDescription;
 	}
+
+    protected function _translateEvents($aryEvents)
+    {
+        $boolTimeZoneChanged = false;
+        $strOldTimeZone = date_default_timezone_get();
+        $strNewTimeZone = get_option('timezone_string');
+        if('' != $strNewTimeZone){
+            date_default_timezone_set($strNewTimeZone);
+            $boolTimeZoneChanged = true;
+        }
+
+        $aryReturn = parent::_translateEvents($aryEvents);
+
+        if($boolTimeZoneChanged){
+            date_default_timezone_set($strOldTimeZone);
+        }
+
+        return $aryReturn;
+
+    }
 }
