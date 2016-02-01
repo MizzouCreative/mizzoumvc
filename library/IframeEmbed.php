@@ -21,7 +21,7 @@ class IframeEmbed {
 		add_filter('oembed_dataparse',array($this,'injectTitleAttribute'),10,3);
 	}
 
-	public function getInstance()
+	public static function getInstance()
 	{
 		if(null === self::$objInstance){
 			self::$objInstance = new IframeEmbed();
