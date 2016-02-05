@@ -33,7 +33,14 @@ abstract class Shortcode extends Main {
         return $strReturn;
     }
 
-    public function mergeOptions($strDefaultsName)
+	/**
+	 * Mergest the passed in shortcode options with the options for the shortcode from the settings page
+	 *
+	 * @param $strDefaultsName sting settings page that contains the defaults for this shortcode
+	 *
+	 * @return array of shortcode options
+	 */
+	public function mergeOptions($strDefaultsName)
     {
         $aryArgs = array();
 

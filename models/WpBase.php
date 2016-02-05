@@ -75,6 +75,9 @@ class WpBase
          * 20140602 PFG:
          * posts_per_page HAD been set to numberposts, but it appears that **ONLY** get_posts allows numberposts as an
          * argument value and converts it to posts_per_page before calling wp_query.
+         *
+         * 20160205 @todo we should consider adding a 'slug' option that maps to name and a title option that also
+         * maps to name but with the value being run through sanitize_title()
          */
         $aryArgs = array(
             'post_type'     => $aryOptions['post_type'],
