@@ -122,8 +122,12 @@ class Loader {
 	            $strNext = next($aryClassParts);
             } else {
                 $strFullPath = $this->strParentThemePath;
-	            $strNext = $strSecond;
-            }
+	            if('parent' == $strSecond){
+		            $strNext = next($aryClassParts);
+	            } else {
+		            $strNext = $strSecond;
+	            }
+	        }
         }
 
         //ok, now we have our root start
