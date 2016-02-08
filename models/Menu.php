@@ -61,6 +61,10 @@ class Menu extends Base {
             //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
             $arySiteOptions = $objSite->{'site-wide'};
 
+	        if($objSite->IsChild && '' != $objSite->parent_static_menu){
+		        $this->add_data('static_parent',$objSite->parent_static_menu);
+	        }
+
 
             $this->add_data('inject_primary',$objSite->option('inject_primary'));
             //for use in self::_determineListElementType
@@ -100,7 +104,15 @@ class Menu extends Base {
            if('' != $strStaticMenu = $this->_retrieveMenu($strMenu)){
                $this->add_data($strMenu,$strStaticMenu);
            }
-       }
+        }
+
+	    if(isset($this->aryData['static_parent'])){
+		    switch_to_blog(1);
+		    if('' != $strStaticMenu = $this->_retrieveMenu($this->aryData['static_parent'])){
+			    $this->add_data($this->aryData['static_parent'],$strStaticMenu);
+		    }
+		    restore_current_blog();
+	    }
     }
 
     protected function _determineMenuName()
