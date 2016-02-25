@@ -123,7 +123,7 @@ function mizzouSetUpInitialOptions()
 					}
 
 					//let's make double sure we have a post id
-					if(!is_wp_error($intSettingsPost) && ctype_digit($intSettingsPost)){
+					if(!is_wp_error($intSettingsPost) && is_int($intSettingsPost)){
 						//now get all of the custom meta data for this post
 						$aryCustomMeta = get_post_custom($intSettingsPost);
 						_mizzou_log($arySettingsVals,'setting options for group ' . $strGroupSettingsKey );
