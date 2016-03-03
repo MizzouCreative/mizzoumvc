@@ -1,17 +1,21 @@
 <?php
 /**
  * Template Name: Calendar
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
  */
 namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
+/**
+ * Retrieves and displays calendar events from the central calendaring application (currently Localist)
+ *
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category controller
+ * @category framework
+ * @uses MizzouMVC\models\Calendar
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 
 class Calendar extends Main {
 

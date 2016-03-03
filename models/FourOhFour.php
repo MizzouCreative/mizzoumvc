@@ -1,16 +1,18 @@
 <?php
+namespace MizzouMVC\models;
+require_once 'Search.php';
+use MizzouMVC\models\Search;
+
 /**
  * Performs an autosearch based on the URL structure of a 404 page
  *
  * @package WordPress
- * @subpackage Mizzou MVC
- * @category theme
+ * @subpackage MizzouMVC
+ * @category framework
  * @category model
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  */
-namespace MizzouMVC\models;
-require_once 'Search.php';
 class FourOhFour extends Search{
 
     /**

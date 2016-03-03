@@ -1,18 +1,23 @@
 <?php
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
 /**
  * Controller for archive pages
- * 
+ *
  *
  * @subpackage MizzouMVC
- * @category theme
  * @category controller
+ * @category framework
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-namespace MizzouMVC\controllers;
-
 class Archive extends Main {
 
+    /**
+     * Workload function
+     * @return void
+     */
     public function main()
     {
         global $wp_query;
@@ -23,12 +28,4 @@ class Archive extends Main {
     }
 }
 
-$objArchive = new Archive();
-/**
-global $wp_query;
-$aryData = array();
-$objWpBase = new WpBase();
-
-$aryData['aryPosts'] = $objWpBase->convertPosts($wp_query->posts);
-Content::render('archive',$aryData,array('include_pagination'=>true));
- * */
+new Archive();

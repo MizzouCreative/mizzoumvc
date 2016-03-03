@@ -1,18 +1,23 @@
 <?php
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
 /**
  * Controller for an attachment page
- * 
+ *
  *
  * @subpackage MizzouMVC
- * @category theme
  * @category controller
+ * @category framework
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-namespace MizzouMVC\controllers;
-
 class Attachment extends Main
 {
+    /**
+     * Workload function
+     * @return void
+     */
     public function main()
     {
         global $post;

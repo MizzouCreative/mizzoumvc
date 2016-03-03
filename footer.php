@@ -1,17 +1,22 @@
 <?php
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
 /**
  * Controller for the footer of the site
- * 
  *
+ * @package Wordpress
  * @subpackage MizzouMVC
- * @category theme
+ * @category framework
  * @category controller
+ * @uses MizzouMVC\models\Footer
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
-namespace MizzouMVC\controllers;
-
 class Footer extends Main {
+    /**
+     * Workload function
+     * @return void
+     */
     public function main()
     {
         $this->boolLoadSurroundingViewData = false;
@@ -19,9 +24,3 @@ class Footer extends Main {
         $this->aryRenderData = array_merge($this->aryRenderData,$objFooter->getTemplateData());
     }
 }
-
-//$objFooter = new Footer((isset($aryContext) ? $aryContext : array()));
-/**
-$objFooter = new Footer($aryContext);
-$aryData = array_merge($aryContext,$objFooter->getTemplateData());
-Content::render('footer',$aryData,array('include_header'=>false,'include_footer'=>false));*/
