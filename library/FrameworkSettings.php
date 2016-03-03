@@ -19,7 +19,10 @@ class FrameworkSettings {
     private static $objInstance = null;
     protected $arySettings = array();
     private $strSettingsFileName = 'framework-settings.ini';
-    protected $aryData = array();
+    protected $aryData = array(
+        'convert_string_booleans'   => true,
+        'flatten_groups'            => true,
+    );
 
     public function __construct()
     {
