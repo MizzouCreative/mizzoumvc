@@ -1,21 +1,38 @@
 <?php
-/**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
 namespace MizzouMVC\models;
+use MizzouMVC\models\Base;
+
+/**
+ * Determines and stores a list of breadcrumbs to the current location in the site
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 class Breadcrumbs extends Base {
 
+    /**
+     * @var array final list of breadcrumbs
+     */
     protected $aryCrumbs;
 
+    /**
+     *
+     * @param string $strPageTitle The current page title
+     * @param array $aryAncestors list of ancestor pages
+     * @param array $aryOptions class options. Possible options to pass in are
+     *
+     * inject_post_home - can be either an array that includes text and url keys=>values, or can be set to true. If set
+     *    to true, the following values need to be set
+     *      - inject_post_home_text
+     *      - inject_post_home_url
+     * home_text - the very first breadcrumb text
+     * home_url - the very first breadcrumb link
+     *
+     */
     public function __construct($strPageTitle, $aryAncestors = array(), $aryOptions = array())
     {
 
@@ -133,6 +150,12 @@ class Breadcrumbs extends Base {
         $this->add_data('crumbs',array_reverse($this->aryCrumbs));
     }
 
+    /**
+     * Creates a new stdClass object with ->name and ->url properties
+     * @param string $strName Name to be included as breadcrumb link text
+     * @param string $strURL URL to use as href in breadcrumb link
+     * @return stdClass
+     */
     protected function _createNewMember($strName,$strURL)
     {
         $objMember = new stdClass();
@@ -142,6 +165,10 @@ class Breadcrumbs extends Base {
         return $objMember;
     }
 
+    /**
+     * Determine which type of archive is being requested
+     * @return string
+     */
     protected function _determineDateArchiveType()
     {
         $strDateArchiveType = '';

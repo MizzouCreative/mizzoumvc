@@ -1,19 +1,23 @@
 <?php
+namespace MizzouMVC\models;
+use MizzouMVC\models\Subview;
 /**
- * 
+ *
  * Retrieves relevant data that needs to be displayed in the footer
  *
  * @package WordPress
- * @subpackage Mizzou MVC
- * @category theme
+ * @subpackage MizzouMVC
+ * @category framework
  * @category model
  * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
-namespace MizzouMVC\models;
 class Footer extends Subview {
 
-	public function __construct($aryContext)
+    /**
+     * @param array $aryContext
+     */
+    public function __construct($aryContext)
 	{
 		$this->_setCopyRightYear();
 		$this->_setWpFooter();

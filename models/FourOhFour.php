@@ -11,7 +11,7 @@ use MizzouMVC\models\Search;
  * @category framework
  * @category model
  * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 class FourOhFour extends Search{
 

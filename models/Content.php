@@ -1,18 +1,21 @@
 <?php
+namespace MizzouMVC\models;
+
 /**
+ * Instructs the view engine to render the view file
  *
  * @package WordPress
- * @subpackage Mizzou MVC
- * @category theme
+ * @subpackage MizzouMVC
+ * @category framework
  * @category model
  * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  *
  * ASSUMES that Base.php and Site.php classes have already been included
  *
- * @todo is this really a model?  or is it more part of the library or application?
+ * @todo this is almost completely deprecated.  see what else needs to be moved to MizzouMVC\controllers\Main in order
+ * to deprecate this class completely
  */
-namespace MizzouMVC\models;
 class Content {
     /**
      * @var array default options used by the render method
@@ -135,6 +138,13 @@ class Content {
 
     }
 
+    /**
+     * Determines the root ancestor of a page/post
+     * @param MizzouMVC\model\MizzouPost $objMainPost
+     * @param string $strPageTitle
+     * @return mixed|string
+     * @todo verify that this functionality has been moved out and is no longer needed
+     */
     protected static function _determineRootAncestor($objMainPost=null,$strPageTitle='')
     {
         $strReturn = '';
@@ -231,6 +241,11 @@ class Content {
     }
 
 
+    /**
+     * Converts string representations of booleans to booleans
+     * @param mixed $mxdVal
+     * @return mixed
+     */
     protected static function _mixedToBool($mxdVal)
     {
         return filter_var($mxdVal,FILTER_VALIDATE_BOOLEAN);

@@ -1,16 +1,4 @@
 <?php
-/**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
 namespace MizzouMVC\models;
 use Mizzou\CalendarTranslator\AbstractTranslator as AbstractTranslator;
 
@@ -18,8 +6,22 @@ use Mizzou\CalendarTranslator\AbstractTranslator as AbstractTranslator;
  * @todo seriously need to look into autoloaders
  */
 require_once dirname(dirname(__FILE__)).'/helpers/calendar/Mizzou/CalendarTranslator/AbstractTranslator.php';
+/**
+ * Translates the data received from Localist to the format we need for display
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ *
+ */
 class Calendar extends AbstractTranslator {
 
+    /**
+     * @param array $aryOptions
+     */
     public function __construct($aryOptions=array())
     {
         _mizzou_log(func_get_args(),'options handed to __construct',false,array('line'=>__LINE__,'file'=>__FILE__));
@@ -50,7 +52,7 @@ class Calendar extends AbstractTranslator {
 
     /**
      * Translates the data returned from Localist into an object we can use
-     * @param $objEvent
+     * @param $objEvent Event object instance from Localist
      * @return stdClass
      */
     protected function _translateEvent($objEvent)
@@ -129,6 +131,11 @@ class Calendar extends AbstractTranslator {
 		return $strDescription;
 	}
 
+    /**
+     * Switches the timezone to the local timezone before we translate the events since wordpress switches the timezone to GMZ
+     * @param array $aryEvents
+     * @return array
+     */
     protected function _translateEvents($aryEvents)
     {
         $boolTimeZoneChanged = false;

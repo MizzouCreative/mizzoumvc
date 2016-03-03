@@ -1,15 +1,16 @@
 <?php
+namespace MizzouMVC\models;
+
 /**
  * Base class contain magic methods and ability to capture the contents of global-space functions that echo directly
  *
  * @package WordPress
- * @subpackage Mizzou MVC
- * @category theme
+ * @subpackage MizzouMVC
+ * @category framework
  * @category model
  * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
-namespace MizzouMVC\models;
 class Base {
     /**
      * Stores the base data we need to access post reformatting
@@ -94,7 +95,7 @@ class Base {
     }
 
     /**
-     * magic isset so lower classes can test for existance of inaccessible properties
+     * magic isset so lower classes can test for existence of inaccessible properties
      *
      * @param mixed $mxdProperty
      * @return boolean
