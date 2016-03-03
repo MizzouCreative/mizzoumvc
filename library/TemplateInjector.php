@@ -2,19 +2,19 @@
 /**
  * Allows for theme templates from the framework to be selectable and used by Pages
  *
- * As of this time, we only have one theme template (Search) but this can be expanded. Heavily inspired by
+ * As of this time, we only have two theme templates (Search & Calendar) but this can be expanded. Heavily inspired by
  * @see http://www.wpexplorer.com/wordpress-page-templates-plugin/
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  * @uses MIZZOUMVC_ROOT_PATH
  * @todo see if there is some way to parse our own controllers for Template Name, and then add them to our list of
- * templates. Similar to this: http://pastie.org/10071582
+ * templates. Similar to this: http://pastie.org/10071582 mirror: http://pastebin.com/rHUxkceK
+ * @todo shouldnt this be namespaced?
  */
 
 class TemplateInjector {
@@ -60,6 +60,7 @@ class TemplateInjector {
 	}
 
 	/**
+     * Creates and/or returns static instance of class
 	 * @return TemplateInjector
 	 */
 	public static function getInstance()

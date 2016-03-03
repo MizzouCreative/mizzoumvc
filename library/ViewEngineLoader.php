@@ -1,30 +1,49 @@
 <?php
-/**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
 namespace MizzouMVC\library;
+
+/**
+ * Sets up and initializes our template engine render.  Currently this is Twig, but later would like to be able to
+ * expand it.
+ *
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 class ViewEngineLoader {
 
+    /**
+     * @var null
+     * @deprecated not used
+     */
     protected $objViewEngineEnvironmentLoader = null;
+    /**
+     * @var null|\Twig_Environment
+     */
     protected $objViewEngine = null;
+    /**
+     * @var null|ViewEngineLoader static instance of our Loader
+     */
 	protected static $objInstance = null;
+    /**
+     * @var string|null server path to the framework
+     */
     protected $strFrameworkDir = null;
+    /**
+     * @var null|string server path to the parent theme
+     */
     protected $strThemeDir = null;
+    /**
+     * @var null|string server path to the child theme
+     */
     protected $strChildThemeDir = null;
 
     /**
-     * @param $strFrameworkDir Server path location of the framework
-     * @param $strThemeDir Server path location of the (parent) theme
-     * @param null $strChildThemeDir server path of the child theme, if applicable
+     * @param string $strFrameworkDir Server path location of the framework
+     * @param string $strThemeDir Server path location of the (parent) theme
+     * @param null|string $strChildThemeDir server path of the child theme, if applicable
      */
     private function __construct($strFrameworkDir,$strThemeDir,$strChildThemeDir=null){
         $this->strFrameworkDir = $strFrameworkDir;
@@ -54,6 +73,7 @@ class ViewEngineLoader {
     }
 
     /**
+     * Creates instance and/or returns stored instance
      * @param string $strFrameworkDir server path of framework
      * @param string $strThemeDir server path of main/parent theme
      * @param string $strChildThemeDir server path of child theme, if applicable
@@ -69,6 +89,10 @@ class ViewEngineLoader {
 	    return self::$objInstance->objViewEngine;
     }
 
+    /**
+     * Determines where the view directories are located to hand off the template renderer
+     * @return array list of directories
+     */
     protected function _determineViewDirectories()
     {
         $aryDirectories = array();
@@ -129,6 +153,11 @@ class ViewEngineLoader {
         }
     }
 
+    /**
+     * Loads custom Twig filters
+     * @return void
+     * @todo allow themes to create and pass in their own twig filters?
+     */
     protected function _loadViewEngineFilters()
     {
         $objTwigDebug = new \Twig_SimpleFilter('var_export',function($string){
@@ -190,6 +219,11 @@ class ViewEngineLoader {
         $this->objViewEngine->addFilter($objTwigAPMonth);
     }
 
+    /**
+     * Loads custom Twig functions
+     * @return void
+     * @todo allow themes to create and pass in their own twig functions?
+     */
     protected function _loadViewEngineFunctions($strFrameWorkDir)
     {
         $this->objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()) use ($strFrameWorkDir){
@@ -232,6 +266,11 @@ class ViewEngineLoader {
         }));
     }
 
+    /**
+     * Loads custom Twig tests
+     * @return void
+     * @todo allow themes to create and pass in their own twig tests?
+     */
     protected function _loadTests()
     {
         $objNumericTest = new \Twig_SimpleTest('numeric',function($mxdVal){

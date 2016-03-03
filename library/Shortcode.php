@@ -1,25 +1,29 @@
 <?php
-/**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
-
 namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
 
-
+/**
+* Abstract class for shortcode-specific controllers to extend.  Sets up common functionality needed when rendering
+* shortcode related views.
+*
+* @package Wordpress
+* @subpackage MizzouMVC
+* @category framework
+* @category library
+* @author Paul F. Gilzow, Web Communications, University of Missouri
+* @copyright 2016 Curators of the University of Missouri
+*
+*/
 abstract class Shortcode extends Main {
 
     protected $boolRunRender = true;
     protected $boolLoadSurroundingViewData = false;
 
+    /**
+     * Render a view file and return it as a string
+     * @param string $stViewFileName View file to render
+     * @return string|void
+     */
     public function render($stViewFileName)
     {
         $strReturn = '';
@@ -34,9 +38,9 @@ abstract class Shortcode extends Main {
     }
 
 	/**
-	 * Mergest the passed in shortcode options with the options for the shortcode from the settings page
+	 * Merges the passed in shortcode options with the options for the shortcode from the settings page
 	 *
-	 * @param $strDefaultsName sting settings page that contains the defaults for this shortcode
+	 * @param string $strDefaultsName settings page that contains the defaults for this shortcode
 	 *
 	 * @return array of shortcode options
 	 */
