@@ -1,26 +1,38 @@
 <?php
-/**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
-
 namespace MizzouMVC\library;
 
-
+/**
+ * Dynamically loads a class' file and creates a new instance of the class
+ *
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ *
+ */
 class Loader {
-
+    /**
+     * @var string server path to the framework
+     */
     protected $strFrameworkPath = null;
+    /**
+     * @var string server path to the parent theme
+     */
     protected $strParentThemePath = null;
+    /**
+     * @var string server path to the child theme
+     */
     protected $strChildThemePath = null;
 
+    /**
+     * Sets the paths to the framework and themes
+     *
+     * @param string $strFramework server path to the framework
+     * @param string $strParentTheme server path to the parent theme
+     * @param string $strChildTheme server path to the child theme
+     */
     public function __construct($strFramework,$strParentTheme,$strChildTheme=null)
     {
         //_mizzou_log(null,'loader constructor called',false,array('line'=>__LINE__,'file'=>__FILE__));
@@ -34,6 +46,13 @@ class Loader {
         //_mizzou_log($this,'Loader constructed, are our paths set?',false,array('line'=>__LINE__,'file'=>__FILE__));
     }
 
+    /**
+     * Locates the php file based on the namespaced class name, requires it and then creates a new instance of the class
+     *
+     * @param string $strClass
+     * @param array $aryArgs
+     * @return object
+     */
     public function load($strClass,$aryArgs=array())
     {
         /*
@@ -99,6 +118,11 @@ class Loader {
         }
     }
 
+    /**
+     * Determines the path to the php file that needs to be required
+     * @param array $aryClassParts
+     * @return string path to file
+     */
     protected function _determinePath($aryClassParts)
     {
         //_mizzou_log($this,'are our paths set?',false,array('line'=>__LINE__,'file'=>__FILE__));

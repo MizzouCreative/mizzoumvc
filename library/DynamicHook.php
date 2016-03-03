@@ -1,19 +1,25 @@
 <?php
 /**
- * 
+ * Allows us to pass parameters to functions passed to add_filter and add_action
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
+ * @example add_filter('admin_menu',array(new DynamicHook(array('single'=>'News','plural'=>'News')),'mizzouChangeLabelsOnDefaultPostType'));
+ *
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 
 class DynamicHook {
+    /**
+     * @var temporary storage of arguments to pass to the function
+     */
     private $mxdData;
+    /**
+     * @var array Default options
+     */
     private $aryOptions = array(
         'override'=>false,
     );
@@ -26,6 +32,12 @@ class DynamicHook {
         }
     }
 
+    /**
+     * Allows us to dynamically call a function with arguments that was passed to add_filter or add_action
+     * @param string $strCallBack
+     * @param mixed $mxdArgs
+     * @return mixed
+     */
     public function __call($strCallBack,$mxdArgs)
     {
         try {

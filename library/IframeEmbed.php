@@ -3,25 +3,30 @@
  * Injects a title attribute into an iframe of an oembed item using the title attribute from the data object returned
  * from the oembed service
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 
 class IframeEmbed {
-	private static $objInstance;
+    /**
+     * @var internal storage of our static instance
+     */
+    private static $objInstance;
 
 	public function __construct()
 	{
 		add_filter('oembed_dataparse',array($this,'injectTitleAttribute'),10,3);
 	}
 
-	public static function getInstance()
+    /**
+     * Creates a new instance and/or returns the stored instance
+     * @return IframeEmbed|internal
+     */
+    public static function getInstance()
 	{
 		if(null === self::$objInstance){
 			self::$objInstance = new IframeEmbed();

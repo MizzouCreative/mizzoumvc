@@ -1,17 +1,15 @@
 <?php
 /**
- * 
+ * Adds a Manager role to the list of available roles in Wordpress. Has the same capabilities as the Editor role but
+ * allows the user to add other users to the Wordpress instance.
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
-
 class Manager {
     public function __construct()
     {
@@ -26,8 +24,8 @@ class Manager {
      *
      * @todo should they be able to add another manager?
      *
-     * @param $aryRoles
-     * @return $aryRoles
+     * @param array $aryRoles
+     * @return array $aryRoles
      */
     public function removeAdministrator($aryRoles)
     {
@@ -39,6 +37,15 @@ class Manager {
         return $aryRoles;
     }
 
+    /**
+     * Map meta capabilities to primitive capabilities for the Manager role
+     *
+     * @param array $aryCapabilities
+     * @param string $strCurrentCapability
+     * @param integer $intUserId
+     * @param array $aryArgs
+     * @return array $aryCapabilities
+     */
     public function mapCapabilities($aryCapabilities,$strCurrentCapability,$intUserId,$aryArgs)
     {
         /**
@@ -82,6 +89,11 @@ class Manager {
         return $aryCapabilities;
     }
 
+    /**
+     * Does the person they are trying to edit have a higher role than them
+     * @param integer $intID
+     * @return bool
+     */
     protected function _canTheyEditThisPerson($intID)
     {
         $boolReturn = true;

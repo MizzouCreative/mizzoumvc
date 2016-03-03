@@ -1,24 +1,36 @@
 <?php
+namespace MizzouMVC\library;
+
 /**
- * 
+ * Loads up framework-specific settings
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category library
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ *
  *
  * @todo We have a lot of overlap here with class Base().  Can we extend that class instead of duplicating the methods?
  */
-namespace MizzouMVC\library;
 class FrameworkSettings {
 
+    /**
+     * @var null internal storage of our static instance
+     */
     private static $objInstance = null;
+    /**
+     * @var array internal storage of the framework settings
+     */
     protected $arySettings = array();
+    /**
+     * @var string framework settings file name
+     */
     private $strSettingsFileName = 'framework-settings.ini';
+    /**
+     * @var array Framework setting defaults
+     */
     protected $aryData = array(
         'convert_string_booleans'   => true,
         'flatten_groups'            => true,
@@ -29,6 +41,12 @@ class FrameworkSettings {
         $this->_loadOptions();
     }
 
+    /**
+     * Retrieves a framework setting value
+     * @param $strSetting setting to be retrieved
+     * @return string setting
+     * @deprecated ?
+     */
     public function setting($strSetting)
     {
         $strSettingReturn = '';
@@ -88,6 +106,9 @@ class FrameworkSettings {
         return $aryReturn;
     }
 
+    /**
+     * Loads framework-settings file from child (if applicable) and parent themes
+     */
     protected function _loadOptions()
     {
         $aryOptionsFiles = array();
@@ -107,10 +128,5 @@ class FrameworkSettings {
         foreach($aryOptionsFiles as $strSettingsFile){
             $this->aryData = array_merge($this->aryData,$this->_loadOptionsFile($strSettingsFile));
         }
-
-
     }
-
-
-
 }

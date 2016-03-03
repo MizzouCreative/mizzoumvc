@@ -16,6 +16,10 @@ use MizzouMVC\controllers\Main;
 
 class Single extends Main
 {
+    /**
+     * Workload function
+     * @return void
+     */
     public function main()
     {
         global $post;
