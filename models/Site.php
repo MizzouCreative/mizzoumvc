@@ -557,6 +557,14 @@ class Site extends Base {
                      * well, we've got two subkeys with the same name
                      * @todo what do we do? give the second key a different name? log it? warning?
                      */
+                    $strMsg = 'WARNING! You have more than one settings key with the same name.';
+                    $strMsg .= ' ' . $mxdKey . ' has been used previously and currently has this value.';
+
+                    _mizzou_log($this->arySiteOptions[$mxdKey],$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
+
+                    $strMsg = 'WARNING cont: The new value you are trying to set for  ' . $mxdKey . ' is:';
+
+                    _mizzou_log($mxdVal,$strMsg,false,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
                 }
             }
         }
