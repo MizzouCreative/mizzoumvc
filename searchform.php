@@ -13,6 +13,7 @@
  * @copyright 2013 Curators of the University of Missouri
  *
  * @todo i dont think we need a controller for the search form.  just the view
+ * @deprecated
  */
 
 

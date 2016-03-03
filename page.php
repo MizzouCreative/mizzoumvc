@@ -1,19 +1,25 @@
 <?php
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
 /**
  * Controller for a static page
- * 
  *
+ * @package Wordpress
  * @subpackage MizzouMVC
- * @category theme
+ * @category framework
  * @category controller
+ * @uses MizzouMVC\models\MizzouPost
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-namespace MizzouMVC\controllers;
-
 class Page extends Main
 {
-	function main()
+    /**
+     * Workload function
+     * @return void
+     */
+    public function main()
 	{
 		global $post;
 		$this->aryRenderData['MainPost'] = $this->load('MizzouMVC\models\MizzouPost',$post);
@@ -21,4 +27,4 @@ class Page extends Main
 	}
 }
 
-$objPage = new Page();
+new Page();

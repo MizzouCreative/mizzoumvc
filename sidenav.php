@@ -10,6 +10,7 @@
  * @uses 
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
+ * @deprecated
  */
 _mizzou_log('',__FILE__.'called',true);
 $strMenu = '';

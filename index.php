@@ -1,21 +1,25 @@
 <?php
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
 /**
- * Template file used to render the Site Front Page, whether the front page 
- * displays the Blog Posts Index or a static page. The Front Page template takes 
- * precedence over the Blog Posts Index (Home) template. 
- * 
+ * The fallback controller when routing isnt able to match another controller
  *
  * @package WordPress
  * @subpackage MizzouMVC
- * @category theme
+ * @category framework
  * @category controller
+ * @uses MizzouMVC\models\MizzouPost
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
-namespace MizzouMVC\controllers;
 
 class Index extends Main
 {
+    /**
+     * Workload function
+     * @return void
+     */
     public function main()
     {
         global $post;

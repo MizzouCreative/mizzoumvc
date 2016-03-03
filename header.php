@@ -1,23 +1,29 @@
 <?php
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
 /**
  * Controller file used to gather components for header view
  *
- * Do NOT instantiate the class.  The main controller will do that
+ * Do NOT instantiate this class.  The main controller will do that
  *
  * @package WordPress
  * @subpackage MizzouMVC
- * @category theme
+ * @category framework
  * @category controller
+ * @uses MizzouMVC\models\Header
  * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  *
  *
  */
-namespace MizzouMVC\controllers;
-
 class Header extends Main {
 
-	public function main()
+    /**
+     * Workload function
+     * @return void
+     */
+    public function main()
 	{
 		$this->boolLoadSurroundingViewData = false;
 		$objHeader = $this->load('MizzouMVC\models\Header',$this->aryRenderData);
@@ -25,5 +31,3 @@ class Header extends Main {
 		//$this->render('header');
 	}
 }
-
-//$objHeader = new Header((isset($aryContext) ? $aryContext : array()));

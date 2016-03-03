@@ -15,14 +15,16 @@
    */
    class DepartmentCourseInfoWSObject
    {
-       //This is your private passcode.  
-       //if you do not have one or you believe yours has been compromised, 
-       //contact the ADN at http://adn.missouri.edu/ 
+       /*
+        * This is your private passcode. if you do not have one or you believe yours has been compromised, contact the
+        * ADN at http://adn.missouri.edu/
+        */
        private $YourDepartmentPrivatePasscode = '';
 
-       //the location of the web service. dont forget the ?WSDL!
-       
-       //PROD
+       /**
+        * the location of the web service. dont forget the ?WSDL!
+        * Set to PROD
+        */
        private $WebServiceURL = 'https://webservices.doit.missouri.edu/DepartmentCourseInfows/DepartmentCourseInfo.asmx?WSDL';
        
        //DEV

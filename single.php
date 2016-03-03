@@ -1,16 +1,18 @@
 <?php
-/**
- * Template file used to render a single post page. 
- * 
- *
- * @package WordPress
- * @subpackage MizzouMVC
- * @category theme
- * @category controller
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
 namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
+/**
+ * Controller for a single post/custom post type
+ *
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category controller
+ * @uses MizzouMVC\models\MizzouPost
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 
 class Single extends Main
 {

@@ -1,21 +1,27 @@
 <?php
  /**
  * Template Name: Search
- * 
- * Displays search results from the GSA. Also doubles as the the template to 
- * be attached to the Search page created in wordpress.  
+ */
+namespace MizzouMVC\controllers;
+use MizzouMVC\controllers\Main;
+
+/**
+ * Displays search results from the GSA. Also doubles as the the template to
+ * be attached to the Search page created in wordpress.
  *
  * @package WordPress
  * @subpackage MizzouMVC
- * @category theme
+ * @category framework
  * @category controller
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
-namespace MizzouMVC\controllers;
-
 class Search extends Main
 {
+    /**
+     * Workload function
+     * @return void
+     */
     public function main()
     {
         if ( (isset( $_GET['q'] ) && $_GET['q'] != '') || (isset($_GET['s']) && $_GET['s'] != '')) {

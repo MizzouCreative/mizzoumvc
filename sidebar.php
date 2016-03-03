@@ -14,4 +14,5 @@
  * @category template-part
  * @author Charlie Triplett, Web Communications, University of Missouri
  * @copyright 2013 Curators of the University of Missouri
+ * @deprecated
  */

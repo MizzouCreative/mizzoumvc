@@ -222,6 +222,7 @@ function mizzou_remove_dashboard_widgets(){
 
 /**
  * Solely here for backwards compatibility and to catch instances when it is still being used
+ * @deprecated
  */
 class a11y_walker extends MizzouMVC\library\A11yPageWalker {
     public function __construct()
