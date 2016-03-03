@@ -587,7 +587,7 @@ if(!function_exists('_mizzou_log')){
    * This will create a debug.log file inside of /wp-content/
    * 
   * @param mixed $mxdVariable variable we need to debug
-  * @param $strPrependMessage message to include
+  * @param string $strPrependMessage message to include
   * @param boolean $boolBackTraced
   * @param array $aryDetails details for doing a mini backtrace instead of the full thing
   * 
