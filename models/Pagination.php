@@ -14,25 +14,42 @@
 namespace MizzouMVC\models;
 use \WP_Query;
 class Pagination extends Base{
+    /**
+     * @var bool
+     */
     public $paged = false;
-	protected $wpPaged = null;
-
-	protected $aryDefaults = array(
+    /**
+     * @var null
+     */
+    protected $wpPaged = null;
+    /**
+     * @var array
+     */
+    protected $aryDefaults = array(
 		'pagination_width'          => 5,
 		'pagination_next'           => false,
 		'pagination_previous'       => false,
 		'pagination_glue'           =>'&#8230;',
 		'pagination_current_linked' =>true,
 	);
-
+    /**
+     * @var array
+     */
 	protected $aryAdjacentItems = array();
-
+    /**
+     * @var array
+     */
 	protected $aryOptions = array();
-
+    /**
+     * @var null
+     */
 	protected $strHrefPattern = null;
 
 	//protected $OnPage,$MaxPages,$MidPoint,$LowerLimit,$UpperLimit;
 
+    /**
+     * @param array $aryArgs
+     */
     public function __construct($aryArgs)
     {
         if(isset($aryArgs['wp_query']) && $aryArgs['wp_query'] instanceof WP_Query){
@@ -60,7 +77,11 @@ class Pagination extends Base{
         }
     }
 
-	protected function _determineLowerAndUpperLimits()
+    /**
+     * Determines the upper and lower limits to be used in the pagination links
+     * @return void
+     */
+    protected function _determineLowerAndUpperLimits()
 	{
 		if($this->MaxPages - $this->OnPage < $this->MidPoint){
 			//we're close to the end, give the extra to the low end
@@ -92,7 +113,13 @@ class Pagination extends Base{
 	}
 
 
-	protected function _determineHrefPattern()
+    /**
+     * Determines the href to be used in the pagination links
+     * Specifically built because we had situations where there query parameters in a paginated area, and we needed
+     * to retain those parameters as we built the links
+     * @return void
+     */
+    protected function _determineHrefPattern()
 	{
 		if(is_null($this->wpPaged) || $this->wpPaged == 0 || false === strpos($_SERVER['REQUEST_URI'],'/page/')){
 			$strHrefBase = $_SERVER['REQUEST_URI'];
@@ -107,7 +134,11 @@ class Pagination extends Base{
 		}
 	}
 
-	protected function _buildPagination()
+    /**
+     * Builds out all the pagination pieces
+     * @return void
+     */
+    protected function _buildPagination()
 	{
 		$aryPaginationParts = array();
 		//first, do they even want prev?
@@ -180,7 +211,17 @@ class Pagination extends Base{
 
 	}
 
-	protected function _buildPaginationLinkObject($aryOptions)
+    /**
+     * Builds a pagination object
+     *
+     * Will contain public members
+     *  - text: string, text to be displayed
+     *  - link: string, href to be used
+     *  - class: string, class to include
+     * @param array $aryOptions
+     * @return \stdClass
+     */
+    protected function _buildPaginationLinkObject($aryOptions)
 	{
 		$aryDefaults = array(
 			'text'=>'',

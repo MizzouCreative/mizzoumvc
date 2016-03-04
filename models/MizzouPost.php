@@ -73,6 +73,10 @@ class MizzouPost extends PostBase
      */
     private $strDefaultDateFormat = ' j, Y';
 
+    /**
+     * @param WP_Post|integer $mxdPost
+     * @param array $aryOptions
+     */
     public function __construct($mxdPost, $aryOptions = array())
     {
 
@@ -105,6 +109,9 @@ class MizzouPost extends PostBase
 
     }
 
+    /**
+     * @return array
+     */
     public function getAllCustomData()
     {
         return $this->aryCustomData;
@@ -133,6 +140,7 @@ class MizzouPost extends PostBase
      * Retrieves and possibly returns an Image object for the post's featured image
      * @param bool $boolReturn
      * @return mixed object|void
+     * @uses \MizzouMVC\models\ImageData
      */
     public function getFeaturedImage($boolReturn = false)
     {
@@ -158,6 +166,10 @@ class MizzouPost extends PostBase
         }
     }
 
+    /**
+     * Returns a list of all the ancestors of a page/post
+     * @return array
+     */
     public function retrieveAncestors()
     {
         if(!isset($this->aryData['ancestors'])){
@@ -167,6 +179,9 @@ class MizzouPost extends PostBase
         return $this->aryData['ancestors'];
     }
 
+    /**
+     * Retrieves and sets all of the Ancestors of a page/post
+     */
     public function _setAncestors()
     {
         $aryAncestors = array();
@@ -189,6 +204,7 @@ class MizzouPost extends PostBase
      *
      * Will becomes an array 'address' containing the values from the three fields
      * @param array $aryOptions
+     * @return void
      */
     protected function _consolidateMetaGroups($aryOptions)
     {
@@ -345,7 +361,7 @@ class MizzouPost extends PostBase
      * Reformats the post's custom data.
      *
      * Removes the prefix from the id, and removes any internal custom data fields
-     *
+     * @return void
      */
     private function _reformatMetaData($aryOptions)
     {
@@ -389,6 +405,7 @@ class MizzouPost extends PostBase
 
     /**
      * Retrieves the post's permalink
+     * @return string
      */
     protected function _retrievePermalink()
     {
@@ -405,13 +422,18 @@ class MizzouPost extends PostBase
 	    return $strPermalink;
 	}
 
-	protected function _setPermalink()
+    /**
+     * Stores the post's permalink
+     * @return void
+     */
+    protected function _setPermalink()
 	{
 		$this->add_data('permalink',$this->_retrievePermalink());
 	}
 
     /**
      * Retrieves/sets the post's format
+     * @return void
      */
     private function _setPostFormat()
     {
@@ -421,6 +443,7 @@ class MizzouPost extends PostBase
     /**
      * Retrieves and sets both the raw contents member (content_raw) and the contents member (content) after running the
      * raw contents through the the_content filters.
+     * @return void
      */
     private function _setContent()
     {
@@ -431,6 +454,7 @@ class MizzouPost extends PostBase
     /**
      * Retrieves and sets both the raw title member (title_raw) and title member (title) after running the raw title
      * through the the_title filters
+     * @return void
      */
     private function _setTitle()
     {
@@ -439,6 +463,7 @@ class MizzouPost extends PostBase
     }
 
     /**
+     * @return void
      * @todo change this to use strftime
      * @todo possibly add your own date pattern parsing method with additional tokens for AP Style components
      */
@@ -476,6 +501,7 @@ class MizzouPost extends PostBase
 
     /**
      * Sets the iso8601 formatted date based on the timestamp of the post
+     * @return void
      */
     private function _setISO8601Date()
     {
@@ -485,6 +511,7 @@ class MizzouPost extends PostBase
     /**
      * Retrieves the meta (custom) data associated with a post, and handles the reformatting of meta/custom data and
      * consolidation of meta/custom fields
+     * @return void
      * @uses get_post_custom
      */
     private function _handleMetaData()
@@ -515,6 +542,7 @@ class MizzouPost extends PostBase
 
     /**
      * Handles the setting of taxonomy options
+     * @return void
      */
     private function _handleTaxonomyOptions()
     {
@@ -528,6 +556,8 @@ class MizzouPost extends PostBase
     /**
      * Captures the contents of all sidebar widgets. This assumes the post has been set up with custom fields that allows
      * the content editor to choose what widget appears on a post/page
+     * @return void
+     * @todo deprecated? If not, then we need to move it a Widget class and then deprecate
      */
     private function _captureWidgetOutput()
     {
@@ -542,6 +572,7 @@ class MizzouPost extends PostBase
     /**
      * Retrieves and sets the excerpt member. If the excerpt isn't explicitly set in the post, use the raw content and
      * truncate. Then run everything through the get_the_excerpt filter
+     * @return void
      * @uses wp_trim_words
      * @uses strip_shortcodes
      */
@@ -558,6 +589,7 @@ class MizzouPost extends PostBase
 
     /**
      * Retrieve and sets the taxonomies and taxonomy terms associated with the post
+     * @return void
      */
     protected function _retrieveTaxonomies()
     {
