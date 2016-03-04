@@ -1,15 +1,13 @@
 <?php
 /**
- * 
+ * Retrieves all menus needed on a page
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 namespace MizzouMVC\models;
 class Menu extends Base {
@@ -29,6 +27,12 @@ class Menu extends Base {
 
     protected $strPatternItemsWrap = '/^<((o|u)l)/';
 
+    /**
+     * @param \MizzouMVC\models\Site $objSite
+     * @param array $aryContext
+     * @category settings
+     * @note see line 53 & 66
+     */
     public function __construct(\MizzouMVC\models\Site $objSite, $aryContext)
     {
         if(isset($objSite)){
@@ -97,6 +101,10 @@ class Menu extends Base {
         }
     }
 
+    /**
+     * Retrieves the static menus as defined in the theme settings
+     * @param array $aryMenus
+     */
     protected function _retrieveStaticMenus($aryMenus)
     {
         _mizzou_log($aryMenus,'names of the static menus im going to try and get',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
@@ -115,6 +123,10 @@ class Menu extends Base {
 	    }
     }
 
+    /**
+     * Determines the name of the Page menu to retrieve
+     * @return string
+     */
     protected function _determineMenuName()
     {
         $strMenu = '';
@@ -147,6 +159,10 @@ class Menu extends Base {
         return $strMenu;
     }
 
+    /**
+     * Retrieves and stores the Page menu
+     * @return void
+     */
     protected function _retrievePageMenu()
     {
         /**
@@ -162,6 +178,12 @@ class Menu extends Base {
 
     }
 
+    /**
+     * Retrieves a menu
+     * @param string $strMenuName
+     * @return string|false
+     * @uses wp_nav_menu()
+     */
     protected function _retrieveMenu($strMenuName)
     {
         //_mizzou_log($this->aryMenuOptions,'getting ready to retrieve menu ' . $strMenuName . 'with these options',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
@@ -169,6 +191,9 @@ class Menu extends Base {
 
     }
 
+    /**
+     * @return string
+     */
     protected function _determineListElementType()
     {
         $strReturn = 'ul';//wordpress default for menus
@@ -181,6 +206,9 @@ class Menu extends Base {
         return $strReturn;
     }
 
+    /**
+     * Injects the Page into the Primary menu when on the page
+     */
     protected function _injectPrimaryMenu()
     {
         //_mizzou_log(null,'ive been asked to inject into the primary menu');

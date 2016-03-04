@@ -1,16 +1,20 @@
 <?php
+namespace MizzouMVC\models;
+use MizzouMVC\models\Base;
+
 /**
- * 
- * TL;DR description 
+ * Intermediate class for those models who have overlapping functionality and whose data is used in subviews (views that
+ * are included by other views. At the time of this writing, that includes, but is not limited to Header and Footer.
+ * Header and Footer.
  *
- * @package 
- * @subpackage 
- * @category 
- * @category 
+ * @package WordPress
+ * @subpackage Mizzou MVC
+ * @category framework
+ * @category Model
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
+ * @dependency objSite model
  */
-namespace MizzouMVC\models;
 class Subview extends Base {
 
 	public function __construct($aryContext)
@@ -25,7 +29,11 @@ class Subview extends Base {
 		}
 	}
 
-	public function getTemplateData()
+    /**
+     * Returns the data to be used by the subview
+     * @return array
+     */
+    public function getTemplateData()
 	{
 		return $this->aryData;
 	}

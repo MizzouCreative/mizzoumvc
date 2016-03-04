@@ -5,8 +5,8 @@
  * This model DEPENDS on objSite being passed into it
 *
 * @package WordPress
-* @subpackage Mizzou MVC
-* @category theme
+* @subpackage MizzouMVC
+* @category framework
 * @category Model
 * @author Paul F. Gilzow, Web Communications, University of Missouri
 * @copyright 2015 Curators of the University of Missouri
@@ -16,8 +16,17 @@ namespace MizzouMVC\models;
 class Header extends Subview {
 
 
-	function __construct($aryContext){
-
+    /**
+     * Determines and sets value used in the header area
+     * @param $aryContext
+     * @return void
+     */
+    function __construct($aryContext){
+        /**
+         * Why are replicating the exact same functionality that the parent class does in its __construct??
+         * @todo verify and then remove this code
+         * @todo verify that we still need access to the Site class.
+         */
         if(isset($aryContext['objSite'])){
             $this->add_data('objSite',$aryContext['objSite']);
         } else {
@@ -40,7 +49,7 @@ class Header extends Subview {
         $this->_setCurrentPageShortURL();
 		$this->_setWpHead();
         /**
-         * @todo this should PROBABLY be an optional item
+         * @todo this has been moved to the Menu model. deprecate
          */
         if($aryContext['objSite']->option('inject_primary')){
             $this->_injectPrimaryMenu();
@@ -51,7 +60,8 @@ class Header extends Subview {
 
 
 	/**
-	 *
+	 * Determines whether or not we should include a noindex meta for the current page
+     * @return void
 	 */
 	protected function _determineIncludeNoIndex()
 	{
@@ -86,6 +96,10 @@ class Header extends Subview {
 		return $boolIncludeNoIndex;
 	}
 
+    /*
+     * Sets the no index value
+     * @return void
+     */
 	protected function _setIncludeNoIndex($boolIncludeNoIndex=null)
 	{
 		if(is_null($boolIncludeNoIndex) || !is_bool($boolIncludeNoIndex)){
@@ -96,7 +110,8 @@ class Header extends Subview {
 	}
 
 	/**
-	 *
+	 * Determines the Page title to be used for the <title> element
+     * @return void
 	 */
 	protected function _determineHeaderTitle()
 	{
@@ -177,6 +192,11 @@ class Header extends Subview {
 		$this->add_data('CurrentPageShortUrl',wp_get_shortlink());
 	}
 
+    /**
+     * Determines which stylesheet should be used
+     * @category settings
+     * @return string full src path to the stylesheet
+     */
     protected function _determineActiveStylesheet()
     {
         if($this->aryData['objSite']->option('stylesheet') != ''){
@@ -188,13 +208,21 @@ class Header extends Subview {
         return $strStyleSheet;
     }
 
+    /**
+     * Sets a full src path to a stylesheet
+     * @return void
+     */
     protected function _setActiveStylesheet()
     {
         $this->add_data('ActiveStylesheet',$this->_determineActiveStylesheet());
     }
 
+    /**
+     * @deprecated
+     */
     protected function _injectPrimaryMenu()
     {
+        _mizzou_log(null,'DEPRECATED FUNCTION CALL: turn on stack trace to figure out where it was called. ',false,array('line'=>__LINE__,'file'=>__FILE__,'func'=>__FUNCTION__));
         if($this->aryData['objSite']->PrimaryMenu != '' && $this->aryData['PageTitle'] != ''){
             $objDomMenu = new DOMDocument();
             $objDomMenu->loadXML($this->aryData['objSite']->PrimaryMenu);

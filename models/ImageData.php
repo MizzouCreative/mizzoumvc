@@ -1,28 +1,26 @@
 <?php
-/**
-* Gathers all the image data related to a post
-* 
-* @package WordPress
-* @subpackage theme-helper
-* @category theme
-* @category class
-* @author Paul F. Gilzow & Jason Rollins, Web Communications, University of Missouri
-* @copyright 2013 Curators of the University of Missouri
-* @uses $_wp_additional_image_sizes
-* @version 201212211512 
-*/
 namespace MizzouMVC\models;
+use MizzouMVC\models\PostBase;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'PostBase.php';
 
 /**
- * Class ImageData
+ * Gathers all the image data related to a post
+ *
+ * @package WordPress
+ * @subpackage MizzouMVCr
+ * @category framework
+ * @category model
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ * @uses $_wp_additional_image_sizes
+ * @version 201212211512
  */
 class ImageData extends PostBase
 {
     /**
     * Default wordpress image sizes.
     *
-    * I thought perhaps we could putt the default sizes directly from wordpress, instead of hardcoding them here, but it
+    * I thought perhaps we could pull the default sizes directly from wordpress, instead of hardcoding them here, but it
     * appears that they are hard-coded into wordpress as well...
      * @see line 630 https://core.trac.wordpress.org/browser/tags/3.9.1/src/wp-includes/media.php#L0
     * 
@@ -37,7 +35,7 @@ class ImageData extends PostBase
 
     /**
      *
-     * @param $mxdPostData
+     * @param object|integer $mxdPostData WP_Post object or post ID
      * @param bool $boolIncludeCaption deprecated. included for backwards compatibility
      */
     public function __construct($mxdPostData,$boolIncludeCaption = false){
@@ -52,6 +50,7 @@ class ImageData extends PostBase
 
     /**
      * Retrieves and sets the additional information about an image: alt, caption, additional sizes URLs
+     * @return void
      */
     protected function _retrieve_wp_data(){
         /**
