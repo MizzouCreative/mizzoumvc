@@ -1,25 +1,21 @@
 <?php
-/**
- * Base Model class for other models to extend
- *
- * @package WordPress
- * @subpackage MizzouMVC
- * @category theme
- * @category model
- * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
- * @uses is_user_logged_in()
- * @uses comments_template()
- * @todo move function calls out of this view
- */
+
 namespace MizzouMVC\models;
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
 
 
 
 /**
- * Class WpBase
+ * Base Model class for other models to extend
  *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ * @uses is_user_logged_in()
+ * @todo move function calls out of this view
  * @uses get_post() @see self::convertPosts()
  * @uses wp_get_attachment_url @see self::convertPosts()
  */
@@ -55,6 +51,9 @@ class WpBase
 
     public $strPostPrefix = null;
 
+    /**
+     * @param string|null $strPostPreFix optional
+     */
     public function __construct($strPostPreFix = null)
     {
         $this->_setDefaults();
@@ -64,6 +63,10 @@ class WpBase
     }
 
 
+    /**
+     * @param array $aryOptions
+     * @return array
+     */
     public function retrieveContent($aryOptions)
     {
 
@@ -150,7 +153,7 @@ class WpBase
     }
 
     /**
-     * Convert Posts to our custom Post object
+     * Convert WP_Posts to our custom Post object \MizzouMVC\models\MizzouPost or child class
      *
      * @param array $aryPosts
      * @param array $aryOptions
@@ -208,6 +211,12 @@ class WpBase
         return $aryReturn;
     }
 
+    /**
+     * Converts a WP_Post object to a MizzouPost (or child class of MizzouPost)
+     * @param \WP_Post $objPost
+     * @param array $aryOptions
+     * @return \MizzouMVC\models\MizzouPost or child of
+     */
     public function convertPost($objPost,$aryOptions = array())
     {
         if( ( is_object( $objPost ) && $objPost instanceof \WP_Post) || is_numeric($objPost) ){
@@ -350,6 +359,11 @@ class WpBase
         }
     }
 
+    /**
+     * @param array $aryArray
+     * @param string $strNewKey
+     * @param mixed $mxdNewValue
+     */
     protected function _addElementToGroupArray(&$aryArray,$strNewKey,$mxdNewValue)
     {
         if(!isset($aryArray[$strNewKey])){
@@ -359,6 +373,9 @@ class WpBase
         $aryArray[$strNewKey][] = $mxdNewValue;
     }
 
+    /**
+     * @param string|null $strPostPrefix
+     */
     public function setPostPrefix($strPostPrefix=null)
     {
         if(is_null($strPostPrefix)){
@@ -370,27 +387,36 @@ class WpBase
         $this->aryDefaults['meta_prefix'] = $this->strPostPrefix;
     }
 
+    /**
+     * @return string
+     */
     public function getPermalink()
     {
         return $this->strArchivePermalink;
     }
 
+    /**
+     * @return void
+     */
     protected function _setDefaults()
     {
         $this->aryDefaults['post_type'] = $this->strPostType;
     }
 
+    /**
+     * @return void
+     */
     private function _setPermalink()
     {
         $this->strArchivePermalink = get_post_type_archive_link($this->strPostType);
     }
 
     /**
-     * Here so child classes can override it
+     * Creates a new instance of MizzouPost.  Here so child classes can override it
      *
      * @param WP_Post $objPost
      * @param array $aryOptions
-     * @return MizzouPost
+     * @return \MizzouMVC\models\MizzouPost
      */
     protected function _newPostInstance($objPost,$aryOptions)
     {
@@ -398,9 +424,11 @@ class WpBase
     }
 
     /**
+     *
+     *
      * @param mixed $objPost WP_Post or integer post id
      * @param array $aryOptions
-     * @return MizzouPost or derived child
+     * @return \MizzouMVC\models\MizzouPost or child of
      */
     private function _instantiateNewPost($objPost,$aryOptions)
     {

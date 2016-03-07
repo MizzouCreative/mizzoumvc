@@ -19,6 +19,8 @@
  *
  * @todo there are a couple of methods that seem outside the scope of the class
  *
+ * @todo uses WpBase. We should inject that into this object to break the dependency
+ *
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
 namespace MizzouMVC\models;

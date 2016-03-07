@@ -1,4 +1,7 @@
 <?php
+namespace MizzouMVC\models;
+use MizzouMVC\models\Base;
+
 /**
  * Retrieves and stores all of the theme options
  *
@@ -10,7 +13,6 @@
  * @copyright 2014 Curators of the University of Missouri
  * @deprecated
  */
-namespace MizzouMVC\models;
 class Theme extends Base {
 
 } 

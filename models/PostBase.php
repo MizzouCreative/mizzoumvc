@@ -1,4 +1,8 @@
 <?php
+namespace MizzouMVC\models;
+use MizzouMVC\models\Base;
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Base.php';
+
 /**
  * Basis for all post-related models.
  *
@@ -6,16 +10,13 @@
  * passed in.
  *
  * @package WordPress
- * @subpackage Mizzou MVC
- * @category theme
+ * @subpackage MizzouMVC
+ * @category framework
  * @category model
  * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  * @todo there is a dependency here on _mizzou_log. Either remove or inject the dependency
  */
-namespace MizzouMVC\models;
-require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Base.php';
-
 class PostBase extends Base
 {
 
