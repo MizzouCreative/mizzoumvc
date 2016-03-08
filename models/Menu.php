@@ -76,13 +76,21 @@ class Menu extends Base {
             //we're done with context and objSite, so lets kill it since it is likely pretty big
             unset($aryContext,$objSite);
 
+            if(isset($arySiteOptions['static_menu']) && is_array($arySiteOptions['site-wide'])){
+                $aryStaticMenus = $arySiteOptions['static_menu'];
+            } else {
+                $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
+                if(count($aryStaticMenuKeys) > 0){
+                    $aryStaticMenus = array_intersect_key($arySiteOptions,array_flip($aryStaticMenuKeys));
+                } else {
+                    $aryStaticMenus = array();
+                }
+            }
 
 
-            $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
 
-            if(count($aryStaticMenuKeys) > 0){
-                $aryStaticMenus = array_intersect_key($arySiteOptions,array_flip($aryStaticMenuKeys));
 
+            if(count($aryStaticMenus) > 0){
                 $this->_retrieveStaticMenus($aryStaticMenus);
                 /**
                  * @todo we need to document that if they want to inject the primary menu, the option has to be 'yes'
