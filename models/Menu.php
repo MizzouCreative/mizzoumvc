@@ -76,7 +76,7 @@ class Menu extends Base {
             //we're done with context and objSite, so lets kill it since it is likely pretty big
             unset($aryContext,$objSite);
 
-            if(isset($arySiteOptions['static_menu']) && is_array($arySiteOptions['site-wide'])){
+            if(isset($arySiteOptions['static_menu']) && is_array($arySiteOptions['static_menu'])){
                 $aryStaticMenus = $arySiteOptions['static_menu'];
             } else {
                 $aryStaticMenuKeys = preg_grep('/static_menu_?\d/',array_keys($arySiteOptions));
