@@ -142,6 +142,11 @@ class WpBase
         return $aryReturn;
     }
 
+    /**
+     * Retrieve
+     * @param integer|null $intCount optional.
+     * @return array
+     */
     public function retrieveAll($intCount=null)
     {
         $aryArgs = $this->aryDefaults;

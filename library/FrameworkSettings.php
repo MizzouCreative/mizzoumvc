@@ -36,6 +36,9 @@ class FrameworkSettings {
         'flatten_groups'            => true,
     );
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->_loadOptions();

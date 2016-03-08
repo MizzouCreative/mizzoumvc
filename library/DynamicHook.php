@@ -24,6 +24,10 @@ class DynamicHook {
         'override'=>false,
     );
 
+    /**
+     * @param mixed $mxdArgs
+     * @param array $aryOptions
+     */
     public function __construct($mxdArgs,$aryOptions=array())
     {
         $this->mxdData = $mxdArgs;
