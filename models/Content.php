@@ -1,4 +1,7 @@
 <?php
+/**
+ * Instructs the view engine to render the view file
+ */
 namespace MizzouMVC\models;
 
 /**

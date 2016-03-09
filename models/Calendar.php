@@ -1,4 +1,7 @@
 <?php
+/**
+ * Translates the data received from Localist to the format we need for display
+ */
 namespace MizzouMVC\models;
 use Mizzou\CalendarTranslator\AbstractTranslator as AbstractTranslator;
 

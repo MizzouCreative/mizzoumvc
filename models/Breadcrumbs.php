@@ -1,4 +1,7 @@
 <?php
+/**
+ * Determines and stores a list of breadcrumbs to the current location in the site
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 

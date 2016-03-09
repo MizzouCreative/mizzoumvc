@@ -1,4 +1,7 @@
 <?php
+/**
+ * Base class contain magic methods and ability to capture the contents of global-space functions that echo directly
+ */
 namespace MizzouMVC\models;
 
 /**
@@ -39,7 +42,7 @@ class Base {
     protected $objOriginalPost = null;
 
     /**
-     * @var array
+     * @var array stores initial properties from a WP_Post object
      */
     protected $aryBaseKeys              = array();
     /**
