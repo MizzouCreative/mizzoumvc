@@ -1,4 +1,7 @@
 <?php
+/**
+ * Retrieves relevant data that needs to be displayed in the footer
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Subview;
 /**

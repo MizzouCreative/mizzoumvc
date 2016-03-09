@@ -1,4 +1,7 @@
 <?php
+/**
+ * Gathers all the image data related to a post
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\PostBase;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'PostBase.php';

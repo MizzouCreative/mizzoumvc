@@ -1,4 +1,7 @@
 <?php
+/**
+ * Performs an autosearch based on the URL structure of a 404 page
+ */
 namespace MizzouMVC\models;
 require_once 'Search.php';
 use MizzouMVC\models\Search;

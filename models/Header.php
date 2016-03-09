@@ -1,18 +1,23 @@
 <?php
 /**
 * Model to collect data needed by header view
- *
- * This model DEPENDS on objSite being passed into it
-*
-* @package WordPress
-* @subpackage MizzouMVC
-* @category framework
-* @category Model
-* @author Paul F. Gilzow, Web Communications, University of Missouri
-* @copyright 2015 Curators of the University of Missouri
-* @dependency objSite model
  */
 namespace MizzouMVC\models;
+use MizzouMVC\models\Subview;
+/**
+ * Model to collect data needed by header view
+ *
+ * This model DEPENDS on objSite being passed into it
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category Model
+ * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @copyright 2015 Curators of the University of Missouri
+ * @dependency objSite model
+ */
+
 class Header extends Subview {
 
 

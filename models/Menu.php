@@ -1,6 +1,12 @@
 <?php
 /**
  * Retrieves all menus needed on a page
+ */
+namespace MizzouMVC\models;
+use MizzouMVC\models\Base;
+
+/**
+ * Retrieves all menus needed on a page
  *
  * @package WordPress
  * @subpackage MizzouMVC
@@ -9,7 +15,6 @@
  * @author Paul Gilzow, Web Communications, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */
-namespace MizzouMVC\models;
 class Menu extends Base {
 
     protected $aryDefaultMenuOptions = array(
