@@ -37,13 +37,14 @@ add_action('init',array('IframeEmbed','getInstance'),10,3);
 register_activation_hook(__FILE__,'mizzouMVCPluginActivation');
 
 /**
+ * Adds oEmbed support for youtube links.
  * @param $strReturn
  * @param $objData
  * @param $strUrl
  *
  * @return string
  *
- * @deprecated
+ * @deprecated wordpress added this functionality in directly
  */
 function mizzouMVCYoutube($strReturn,$objData,$strUrl)
 {
@@ -60,6 +61,9 @@ function mizzouMVCYoutube($strReturn,$objData,$strUrl)
 	return $strReturn;
 }
 
+/**
+ * Determines if we should register the CPT for theme settings
+ */
 function mizzouMVCShouldWeRegisterSettingsCPT()
 {
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE){
@@ -67,6 +71,9 @@ function mizzouMVCShouldWeRegisterSettingsCPT()
     }
 }
 
+/**
+ * Registers the mizzoumvc-settings CPT
+ */
 function mizzouMVCRegisterSettingsCPT()
 {
     mizzouRegisterPostType('mizzoumvc-settings',array(
@@ -87,6 +94,9 @@ function mizzouMVCRegisterSettingsCPT()
     ));
 }
 
+/**
+ * Adds the initial theme settings when activating the theme
+ */
 function mizzouSetUpInitialOptions()
 {
     $strOptionsLoadedKeyName = 'mizzouMVC_theme_options_loaded';
@@ -149,6 +159,11 @@ function mizzouSetUpInitialOptions()
 	}
 }
 
+/**
+ * Loads and parses config.ini file
+ * @param string $strFile
+ * @return array
+ */
 function mizzouMVCLoadOptionsFile($strFile)
 {
     $aryReturn = array();
@@ -161,6 +176,9 @@ function mizzouMVCLoadOptionsFile($strFile)
     return $aryReturn;
 }
 
+/**
+ * Functions to fire on plugin activation
+ */
 function mizzouMVCPluginActivation()
 {
 	/**
@@ -176,6 +194,7 @@ function mizzouMVCPluginActivation()
 }
 
 /**
+ * Adds a custom role of Manager to wordpress' roles
  * @todo lets move this into the Manager class?
  */
 function mizzouAddManagerRole()
