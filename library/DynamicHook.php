@@ -11,7 +11,6 @@
  * @author Paul F. Gilzow, Web Communications, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */
-
 class DynamicHook {
     /**
      * @var temporary storage of arguments to pass to the function
@@ -25,6 +24,7 @@ class DynamicHook {
     );
 
     /**
+     * Stores the parameters we want to pass to the function
      * @param mixed $mxdArgs
      * @param array $aryOptions
      */

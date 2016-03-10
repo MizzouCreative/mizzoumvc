@@ -72,6 +72,9 @@ class Base {
     public  $boolError = false;
 
 
+    /**
+     * To be implemented by extending class
+     */
     public function __construct()
     {
 

@@ -23,7 +23,7 @@ class Breadcrumbs extends Base {
     protected $aryCrumbs;
 
     /**
-     *
+     * Determines and stores a list of breadcrumbs to the current location in the site
      * @param string $strPageTitle The current page title
      * @param array $aryAncestors list of ancestor pages
      * @param array $aryOptions class options. Possible options to pass in are

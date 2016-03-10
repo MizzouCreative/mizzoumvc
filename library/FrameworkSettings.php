@@ -1,4 +1,7 @@
 <?php
+/**
+ *  * Loads up framework-specific settings
+ */
 namespace MizzouMVC\library;
 
 /**
@@ -37,7 +40,7 @@ class FrameworkSettings {
     );
 
     /**
-     *
+     * Retrieves and stores framework specific options from the framework, theme and child theme (if applicable)
      */
     public function __construct()
     {
