@@ -32,6 +32,10 @@ class FourOhFour extends Search{
                     '.asp',
                 );
 
+    /**
+     * Sets options and the data to be searched for
+     * @param array $aryData
+     */
     public function __construct($aryData)
     {
         if(isset($aryData['strRequestURI'])){

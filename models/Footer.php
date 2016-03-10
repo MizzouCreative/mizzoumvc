@@ -18,6 +18,7 @@ use MizzouMVC\models\Subview;
 class Footer extends Subview {
 
     /**
+     * Sets Copyright year and footer content captureed from wp_footer
      * @param array $aryContext
      */
     public function __construct($aryContext)

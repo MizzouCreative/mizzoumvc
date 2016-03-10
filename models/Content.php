@@ -43,26 +43,33 @@ class Content {
     protected static $strHeaderTitle = '';
 
     /**
-     * @var null
+     * @var null|object
      */
     protected static $objPagePostType = null;
 
     /**
-     *
+     * @var null|object
      */
     protected static $objViewEngine = null;
 
     /**
-     *
+     * @var null|object
      */
     protected static $objView = null;
 
-    protected static $intCounter = 0;
     /**
-     * @param string $strInnerViewFileName
-     * @param array $aryData
+     * @var int
+     */
+    protected static $intCounter = 0;
+
+    /**
+     * Renders the view file
+     * @param string $strInnerViewFileName the name of the view file to render
+     * @param array $aryData data to hand down to the view file
+     * @param \Twig_Environment $objViewEngine
+     * @param Site $objSite
      * @param array $aryOptions
-     * @return void
+     * @return null|string
      */
     public static function render($strInnerViewFileName,$aryData, \Twig_Environment $objViewEngine, Site $objSite=null, $aryOptions=array())
     {

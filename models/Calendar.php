@@ -23,6 +23,7 @@ require_once dirname(dirname(__FILE__)).'/helpers/calendar/Mizzou/CalendarTransl
 class Calendar extends AbstractTranslator {
 
     /**
+     * Sets options
      * @param array $aryOptions
      */
     public function __construct($aryOptions=array())
@@ -97,6 +98,7 @@ class Calendar extends AbstractTranslator {
 
 	/**
 	 * Reformats the Month to AP style date format based on the timestamp of the post
+     * @param string $strMonth
 	 * @return string AP style formatted month
 	 * @todo this is the exact same function from @see MizzouPost::_getAPMonth(). Can we convert
 	 */

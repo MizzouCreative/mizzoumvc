@@ -20,7 +20,11 @@ class Search extends Base {
     protected $arySearchParams = array();
     protected $aryInternalData = array();
 
-    function __construct($aryData)
+    /**
+     * Sets options and the data to be searched for
+     * @param array $aryData
+     */
+    public function __construct($aryData)
     {
         if(!isset($aryData['search_options'])){
             // #FAIL
