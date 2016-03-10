@@ -76,6 +76,7 @@ class WpBase
 
 
     /**
+     * Retrieves a collection of Custom Post objects based on options given in aryOptions
      * @param array $aryOptions
      * @return array
      */
@@ -377,6 +378,7 @@ class WpBase
     }
 
     /**
+     * Adds an item to a group
      * @param array $aryArray
      * @param string $strNewKey
      * @param mixed $mxdNewValue
@@ -391,6 +393,7 @@ class WpBase
     }
 
     /**
+     * Sets the custom meta data prefix
      * @param string|null $strPostPrefix
      */
     public function setPostPrefix($strPostPrefix=null)
@@ -405,6 +408,7 @@ class WpBase
     }
 
     /**
+     * Returns the post type archive permalink
      * @return string
      */
     public function getPermalink()
@@ -443,7 +447,7 @@ class WpBase
     }
 
     /**
-     *
+     * Creates a new instance of our custom post object
      *
      * @param mixed $objPost WP_Post or integer post id
      * @param array $aryOptions
