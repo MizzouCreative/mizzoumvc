@@ -18,15 +18,15 @@ use \WP_Query;
  */
 class Pagination extends Base{
     /**
-     * @var bool
+     * @var bool whether the section is paged
      */
     public $paged = false;
     /**
-     * @var null
+     * @var null|integer internal storage of wp_query->query_vars['paged']
      */
     protected $wpPaged = null;
     /**
-     * @var array
+     * @var array default pagination options
      */
     protected $aryDefaults = array(
 		'pagination_width'          => 5,
@@ -36,21 +36,25 @@ class Pagination extends Base{
 		'pagination_current_linked' =>true,
 	);
     /**
+     * Not use
      * @var array
+     * @deprecated
+     * @todo delete
      */
 	protected $aryAdjacentItems = array();
     /**
-     * @var array
+     * @var array options for this specific instance
      */
 	protected $aryOptions = array();
     /**
-     * @var null
+     * @var null|string the href pattern to be used for building links
      */
 	protected $strHrefPattern = null;
 
 	//protected $OnPage,$MaxPages,$MidPoint,$LowerLimit,$UpperLimit;
 
     /**
+     * Builds pagination links for an archive section
      * @param array $aryArgs
      */
     public function __construct($aryArgs)

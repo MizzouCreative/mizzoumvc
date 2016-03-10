@@ -17,6 +17,10 @@ use MizzouMVC\models\Base;
  */
 class Menu extends Base {
 
+    /**
+     *
+     * @var array Default options for retrieving a menu
+     */
     protected $aryDefaultMenuOptions = array(
         /**
          * Why a bogus theme_location? @see http://codex.wordpress.org/Function_Reference/wp_nav_menu#Targeting_a_specific_Menu
@@ -28,15 +32,22 @@ class Menu extends Base {
         'menu'=>'',
     );
 
+    /**
+     * @var array internal storage of menu options
+     */
     protected $aryMenuOptions = array();
 
+    /**
+     * @var string regex pattern to match item_wrap
+     */
     protected $strPatternItemsWrap = '/^<((o|u)l)/';
 
     /**
+     * Retrieves all menus needed on a page
      * @param \MizzouMVC\models\Site $objSite
      * @param array $aryContext
      * @category settings
-     * @note see line 53 & 66
+     * @note see line 69 & 89
      */
     public function __construct(\MizzouMVC\models\Site $objSite, $aryContext)
     {
@@ -205,7 +216,10 @@ class Menu extends Base {
     }
 
     /**
+     * Determines what type of element is being requested for item_wrap
      * @return string
+     * @todo we need to rethink this. Themes need to be able to alter item_wrap to any element they need as well as being
+     * able to designate a custom walker class
      */
     protected function _determineListElementType()
     {
@@ -220,7 +234,7 @@ class Menu extends Base {
     }
 
     /**
-     * Injects the Page into the Primary menu when on the page
+     * Injects the Page menu into the Primary menu when on the page
      */
     protected function _injectPrimaryMenu()
     {

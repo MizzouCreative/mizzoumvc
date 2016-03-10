@@ -19,12 +19,9 @@ use MizzouMVC\models\Subview;
  */
 
 class Header extends Subview {
-
-
     /**
      * Determines and sets value used in the header area
      * @param $aryContext
-     * @return void
      */
     function __construct($aryContext){
         /**
@@ -101,8 +98,9 @@ class Header extends Subview {
 		return $boolIncludeNoIndex;
 	}
 
-    /*
+    /**
      * Sets the no index value
+     * @param null|bool $boolIncludeNoIndex default is null
      * @return void
      */
 	protected function _setIncludeNoIndex($boolIncludeNoIndex=null)
@@ -223,6 +221,7 @@ class Header extends Subview {
     }
 
     /**
+     * Injects the Page menu into the Primary menu when on the page
      * @deprecated
      */
     protected function _injectPrimaryMenu()

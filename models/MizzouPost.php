@@ -13,6 +13,15 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageData.php';
 /**
  * Custom Post object that contains more detailed,complete information about a post
  *
+ * This is NOT a custom post type, can be used with a custom post type.  The purpose of this class is to gather up *all*
+ * possible information needed on a post type, default or custom.  this includes, but is not limited to:
+ *  - permalink
+ *  - custom meta data
+ *  - associated taxonomies
+ *  - ancestors
+ *  - descendants
+ *  - featured image
+ *
  * @package WordPress
  * @subpackage MizzouMVC
  * @category framework
@@ -367,6 +376,7 @@ class MizzouPost extends PostBase
      * Reformats the post's custom data.
      *
      * Removes the prefix from the id, and removes any internal custom data fields
+     * @param array $aryOptions
      * @return void
      */
     private function _reformatMetaData($aryOptions)
@@ -469,6 +479,7 @@ class MizzouPost extends PostBase
     }
 
     /**
+     * Formats all dates based on format_date option, or the default of AP Month j, Y
      * @return void
      * @todo change this to use strftime
      * @todo possibly add your own date pattern parsing method with additional tokens for AP Style components

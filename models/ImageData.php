@@ -37,8 +37,8 @@ class ImageData extends PostBase
     );
 
     /**
-     *
-     * @param object|integer $mxdPostData WP_Post object or post ID
+     * Gathers all the image data related to a post
+     * @param WP_Post|integer $mxdPostData WP_Post object or post ID
      * @param bool $boolIncludeCaption deprecated. included for backwards compatibility
      */
     public function __construct($mxdPostData,$boolIncludeCaption = false){
@@ -85,6 +85,7 @@ class ImageData extends PostBase
     }
 
     /**
+     * Deprecated
      * @deprecated
      * @return null
      */
