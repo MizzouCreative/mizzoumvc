@@ -1,4 +1,7 @@
 <?php
+/**
+ * A VERY basic model that can be used with a CPT of 'publication
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\WpBase;
 require_once 'WpBase.php';

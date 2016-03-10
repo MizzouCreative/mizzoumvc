@@ -1,18 +1,21 @@
 <?php
 /**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * Builds pagination links for an archive section
  */
 namespace MizzouMVC\models;
+use MizzouMVC\models\Base;
 use \WP_Query;
+
+/**
+ * Builds pagination links for an archive section
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 class Pagination extends Base{
     /**
      * @var bool

@@ -1,21 +1,25 @@
 <?php
 /**
- * Most basic post model.
- *
- * @package WordPress
- * @subpackage Mizzou MVC
- * @category theme
- * @category model
- * @author Paul Gilzow, Web Communications, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * Custom Post object that contains more detailed,complete information about a post
  */
 namespace MizzouMVC\models;
+use MizzouMVC\models\PostBase;
 /**
  * This assumes that both files are in the same directory
  */
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'PostBase.php';
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageData.php';
 
+/**
+ * Custom Post object that contains more detailed,complete information about a post
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category model
+ * @author Paul Gilzow, Web Communications, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 class MizzouPost extends PostBase
 {
     /**
@@ -110,6 +114,7 @@ class MizzouPost extends PostBase
     }
 
     /**
+     * Returns all custom data assigned to the post
      * @return array
      */
     public function getAllCustomData()
@@ -118,6 +123,7 @@ class MizzouPost extends PostBase
     }
 
     /**
+     * Returns the Post's parent name, if applicable
      * @return string the name of the current post's parent
      */
     public function retrieveParentName()

@@ -143,7 +143,7 @@ class WpBase
     }
 
     /**
-     * Retrieve
+     * Retrieve all posts using default options
      * @param integer|null $intCount optional.
      * @return array
      */

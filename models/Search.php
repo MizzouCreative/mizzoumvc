@@ -1,4 +1,7 @@
 <?php
+/**
+ * Queries the GSA for search terms
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 

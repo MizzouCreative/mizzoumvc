@@ -1,4 +1,7 @@
 <?php
+/**
+ * Basis for all post-related models.
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Base.php';

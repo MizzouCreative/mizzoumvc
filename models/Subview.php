@@ -1,4 +1,9 @@
 <?php
+/**
+ * Intermediate class for those models who have overlapping functionality and whose data is used in subviews (views that
+ * are included by other views. At the time of this writing, that includes, but is not limited to Header and Footer.
+ * Header and Footer.
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 
