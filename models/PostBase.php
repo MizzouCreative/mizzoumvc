@@ -23,6 +23,10 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Base.php';
 class PostBase extends Base
 {
 
+    /**
+     * verifies we have a post object, or retrieves on if given the id
+     * @param \WP_Post|int $mxdPost WP_Post object or integer id of the post we're working on
+     */
     public function __construct($mxdPost)
     {
         if(is_object($mxdPost) && $mxdPost instanceof \WP_Post){

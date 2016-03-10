@@ -21,5 +21,8 @@ require_once 'WpBase.php';
  */
 
 class Publication extends WpBase {
+    /**
+     * @var string post type for publications
+     */
     protected $strPostType = 'publication';
 }

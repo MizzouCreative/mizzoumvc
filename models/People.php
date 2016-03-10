@@ -21,11 +21,12 @@ require_once 'WpBase.php';
  */
 class People extends WpBase{
     /**
-     * @var string
+     * @var string the post type name
      */
     protected $strPostType = 'person';
 
     /**
+     * Sets up all the defaults needed when retrieving people post type
      * @param string|null $strPostPreFix meta data prefix for custom meta keys for this post type
      */
     public function __construct($strPostPreFix = null)

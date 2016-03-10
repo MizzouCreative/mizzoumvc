@@ -21,5 +21,8 @@ require_once 'WpBase.php';
  */
 
 class Slide extends WpBase {
+    /**
+     * @var string post type name for slides
+     */
     protected $strPostType = 'slide';
 }

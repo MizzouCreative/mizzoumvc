@@ -1,12 +1,11 @@
 <?php
-
+/**
+ * Base Model class for other CPT-based models to extend. This is a replacement for /enhancement of \WP_Query
+ */
 namespace MizzouMVC\models;
 //assumed that /theme/helpers/paths.php has been loaded already in functions.php
-
-
-
 /**
- * Base Model class for other models to extend
+ * Base Model class for other CPT-based models to extend. This is a replacement for /enhancement of \WP_Query
  *
  * @package WordPress
  * @subpackage MizzouMVC
@@ -21,9 +20,15 @@ namespace MizzouMVC\models;
  */
 class WpBase
 {
-	protected $strPostType = 'post';
+    /**
+     * @var string post type we're dealing with
+     */
+    protected $strPostType = 'post';
 
-	protected $aryDefaults = array(
+    /**
+     * @var array default options for retrieval of posts
+     */
+    protected $aryDefaults = array(
         'post_type'         => '',
         'count'             => -1,
         'taxonomy'          => '',
@@ -47,11 +52,18 @@ class WpBase
         'include_attachments'=> false,
     );
 
+    /**
+     * @var string archive permalink for the post type
+     */
     protected $strArchivePermalink  = '';
 
+    /**
+     * @var null|string the custom meta data prefix to use with this post type
+     */
     public $strPostPrefix = null;
 
     /**
+     * Sets up all the defaults needed when retrieving posts
      * @param string|null $strPostPreFix optional
      */
     public function __construct($strPostPreFix = null)
@@ -401,6 +413,7 @@ class WpBase
     }
 
     /**
+     * Sets defaults to be used in retrieval of posts
      * @return void
      */
     protected function _setDefaults()
@@ -409,6 +422,7 @@ class WpBase
     }
 
     /**
+     * Retrieves the permalink to the archive area for this post type
      * @return void
      */
     private function _setPermalink()

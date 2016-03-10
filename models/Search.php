@@ -16,8 +16,13 @@ use MizzouMVC\models\Base;
  * @copyright 2014 Curators of the University of Missouri
  */
 class Search extends Base {
-
+    /**
+     * @var array search options that are handed to us during construction
+     */
     protected $arySearchParams = array();
+    /**
+     * @var array internal storage array
+     */
     protected $aryInternalData = array();
 
     /**

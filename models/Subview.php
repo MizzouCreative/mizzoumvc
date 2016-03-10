@@ -22,7 +22,13 @@ use MizzouMVC\models\Base;
  */
 class Subview extends Base {
 
-	public function __construct($aryContext)
+    /**
+     * Stores data passed in on construction and checks to ensure objSite was provided
+     * @param array $aryContext
+     * @todo we should either have options from Site passed in, or have Site passed in separately.
+     * @todo figure out EXACTLY what is needed from context so we're not storing unnecessary data
+     */
+    public function __construct($aryContext)
 	{
 		$this->aryData = array_merge($this->aryData,$aryContext);
 
