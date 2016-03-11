@@ -1,4 +1,8 @@
 <?php
+/**
+ * Dynamically loads a class' file and creates a new instance of the class
+ *
+ */
 namespace MizzouMVC\library;
 
 /**

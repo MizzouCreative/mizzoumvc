@@ -19,6 +19,9 @@ use MizzouMVC\controllers\Main;
 
 class Calendar extends Main {
 
+    /**
+     * Workhorse function
+     */
     public function main()
     {
         if(isset($this->objSite->calendar) && is_array($this->objSite->calendar)){

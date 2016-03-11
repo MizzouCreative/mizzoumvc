@@ -2,6 +2,11 @@
 /**
  * Adds a Manager role to the list of available roles in Wordpress. Has the same capabilities as the Editor role but
  * allows the user to add other users to the Wordpress instance.
+ */
+
+/**
+ * Adds a Manager role to the list of available roles in Wordpress. Has the same capabilities as the Editor role but
+ * allows the user to add other users to the Wordpress instance.
  *
  * @package Wordpress
  * @subpackage MizzouMVC
@@ -11,6 +16,9 @@
  * @copyright 2016 Curators of the University of Missouri
  */
 class Manager {
+    /**
+     * Adds the necessary filter calls to insert our manager role
+     */
     public function __construct()
     {
         add_filter('editable_roles',array(&$this,'removeAdministrator'));

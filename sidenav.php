@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ * No longer used. deprecated.
  *
  * @package 
  * @subpackage 

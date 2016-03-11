@@ -1,4 +1,7 @@
 <?php
+/**
+ * Controller for a single post/custom post type
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 

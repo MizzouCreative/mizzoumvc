@@ -1,7 +1,8 @@
 <?php
 /**
- * Controller for Comments
+ * Controller for Comments. Not currently used.
  *
+ * @package Wordpress
  * @subpackage MizzouMVC
  * @category theme
  * @category controller

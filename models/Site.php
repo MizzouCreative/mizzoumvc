@@ -1,13 +1,20 @@
 <?php
 /**
- * Collects and contains site-specific information
+ * Collects and stores site-specific information and options
+ */
+namespace MizzouMVC\models;
+use MizzouMVC\library\Loader;
+require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'.DIRECTORY_SEPARATOR.'FrameworkSettings.php';
+
+/**
+ * Collects and stores site-specific information and options
  *
  * @package WordPress
  * @subpackage Mizzou MVC
  * @category theme
  * @category model
  * @author Paul Gilzow, Mizzou Creative, University of Missouri
- * @copyright 2014 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  *
  * @uses class WpBase()
  * @uses home_url()
@@ -23,15 +30,6 @@
  *
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
-namespace MizzouMVC\models;
-use MizzouMVC\library\Loader;
-
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'.DIRECTORY_SEPARATOR.'FrameworkSettings.php';
-
-/**
- * Stores basic information used across the site.
- * @todo move getView into Framework class?
- */
 class Site extends Base {
     /**
      * @var array default options
@@ -45,6 +43,9 @@ class Site extends Base {
         'child_path'        => null,
     );
 
+    /**
+     * @var \MizzouMVC\library\FrameworkSettings|null internal storage of our FrameWorkSettings object
+     */
     protected $objFrameworkSettings = null;
 
 	/**
@@ -52,8 +53,14 @@ class Site extends Base {
 	 */
 	protected $arySiteOptions = array();
 
+    /**
+     * @var string regex pattern for finding collapsible options
+     */
     protected $strCollapseSettingsPattern = '/(.+)\d$/';
 
+    /**
+     * @var array list of strings to convert to bool
+     */
     protected $aryStringsToConvertToBool = array(
         'yes',
         'no',
@@ -63,6 +70,11 @@ class Site extends Base {
         'false',
     );
 
+    /**
+     * Collects and stores site-specific information and options
+     * @param \MizzouMVC\library\FrameworkSettings $objFrameWorkSettings
+     * @param array $aryOptions
+     */
     public function __construct(\MizzouMVC\library\FrameworkSettings $objFrameWorkSettings, $aryOptions = array())
     {
         $this->aryOptions = array_merge($this->aryOptions,$aryOptions);
@@ -190,6 +202,7 @@ class Site extends Base {
      * @return mixed
      * @uses wp_list_pages wordpress function
      * @todo specific to the original IPP implementation. See if we still need this
+     * @deprecated
      */
     public function getPageList($aryExclude = array())
     {
@@ -396,6 +409,7 @@ class Site extends Base {
      * I'm actually torn on the validity of allowing the changing of analytics code in the wordpress GUI vs statically
      * placing the tracking code in the footer view.
      * @todo further, this should probably be moved into the footer
+     * @deprecate
      */
     protected function _getTrackingCode()
     {
@@ -405,7 +419,9 @@ class Site extends Base {
     /**
      * Returns the markup for the audience menu
      * @return string markup for the audience menu
+     * @deprecated
      * @todo this is IPP specific unless we agree that all sites/themes will include an audience menu
+     *
      */
     protected function _getAudienceMenu()
     {
@@ -415,6 +431,7 @@ class Site extends Base {
     /**
      * Returns the markup for the primary audience menu
      * @return string markup for the primary audience menu
+     * @deprecated
      * @todo this is IPP specific unless we agree that all sites/theme will include an audience menu
      */
     protected function _getPrimaryMenu()
@@ -427,6 +444,7 @@ class Site extends Base {
      * @param $strMenuName Name, ID or slug of the menu to retrieve
      * @param null $strMenuFormat sprintf format that the menu should follow (items_wrap in the options of wp_nav_menu)
      * @return string markup of the menu requested
+     * @deprecated
      * @todo seems like we need a public getMenu method that calls this method.
      */
     protected function _getWPMenu($strMenuName,$strMenuFormat = null)
@@ -453,7 +471,7 @@ class Site extends Base {
 
     /**
      * Loads options from the parent and child config.ini files
-     * return void
+     * @return void
      */
     protected function _loadOptions()
     {
@@ -658,6 +676,13 @@ class Site extends Base {
         return $arySettings;
     }
 
+    /**
+     * Site specific implementation. Before adding the option to the internal storage, checks to see if it is a string
+     * representation of a bool, and checks to see if the framework should string bools to actual bools. If so, then converts
+     * the string to a bool value
+     * @param mixed $mxdKey key name
+     * @param mixed $mxdData value to store
+     */
     public function add_data($mxdKey,$mxdData)
     {
         if(isset($this->objFrameworkSettings->convert_string_booleans) && true === $this->objFrameworkSettings->convert_string_booleans){
