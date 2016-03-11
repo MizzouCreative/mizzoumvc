@@ -1,27 +1,25 @@
 <?php
-/**
- * 
- *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
- */
 
 /**
-Plugin Name: Mizzou MVC Framework Test
-Plugin URI:  http://marcom.missouri.edu/
-Description: Initial test at moving framework from master theme into plugin
-Version: 0.0.1
-Author: Paul Gilzow
-Author URI: http://missouri.edu/
+ * Intercepts wordpress' routing and redirects to one of the controllers in the framework, if a controller isnt present
+ * in the parent or child theme
  */
-
 add_filter('template_include','mzuMVCTemplateOverride');
+
+/**
+ * Intercepts wordpress' routing and redirects to one of the controllers in the framework, if a controller isnt present
+ * in the parent or child theme
+ *
+ * @package Wordpress
+ * @subpackage MizzouMVC
+ * @category framework
+ * @category functions
+ * @uses MizzouMVC\models\MizzouPost
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ * @param string $strTemplate template file wordpress has decided to load
+ * @return string template file we'll tell wordpress to load
+ */
 function mzuMVCTemplateOverride($strTemplate)
 {
     //echo 'template override called.';exit;

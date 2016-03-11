@@ -19,7 +19,7 @@ namespace MizzouMVC\library;
 class ViewEngineLoader {
 
     /**
-     * @var null
+     * @var null no longer used
      * @deprecated not used
      */
     protected $objViewEngineEnvironmentLoader = null;
