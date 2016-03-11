@@ -1,4 +1,7 @@
 <?php
+/**
+ * The fallback controller when routing isnt able to match another controller
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 

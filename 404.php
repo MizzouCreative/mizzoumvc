@@ -1,6 +1,10 @@
 <?php
+/**
+ * In addition to serving the 404 header and notification, will automatically
+ * perform a search based on the non-existant URL. Change the html structure
+ * below as needed.
+ */
 namespace MizzouMVC\controllers;
-
 /**
  * Template file used to render a Server 404
  *
@@ -12,7 +16,7 @@ namespace MizzouMVC\controllers;
  * @subpackage MizzouMVC
  * @category controller
  * @category framework
- * @uses class-customPostData
+ * @uses \MizzouMVC\models\FourOhFour
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */

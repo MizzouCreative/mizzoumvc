@@ -1,4 +1,7 @@
 <?php
+/**
+ * Controller for a static page
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 
@@ -11,7 +14,7 @@ use MizzouMVC\controllers\Main;
  * @category controller
  * @uses MizzouMVC\models\MizzouPost
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 class Page extends Main
 {

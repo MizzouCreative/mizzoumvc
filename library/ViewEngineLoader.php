@@ -1,4 +1,8 @@
 <?php
+/**
+ * Sets up and initializes our template engine render.  Currently this is Twig, but later would like to be able to
+ * expand it.
+ */
 namespace MizzouMVC\library;
 
 /**
@@ -20,7 +24,7 @@ class ViewEngineLoader {
      */
     protected $objViewEngineEnvironmentLoader = null;
     /**
-     * @var null|\Twig_Environment
+     * @var null|\Twig_Environment internal storage of the view engine
      */
     protected $objViewEngine = null;
     /**
@@ -41,6 +45,7 @@ class ViewEngineLoader {
     protected $strChildThemeDir = null;
 
     /**
+     * Sets viw directory locations, whether to enable caching, loads custom view filters/functions/tests
      * @param string $strFrameworkDir Server path location of the framework
      * @param string $strThemeDir Server path location of the (parent) theme
      * @param null|string $strChildThemeDir server path of the child theme, if applicable
@@ -221,6 +226,7 @@ class ViewEngineLoader {
 
     /**
      * Loads custom Twig functions
+     * @param string $strFrameWorkDir server path to the framework
      * @return void
      * @todo allow themes to create and pass in their own twig functions?
      */

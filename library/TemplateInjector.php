@@ -1,5 +1,8 @@
 <?php
 /**
+ *  Allows controllers from the framework to register as selectable "templates" in a Page
+ */
+/**
  * Allows for theme templates from the framework to be selectable and used by Pages
  *
  * As of this time, we only have two theme templates (Search & Calendar) but this can be expanded. Heavily inspired by
@@ -16,7 +19,6 @@
  * templates. Similar to this: http://pastie.org/10071582 mirror: http://pastebin.com/rHUxkceK
  * @todo shouldnt this be namespaced?
  */
-
 class TemplateInjector {
 
 	/**
@@ -33,7 +35,10 @@ class TemplateInjector {
         'Calendar.php'  => 'mvzCalendar',
 	);
 
-	private function __construct()
+    /**
+     * registers the necessary filter hooks with wordpress
+     */
+    private function __construct()
 	{
 		$this->_removeOverriddenTemplates();
 
@@ -49,6 +54,7 @@ class TemplateInjector {
 
 	/**
 	 * If a theme has overridden one of our templates, remove it from the listing
+     * @return void
 	 */
 	protected function _removeOverriddenTemplates()
 	{
@@ -75,7 +81,7 @@ class TemplateInjector {
 	/**
 	 * Injects our theme templates into Wordpress' list of theme templates
 	 *
-	 * @param $aryAttributes
+	 * @param array $aryAttributes
 	 *
 	 * @return array
 	 */

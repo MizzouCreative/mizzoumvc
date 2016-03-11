@@ -1,4 +1,7 @@
 <?php
+/**
+ * Was supposed to be the model to retrieve/store theme options, but that was moved to @see \MizzouMVC\models\Site
+ */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 

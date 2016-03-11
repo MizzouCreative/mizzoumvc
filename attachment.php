@@ -1,4 +1,7 @@
 <?php
+/**
+ * Controller for an attachment page
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 

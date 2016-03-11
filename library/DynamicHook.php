@@ -1,6 +1,9 @@
 <?php
 /**
  * Allows us to pass parameters to functions passed to add_filter and add_action
+ */
+/**
+ * Allows us to pass parameters to functions passed to add_filter and add_action
  *
  * @example add_filter('admin_menu',array(new DynamicHook(array('single'=>'News','plural'=>'News')),'mizzouChangeLabelsOnDefaultPostType'));
  *
