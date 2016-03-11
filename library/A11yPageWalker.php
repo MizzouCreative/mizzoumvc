@@ -1,4 +1,8 @@
 <?php
+/**
+ * Essentially, this exists to change the output in wordpress' wp_list_changes and menus from using <ul> to <ol>.
+ * That's pretty much it.
+ */
 namespace MizzouMVC\library;
 
 /**

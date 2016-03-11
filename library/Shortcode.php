@@ -1,4 +1,8 @@
 <?php
+/**
+ * Abstract class for shortcode-specific controllers to extend.  Sets up common functionality needed when rendering
+ * shortcode related views.
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 
@@ -15,8 +19,14 @@ use MizzouMVC\controllers\Main;
 *
 */
 abstract class Shortcode extends Main {
-
+    /**
+     * @var bool should render() run
+     *
+     */
     protected $boolRunRender = true;
+    /**
+     * @var bool Should parent Main load Header,Footer,etc classes
+     */
     protected $boolLoadSurroundingViewData = false;
 
     /**

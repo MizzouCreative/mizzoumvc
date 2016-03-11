@@ -1,6 +1,4 @@
 <?php
-// error_reporting(E_ALL); ini_set('display_errors', 1);
-
 /**
  * Contains functions necessary for the functionality and display of the theme
  * 
@@ -47,6 +45,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR
 /**
  * Contains and fires all of the add_filter, add_action and remove_action hooks that need to fire during init
  * @todo rename function to conform to naming standards
+ * @return void
  */
 function mizzou_setup(){
     add_filter('query_vars','mizzou_add_URL_query_vars');
@@ -110,11 +109,16 @@ function mizzou_setup(){
  * @todo since this is really a theme-specific option, should it be moved out of the framework and pushed back down to
  * the child theme to implement?
  * @todo rename function to conform to naming standards
+ * @return void
  */
 function mizzou_setup_theme(){
     add_theme_support( 'post-thumbnails' );
 }
 
+/**
+ * Ensures that at a minimum jquery is enqueued
+ * @return void
+ */
 function mizzouRegisterScripts()
 {
     wp_enqueue_script('jquery');
@@ -234,8 +238,8 @@ class a11y_walker extends MizzouMVC\library\A11yPageWalker {
 
 /**
  * If more than one page of archived posts exists, return TRUE.
- * @global type $wp_query
- * @return type
+ * @global WP_Query $wp_query
+ * @return boolean
  * @todo documentation
  * @deprecated
  */
@@ -274,17 +278,35 @@ function site_modified_date($boolReturn=false) {
     }
 }
 
+/**
+ * Creates the labels for a custom taxonomy, to be used when registering the taxonomy
+ * @param $strBaseWord Single word to be used for labels
+ * @param string $strBaseWordPlural plural form. Optional. Defaults to Baseword + 's'
+ * @return array
+ */
 function mizzouCreateTaxonomyLabels($strBaseWord,$strBaseWordPlural = '')
 {
     return mizzouCreateLabels('taxonomy',$strBaseWord,$strBaseWordPlural);
 }
 
-
+/**
+ * Creates the labels for a custom post type, to be used when registering the CPT
+ * @param $strBaseWord Single word to be used for labels
+ * @param string $strBaseWordPlural plural form. Optional. Defaults to Baseword + 's'
+ * @return array
+ */
 function mizzouCreatePostTypeLabels($strBaseWord,$strBaseWordPlural='')
 {
     return mizzouCreateLabels('post',$strBaseWord,$strBaseWordPlural);
 }
 
+/**
+ * Creates labels for posts and taxonomies
+ * @param string $strType post or taxonomy
+ * @param string $strBaseWord Baseword (single form) to use for the labels. Will automatically replace '_' with a space for situations where the post/taxonomy key has been passed
+ * @param string $strBaseWordPlural
+ * @return array
+ */
 function mizzouCreateLabels($strType,$strBaseWord,$strBaseWordPlural='')
 {
     $aryAdditionalLabels = array();
@@ -341,8 +363,9 @@ function mizzouCreateLabels($strType,$strBaseWord,$strBaseWordPlural='')
 }
 
 /**
- * @param $strPostTypeName
- * @param array $aryOptions
+ * Registers a custom post type with wordpress
+ * @param string $strPostTypeName
+ * @param array $aryOptions options are the same as the options for register_post_type
  * @todo add an option so that you can pass in a singular label name that we can then pass over to @link mizzouCreatePostTypeLabels()
  */
 function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
@@ -372,6 +395,12 @@ function mizzouRegisterPostType($strPostTypeName,$aryOptions=array())
     register_post_type($strPostTypeName,$aryPostTypeOptions);
 }
 
+/**
+ * Registers a custom taxonomy with wordpress
+ *
+ * @param string $strTaxName the taxonomy name to use when registering
+ * @param array $aryOptions
+ */
 function mizzouRegisterTaxonomy($strTaxName,$aryOptions=array())
 {
     $aryTaxonomyArgs = array(
@@ -435,7 +464,7 @@ function mizzouAdjustHelpScreen($strOldHelp,$intScreenID,$objScreen)
 }
 
 /**
- *
+ * Changes the label on the default post type from "post" to something else
  *
  * You'll need to utilize the DynamicHook class to pass in the single/plural version of the label you'll want to use
  *
@@ -452,6 +481,7 @@ function mizzouAdjustHelpScreen($strOldHelp,$intScreenID,$objScreen)
  *
  * @param $mxdArgs
  * @param $aryArgs
+ * @return void
  */
 function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
 {
@@ -469,6 +499,11 @@ function mizzouChangeLabelsOnDefaultPostType($mxdArgs,$aryArgs)
 	}
 }
 
+/**
+ * Changes the label on the default post type from "post" to something else in the admin area
+ * @param array $aryArgs
+ * @return void
+ */
 function mizzouChangeLabelsonDefaultPostTypeFrontEnd($aryArgs)
 {
 	global $wp_post_types;
@@ -484,6 +519,12 @@ function mizzouChangeLabelsonDefaultPostTypeFrontEnd($aryArgs)
 	}
 }
 
+/**
+ * Removes the posts_per_page limitation from custom post types
+ * @param array $aryDefaultArgs
+ * @param array $aryPostTypes
+ * @return void
+ */
 function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
 {
     if(is_array($aryDefaultArgs) && count($aryDefaultArgs) > 0){
@@ -498,6 +539,11 @@ function mizzouRemovePostsPerPageFromCPTs($aryDefaultArgs,$aryPostTypes)
     }
 }
 
+/**
+ * Adds oEmbed support for Google Map links
+ * @param array $aryMatches
+ * @return mixed|void
+ */
 function embedGoogleMap( $aryMatches ) {
     $query = parse_url($aryMatches[0]);
     parse_str($query['query'], $qvars);

@@ -1,8 +1,11 @@
 <?php
+/**
+ * Controller file used to gather components for footer view
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 /**
- * Controller for the footer of the site
+ * Controller class used to gather components for header view
  *
  * @package Wordpress
  * @subpackage MizzouMVC

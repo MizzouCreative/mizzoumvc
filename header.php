@@ -1,9 +1,12 @@
 <?php
+/**
+ * Controller file used to gather components for header view
+ */
 namespace MizzouMVC\controllers;
 use MizzouMVC\controllers\Main;
 
 /**
- * Controller file used to gather components for header view
+ * Controller class used to gather components for header view
  *
  * Do NOT instantiate this class.  The main controller will do that
  *

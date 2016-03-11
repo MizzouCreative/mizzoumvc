@@ -1,13 +1,6 @@
 <?php
 /**
- * 
- *
- * @package WordPress
- * @subpackage MizzouMVC
- * @category controller
- * @category framework
- * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
- * @copyright 2016 Curators of the University of Missouri
+ * Framework application controller
  */
 namespace MizzouMVC\controllers;
 use MizzouMVC\library\Loader;
@@ -18,7 +11,7 @@ use MizzouMVC\library\ViewEngineLoader;
 use MizzouMVC\models\Content;
 
 /**
- *
+ * Framework application controller
  *
  * @package WordPress
  * @subpackage MizzouMVC
@@ -28,25 +21,60 @@ use MizzouMVC\models\Content;
  * @copyright 2016 Curators of the University of Missouri
  */
 abstract class Main {
-
+    /**
+     * @var null|\MizzouMVC\models\Site internal storage for our Site object
+     */
     protected $objSite              = null;
+    /**
+     * @var null|string server path to our parent theme
+     */
     protected $strParentThemePath   = null;
+    /**
+     * @var null|string server path to our child theme
+     */
     protected $strChildThemePath    = null;
+    /**
+     * @var null|string server path to the framework
+     */
     protected $strFrameworkPath     = null;
+    /**
+     * @var null|\ViewEngineLoader internal storage for ViewEngine. Currently Twig
+     */
     protected $objViewEngine        = null;
+    /**
+     * @var null|\MizzouMVC\library\Loader internal storage for our Loader object
+     */
     protected $objLoader            = null;
-	protected $boolIncludeHeader    = true;
-	protected $boolIncludeFooter    = true;
-	protected $boolIncludePagination= false;
-	protected $objPagePostType      = null;
+    /**
+     * @var bool Gather Header data?
+     */
+    protected $boolIncludeHeader    = true;
+    /**
+     * @var bool Gather Footer data?
+     */
+    protected $boolIncludeFooter    = true;
+    /**
+     * @var bool Load \MizzouMVC\models\Pagination and make it available?
+     */
+    protected $boolIncludePagination= false;
+    /**
+     * @var null|string the current page being viewed's post type
+     */
+    protected $objPagePostType      = null;
 	/**
 	 * @var bool should the controller load up the data for the other views (usually header and footer)? If this is set
 	 * to false, boolIncludeHeader and boolIncludeFooter are ignored
 	 */
 	protected $boolLoadSurroundingViewData = true;
 
+    /**
+     * @var array internal storage of the data to be handed down to the view
+     */
     protected $aryRenderData = array();
 
+    /**
+     * @var array View rendering options
+     */
     protected $aryRenderOptions = array(
         'include_pagination'=>false,
         'return'            =>false,
@@ -54,10 +82,21 @@ abstract class Main {
         'include_breadcrumbs'=>false,
     );
 
+    /**
+     * @var array|null|\WP_Post internal storage of the global \WP_Post ($post) object.
+     */
     public $post = null;
+    /**
+     * @var null|\WP_Query internal storage of the global \WP_Query ($wp_query) object
+     */
     public $wp_query = null;
 
 
+    /**
+     * Loads up all the default data and then fires ->main()
+     * @param array $aryContext
+     * @return void
+     */
     public function __construct(array $aryContext=array())
     {
 
@@ -108,6 +147,11 @@ abstract class Main {
         $this->main();
     }
 
+    /**
+     * Ensures we have access to the Site, Loader and Template View Rendering Engine objects
+     * @param Site $objSite
+     * @return void
+     */
     protected function _init(Site $objSite=null)
     {
         //_mizzou_log(null,'Main init called',false,array('line'=>__LINE__,'file'=>__FILE__));
@@ -147,7 +191,10 @@ abstract class Main {
     }
 
     /**
-     * @param $strInnerViewFileName
+     * Gathers the final bits of data, then hands the data over to the rendering engine to generate the output from the
+     * view file
+     * @param string $strInnerViewFileName
+     * @return void|string
      */
     public function render($strInnerViewFileName)
     {
@@ -186,6 +233,10 @@ abstract class Main {
         }
     }
 
+    /**
+     * Loads and stores the Menu object
+     * @return void
+     */
     protected function _loadMenu(){
         //_mizzou_log(__FUNCTION__,'just loaded the function',false,array('line'=>__LINE__,'file'=>__FILE__));
         //Menu class HAS to have Site. it also can take MainPost, PageTitle and menuName
@@ -197,16 +248,33 @@ abstract class Main {
 
     }
 
+    /**
+     * Changes or adds a key->value to render options
+     * @param mixed $mxdKey
+     * @param mixed $mxdValue
+     * @return void
+     */
     protected function renderOption($mxdKey,$mxdValue)
     {
         $this->aryRenderOptions[$mxdKey] = $mxdValue;
     }
 
+    /**
+     * Adds a key->value to be used in the View
+     * @param mixed $mxdKey
+     * @param mixed $mxdValue
+     * @return void
+     */
     protected function renderData($mxdKey,$mxdValue)
     {
         $this->aryRenderData[$mxdKey] = $mxdValue;
     }
 
+    /**
+     * Attempts to convert a value to a boolean. Just a wrapper for filer_var with FILTER_VALIDATE_BOOLEAN
+     * @param mixed $mxdVal
+     * @return mixed
+     */
     protected function mixedToBool($mxdVal)
     {
         return filter_var($mxdVal,FILTER_VALIDATE_BOOLEAN);
@@ -248,8 +316,8 @@ abstract class Main {
 	 * loaded regularly, then extend this class (Main) with an abstract child, overriding (extending) this method to include
 	 * your controller that needs to be called
 	 *
-	 * example
-	 *
+	 * @example
+	 * <code>
 	 * protected function _loadSurroundingViewData()
 	 * {
 	 *      parent::_loadSurroundingViewData();
@@ -259,6 +327,8 @@ abstract class Main {
 	 *      }
 	 *
 	 * }
+     * </code>
+     * @return void
 	 */
 	protected function _loadSurroundingViewData()
 	{
@@ -280,9 +350,16 @@ abstract class Main {
 		}
 	}
 
-	protected function _retrievePaginationModel()
+    /**
+     * Loads and stores the Pagination object
+     * @return void
+     */
+    protected function _retrievePaginationModel()
 	{
-		global $wp_query;
+        /**
+         * @todo Why are we calling global wp_query when we already stored in __construct?
+         */
+        global $wp_query;
 		$aryOptions = array('wp_query'=>$wp_query);
 		if('' != $this->objSite->pagination && is_array($this->objSite->pagination)){
 			$aryOptions = array_merge($aryOptions,$this->objSite->pagination);
@@ -298,7 +375,9 @@ abstract class Main {
 	}
 
 	/**
+     * Retrieves the Header model and stores the data from in into our render data storage
 	 * Header controller and model need certain pieces of data that we should already have gathered.
+     * @return void
 	 */
 	protected function _retrieveHeaderControllerData()
 	{
@@ -322,6 +401,7 @@ abstract class Main {
 
 	/**
 	 * Here just so it can be overriden if necessary
+     * @return void
 	 */
 	protected function _retrieveFooterControllerData()
 	{
@@ -331,7 +411,9 @@ abstract class Main {
 	/**
 	 * Requests a new instance of the controller and then merges its template data with our current template data
 	 *
-	 * @param $strController string controller name
+	 * @param string $strController controller name
+     * @param array $aryData
+     * @return void
 	 */
 	protected function _retrieveControllerData($strController,$aryData=array())
 	{
@@ -409,11 +491,18 @@ abstract class Main {
 
 	}
 
-	protected function _determinePageTitle()
+    /**
+     * Attempts to automatically determine the page's title if it hasnt already been set
+     * @return string
+     */
+    protected function _determinePageTitle()
 	{
 		$strPageTitle = '';
 		if(is_archive()){
-			global $wp_query;
+            /**
+             * @todo again, why are we calling global $wp_query if we stored it in __construct?
+             */
+            global $wp_query;
 			//_mizzou_log(post_type_archive_title(null,false),'we know we have an archive, here is the post_type_archive_title');
 			if(is_date()){
 				if(!isset($this->aryRenderData['DateArchiveType'])){
@@ -475,7 +564,12 @@ abstract class Main {
 		return trim($strPageTitle);
 	}
 
-	protected function _determineDateArchiveType()
+    /**
+     * Determines what type of date archive the request is for
+     * @return string
+     * @return void
+     */
+    protected function _determineDateArchiveType()
 	{
 		$strDateArchiveType = '';
 
@@ -492,6 +586,7 @@ abstract class Main {
 
 	/**
 	 * Determines the post type of the current page we are dealing with
+     * @return void
 	 */
 	protected function _determinePagePostType()
 	{
@@ -529,6 +624,7 @@ abstract class Main {
      * @param string $strName
      * @return array
      * @uses get_field_object() which is an Advanced Custom Fields specific function
+     * @return void
      */
     protected function _retrieveFieldObject($strName)
     {
