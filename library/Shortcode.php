@@ -10,7 +10,7 @@ use MizzouMVC\controllers\Main;
 * @subpackage MizzouMVC
 * @category framework
 * @category library
-* @author Paul F. Gilzow, Web Communications, University of Missouri
+* @author Paul F. Gilzow, Mizzou Creative, University of Missouri
 * @copyright 2016 Curators of the University of Missouri
 *
 */

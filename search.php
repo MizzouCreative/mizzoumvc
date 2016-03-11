@@ -13,7 +13,7 @@ use MizzouMVC\controllers\Main;
  * @subpackage MizzouMVC
  * @category framework
  * @category controller
- * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
 class Search extends Main

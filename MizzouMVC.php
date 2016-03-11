@@ -4,7 +4,7 @@
  * Plugin URI: http://universityaffairs.missouri.edu/department/web-communications/
  * Description: MVC Framework for rapid deployment of custom themes
  * Version: v1.1
- * Author: Paul F. Gilzow, Web Communications, University of Missouri
+ * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
  * Author URI: http://universityaffairs.missouri.edu/department/web-communications/
  * @package 
  * @subpackage 
@@ -12,7 +12,7 @@
  * @category 
  * @category 
  * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
 /**

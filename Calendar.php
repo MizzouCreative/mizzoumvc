@@ -13,7 +13,7 @@ use MizzouMVC\controllers\Main;
  * @category controller
  * @category framework
  * @uses MizzouMVC\models\Calendar
- * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */
 

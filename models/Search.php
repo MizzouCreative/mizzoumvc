@@ -12,7 +12,7 @@ use MizzouMVC\models\Base;
  * @subpackage Mizzou MVC
  * @category model
  * @category framework
- * @author Paul Gilzow, Web Communications, University of Missouri
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  */
 class Search extends Base {

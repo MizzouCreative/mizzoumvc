@@ -13,8 +13,8 @@ namespace MizzouMVC\controllers;
  * @category controller
  * @category framework
  * @uses class-customPostData
- * @author Paul F. Gilzow & Jason L Rollins, Web Communications, University of Missouri
- * @copyright 2013 Curators of the University of Missouri
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 class FourOhFour extends Main {
     /**

@@ -9,7 +9,7 @@ namespace MizzouMVC\library;
  * @subpackage Mizzou MVC
  * @category framework
  * @category model
- * @author Charlie Triplett, Paul Gilzow, Web Communications, University of Missouri
+ * @author Charlie Triplett, Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2014 Curators of the University of Missouri
  *
  * @todo this class needs to be renamed.  it doesn't have anything to do with A11y.  it just changes the markup from using

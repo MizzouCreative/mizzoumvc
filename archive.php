@@ -9,7 +9,7 @@ use MizzouMVC\controllers\Main;
  * @subpackage MizzouMVC
  * @category controller
  * @category framework
- * @author Paul F. Gilzow, Web Communications, University of Missouri
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
  */
 class Archive extends Main {

@@ -12,7 +12,7 @@
  * @subpackage SITENAME
  * @category theme
  * @category template-part
- * @author Charlie Triplett, Web Communications, University of Missouri
+ * @author Charlie Triplett, Mizzou Creative, University of Missouri
  * @copyright 2013 Curators of the University of Missouri
  * @deprecated
  */

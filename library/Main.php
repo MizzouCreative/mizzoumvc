@@ -2,14 +2,12 @@
 /**
  * 
  *
- * @package 
- * @subpackage 
- * @since 
- * @category 
- * @category 
- * @uses 
- * @author Paul F. Gilzow, Web Communications, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category controller
+ * @category framework
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
  */
 namespace MizzouMVC\controllers;
 use MizzouMVC\library\Loader;
@@ -19,6 +17,16 @@ use MizzouMVC\library\FrameworkSettings;
 use MizzouMVC\library\ViewEngineLoader;
 use MizzouMVC\models\Content;
 
+/**
+ *
+ *
+ * @package WordPress
+ * @subpackage MizzouMVC
+ * @category controller
+ * @category framework
+ * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ */
 abstract class Main {
 
     protected $objSite              = null;

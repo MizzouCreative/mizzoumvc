@@ -13,7 +13,7 @@ use \WP_Query;
  * @subpackage MizzouMVC
  * @category framework
  * @category model
- * @author Paul Gilzow, Web Communications, University of Missouri
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */
 class Pagination extends Base{

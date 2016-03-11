@@ -26,7 +26,7 @@ require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ImageData.php';
  * @subpackage MizzouMVC
  * @category framework
  * @category model
- * @author Paul Gilzow, Web Communications, University of Missouri
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */
 class MizzouPost extends PostBase

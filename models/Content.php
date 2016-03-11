@@ -11,7 +11,7 @@ namespace MizzouMVC\models;
  * @subpackage MizzouMVC
  * @category framework
  * @category model
- * @author Paul Gilzow, Web Communications, University of Missouri
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  *
  * ASSUMES that Base.php and Site.php classes have already been included

@@ -11,7 +11,7 @@ namespace MizzouMVC\models;
  * @subpackage MizzouMVC
  * @category framework
  * @category model
- * @author Paul Gilzow, Web Communications, University of Missouri
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  * @uses is_user_logged_in()
  * @todo move function calls out of this view
