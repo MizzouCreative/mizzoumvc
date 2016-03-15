@@ -25,6 +25,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARAT
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'TemplateInjector.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'IframeEmbed.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'plugin_update_check.php';
 
 //add_action('admin_menu','mizzoumvcRegisterAdminMenu');
 //add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
@@ -225,3 +226,13 @@ function mizzouAddManagerRole()
         }
     }
 }
+
+/**
+ * Kernl.us private plugin hosting support
+ */
+$MyUpdateChecker = new PluginUpdateChecker_2_0 (
+	'https://kernl.us/api/v1/updates/56e873cdad9740ca2010948d/',
+	__FILE__,
+	'mizzoumvc-framework',
+	1
+);
