@@ -3,17 +3,18 @@
  * Plugin Name: MizzouMVC
  * Plugin URI: http://universityaffairs.missouri.edu/department/web-communications/
  * Description: MVC Framework for rapid deployment of custom themes
- * Version: v1.1
+ * Version: v3.0.3
  * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
  * Author URI: http://universityaffairs.missouri.edu/department/web-communications/
- * @package 
+ * @package W
  * @subpackage 
  * @since 
  * @category 
  * @category 
  * @uses 
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+ * @version 3.0.3
  */
 /**
  * @todo let's check to see if the memory is low and then increase if needed
