@@ -3,7 +3,7 @@
  * Plugin Name: MizzouMVC
  * Plugin URI: http://universityaffairs.missouri.edu/department/web-communications/
  * Description: MVC Framework for rapid deployment of custom themes
- * Version: v3.1.2
+ * Version: v3.1.3
  * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
  * Author URI: http://universityaffairs.missouri.edu/department/web-communications/
  * @package W
@@ -14,7 +14,7 @@
  * @uses 
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
- * @version 3.1.2
+ * @version 3.1.3
  */
 /**
  * @todo let's check to see if the memory is low and then increase if needed
@@ -234,6 +234,6 @@ function mizzouAddManagerRole()
 $MyUpdateChecker = new PluginUpdateChecker_2_0 (
 	'https://kernl.us/api/v1/updates/56e873cdad9740ca2010948d/',
 	__FILE__,
-	'mizzoumvc-framework',
+	'mizzoumvc',
 	1
 );
