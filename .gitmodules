@@ -1,4 +1,0 @@
-[submodule "helpers/twig"]
-	path = helpers/twig
-	url = https://github.com/twigphp/Twig.git
-	branch = 1.x
