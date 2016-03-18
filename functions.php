@@ -39,8 +39,31 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'menus.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'editor.php';
 
-require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'twig'.DIRECTORY_SEPARATOR.'lib'.DIRECTORY_SEPARATOR.'Twig'.DIRECTORY_SEPARATOR.'Autoloader.php';
+require_once mizzouDetermineTwigLocation().'lib'.DIRECTORY_SEPARATOR.'Twig'.DIRECTORY_SEPARATOR.'Autoloader.php';
 
+
+/**
+ * Returns the path to twig.
+ * Previously, twig loader was located at
+ * helpers/twig/lib/Twig/Autoloader.php
+ * When we decided to include Twig in the plugin directly (so we could package it as a wordpress plugin and use plugin
+ * hosting), we had to switch to using composer to manage the dependency.  Composer installs it at
+ * helpers/twig/twig/lib/Twig/Autoloader.php
+ * @return string
+ */
+function mizzouDetermineTwigLocation()
+{
+    $strReturn = dirname(__FILE__).DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'twig'.DIRECTORY_SEPARATOR;
+    if(!is_dir($strReturn.'lib')){
+        if(is_dir($strReturn.'twig')){
+            $strReturn .= 'twig'.DIRECTORY_SEPARATOR;
+        } else {
+            _mizzou_log(scandir($strReturn),'we cant find the correct twig path. contents of ' . $strReturn,false,array('line'=>__LINE__,'file'=>__FILE__));
+        }
+    }
+
+    return $strReturn;
+}
 
 /**
  * Contains and fires all of the add_filter, add_action and remove_action hooks that need to fire during init
