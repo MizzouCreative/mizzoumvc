@@ -1,0 +1,9 @@
+{
+	"config": {
+		"vendor-dir":"helpers"
+	},
+	
+	"require": {
+		"twig/twig":"1.24.*"
+	}
+}
