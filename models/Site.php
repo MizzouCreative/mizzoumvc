@@ -123,7 +123,10 @@ class Site extends Base {
                 /**
                  * If we load up the parent options in the case where there isnt a parent -> child relationship, then
                  * there is a strong chance there could be same keys in both that overwrite each other. One place with
-                 * unintended consequences is static_menus.  
+                 * unintended consequences is static_menus.
+                 *
+                 * @todo should we allow a non child theme site to access parent site options?  If we do, do we merge
+                 * them?  Keep them separated?
                  */
                 if($this->IsChild){
                     //and let's load up the options from the Parent site
