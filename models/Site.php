@@ -120,8 +120,16 @@ class Site extends Base {
                 switch_to_blog(1);
                 $strParentSiteName = $this->_getSiteName();
                 $strParentSiteURL = $this->_getSiteHomeURL();
-                //and let's load up the options from the Parent site
-                $this->_loadOptions();//get the parent options
+                /**
+                 * If we load up the parent options in the case where there isnt a parent -> child relationship, then
+                 * there is a strong chance there could be same keys in both that overwrite each other. One place with
+                 * unintended consequences is static_menus.  
+                 */
+                if($this->IsChild){
+                    //and let's load up the options from the Parent site
+                    $this->_loadOptions();//get the parent options
+                }
+
                 restore_current_blog();
             } else {
                 //ok we're on the parent site, so we'll reuse values
