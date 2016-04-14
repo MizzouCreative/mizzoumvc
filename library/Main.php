@@ -453,7 +453,7 @@ abstract class Main {
 	protected function _determineControllerNameSpace($strController)
 	{
 		$strControllerFileName = $strController.'.php';
-		if('' != $strLocatedController = locate_template($strControllerFileName)){
+		if('' != $strLocatedController = locate_template($strControllerFileName) && FALSE !== strpos($strLocatedController,ABSPATH . WPINC)){
 			/**
 			 * We need to search in the file for its namespace
 			 * @todo this seems HORRIBLY inefficient.  Surely there's a way to say i need this file, what is this file's
