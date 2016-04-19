@@ -452,9 +452,19 @@ abstract class Main {
 	 */
 	protected function _determineControllerNameSpace($strController)
 	{
-		$strControllerFileName = $strController.'.php';
+        /**
+         * we need access to TWO global constants but need to concatenate them. If we try to do it directly
+         *  \ABSPATH . \WPINC
+         * Then PHP attemps to make \ABSPATH the namespace for the constant WPINC
+         * So we'll assign each constant to local variables and then concatenate them
+         */
+        $strAbsPath = \ABSPATH;
+        $strWpInc = \WPINC;
+        $strStoopidWordpressThemeCompat = $strAbsPath . $strWpInc;
+        
+        $strControllerFileName = $strController.'.php';
         $strLocatedController = locate_template($strControllerFileName);
-		if('' != $strLocatedController && FALSE === strpos($strLocatedController, \ABSPATH . \WPINC)){
+		if('' != $strLocatedController && FALSE === strpos($strLocatedController, $strStoopidWordpressThemeCompat)){
 			/**
 			 * We need to search in the file for its namespace
 			 * @todo this seems HORRIBLY inefficient.  Surely there's a way to say i need this file, what is this file's
