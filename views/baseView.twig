@@ -17,14 +17,14 @@
 #}
 
 {% include 'header.twig' %}
-
-<div class="content-layer">
-    {% block sidebar %}
-        {% include 'sidebar.twig' %}
-    {% endblock %}
-    <section class="content-block">
-        {% block content %}{% endblock %}
-    </section>
+<div id="skip-to-content" class="content-wrapper" tabindex="-1">
+    <div class="content-layer">
+        {% block sidebar %}
+            {% include 'sidebar.twig' %}
+        {% endblock %}
+        <section class="content-block">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
 </div>
-
 {% include 'footer.twig' %}
