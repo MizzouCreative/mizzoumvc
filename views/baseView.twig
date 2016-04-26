@@ -15,9 +15,16 @@
  *  - strInnerViewContent
  *
 #}
+
 {% include 'header.twig' %}
-{% block content %}{% endblock %}
-{% block sidebar %}
-    {% include 'sidebar.twig' %}
-{% endblock %}
+
+<div class="content-layer">
+    {% block sidebar %}
+        {% include 'sidebar.twig' %}
+    {% endblock %}
+    <section class="content-block">
+        {% block content %}{% endblock %}
+    </section>
+</div>
+
 {% include 'footer.twig' %}

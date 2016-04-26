@@ -15,11 +15,10 @@
  *  - blog url: see objSite below
  *  - blog name: see objSite below
  *  - navigation menus: see objSite below
- *  - search form: strSearchFormContents
  *  - contents of wp_head: strWpHeaderContents
  *  - whether or not to include <meta> robots: boolIncludeNoIndex
  *
- *  Site contains
+ *  objSite contains
  *  -> CopyrightYear (also accessible as strCopyrightYear)
  *  -> Name (also accessible as strSiteName)
  *  -> URL (also accessible as strSiteURL)
@@ -31,32 +30,77 @@
  *  -> PrimaryMenu (also accessible as strPrimaryMenu)
  *  -> AudienceMenu (also accessible as strAudienceMenu)
  *  -> LastModifiedDate (also accessible as strModifiedDate)
+ *
+ *
+ * @todo Shouldnt tracking code be moved into the theme options and then accessed via objTheme object?
 ##}
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
 <head>
-    <meta charset="UTF-8">
 
     <title>{{ HeadTitle }}</title>
-    <meta name="apple-mobile-web-app-title" content="{{ Site.Name }}" />
-{% if IncludeNoIndex %}
+
+    {% if IncludeNoIndex %}
     <meta name="ROBOTS" content="NOINDEX,NOARCHIVE">
-{% endif %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;">
-    <!--[if ! lte IE 7]><!-->
-    <link href="{{ ActiveStylesheet }}" rel="stylesheet">
-    <!--<![endif]-->
-    <link rel="shortcut icon" href="{{ Site.ActiveThemeURL }}favicon.ico" />
+    {% endif %}
+
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+	<!-- Favicon -->
+	<link href="{{ Site.ActiveThemeURL }}images/icons/favicon.ico" rel="icon"/>
+
+	<!-- Apple Touch Icons -->
+	<link href="{{ Site.ActiveThemeURL }}images/icons/apple-touch-icon.png" rel="apple-touch-icon-precomposed"/>
+    <meta content="CELL" name="apple-mobile-web-app-title"/>
+
+	<!-- Microsoft Windows 8+ Tiles -->
+    <meta content="CELL" name="application-name"/>
+    <meta content="{{ Site.ActiveThemeURL }}images/icons/microsoft-pinned-site.png" name="msapplication-TileImage"/>
+    <meta content="#343434" name="msapplication-TileColor"/>
 
     {{ wpHead | raw}}
 
+    <!-- CSS -->
+    <!--[if gt IE 7]><!--><link href="{{ objSite.ActiveThemeURL }}css/styles.css" rel="stylesheet"/><!--<![endif]-->
+    <!--[if IE 8]><link href="{{ Site.ActiveThemeURL }}css/ie.css" rel="stylesheet" /><![endif]-->
+    <!--[if lte IE 7]><link href="{{ Site.ActiveThemeURL }}css/text-only.css" rel="stylesheet" /><![endif]-->
+
+    <!-- Javascript -->
+    <!--[if gt IE 7]><!--><script src="{{ Site.ActiveThemeURL }}js/iep-min.js" type="text/javascript"></script><!--<![endif]-->
+    <!--[if lt IE 9]><script src="{{ Site.ActiveThemeURL }}js/html5shiv-printshiv.min.js"></script><![endif]-->
 
 </head>
+
 <body>
-{% if Menu.Primary is not empty %}
-<nav id="main">{{ Menu.Primary | raw }}</nav>
-{% endif %}
-{% if Menu.Audience is not empty %}
-<nav id="secondary">{{ Menu.Audience | raw}}</nav>
-{% endif %}
-{%  include 'searchform.twig' %}
+
+    <div class="offset">
+        <a id="offset-1" href="#nav" tabindex="1">Skip to navigation</a>
+	    <a id="offset-2" href="#skip-to-content" tabindex="2">Skip to content</a>
+    </div>
+
+    <div class="header-layer">
+        <header class="header" role="banner">
+
+            <div class="mizzou-brand">
+                <p class="logo"><a href="http://missouri.edu">Mizzou Logo</a></p>
+                <h1><a href="{{ Site.URL }}">Site.Name</a></h1>
+                <h2><a href="http://missouri.edu">University of Missouri</a></h2>
+            </div>
+
+            <div class="tactical">
+        		{% include 'searchform.twig' %}
+            </div>
+
+        </header>
+    </div>
+
+    {% if Menu.Primary is not empty %}
+    <div class="nav-layer" id="nav" tabindex="-1" role="navigation">
+        <nav class="nav">
+            {{ Menu.Primary }}
+        </nav>
+    </div>
+    {% endif %}
+
+    <div id="skip-to-content" class="content-wrapper" tabindex="-1">
