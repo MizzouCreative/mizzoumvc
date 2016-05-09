@@ -71,7 +71,7 @@ function mizzouDetermineTwigLocation()
  * @return void
  */
 function mizzoumvc_setup(){
-    add_filter('query_vars','mizzou_add_URL_query_vars');
+    add_filter('query_vars','mizzoumvc_add_URL_query_vars');
     add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
     add_filter('edit_tag_link', 'edit_tag_link_new_window');
     add_filter('the_generator','mizzouRemoveGenerator');
@@ -154,8 +154,12 @@ function mizzouRegisterScripts()
  * @return array
  * @todo rename function to conform to naming standards
  */
-function mizzou_add_URL_query_vars($aryVars){
-    $aryVars[] = 'q';
+function mizzoumvc_add_URL_query_vars($aryVars){
+    //only add it if it doesnt already exist
+    if(false === array_search('q',$aryVars)){
+        $aryVars[] = 'q';
+    }
+
     return $aryVars;
 }
 
