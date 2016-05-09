@@ -240,14 +240,41 @@ function mizzoumvc_display_postexcerpt($aryHidden,$objScreen){
 * @return void
 * @todo rename function to conform to naming standards
 */
-function mizzou_remove_dashboard_widgets(){
+function mizzoumvc_remove_dashboard_widgets(){
     global $wp_meta_boxes;
+
+    $arySide = array(
+        'dashboard_quick_press',
+        'dashboard_primary',
+        'dashboard_secondary',
+    );
+    $aryNormal = array(
+        'dashboard_recent_comments',
+        'dashboard_incoming_links',
+        'dashboard_plugins',
+    );
+
+    $aryRemove = array(
+        'side'=>array('core'=>$arySide),
+        'normal'=>array('core'=>$aryNormal),
+        );
+
+    foreach ($aryRemove as $strMetaKey=>$aryMetaVal){
+        foreach ($aryMetaVal['core'] as $strMetaBox){
+            if(isset($wp_meta_boxes['dashboard'][$strMetaKey]['core'][$strMetaBox])){
+                unset($wp_meta_boxes['dashboard'][$strMetaKey]['core'][$strMetaBox]);
+            }
+        }
+    }
+
+    /**
     unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
     unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
     unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
     unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
     unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
     unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+     * */
     
 }
 
@@ -616,7 +643,7 @@ if(!function_exists('mizzouRemoveGenerator')){
 /**
 *  Removes all of the dashboard widgets except right now and drafts
 */
-add_action('wp_dashboard_setup','mizzou_remove_dashboard_widgets');
+add_action('wp_dashboard_setup','mizzoumvc_remove_dashboard_widgets');
 /**
 * In order to add theme options, they need to be hooked BEFORE the init.
 */
