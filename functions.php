@@ -72,7 +72,7 @@ function mizzouDetermineTwigLocation()
  */
 function mizzoumvc_setup(){
     add_filter('query_vars','mizzoumvc_add_URL_query_vars');
-    add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
+    add_filter('default_hidden_meta_boxes', 'mizzoumvc_display_postexcerpt', 10, 2);
     add_filter('edit_tag_link', 'edit_tag_link_new_window');
     add_filter('the_generator','mizzouRemoveGenerator');
     add_filter('redirect_canonical','mizzouBlockUserEnumeration', 10,2);
@@ -227,7 +227,7 @@ function mizzoumvc_gather_404_search_terms($aryIgnoreWords=null){
  * @todo should this be moved into a theme option and handled by the theme class?
  * @todo rename function to conform to naming standards
  */
-function mizzou_display_postexcerpt($aryHidden,$objScreen){
+function mizzoumvc_display_postexcerpt($aryHidden,$objScreen){
     if($objScreen->base == 'post'){
         if(FALSE !== $intKey = array_search('postexcerpt', $aryHidden)) unset($aryHidden[$intKey]);
     }
