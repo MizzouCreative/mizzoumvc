@@ -70,7 +70,7 @@ function mizzouDetermineTwigLocation()
  * @todo rename function to conform to naming standards
  * @return void
  */
-function mizzou_setup(){
+function mizzoumvc_setup(){
     add_filter('query_vars','mizzou_add_URL_query_vars');
     add_filter('default_hidden_meta_boxes', 'mizzou_display_postexcerpt', 10, 2);
     add_filter('edit_tag_link', 'edit_tag_link_new_window');
@@ -134,7 +134,7 @@ function mizzou_setup(){
  * @todo rename function to conform to naming standards
  * @return void
  */
-function mizzou_setup_theme(){
+function mizzoumvc_setup_theme(){
     add_theme_support( 'post-thumbnails' );
 }
 
@@ -616,11 +616,11 @@ add_action('wp_dashboard_setup','mizzou_remove_dashboard_widgets');
 /**
 * In order to add theme options, they need to be hooked BEFORE the init.
 */
-add_action('after_setup_theme','mizzou_setup_theme');
+add_action('after_setup_theme','mizzoumvc_setup_theme');
 /**
 *  All other filters and actions that dont need to fire before init
 */
-add_action('init','mizzou_setup');
+add_action('init','mizzoumvc_setup');
 
 
 /**
