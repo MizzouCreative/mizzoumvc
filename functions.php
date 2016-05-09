@@ -173,7 +173,7 @@ function mizzoumvc_add_URL_query_vars($aryVars){
  * @todo rename function to conform to naming standards
  * @deprecated moved into 404 model
  */
-function mizzou_gather_404_search_terms($aryIgnoreWords=null){
+function mizzoumvc_gather_404_search_terms($aryIgnoreWords=null){
     $aryIgnore = array(
             '/',
             '-',
