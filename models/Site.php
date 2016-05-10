@@ -98,6 +98,7 @@ class Site extends Base {
         $this->add_data('CopyrightYear',date('Y'));
         $this->add_data('Name',$this->_getSiteName());
         $this->add_data('URL',$this->_getSiteHomeURL());
+        $this->add_data('Description',$this->_getSiteDescription());
         $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
         /**
@@ -314,6 +315,10 @@ class Site extends Base {
         return $strHomeURL;
     }
 
+    private function _getSiteDescription()
+    {
+        return $this->_getSiteOption('blogdescription');
+    }
     /**
      * Returns the Parent theme's URL. Includes ending forward slash.
      * Wrapper function to get_template_directory_uri() wordpress function.
