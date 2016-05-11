@@ -4,6 +4,7 @@
  */
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
+use MizzouMVC\models\SingleMenu;
 
 /**
  * Retrieves all menus needed on a page
@@ -211,7 +212,8 @@ class Menu extends Base {
     protected function _retrieveMenu($strMenuName)
     {
         //_mizzou_log($this->aryMenuOptions,'getting ready to retrieve menu ' . $strMenuName . 'with these options',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
-        return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
+        //return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
+        return new SingleMenu($strMenuName,$this->aryMenuOptions);
 
     }
 
