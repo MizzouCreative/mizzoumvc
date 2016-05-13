@@ -5,6 +5,7 @@
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 use MizzouMVC\models\SingleMenu;
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'SingleMenu.php';
 
 /**
  * Retrieves all menus needed on a page
@@ -80,7 +81,7 @@ class Menu extends Base {
             }
 
             //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
-            $arySiteOptions = $objSite->{'site-wide'};
+            $arySiteOptions = (isset($objSite->{'site-wide'})) ? $objSite->{'site-wide'} : array();
 
 	        if($objSite->IsChild && '' != $objSite->parent_static_menu){
 		        $this->add_data('static_parent',$objSite->parent_static_menu);
