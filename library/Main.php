@@ -6,6 +6,7 @@ namespace MizzouMVC\controllers;
 use MizzouMVC\library\Loader;
 use MizzouMVC\models\Menu;
 use MizzouMVC\models\Site;
+use MizzouMVC\models\RenderType;
 use MizzouMVC\library\FrameworkSettings;
 use MizzouMVC\library\ViewEngineLoader;
 use MizzouMVC\models\Content;
@@ -91,6 +92,10 @@ abstract class Main {
      */
     public $wp_query = null;
 
+    /**
+     * @var null|\stdClass
+     */
+    protected $objRenderType = null;
 
     /**
      * Loads up all the default data and then fires ->main()
@@ -188,6 +193,8 @@ abstract class Main {
 
         $this->objLoader = new Loader($this->strFrameworkPath,$this->strParentThemePath,$this->strChildThemePath);
         //_mizzou_log($this->objLoader,'just finished creating loader',false,array('line'=>__LINE__,'file'=>__FILE__));
+
+        $this->objRenderType = $this->_retrieveRenderType();
     }
 
     /**
@@ -340,7 +347,9 @@ abstract class Main {
              * We're doing it here because we only want to load it once when we're sure we're loading up an entire view.
              *
              */
-            $this->aryRenderData['RenderType'] = $this->_retrieveRenderType();
+			if((!isset($this->aryRenderData['RenderType']) || empty($this->aryRenderData['RenderType'])) && !is_null($this->objRenderType)){
+                $this->aryRenderData['RenderType'] = $this->objRenderType;
+            }
 
             if($this->boolIncludePagination){
 				$this->_retrievePaginationModel();
@@ -650,20 +659,7 @@ abstract class Main {
 
 	protected function _retrieveRenderType()
     {
-        /**
-         * This is basically a preg_grep on array keys instead of values. let me explain what's going on.
-         * 1. Get all the properties from the Wp_Query object
-         * 2. grab the keys from wp_query
-         * 3. preg_grep for those keys that match is_*
-         * 4. flip the resulting array so the matches are keys of an array
-         * 5. grab the intersection of keys between the original wp_query and our resulting array
-         * 6. PROFIT! ok, really we end up with an array containing all of the items from wp_query where the keys match
-         * $is_something and then return it as an object
-         */
-        $aryWPQueryProps = get_object_vars($this->wp_query);
-        $aryIsActions =  array_intersect_key($aryWPQueryProps,array_flip(preg_grep('/^is_/',array_keys($aryWPQueryProps))));
-        _mizzou_log($aryIsActions,'our collection action properties before conversion',false,array('line'=>__LINE__,'file'=>__FILE__));
-        return (object)$aryIsActions;
+        return new RenderType($this->wp_query);
     }
 
 	/**
