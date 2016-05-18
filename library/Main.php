@@ -195,6 +195,7 @@ abstract class Main {
         //_mizzou_log($this->objLoader,'just finished creating loader',false,array('line'=>__LINE__,'file'=>__FILE__));
 
         $this->objRenderType = $this->_retrieveRenderType();
+		$this->renderData('RenderType',$this->objRenderType );
     }
 
     /**
