@@ -358,6 +358,8 @@ class MizzouPost extends PostBase
      * @return object stdClass
      * @todo this is very similar to _setMembers. Can we consolidate?
      * @todo should this be moved higher? PostBase, or possibly Base?  It's pretty basic functionality
+     * @todo also, is there a reason we're looping through the object's member instead of doing an array merge with 
+     * Base->aryData ?
      */
     private function _cloneObject($objObject)
     {
