@@ -668,7 +668,7 @@ abstract class Main {
          * @todo brittleness.  What happens if we change the directory where views are stored, or change the view
          * extension? Or we have a child theme that creates a special category version?
          */
-        $strSpecialViewFull = $this->objSite->ActiveThemeURL.'views'.DIRECTORY_SEPARATOR.$strViewToFind.'.twig';
+        $strSpecialViewFull = $this->objSite->ActiveThemePath.'views'.DIRECTORY_SEPARATOR.$strViewToFind.'.twig';
 
         return (is_readable($strSpecialViewFull)) ? $strViewToFind : $strMainView;
 
