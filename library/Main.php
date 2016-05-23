@@ -526,10 +526,6 @@ abstract class Main {
 	{
 		$strPageTitle = '';
 		if(is_archive()){
-            /**
-             * @todo again, why are we calling global $wp_query if we stored it in __construct?
-             */
-            global $wp_query;
 			//_mizzou_log(post_type_archive_title(null,false),'we know we have an archive, here is the post_type_archive_title');
 			if(is_date()){
 				if(!isset($this->aryRenderData['DateArchiveType'])){
@@ -574,19 +570,21 @@ abstract class Main {
 				 * If it isn't a dated archive, has it been filtered by a taxonomy?
 				 */
 				$objQueried = get_queried_object();
-				if(is_object($objQueried) && count($wp_query->tax_query->queries) > 0){
+				if(is_object($objQueried) && count($this->wp_query->tax_query->queries) > 0){
 					$strPageTitle = ($strPageTitle == '') ? $objQueried->name : $objQueried->name . ' ' . $strPageTitle;
 				}
 			}
 
-			//now, are we in the midst of pagination?
-			_mizzou_log($wp_query,'wp_query is paged set?',false,array('line'=>__LINE__,'file'=>__FILE__));
-			if(isset($wp_query->query_vars['paged']) && $wp_query->query_vars['paged'] != 0){
-				$strPageTitle .= ', Page ' . $wp_query->query_vars['paged'];
-			}
+
 		} else {
 			$strPageTitle = wp_title('',false);
 		}
+
+        //IT's possible to be paginated even outside of an archive, so are we in the midst of pagination?
+        _mizzou_log($this->wp_query,'wp_query is paged set?',false,array('line'=>__LINE__,'file'=>__FILE__));
+        if(isset($this->wp_query->query_vars['paged']) && $this->wp_query->query_vars['paged'] != 0){
+            $strPageTitle .= ', Page ' . $this->wp_query->query_vars['paged'];
+        }
 		_mizzou_log($strPageTitle,'page title as determined',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
 		return trim($strPageTitle);
 	}
@@ -661,6 +659,19 @@ abstract class Main {
 	protected function _retrieveRenderType()
     {
         return new RenderType($this->wp_query);
+    }
+
+    protected function _specializedView($strMainView,$strSpecial)
+    {
+        $strViewToFind = $strMainView.'-'.$strSpecial;
+        /**
+         * @todo brittleness.  What happens if we change the directory where views are stored, or change the view
+         * extension?
+         */
+        $strSpecialViewFull = dirname(__FILE__).DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$strViewToFind.'.twig';
+
+        return (is_readable($strSpecialViewFull)) ? $strViewToFind : $strMainView;
+
     }
 
 	/**
