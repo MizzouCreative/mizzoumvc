@@ -33,8 +33,13 @@ class SingleMenu extends Base
         return wp_get_nav_menu_items($strMenuName);
     }
 
-    protected function _getFormattedMenu($strMenuName,$aryMenuOptons)
+    protected function _getFormattedMenu($strMenuName,$aryMenuOptions)
     {
-        return wp_nav_menu(array_merge($aryMenuOptons,array('menu'=>$strMenuName)));
+        $strMenu = wp_nav_menu(array_merge($aryMenuOptions,array('menu'=>$strMenuName)));
+        if(!is_string($strMenu)){
+            _mizzou_log($strMenuName,'this menu doesnt appear to exist or came back as something other than a string ',false,array('line'=>__LINE__,'file'=>__FILE__));
+            $strMenu = '';
+        }
+        return $strMenu;
     }
 }
