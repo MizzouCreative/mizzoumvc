@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: MizzouMVC
- * Plugin URI: http://universityaffairs.missouri.edu/department/web-communications/
+ * Plugin URI: https://marcom.missouri.edu/department/miz-creative/
  * Description: MVC Framework for rapid deployment of custom themes
- * Version: 3.3.6beta
+ * Version: 3.4.0
  * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
- * Author URI: http://universityaffairs.missouri.edu/department/web-communications/
+ * Author URI: https://marcom.missouri.edu/department/miz-creative/
  * @package W
  * @subpackage 
  * @since 
@@ -14,7 +14,7 @@
  * @uses 
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
- * @version 3.3.6beta
+ * @version 3.4.0
  */
 /**
  * @todo let's check to see if the memory is low and then increase if needed
