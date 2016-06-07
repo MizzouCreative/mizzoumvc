@@ -214,8 +214,12 @@ class Menu extends Base {
     {
         //_mizzou_log($this->aryMenuOptions,'getting ready to retrieve menu ' . $strMenuName . 'with these options',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
         //return wp_nav_menu(array_merge($this->aryMenuOptions,array('menu'=>$strMenuName)));
-        return new SingleMenu($strMenuName,$this->aryMenuOptions);
-
+        $objNewMenu = new SingleMenu($strMenuName,$this->aryMenuOptions);
+        if('' !== $objNewMenu->formatted && count($objNewMenu->items) > 0){
+            return $objNewMenu;
+        } else {
+            return '';
+        }
     }
 
     /**
