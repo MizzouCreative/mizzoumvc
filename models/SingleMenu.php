@@ -12,13 +12,29 @@ use MizzouMVC\models\Base;
 class SingleMenu extends Base
 {
 
-
+    /**
+     * SingleMenu constructor.
+     * @param string $strMenuName the menu we want to retrieve
+     * @param array $aryMenuOptions options for retrieving the menu
+     */
     public function __construct($strMenuName,$aryMenuOptions=array())
     {
         $this->add_data('formatted',$this->_getFormattedMenu($strMenuName,$aryMenuOptions));
-        $this->add_data('items',$this->_getMenuItems($strMenuName));
+        //no use trying to get the menu items if we already know the menu doesnt exist
+        if('' !== $this->aryData['formatted']){
+            $aryItems = $this->_getMenuItems($strMenuName);
+        } else {
+            $aryItems = array();
+        }
+
+        $this->add_data('items',$aryItems);
+
     }
 
+    /**
+     * Here for backwards compatibilty
+     * @return string
+     */
     public function __toString()
     {
         $strReturn = '';
@@ -28,11 +44,28 @@ class SingleMenu extends Base
         return $strReturn;
     }
 
+    /**
+     * retrieves the individual items for a given menu
+     * @param string $strMenuName name of menu we want to retrieve
+     * @return array
+     * @uses wp_get_nav_menu_items()
+     */
     protected function _getMenuItems($strMenuName)
     {
-        return wp_get_nav_menu_items($strMenuName);
+        $aryItems = wp_get_nav_menu_items($strMenuName);
+        if(!is_array($aryItems)){
+            $aryItems = array();
+        }
+        return $aryItems;
     }
 
+    /**
+     * Retrieves the html formatted version of the menu
+     * @param string $strMenuName name of menu we want to retrieve
+     * @param array $aryMenuOptions options for retrieving the menu
+     * @return string formatted string version of the menu
+     * @uses wp_nav_menu()
+     */
     protected function _getFormattedMenu($strMenuName,$aryMenuOptions)
     {
         $strMenu = wp_nav_menu(array_merge($aryMenuOptions,array('menu'=>$strMenuName)));
