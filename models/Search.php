@@ -67,7 +67,7 @@ class Search extends Base {
          * If they didnt give us anything to search for then no need to do anything
          */
         if($this->aryData['SearchTerms'] != ''){
-            if(false !== $strSearchResults = file_get_contents($this->_prepQueryString())){
+            if(false !== $strSearchResults = wp_remote_fopen($this->_prepQueryString())){
                 return $strSearchResults;
             } else {
                 $this->add_error('Search attempt failed');
