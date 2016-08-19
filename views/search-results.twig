@@ -1,0 +1,49 @@
+{#
+ * Available:
+ * - SearchResults: array of matching posts if using internal, external will depend on the Search model
+ * - Site:
+ * 
+ * @package WordPress
+ * @subpackage 
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+#}
+
+{%  if SearchResults is defined %}
+    {% if SearchResults is iterable %}
+        {# we're using the internal search and have an array of matching postss #}
+        {% if SearchResults| length > 0 %}
+            {% for SearchResult in SearchResults %}
+                <article id="post-{{ SearchResult.ID }}">
+                    <header class="entry-header">
+                        <h2 class="entry-title"><a href="{{ SearchResult.permalink }}">{{ SearchResult.title }}</a></h2>
+                    </header>
+                    <div class="entry-summary">
+                        {{ SearchResult.excerpt }}
+                    </div>
+                    <footer class="entry-footer">
+                    <span class="posted-on">
+                        <span class="screen-reader-text">Posted on </span> <a href="{{ SearchResult.permalink }}" rel="bookmark">
+                            <time class="entry-date published" datetime="{{ SearchResult.iso8601_date }}">{{ SearchResul.formatted_date }}</time>
+                        </a>
+                    </span>
+                    </footer>
+                </article>
+            {% endfor %}
+            {% if Pagination is not empty and Pagination.paged %}
+                {% include 'pagination.twig' %}
+            {% endif %}
+        {% else %}
+            <p>Your search did not match any documents. Try again?</p>
+            {%  include 'searchform.twig' %}
+        {% endif %}
+    {% else %}
+        {{ SearchResults }}
+    {% endif %}
+{% else %}
+    {# User most likely came to the page directly and hasn't searched #}
+    <p>Please enter search terms below.</p>
+    {% include 'searchform.twig' %}
+{% endif %}
