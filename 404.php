@@ -28,11 +28,25 @@ class FourOhFour extends Main {
     public function main()
     {
         $arySearchData = array();
-        $arySearchData['search_options'] = $this->objSite->search;
         $arySearchData['strRequestURI'] = $_SERVER['REQUEST_URI'];
+        $arySearchData['search_options'] = $this->objSite->search;
+
         $obj404 = $this->load('MizzouMVC\models\FourOhFour',$arySearchData);
-        //$obj404 = new Model404($this->aryRenderData);
-        $this->renderData('SearchResults',$obj404->getSearchResults());
+
+        if($this->objSite->search['internal']){
+            //first lets get the prepared search terms
+            $strSearchTerms = $obj404->SearchTerms;
+            $objWpBase = $this->load('MizzouMVC\models\WpBase');
+            $aryOptions = array(
+                'post_type' => '',
+                'passthru'  => array('s'=>$strSearchTerms),
+            );
+            $mxdSearchResults = $objWpBase->retrieveContent($aryOptions);
+        } else {
+            $mxdSearchResults = $obj404->getSearchResults();
+        }
+
+        $this->renderData('SearchResults',$mxdSearchResults);
         $this->render('search');
     }
 }
