@@ -14,10 +14,5 @@
     {% if PageTitle == 'Page not found' %}
         <p>Oops &#8230; that page does not exist. Here are the closest matches we could find.</p>
     {% endif %}
-    {%  if SearchResults is not empty %}
-    {{ SearchResults }}
-    {% else %}
-        <p>Please enter search terms below.</p>
-        {% include 'searchform.twig' %}
-    {% endif %}
+    {% include 'search-results.twig' %}
 {% endblock %}
