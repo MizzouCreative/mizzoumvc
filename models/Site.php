@@ -496,6 +496,7 @@ class Site extends Base {
         $aryOptions = array();
         $objWpBase = new WpBase();
         $arySettingsPages = $objWpBase->retrieveContent(array(
+            //@todo we need to move the post-type slug to a variable so that we can change it in one place
             'post_type'=>'mizzoumvc-settings',
             'include_meta'=>true,
             'include_image'=>false,
@@ -564,6 +565,8 @@ class Site extends Base {
             $this->add_data($mxdOptionKey,$mxdOptionVal);
         }
 
+        //have to fix the
+        $this->_resolveSearchBackwardsCompatibility();
         //load up a flattened collection of options
         $this->_loadFlattenedOptions($aryOptions);
         //_mizzou_log($this,'our Site object after dealing with the options',false,array('line'=>__LINE__,'file'=>__FILE__));
@@ -691,6 +694,35 @@ class Site extends Base {
 
         return $arySettings;
     }
+
+    /**
+     * Prior to v3.5.0, *all* search was handled via an external search engine.  In 3.5.0 we're allowing the option to use
+     * the internal search as well as external. So we'll need to figure out if the theme is using an external search option
+     * and then set up the internal/external flag so controllers/views know which one they are dealing with
+     */
+    protected function _resolveSearchBackwardsCompatibility(){
+        $aryNewSearchOptions = array();
+        $aryNewSearchOptions['action'] = $this->option('URL');
+        $aryNewSearchOptions['internal'] = true;
+        //They've deleted the search group so we'll set for using internal
+
+        if(!isset($this->aryData['search'])){
+            $this->add_data('search',array());
+            $strInputName = 's';
+        } else {
+            //@todo should this be another setting option?  *We've* standardized on it, but maybe others will need something different?
+            $aryNewSearchOptions['action'] .= 'search/';
+            //@todo same as above. we need q for the GSA, but what happens when we switch? ElasticSearch uses q, as does Apache Solr so we *should* be safe with q
+            $strInputName = 'q';
+            $aryNewSearchOptions['internal'] = false;
+        }
+
+        $aryNewSearchOptions['input_name'] = $strInputName;
+
+        $this->aryData['search'] = array_merge($this->aryData['search'],$aryNewSearchOptions);
+
+    }
+
 
     /**
      * Site specific implementation. Before adding the option to the internal storage, checks to see if it is a string
