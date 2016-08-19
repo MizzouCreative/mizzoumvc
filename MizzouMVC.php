@@ -19,7 +19,7 @@
 /**
  * @todo let's check to see if the memory is low and then increase if needed
  */
-//ini_set('memory_limit', '128M');
+define('MIZZOUMVC_VERSION','3.4.0');
 define('MIZZOUMVC_ROOT_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';
@@ -92,7 +92,7 @@ function mizzouMVCRegisterSettingsCPT()
         ),
         'rewrite'           =>false,
         'query_var'         =>false,
-        'labels'            => mizzouCreatePostTypeLabels('Setting'),
+        'labels'            => mizzouCreatePostTypeLabels('Theme Setting'),
     ));
 }
 
