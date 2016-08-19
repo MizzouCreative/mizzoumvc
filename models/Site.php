@@ -702,7 +702,7 @@ class Site extends Base {
      */
     protected function _resolveSearchBackwardsCompatibility(){
         $aryNewSearchOptions = array();
-        $aryNewSearchOptions['action'] = $this->option('URL');
+        $aryNewSearchOptions['action'] = $this->aryData['URL'];
         $aryNewSearchOptions['internal'] = true;
         //They've deleted the search group so we'll set for using internal
 
