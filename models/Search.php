@@ -24,6 +24,12 @@ class Search extends Base {
      * @var array internal storage array
      */
     protected $aryInternalData = array();
+    /**
+     * @var array values we use for search, but are not needed as parameters for an api call
+     */
+    protected $aryRemoveFromSearchOptions = array(
+        'url','action','input_name',
+    );
 
     /**
      * Sets options and the data to be searched for
@@ -42,8 +48,7 @@ class Search extends Base {
                 $arySearchOptions = $aryData['search_options'];
                 unset($aryData['search_options']);
                 $this->aryInternalData['search_url'] = $arySearchOptions['url'];
-                unset($arySearchOptions['url']);
-                $this->aryInternalData['search_parameters'] = $arySearchOptions;
+                $this->aryInternalData['search_parameters'] = $this->_removeUnneededSearchParams($arySearchOptions);
             } else {
                 $this->add_error('search options is not an array!');
             }
@@ -148,5 +153,10 @@ class Search extends Base {
         $this->add_data('SearchTerms',$strSearchTerms);
 
         return $strSearchTerms;
+    }
+
+    protected function _removeUnneededSearchParams($arySearchParams)
+    {
+        return array_diff_key($arySearchParams,array_flip($this->aryRemoveFromSearchOptions));
     }
 }
