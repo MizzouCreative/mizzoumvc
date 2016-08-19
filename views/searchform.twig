@@ -1,5 +1,7 @@
 {#
- * 
+ * Available:
+ * - SearchTerms - terms that were searched for
+ * - Site - Site object
  * 
  * @package WordPress
  * @subpackage Wordpress MVC
@@ -8,12 +10,9 @@
  * @author Paul Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2015 Curators of the University of Missouri
 #}
-    <form class="search-form" action="{{ Site.URL }}search/" method="get" role="search">
+    <form class="search-form" action="{{ Site.search.action }}" method="get" role="search">
         <div class="search-container">
-            <input class="search-field" name="q" type="text" onfocus="this.value=''" value="{{ SearchTerms | e }}" title="Search {{ Site.Name }}"/>
+            <input class="search-field" name="{{ Site.search['input_name'] }}" type="text" onfocus="this.value=''" value="{{ SearchTerms | e }}" title="Search {{ Site.Name }}"/>
             <input class="search-button" name="sa" type="submit" value="Search" title="Submit Search"/>
-            {% for SearchName, SearchParameter in Site.search_parameters %}
-            <input name="{{ SearchName }}" type="hidden" value="{{ SearchParameter | e }}" />
-            {% endfor %}
         </div>
     </form>
