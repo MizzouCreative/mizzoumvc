@@ -51,6 +51,8 @@ class Pagination extends Base{
      */
 	protected $strHrefPattern = null;
 
+    protected $boolIsSearch = false;
+
 	//protected $OnPage,$MaxPages,$MidPoint,$LowerLimit,$UpperLimit;
 
     /**
@@ -63,6 +65,7 @@ class Pagination extends Base{
             $this->wpPaged = $aryArgs['wp_query']->query_vars['paged'];
 	        $this->add_data('MaxPages',(isset($aryArgs['wp_query']->max_num_pages)) ? $aryArgs['wp_query']->max_num_pages : 1);
 	        $this->add_data('OnPage',($this->wpPaged != 0) ? $this->wpPaged :1);
+            $this->boolIsSearch = $aryArgs['wp_query']->is_search;
 
 	        unset($aryArgs['wp_query']);//we no longer need it, so no use storing it any longer
 
@@ -124,21 +127,41 @@ class Pagination extends Base{
      * Determines the href to be used in the pagination links
      * Specifically built because we had situations where there query parameters in a paginated area, and we needed
      * to retain those parameters as we built the links
+     * @uses get_option()
      * @return void
      */
     protected function _determineHrefPattern()
 	{
-		if(is_null($this->wpPaged) || $this->wpPaged == 0 || false === strpos($_SERVER['REQUEST_URI'],'/page/')){
-			$strHrefBase = $_SERVER['REQUEST_URI'];
-		} else {
-			$strHrefBase = substr($_SERVER['REQUEST_URI'],0,(strpos($_SERVER['REQUEST_URI'],'/page/') + 1 ));
-		}
 
-		$this->strHrefPattern = $strHrefBase . 'page/%d/';
+	    //if we arent using pretty urls OR, we're on a search archive using internal search
+	    if(!get_option('permalink_structure') || $this->boolIsSearch && isset($_GET['s'])){
+            //why urldecode? It's entirely possible the URL contains URLEncoded values (%20), which then throws off the sprintf later on
+	        $strRequestURI = htmlentities(urldecode($_SERVER['REQUEST_URI']),ENT_QUOTES,'UTF-8',false);
+	        if(false === strpos($strRequestURI,'paged=')){
+                //we must be on the very first page
+                $this->strHrefPattern = $strRequestURI.'&paged=%d';
+            } else {
+                //we're on a later page
+                $this->strHrefPattern = preg_replace('/paged=(\d+)/','paged=%d',$strRequestURI);
 
-		if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != ''){
-			$this->strHrefPattern .= '?'.htmlentities($_SERVER['QUERY_STRING'],ENT_QUOTES,'UTF-8',false);
-		}
+            }
+        } else {
+            //we're using pretty permalinks and an external search provider
+            if(is_null($this->wpPaged) || $this->wpPaged == 0 || false === strpos($_SERVER['REQUEST_URI'],'/page/')){
+                $strHrefBase = $_SERVER['REQUEST_URI'];
+            } else {
+                $strHrefBase = substr($_SERVER['REQUEST_URI'],0,(strpos($_SERVER['REQUEST_URI'],'/page/') + 1 ));
+            }
+
+            $this->strHrefPattern = $strHrefBase . 'page/%d/';
+
+            //do we also have a query string we need to append?
+            if(isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != ''){
+                $this->strHrefPattern .= '?'.htmlentities($_SERVER['QUERY_STRING'],ENT_QUOTES,'UTF-8',false);
+            }
+        }
+
+        _mizzou_log($this->strHrefPattern,'our href pattern');
 	}
 
     /**
