@@ -83,8 +83,8 @@ class Menu extends Base {
             //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
             $arySiteOptions = (isset($objSite->{'site-wide'})) ? $objSite->{'site-wide'} : array();
 
-	        if($objSite->IsChild && '' != $objSite->parent_static_menu){
-		        $this->add_data('static_parent',$objSite->parent_static_menu);
+	        if($objSite->IsChild && '' != $objSite->option('parent_static_menu')){
+		        $this->add_data('static_parent',$objSite->option('parent_static_menu'));
 	        }
 
 
