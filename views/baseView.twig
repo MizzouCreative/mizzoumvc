@@ -15,16 +15,36 @@
  *  - strInnerViewContent
  *
 #}
-
 {% include 'header.twig' %}
-<div id="skip-to-content" class="content-wrapper" tabindex="-1">
-    <div class="content-layer">
-        {% block sidebar %}
-            {% include 'sidebar.twig' %}
-        {% endblock %}
-        <section class="content-block">
-            {% block content %}{% endblock %}
-        </section>
+<body>
+{% block skipto %}
+    {% include 'skipto.twig' %}
+{% endblock %}
+<div class="page-wrapper">
+    {% block layer_brand %}
+        {% include 'layer-brand.twig' %}
+    {% endblock %}
+    {% block layer_header %}
+        {% include 'layer-header.twig' %}
+    {% endblock %}
+    {% block nav_primary %}
+        {% include 'nav-primary.twig' %}
+    {% endblock %}
+
+    <div id="content" class="content-wrapper" tabindex="-1">
+        <div class="content-layer">
+            <div class="content-block">
+                <div class="content-main">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                {% block sidebar %}
+                    {% include 'sidebar.twig' %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
-</div>
-{% include 'footer.twig' %}
+    {% include 'footer.twig' %}
+</div><!-- end page-wrapper -->
+</body>
+</html>
