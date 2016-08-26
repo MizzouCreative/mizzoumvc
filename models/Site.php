@@ -749,7 +749,7 @@ class Site extends Base {
     protected function _getFrameworkURL()
     {
         if(defined('MIZZOUMVC_ROOT_URL')){
-            return MIZZOUMVC_ROOT_URL;
+            return MIZZOUMVC_ROOT_URL . '/';
         }
     }
 
