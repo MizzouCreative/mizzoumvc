@@ -9,7 +9,9 @@
  * @copyright 2015 Curators of the University of Missouri
 #}
 {% if Menu.Page is not empty %}
-<div class="sidebar">
-    {{ Menu.Page }}
+<div class="aside">
+    <nav id="mobile-menu" class="nav-vertical">
+        {{ Menu.Page }}
+    </nav>
 </div>
 {% endif %}
