@@ -20,6 +20,16 @@ use MizzouMVC\models\Subview;
 
 class Header extends Subview {
     /**
+     * @todo should we push this up to a site option?
+     * @var string directory name where the stylesheet is located
+     */
+    protected $strStylesheetDirectoryAssumption = 'css';
+    /**
+     * @todo same as above: should we push this up to a site option?
+     * @var string name of the stylesheet
+     */
+    protected $strStyleSheetFileNameAssumption = 'style.css';
+    /**
      * Determines and sets value used in the header area
      * @param $aryContext
      */
@@ -136,10 +146,15 @@ class Header extends Subview {
 		}
 
 		$aryTitleParts[] = $this->aryData['objSite']->Name;
-		/**
+
+        /**
 		 * @todo this piece should come from a Theme options class
 		 */
-		$aryTitleParts[] = 'University of Missouri';
+		$strTitleAnchor = $this->aryData['objSite']->option('header_title_anchor');
+        if('' != $strTitleAnchor) {
+            $aryTitleParts[] = $strTitleAnchor;
+        }
+        $aryTitleParts[] = 'University of Missouri';
 
 
         $strGlue = $this->aryData['objSite']->option('header_title_separator');
@@ -196,16 +211,27 @@ class Header extends Subview {
 	}
 
     /**
-     * Determines which stylesheet should be used
+     * Determines which stylesheet should be used.
+     *
+     *
+     *
      * @category settings
      * @return string full src path to the stylesheet
      */
     protected function _determineActiveStylesheet()
     {
-        if($this->aryData['objSite']->option('stylesheet') != ''){
-            $strStyleSheet = $this->aryData['objSite']->ActiveThemeURL . $this->aryData['objSite']->option('stylesheet');
+
+        $strStyleSheet = '';
+        $strStyleSheetURLLocation = $this->strStylesheetDirectoryAssumption . '/' . $this->strStyleSheetFileNameAssumption;
+        /**
+         * @todo if we ever decide to increase the number of theme levels we support, we'll have to adjust this.
+         * @todo also, we need to check and see if the file has world readable permissions
+         */
+        if(file_exists($this->aryData['objSite']->ActiveThemePath.$this->strStylesheetDirectoryAssumption.DIRECTORY_SEPARATOR.$this->strStyleSheetFileNameAssumption)){
+            $strStyleSheet = $this->aryData['objSite']->ActiveThemeURL . $strStyleSheetURLLocation;
         } else {
-            $strStyleSheet = get_stylesheet_uri();
+            //fall back to the framework css
+            $strStyleSheet = $this->aryData['objSite']->FrameworkURL . $strStyleSheetURLLocation;
         }
 
         return $strStyleSheet;
@@ -217,7 +243,9 @@ class Header extends Subview {
      */
     protected function _setActiveStylesheet()
     {
-        $this->add_data('ActiveStylesheet',$this->_determineActiveStylesheet());
+        $strActiveStyleSheet = $this->_determineActiveStylesheet();
+        $this->add_data('ActiveStylesheet',$strActiveStyleSheet); //backwards compatible to <= v3.4
+        $this->add_data('ActiveStyleSheetURL',$strActiveStyleSheet);
     }
 
     /**
