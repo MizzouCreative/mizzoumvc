@@ -101,6 +101,7 @@ class Site extends Base {
         $this->add_data('Description',$this->_getSiteDescription());
         $this->add_data('ParentThemeURL',$this->_getParentThemeURL());
         $this->add_data('ChildThemeURL',$this->_getChildThemeURL());
+        $this->add_data('FrameworkURL',$this->_getFrameworkURL());
         /**
          * @todo why was this removed here and moved to the header model?
          */
@@ -108,6 +109,7 @@ class Site extends Base {
         $this->add_data('ActiveThemeURL',$this->_getActiveThemeURL());
         $this->add_data('ParentThemePath',$strParentPath);
         $this->add_data('ChildThemePath',$strChildPath);
+        $this->add_data('FrameworkPath',$this->_getFrameworkPath());
         $this->add_data('ActiveThemePath',$this->_getActiveThemePath());
         $this->add_data('TrackingCode',$this->_getTrackingCode());
         $this->add_data('IsChild',is_child_theme());
@@ -721,6 +723,34 @@ class Site extends Base {
 
         $this->aryData['search'] = array_merge($this->aryData['search'],$aryNewSearchOptions);
 
+    }
+
+    /**
+     * Returns the system path to the Framework's root
+     *
+     * Yes, we already have a constant defined for this, but globals are bad, and this way we can minimize our use of it
+     *
+     * @return string
+     */
+    protected function _getFrameworkPath()
+    {
+        if(defined('MIZZOUMVC_ROOT_PATH')){
+            return MIZZOUMVC_ROOT_PATH;
+        }
+    }
+
+    /**
+     * Returns the URL to the Framework's root
+     *
+     * Yes, we already have a constant defined for this, but globals are bad, and this way we can minimize our use of it
+     *
+     * @return string
+     */
+    protected function _getFrameworkURL()
+    {
+        if(defined('MIZZOUMVC_ROOT_URL')){
+            return MIZZOUMVC_ROOT_URL;
+        }
     }
 
 
