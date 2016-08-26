@@ -5,6 +5,7 @@
 namespace MizzouMVC\models;
 use MizzouMVC\models\Base;
 use MizzouMVC\models\SingleMenu;
+use \DOMDocument as DOMDocument;
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'SingleMenu.php';
 
 /**
@@ -247,7 +248,7 @@ class Menu extends Base {
     {
         //_mizzou_log(null,'ive been asked to inject into the primary menu');
         if($this->aryData['PageTitle'] != ''){ // if we have no page title, then there isnt a menu to inject
-            $objDomMenu = new DOMDocument();
+            $objDomMenu = new \DOMDocument();
             $objDomMenu->loadXML($this->aryData['Primary']);
             //_mizzou_log($objDomMenu->saveHTML(),'our primary menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
             $strListElementType = $this->_determineListElementType();
