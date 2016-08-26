@@ -1,0 +1,17 @@
+{#
+ * 
+ * 
+ * @package WordPress
+ * @subpackage 
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+#}
+{% if Menu.Primary is not empty %}
+    <div class="nav-layer" id="nav" tabindex="-1" role="navigation">
+        <nav class="nav-horizontal">
+            {{ Menu.Primary }}
+        </nav>
+    </div>
+{% endif %}
