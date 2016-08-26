@@ -1,15 +1,15 @@
 === MizzouMVC framework ===
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
-Tested up to: 4.5.2
-Stable tag: 3.4.0
+Tested up to: 4.6
+Stable tag: 3.5.0
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
 MVC-based framework for rapid theme development
 
 == Description ==
-An MVC-based framework for rapidly building custom themes.  Please note that this is a framework for *DEVELOPING* themes; it doesn't do much until you use it to build your own custom theme.
+An MVC-based* (see FAQ) framework for rapidly building custom themes.  Please note that this is a framework for *DEVELOPING* themes; it doesn't do much until you use it to build your own custom theme.
 
 The framework overrides WordPress’ normal templating system and instead uses it for routing. Knowledge of/experience with WordPress’ template hierarchy is **crucial**.   [Wordpress template hierarchy](https://developer.wordpress.org/files/2014/10/template-hierarchy.png)
 
@@ -21,8 +21,9 @@ All models and controllers in a theme or child theme should be namespaced.  If y
 == Installation ==
 Pretty standard:
 
-1. Upload the plugin files to the `/wp-content/plugins/mizzoumvc` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/mizzoumvc` directory
 1. Activate the plugin through the 'Plugins' screen in WordPress
+1. After that you'll be able to update the plugin from within the wordpress admin console
 
 Please note that this is a framework for *DEVELOPING* themes; it doesn't do much until you use it to build your own custom theme.
 
@@ -37,6 +38,9 @@ You're right!  This is a framework for building out custom themes quickly and ef
 = Why? =
 Code reuse. We had a lot of similar code in every custom theme we built which led to a boilerplate theme, with the actual site running as a child theme. But then we had situations where we actually needed true parent->child themes, thus the framework was born.  In addition, separation of concerns.  Front-end developers can focus on the views and the back-end devs can concentrate on the models and controllers.
 
+= This framework doesn't really follow the MVC pattern! What gives? =
+No, no it doesn't.  We don't do any create, read, update, etc. in wordpress.  Everything is really just index(). "MVC" has become similar to "kleenex" and "xerox" in that people use it (and understand it) to mean the separation of business logic from presentation.  It's probably closest to MVP/Pasive view or Presentation Model, but even those don't match perfectly. Either way, the purpose is separation of concerns.
+
 = What will I need in order to use this framework? =
 A compatible theme (see our starter theme) and familiarity with [Twig](http://twig.sensiolabs.org/).
 
@@ -50,6 +54,24 @@ Absolutely!
 * https://truman.missouri.edu/
 * https://ipp.missouri.edu/
 * https://cellmu.missouri.edu/
+
+= The theme settings area is UGLY. Why didn't you make it prettier/formatted? =
+Because I'm a back-end developer and don't care what it looks like. =P  Mostly because it takes time, and the settings from one build-out to the next are almost always different.  The way it is now is SUPER fast: add a custom field key and value and it's immediately available in your view. When we need to make the settings area look nicer, or use something nicer than a text field for data entry, we use ACF (+ Pro) and target a specific settings group. It does tie us to the ACF plugin, but only for the formatting; the data retrieval is completely independent of the plugin.
+
+== Roadmap ==
+= Introduction of a Front Controller =
+I don't like that you have to instantiate your controller class after defining it, but I haven't figured out a solid way to send the route information from wordpress and pass it to a single front controller (short of using the global space *blargh*.)
+
+= Framework settings menu area =
+Framework settings are pulled in via framework-settings.ini file in the theme, with defaults hard-coded.  I don't like it, but it's fast and convenient, just not pretty or easy for end-users.
+
+= Move global space functions into static class =
+
+= Introduction of alternative templating engines =
+We really like Twig, but maybe you don't. I'd like to build in the option to choose a different templating engine.
+
+= Abilitity to have more ancestory =
+Right now you can have a child theme, a parent theme and then all of the stuff that ships with this framework.  But there's no reason we can't add some additional ancestry between the parent theme and the framework.  I just haven't had a situation yet where I needed to, but
 
 == Upgrade Notice ==
 none
