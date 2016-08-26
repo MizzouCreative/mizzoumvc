@@ -62,43 +62,6 @@
     {{ wpHead | raw}}
 
     <!-- CSS -->
-    <!--[if gt IE 7]><!--><link href="{{ objSite.ActiveThemeURL }}css/styles.css" rel="stylesheet"/><!--<![endif]-->
-    <!--[if IE 8]><link href="{{ Site.ActiveThemeURL }}css/ie.css" rel="stylesheet" /><![endif]-->
-    <!--[if lte IE 7]><link href="{{ Site.ActiveThemeURL }}css/text-only.css" rel="stylesheet" /><![endif]-->
-
-    <!-- Javascript -->
-    <!--[if gt IE 7]><!--><script src="{{ Site.ActiveThemeURL }}js/iep-min.js" type="text/javascript"></script><!--<![endif]-->
-    <!--[if lt IE 9]><script src="{{ Site.ActiveThemeURL }}js/html5shiv-printshiv.min.js"></script><![endif]-->
-
+    <!--[if gt IE 8]><!--><link href="{{ ActiveStyleSheetURL }}" rel="stylesheet"/><!--<![endif]-->
+    <!--[if lte IE 8]><link href="{{ Site.ActiveThemeURL }}css/text-only.css" rel="stylesheet" /><![endif]-->
 </head>
-
-<body>
-
-    <div class="offset">
-        <a id="offset-1" href="#nav" tabindex="1">Skip to navigation</a>
-	    <a id="offset-2" href="#skip-to-content" tabindex="2">Skip to content</a>
-    </div>
-
-    <div class="header-layer">
-        <header class="header" role="banner">
-
-            <div class="mizzou-brand">
-                <p class="logo"><a href="http://missouri.edu">Mizzou Logo</a></p>
-                <h1><a href="{{ Site.URL }}">{{ Site.Name }}</a></h1>
-                <h2><a href="http://missouri.edu">University of Missouri</a></h2>
-            </div>
-
-            <div class="tactical">
-        		{% include 'searchform.twig' %}
-            </div>
-
-        </header>
-    </div>
-
-    {% if Menu.Primary is not empty %}
-    <div class="nav-layer" id="nav" tabindex="-1" role="navigation">
-        <nav class="nav">
-            {{ Menu.Primary }}
-        </nav>
-    </div>
-    {% endif %}
