@@ -20,12 +20,7 @@ use MizzouMVC\models\Subview;
 
 class Header extends Subview {
     /**
-     * @todo should we push this up to a site option?
-     * @var string directory name where the stylesheet is located
-     */
-    protected $strStylesheetDirectoryAssumption = 'css';
-    /**
-     * @todo same as above: should we push this up to a site option?
+     * @todo is there a way to pull what wordpress assumes the stylesheet will be named and tie it to that?
      * @var string name of the stylesheet
      */
     protected $strStyleSheetFileNameAssumption = 'style.css';
@@ -147,16 +142,13 @@ class Header extends Subview {
 
 		$aryTitleParts[] = $this->aryData['objSite']->Name;
 
-        /**
-		 * @todo this piece should come from a Theme options class
-		 */
-		$strTitleAnchor = $this->aryData['objSite']->option('header_title_anchor');
+        $strTitleAnchor = $this->aryData['objSite']->option('header_title_anchor');
         if('' != $strTitleAnchor) {
             $aryTitleParts[] = $strTitleAnchor;
         }
-        $aryTitleParts[] = 'University of Missouri';
-
-
+        /**
+         * @todo what if they didnt designate some glue? should we add a fall back/default?
+         */
         $strGlue = $this->aryData['objSite']->option('header_title_separator');
 
 		return implode($strGlue,$aryTitleParts);
@@ -213,6 +205,8 @@ class Header extends Subview {
     /**
      * Determines which stylesheet should be used.
      *
+     * we're going to assume that people will usually NOT want to use the framework stylesheet.
+     *
      *
      *
      * @category settings
@@ -221,17 +215,14 @@ class Header extends Subview {
     protected function _determineActiveStylesheet()
     {
 
-        $strStyleSheet = '';
-        $strStyleSheetURLLocation = $this->strStylesheetDirectoryAssumption . '/' . $this->strStyleSheetFileNameAssumption;
-        /**
-         * @todo if we ever decide to increase the number of theme levels we support, we'll have to adjust this.
-         * @todo also, we need to check and see if the file has world readable permissions
-         */
-        if(file_exists($this->aryData['objSite']->ActiveThemePath.$this->strStylesheetDirectoryAssumption.DIRECTORY_SEPARATOR.$this->strStyleSheetFileNameAssumption)){
-            $strStyleSheet = $this->aryData['objSite']->ActiveThemeURL . $strStyleSheetURLLocation;
+        if('' != $this->aryData['objSite']->option('use_framework_stylesheet') &&
+            (
+                (is_bool($this->aryData['objSite']->option('use_framework_stylesheet')) && $this->aryData['objSite']->option('use_framework_stylesheet'))
+                || 'yes' == $this->aryData['objSite']->option('use_framework_stylesheet')
+            )){
+            $strStyleSheet = $this->aryData['objSite']->FrameworkURL . $this->strStyleSheetFileNameAssumption;
         } else {
-            //fall back to the framework css
-            $strStyleSheet = $this->aryData['objSite']->FrameworkURL . $strStyleSheetURLLocation;
+            $strStyleSheet = get_stylesheet_uri();
         }
 
         return $strStyleSheet;
