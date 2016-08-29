@@ -19,6 +19,7 @@ class SingleMenu extends Base
      */
     public function __construct($strMenuName,$aryMenuOptions=array())
     {
+        $this->add_data('name',$strMenuName);
         $this->add_data('formatted',$this->_getFormattedMenu($strMenuName,$aryMenuOptions));
         //no use trying to get the menu items if we already know the menu doesnt exist
         if('' !== $this->aryData['formatted']){
