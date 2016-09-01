@@ -3,7 +3,7 @@
  * Plugin Name: MizzouMVC
  * Plugin URI: https://marcom.missouri.edu/department/miz-creative/
  * Description: MVC Framework for rapid custom theme development
- * Version: 3.4.0
+ * Version: 3.5.0
  * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
  * Author URI: https://marcom.missouri.edu/department/miz-creative/
  * @package W
