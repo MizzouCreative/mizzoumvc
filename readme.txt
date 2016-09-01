@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 4.6
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,7 +33,7 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
-= 3.5.0 =
+= 3.5.1 =
 * Changed label for theme settings area from "All Settings" to "All Theme Settings"
 * Added ability to use internal search OR external search for both search and 404 since not everyone has a GSA.
 * new markup in the default views + updated css
