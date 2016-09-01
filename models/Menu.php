@@ -84,7 +84,10 @@ class Menu extends Base {
             //$arySiteOptions = $this->aryData['objSite']->{'site-wide'};
             $arySiteOptions = (isset($objSite->{'site-wide'})) ? $objSite->{'site-wide'} : array();
 
-	        if($objSite->IsChild && '' != $objSite->option('parent_static_menu')){
+            /**
+             * @todo What happens if we need more than one menu from the parent?
+             */
+            if($objSite->IsChild && '' != $objSite->option('parent_static_menu')){
 		        $this->add_data('static_parent',$objSite->option('parent_static_menu'));
 	        }
 
@@ -107,6 +110,7 @@ class Menu extends Base {
             }
 
 
+            $this->_retrievePageMenu();
 
 
             if(count($aryStaticMenus) > 0){
@@ -119,7 +123,7 @@ class Menu extends Base {
                 }
             }
 
-            $this->_retrievePageMenu();
+
         } else {
             /***
              * @todo we really kinda need it. what else should we do?
@@ -210,6 +214,7 @@ class Menu extends Base {
      * @param string $strMenuName
      * @return string|false
      * @uses wp_nav_menu()
+     * @todo dependency on SingleMenu class. Resolve
      */
     protected function _retrieveMenu($strMenuName)
     {
@@ -247,7 +252,9 @@ class Menu extends Base {
     protected function _injectPrimaryMenu()
     {
         //_mizzou_log(null,'ive been asked to inject into the primary menu');
-        if($this->aryData['PageTitle'] != ''){ // if we have no page title, then there isnt a menu to inject
+        //if($this->aryData['PageTitle'] != ''){ // if we have no page title, then there isnt a menu to inject
+        if(isset($this->aryData['Page'])){ //we can't inject a page menu if we don't have one
+            $strPageMenuName = $this->aryData['Page']->name;
             $objDomMenu = new \DOMDocument();
             $objDomMenu->loadXML($this->aryData['Primary']);
             //_mizzou_log($objDomMenu->saveHTML(),'our primary menu as a DOMobject',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
@@ -262,7 +269,7 @@ class Menu extends Base {
                     $objMainMenuLIList = $objChildNode->getElementsByTagName('li');
                     for($i=0;$i<$objMainMenuLIList->length;++$i){
                         $objChildLI = $objMainMenuLIList->item($i);
-                        if(trim($this->aryData['PageTitle']) == $objChildLI->nodeValue){
+                        if(trim($strPageMenuName) == $objChildLI->nodeValue){
                             $i = $objMainMenuLIList->length;
                             /* ok, so we have a node title that matches a page title. now let's go see if we have a
                              * matching menu
@@ -275,9 +282,9 @@ class Menu extends Base {
                             if('' != $strSubMenu = $this->_retrieveMenu($objChildLI->nodeValue)){
                                 //_mizzou_log($strSubMenu,'we found an element that matches our current page! Here is our matching menu',false,array('line'=>__LINE__,'file'=>basename(__FILE__)));
                                 //store it in the site object
-                                $this->add_data('Page',$strSubMenu);
+                                //$this->add_data('Page',$strSubMenu);
                                 $objDomSecondaryMenu = new DOMDocument();
-                                $objDomSecondaryMenu->loadXML($strSubMenu);
+                                $objDomSecondaryMenu->loadXML($this->aryData['Page']);
                                 $objSecondaryMenuNode = $objDomSecondaryMenu->getElementsByTagName('ul')->item(0);
                                 /*
                                 $objFirstChildOfSecondMenu = $objSecondaryMenuNode->firstChild;
