@@ -27,7 +27,20 @@ Pretty standard:
 
 Please note that this is a framework for *DEVELOPING* themes; it doesn't do much until you use it to build your own custom theme.
 
+== Upgrade Notice ==
+In All Theme Settings --> Site Wide, add two new Custom Fields
+* header_title_anchor - set value to whatever you want to have included as the last piece of text in the <title> element (or empty if you dont want it); framework assumes empty
+* use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
+
 == Changelog ==
+= 3.5.0 =
+* Changed label for theme settings area from "All Settings" to "All Theme Settings"
+* Added ability to use internal search OR external search for both search and 404 since not everyone has a GSA.
+* new markup in the default views + updated css
+* new site-wide options (see config.ini for further explanation)
+  * header_title_anchor - the final text piece included in the <title> element.  Previously, this was hard-coded to "University of Missouri"
+  * use_framework_stylesheet - Should the framework fallback to using the include stylesheet in the framework instead of what is in the theme
+
 = 3.4.0 =
 * Add new object RenderType. Available to Main controller and views.  Contains boolean properties for each possible type of action (e.g. is_home, is_single, is_archive). Also contains property `current` which includes a string of the current render action (e.g. home, single, archive).  Menu object in view has been enhanced and now includes property `items` that is a nested array of all menu items for the given menu (e.g. Menu.Primary.items) that can be looped through in order to build a custom menu structure.  Individual items are identical to that as returned from `wp_get_nav_menu_items`. You can continue to access the formatted menu by either calling the menu directly (i.e. {{ Menu.Primary }} or by using the `formatted` property (e.g. {{ Menu.Primary.formatted }}
 
@@ -39,7 +52,7 @@ You're right!  This is a framework for building out custom themes quickly and ef
 Code reuse. We had a lot of similar code in every custom theme we built which led to a boilerplate theme, with the actual site running as a child theme. But then we had situations where we actually needed true parent->child themes, thus the framework was born.  In addition, separation of concerns.  Front-end developers can focus on the views and the back-end devs can concentrate on the models and controllers.
 
 = This framework doesn't really follow the MVC pattern! What gives? =
-No, no it doesn't.  We don't do any create, read, update, etc. in wordpress.  Everything is really just index(). "MVC" has become similar to "kleenex" and "xerox" in that people use it (and understand it) to mean the separation of business logic from presentation.  It's probably closest to MVP/Pasive view or Presentation Model, but even those don't match perfectly. Either way, the purpose is separation of concerns.
+No, no it doesn't.  We don't do any create, read, update, etc. in wordpress.  Everything is really just index(). "MVC" has become similar to "kleenex" and "xerox" in that people use it (and understand it) to mean the separation of business logic from presentation.  It's probably closest to MVP/Pasive view or Presentation Model, but even those don't match perfectly. Either way, the purpose is separation of concerns, keeping business logic out of the display.
 
 = What will I need in order to use this framework? =
 A compatible theme (see our starter theme) and familiarity with [Twig](http://twig.sensiolabs.org/).
@@ -59,22 +72,28 @@ Absolutely!
 Because I'm a back-end developer and don't care what it looks like. =P  Mostly because it takes time, and the settings from one build-out to the next are almost always different.  The way it is now is SUPER fast: add a custom field key and value and it's immediately available in your view. When we need to make the settings area look nicer, or use something nicer than a text field for data entry, we use ACF (+ Pro) and target a specific settings group. It does tie us to the ACF plugin, but only for the formatting; the data retrieval is completely independent of the plugin.
 
 == Roadmap ==
+= Automated Upgrade Routine =
+
+
 = Introduction of a Front Controller =
 I don't like that you have to instantiate your controller class after defining it, but I haven't figured out a solid way to send the route information from wordpress and pass it to a single front controller (short of using the global space *blargh*.)
 
 = Framework settings menu area =
 Framework settings are pulled in via framework-settings.ini file in the theme, with defaults hard-coded.  I don't like it, but it's fast and convenient, just not pretty or easy for end-users.
 
+= Override of default views =
+The ability to swap out the default view files for your own, thereby giving you the option for a "grandparent" (or default) set of views.  For now you're stuck with ours.
+
 = Move global space functions into static class =
 
 = Introduction of alternative templating engines =
 We really like Twig, but maybe you don't. I'd like to build in the option to choose a different templating engine.
 
-= Abilitity to have more ancestory =
+= Ability to have more view ancestry =
 Right now you can have a child theme, a parent theme and then all of the stuff that ships with this framework.  But there's no reason we can't add some additional ancestry between the parent theme and the framework.  I just haven't had a situation yet where I needed to, but
 
-== Upgrade Notice ==
-none
+= Auto Detection of ACF Pro usage =
+We use ACF Pro, but some of those features require special, specific processing on the display side of things. We have a model to handle this situation, but I'd like to automate the inclusion of the model when it detects the presence of ACF Pro
 
 == Screenshots ==
 none, yet
