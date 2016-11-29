@@ -134,18 +134,18 @@ class ViewEngineLoader {
             $strPossibleCacheLocation = $this->strThemeDir.'cache'.DIRECTORY_SEPARATOR;
             if(!is_dir($strPossibleCacheLocation) && !file_exists($strPossibleCacheLocation)){
                 //we need to make a directory
-                /**
-                 * @todo change to INT perms, not string
-                 */
-                if(mkdir($strPossibleCacheLocation,'0755')){
+                if(mkdir($strPossibleCacheLocation,0700)){
                     $strViewCacheLocation = $strPossibleCacheLocation;
                 }
-            } elseif(!is_writable($strPossibleCacheLocation)) {
+            /**
+             * Add a check for file perms to make sure it is 0700
+             */
+            } elseif(!is_writable($strPossibleCacheLocation) || (0700 !== (fileperms($strPossibleCacheLocation) & 0777))) {
                 //it exists but we cant write to it...
                 /**
                  * @todo change to INT perms, not string
                  */
-                if(chmod($strPossibleCacheLocation,0755)){
+                if(chmod($strPossibleCacheLocation,0700)){
                     $strViewCacheLocation = $strPossibleCacheLocation;
                 }
             } else {
