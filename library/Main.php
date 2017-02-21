@@ -218,6 +218,15 @@ abstract class Main {
 			    $this->renderData('PageTitle',$this->_determinePageTitle());
 		    }
 
+            /**
+             * previously we had an array aryRenderOptions where options could be set, but those have mostly been moved
+             * into other areas of responsibility.  pagination is one that seems to still being used so we'll check for it
+             * and if it's set, set the correct property, and trigger a warning message
+             */
+		    if(isset($this->aryRenderOptions['include_pagination']) && $this->aryRenderOptions['include_pagination'] ){
+		        $this->boolIncludePagination = true;
+                _mizzou_log(null,'DEPRECATED CODE: Pagination should be set using $this->boolIncludePagination in your extending controller class',false,array('line'=>__LINE__,'file'=>__FILE__));
+            }
 
 		    $this->_loadSurroundingViewData();
 
