@@ -1,0 +1,20 @@
+{#
+ * Generic output for a post excerpt
+ *
+ * @package WordPress
+ * @subpackage Wordpress MVC
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+#}
+{% if Post is not empty %}
+    <div class="post-item">
+        <a class="clearfix post-link" href="{{ Post.permalink }}">
+            <p class="date">{{ Post.formatted_date }}</p>
+            {% if Post.image is not empty %}<img src="{{ Post.image.src_medium }}" alt="{{ Post.image.alt }}">{% endif %}
+            <h3 class="post-title">{{ Post.title }}</h3>
+            <p class="post-excerpt">{{ Post.excerpt }}</p>
+        </a>
+    </div>
+{% endif %}
