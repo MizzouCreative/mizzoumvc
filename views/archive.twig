@@ -1,16 +1,22 @@
 {#
- * Tl;DR Summary
+ * Base archive view
  * 
- * @package 
- * @subpackage 
+ * @package WordPress
+ * @subpackage Wordpress MVC
  * @category theme
  * @category view
  * @author Paul Gilzow, Mizzou Creative, University of Missouri
- * @copyright 2015 Curators of the University of Missouri
+ * @copyright 2017 Curators of the University of Missouri
 #}
 {% extends 'baseView.twig' %}
 {% block content %}
     <h1>{{ PageTitle }}</h1>
-    {{ MainPost.content }}
-    <!-- generic archive page -->
+    {% if Posts is not empty and Posts|length > 0 %}
+        {% for Post in Posts %}
+            {% include 'post-card.twig' %}
+        {% endfor %}
+        {% include 'pagination.twig' %}
+    {% else %}
+    <p>No posts found.</p>
+    {% endif %}
 {% endblock %}
