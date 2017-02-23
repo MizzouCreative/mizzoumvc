@@ -20,10 +20,9 @@ class Archive extends Main {
      */
     public function main()
     {
-        global $wp_query;
         $objWpBase = $this->load('MizzouMVC\models\WpBase');
-        $this->renderData('Posts',$objWpBase->convertPosts($wp_query->posts));
-        $this->aryRenderOptions['include_pagination'] = true;
+        $this->renderData('Posts',$objWpBase->convertPosts($this->wp_query->posts));
+        $this->boolIncludePagination = true;
         $this->render('archive');
     }
 }
