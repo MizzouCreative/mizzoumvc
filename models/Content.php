@@ -85,7 +85,11 @@ class Content {
                 _mizzou_log(null,'you didnt instruct me to bypass init but you also didnt include the Site object',true,array('line'=>__LINE__,'file'=>__FILE__));
             } else {
                 //edit post link
-                if('' != $objSite->{'site-wide'}['include_edit_link'] && self::_mixedToBool($objSite->{'site-wide'}['include_edit_link'])){
+                if(
+                    isset($objSite->{'site-wide'}['include_edit_link'])
+                    && '' != $objSite->{'site-wide'}['include_edit_link']
+                    && self::_mixedToBool($objSite->{'site-wide'}['include_edit_link'])
+                ){
                     if(((is_single() || is_page()) && '' != $strPostLink = get_edit_post_link())){
                         $aryData['EditLink'] = $strPostLink;
                     }
@@ -103,7 +107,8 @@ class Content {
                  */
                 if(
                     (
-                        '' != $objSite->{'site-wide'}['include_breadcrumbs']
+                        isset($objSite->{'site-wide'}['include_breadcrumbs'])
+                        && '' != $objSite->{'site-wide'}['include_breadcrumbs']
                         && self::_mixedToBool($objSite->{'site-wide'}['include_breadcrumbs'])
                         && (!isset($aryPassedOptions['include_breadcrumbs']) || $aryPassedOptions['include_breadcrumbs']))
                     ||
