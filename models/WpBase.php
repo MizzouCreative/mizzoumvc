@@ -17,6 +17,7 @@ namespace MizzouMVC\models;
  * @todo move function calls out of this view
  * @uses get_post() @see self::convertPosts()
  * @uses wp_get_attachment_url @see self::convertPosts()
+ * @todo rename to MizzouQuery since it better reflects the purpose of the class?
  */
 class WpBase
 {
@@ -440,6 +441,8 @@ class WpBase
      * @param WP_Post $objPost
      * @param array $aryOptions
      * @return \MizzouMVC\models\MizzouPost
+     * @todo instead of having a child class overload this method, should we instead switch to using the loader class
+     * and passing the namespaced class we want to use into the constructor for this class?
      */
     protected function _newPostInstance($objPost,$aryOptions)
     {
