@@ -62,11 +62,19 @@ class WpBase
      */
     public $strPostPrefix = null;
 
+    protected $strPostModel = '';
+
+    protected $objLoader = null;
+
+    protected $strDefaultPostModelPattern = '/MizzouPost$/';
+
     /**
      * Sets up all the defaults needed when retrieving posts
-     * @param string|null $strPostPreFix optional
+     * @param string $strPostModel Namespaced model to be used for new posts. defaults to MizzouPost
+     * @param object $objLoader the loader object model to used for loading Post models
+     * @param string|null the post type prefix for use with meta fields
      */
-    public function __construct($strPostPreFix = null)
+    public function __construct($strPostModel = 'MizzouPost',$objLoader = null,$strPostPreFix = null)
     {
         $this->_setDefaults();
         $this->_setPermalink();
@@ -74,6 +82,49 @@ class WpBase
 	    $this->aryDefaults['post_type'] = $this->strPostType;
     }
 
+    protected function _setLoaderAndModel($strPostModel,$objLoader)
+    {
+        $this->_setPostModel($strPostModel);
+        if(1 === preg_match($this->strDefaultPostModelPattern,$this->strPostModel) && is_null($objLoader)){
+            //@todo warn them that they need to pass in the loader
+            require_once MIZZOUMVC_ROOT_PATH . 'library' . DIRECTORY_SEPARATOR . 'Loader.php';
+            /**
+             * We need the path to the framework, parent path and child path
+             */
+            $this->objLoader = new MizzouMVC\library\Loader(MIZZOUMVC_ROOT_PATH,get_template_directory() . DIRECTORY_SEPARATOR,get_stylesheet_directory() . DIRECTORY_SEPARATOR);
+        } elseif(is_object($objLoader) && method_exists($objLoader,'load')){
+            $this->objLoader = $objLoader;
+        } else {
+            //@todo throw an error
+        }
+    }
+
+    protected function _setLoader($objLoader)
+    {
+
+    }
+    /**
+     * Checks to see if the string given to use contains a namespace (rudimentary). Also checks to see if the default was
+     * used and if so adds the MizzouMVC namespace.
+     *
+     * @param string $strPostModel Fully qualified namespaced name of the model to use
+     */
+    protected function _setPostModel($strPostModel)
+    {
+        $strNamespacedModel = '';
+        if(0 === preg_match($this->strDefaultPostModelPattern,$strPostModel)){
+            if(false === strpos($strPostModel,'\\')){
+                //@todo throw an error?
+            } else {
+                $strNamespacedModel = $strPostModel;
+            }
+        } elseif('MizzouPost' == $strPostModel){
+            //they left the default
+            $strNamespacedModel = __NAMESPACE__.'\\'.$strPostModel;
+        }
+
+        $this->strPostModel = $strPostModel;
+    }
 
     /**
      * Retrieves a collection of Custom Post objects based on options given in aryOptions
@@ -443,7 +494,8 @@ class WpBase
      */
     protected function _newPostInstance($objPost,$aryOptions)
     {
-        return new MizzouPost($objPost,$aryOptions);
+        return $this->objLoader->load($this->strPostModel,$objPost,$aryOptions);
+        //return new MizzouPost($objPost,$aryOptions);
     }
 
     /**
