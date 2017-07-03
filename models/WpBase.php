@@ -85,9 +85,9 @@ class WpBase
 
     protected function _setLoaderAndModel($strPostModel,$objLoader)
     {
-        _mizzou_log($strPostModel,'requested Post Model to use',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log($strPostModel,'requested Post Model to use',false,array('line'=>__LINE__,'file'=>__FILE__));
         $this->_setPostModel($strPostModel);
-        _mizzou_log($objLoader,'loader we were given',false,array('line'=>__LINE__,'file'=>__FILE__));
+        //_mizzou_log($objLoader,'loader we were given',false,array('line'=>__LINE__,'file'=>__FILE__));
         if(1 === preg_match($this->strDefaultPostModelPattern,$this->strPostModel) && is_null($objLoader)){
             //@todo warn them that they need to pass in the loader
             require_once MIZZOUMVC_ROOT_PATH . 'library' . DIRECTORY_SEPARATOR . 'Loader.php';
@@ -253,7 +253,7 @@ class WpBase
                             }
                             break;
                         case 'post_type':
-                            _mizzou_log($objMizzouPost->ID,'going to sort this ID by post type');
+                            //_mizzou_log($objMizzouPost->ID,'going to sort this ID by post type');
                             $this->_addElementToGroupArray($aryReturn,$objMizzouPost->post_type,$objMizzouPost);
                             break;
                         case 'member':
