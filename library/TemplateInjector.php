@@ -44,7 +44,15 @@ class TemplateInjector {
 
 		if(count($this->aryTemplates) > 0){
 			//inject templates into attributes metabox
-			add_filter('page_attributes_dropdown_pages_args',array($this,'injectTemplates'));
+			if(version_compare(floatval(get_bloginfo('version')),'4.7','<')){
+			    // before v4.6.X of wordpress
+                add_filter('page_attributes_dropdown_pages_args',array($this,'injectTemplates'));
+			} else {
+                //4.7+ method
+                add_filter('theme_page_templates',array($this,'injectTemplatesNew'));
+            }
+
+
 			//inject templates into the page cache
 			add_filter('wp_insert_post_data',array($this,'injectTemplates'));
 			//return our template+path if a page has been assigned to it
@@ -79,7 +87,7 @@ class TemplateInjector {
 	}
 
 	/**
-	 * Injects our theme templates into Wordpress' list of theme templates
+	 * Injects our theme templates into Wordpress' list of theme templates in < 4.7
 	 *
 	 * @param array $aryAttributes
 	 *
@@ -101,6 +109,16 @@ class TemplateInjector {
 		return $aryAttributes;
 
 	}
+
+    /**
+     * Injects our theme templates into Wordpress' list of templates in >= 4.7
+     * @param $aryTemplates
+     * @return array
+     */
+	public function injectTemplatesNew($aryTemplates)
+    {
+        return array_merge($aryTemplates,$this->aryTemplates);
+    }
 
 	/**
 	 * If the page has been assigned to our template, returns the full path to the template file
