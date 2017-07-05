@@ -32,7 +32,7 @@ require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'plugin_update_check.php';
 //add_action('admin_menu','mizzoumvcRegisterThemeAdminMenu');
 add_action('after_switch_theme','mizzouSetUpInitialOptions');
 add_action('after_setup_theme','mizzouMVCShouldWeRegisterSettingsCPT');
-add_action('plugins_loaded',array('TemplateInjector','getInstance'));
+add_action('init',array('TemplateInjector','getInstance'));
 add_action('init',array('IframeEmbed','getInstance'),10,3);
 add_action('init','mizzouManagerRoleFixCheck');
 //add_filter('embed_oembed_html','mizzouMVCYoutube',10,3);
