@@ -70,17 +70,17 @@ class Loader {
 
         $aryClassParts = explode('\\',$strClass);
 
-	    $strFileName = end($aryClassParts);
+        $strFileName = end($aryClassParts);
 
-	    /**
-	     * Wordpress uses hyphens in file names to designate template parts.  But we cant use a hyphen in class names
-	     * @todo make sure the documentation notes controllers that need hyphens in the file name (e.g. single-person.php)
+        /**
+         * Wordpress uses hyphens in file names to designate template parts.  But we cant use a hyphen in class names
+         * @todo make sure the documentation notes controllers that need hyphens in the file name (e.g. single-person.php)
          * need to use underscores in the classname.  In those instances where they want to use underscores in the file
          * name/classname and not have them converted to hyphens will need to use double underscores
          * page_publications__by__author will convert to page-publications__by__author.php
-	     */
-	    if(1 == preg_match('/\\\\controllers\\\\/',$strClass)){
-			//$strFileName = str_replace('_','-',$strFileName);
+         */
+        if(1 == preg_match('/\\\\controllers\\\\/',$strClass)){
+            //$strFileName = str_replace('_','-',$strFileName);
             /**
              * so it gets more interesting.  we have situations like the following:
              * page-publications_by_author.php
@@ -93,9 +93,9 @@ class Loader {
              */
 
             $strFileName = preg_replace('/(?=(_(?!_)))((?<!_)_)/', '-',$strFileName);
-	    }
+        }
 
-	    $strFileName .= '.php';
+        $strFileName .= '.php';
 
 
         $strFullPath = $this->_determinePath($aryClassParts) . $strFileName;
@@ -104,13 +104,13 @@ class Loader {
             require_once $strFullPath;
             if(class_exists($strClass,false)){
                 if(count($aryArgs) > 0){
-	                //_mizzou_log($aryArgs,'arguments before extractment',false,array('line'=>__LINE__,'file'=>__FILE__));
-	                /**
-	                 * @todo what should we do about the prefix for invalid/numeric variables? should it be a theme/framework setting?
-	                 */
-	                //return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID,'mzmvc'));
-	                $objReflect = new \ReflectionClass($strClass);
-	                return $objReflect->newInstanceArgs($aryArgs);
+                    //_mizzou_log($aryArgs,'arguments before extractment',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    /**
+                     * @todo what should we do about the prefix for invalid/numeric variables? should it be a theme/framework setting?
+                     */
+                    //return new $strClass(extract($aryArgs,EXTR_PREFIX_INVALID,'mzmvc'));
+                    $objReflect = new \ReflectionClass($strClass);
+                    return $objReflect->newInstanceArgs($aryArgs);
                 } else {
                     return new $strClass;
                 }
@@ -130,7 +130,7 @@ class Loader {
     protected function _determinePath($aryClassParts)
     {
         //_mizzou_log($this,'are our paths set?',false,array('line'=>__LINE__,'file'=>__FILE__));
-        //_mizzou_log($aryClassParts,'the class parts to the file we need',false,array('line'=>__LINE__,'file'=>__FILE__));
+        _mizzou_log($aryClassParts,'the class parts to the file we need',false,array('line'=>__LINE__,'file'=>__FILE__));
         $strFullPath = '';
 
         $strEndPiece = end($aryClassParts);
@@ -139,23 +139,35 @@ class Loader {
         $strFirst = reset($aryClassParts);
 
         if('MizzouMVC' == $strFirst){
-            $strFullPath = $this->strFrameworkPath;
-	        $strNext = next($aryClassParts);
+            $strNext = next($aryClassParts); // models or plugin
+            if('plugin' == $strNext){
+                //we need the plugin path e.g. /var/www/html/account/www/wp-content/plugins
+                $strFullPath = dirname($this->strFrameworkPath);
+                //hold the pieces we have so far
+                $aryPluginDir = array($strFirst,$strNext);
+                //this should be the name of the plugin
+                $strNext = next($aryClassParts);
+                $aryPluginDir[] = $strNext;
+                $strFullPath .= DIRECTORY_SEPARATOR . strtolower(implode('-',$aryPluginDir)) . DIRECTORY_SEPARATOR;
+                $strNext = next($aryClassParts);
+            } else {
+                $strFullPath = $this->strFrameworkPath;
+            }
         } else {
             $strSecond = next($aryClassParts);
             //the first part then will be the project root. The second part COULD be the parent/child indicator, but if
             //not, then it'll be the "parent" path
             if('child' == $strSecond){
                 $strFullPath = $this->strChildThemePath;
-	            $strNext = next($aryClassParts);
+                $strNext = next($aryClassParts);
             } else {
                 $strFullPath = $this->strParentThemePath;
-	            if('parent' == $strSecond){
-		            $strNext = next($aryClassParts);
-	            } else {
-		            $strNext = $strSecond;
-	            }
-	        }
+                if('parent' == $strSecond){
+                    $strNext = next($aryClassParts);
+                } else {
+                    $strNext = $strSecond;
+                }
+            }
         }
 
         //ok, now we have our root start
