@@ -168,6 +168,33 @@ function mizzouSetUpInitialOptions()
             }
         }
 
+        /**
+         * @todo we need some higher-order way of tracking optional "themes" that we might have access to. right now that list is
+         * hard-coded partially in TemplateInjector and partially in other locations
+         */
+        $aryPageAndTemplates = array(
+            'search',
+            'calendar',
+            'news'
+        );
+
+        foreach($aryPageAndTemplates as $strTemplate){
+            if(is_null(get_page_by_path($strTemplate))){
+                $aryPageParams = array(
+                    'post_title'    => ucwords($strTemplate),
+                    'post_status'   => 'publish',
+                    'post_type'     => 'page',
+                    'comment_status'=> 'closed',
+                    'ping_status'   => 'closed',
+                    'meta_input'    => array(
+                        '_wp_page_template' => $strTemplate . '.php',
+                    ),
+                );
+
+                wp_insert_post($aryPageParams);
+            }
+        }
+
         if(!update_option($strOptionsLoadedKeyName,1)){
             _mizzou_log(null,'just tried to create an option for ' . $strOptionsLoadedKeyName . ' but it failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
         }
