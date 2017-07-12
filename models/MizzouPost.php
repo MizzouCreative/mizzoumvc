@@ -88,7 +88,7 @@ class MizzouPost extends PostBase
 
     /**
      * Creates our custom post object with all data requested via options
-     * @param WP_Post|integer $mxdPost
+     * @param \WP_Post|integer $mxdPost
      * @param array $aryOptions
      */
     public function __construct($mxdPost, $aryOptions = array())
