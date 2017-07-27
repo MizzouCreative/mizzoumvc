@@ -196,6 +196,12 @@ abstract class Main {
 
         $this->objRenderType = $this->_retrieveRenderType();
 		$this->renderData('RenderType',$this->objRenderType );
+
+        /**
+         * @todo is there a reason we dont go ahead and auto-generate MainPost for at least single and page? we could add
+         * a parameter to the constructor for overriding the autogeneration. At this stage, we have the RenderType object
+         * so we know what type of request we're dealing with
+         */
     }
 
     /**
