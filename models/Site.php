@@ -4,6 +4,7 @@
  */
 namespace MizzouMVC\models;
 use MizzouMVC\library\Loader;
+use \ArrayAccess;
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'.DIRECTORY_SEPARATOR.'FrameworkSettings.php';
 
 /**
@@ -30,7 +31,8 @@ require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'.DIRECT
  *
  * ASSUMES that Base.php and A11yPageWalker.php classes has already been included
  */
-class Site extends Base {
+class Site extends Base implements ArrayAccess
+{
     /**
      * @var array default options
      */
@@ -260,6 +262,43 @@ class Site extends Base {
     public function currentPublicMembers()
     {
         return array_keys($this->aryData);
+    }
+
+    /**
+     * Allows us to retrieve a property as an array
+     * @param mixed $strOffset
+     * @return mixed
+     */
+    public function offsetGet($strOffset)
+    {
+        return isset($this->aryData[$strOffset]) ? $this->aryData[$strOffset] : null;
+    }
+
+    /**
+     * @param mixed $strOffset
+     * @param mixed $mxdValue
+     */
+    public function offsetSet($strOffset, $mxdValue)
+    {
+        //setting is not allowed
+    }
+
+    /**
+     * allows us to check if a property is set 
+     * @param mixed $strOffset
+     * @return bool
+     */
+    public function offsetExists($strOffset)
+    {
+        return isset($this->aryData[$strOffset]);
+    }
+
+    /**
+     * @param mixed $strOffset
+     */
+    public function offsetUnset($strOffset)
+    {
+        //do nothing. not allowed
     }
 
     /**
