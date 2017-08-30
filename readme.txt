@@ -1,8 +1,8 @@
 === MizzouMVC framework ===
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
-Tested up to: 4.6
-Stable tag: 3.5.3
+Tested up to: 4.8.1
+Stable tag: 3.6.0
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,13 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.6.0 =
+* Framework now supports framework plugins
+* Added a basic archive controller
+* Can now access members of Site via object notation (->) or as an array
+* WpBase (and Children) now accepts a FQ namespace class that it will use to return new posts instances via retrieveContent and convertPost(s).
+* WpBase (and children) now require an instance of the Loader class to be passed in to facilitiate the above
+
 = 3.5.3 =
 Bug fix related to incorrect permissions being set on cache directory
 
