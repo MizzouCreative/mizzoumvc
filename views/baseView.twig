@@ -17,6 +17,9 @@
 #}
 {% include 'header.twig' %}
 <body>
+{% block analytics_noscript %}
+    {% if Site["site-wide"].google_tag_manager_id is not empty %} {% include 'analytics-noscript.twig' %} {% endif %}
+{% endblock %}
 {% block skipto %}
     {% include 'skipto.twig' %}
 {% endblock %}
