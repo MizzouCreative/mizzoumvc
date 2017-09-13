@@ -33,11 +33,13 @@
  *
  *
  * @todo Shouldnt tracking code be moved into the theme options and then accessed via objTheme object?
-##}
+#}
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-
+    {% block analytics_tracking %}
+        {% include 'analytics-tracking.twig' %}
+    {% endblock %}
     <title>{{ HeadTitle }}</title>
 
     {% if IncludeNoIndex %}
