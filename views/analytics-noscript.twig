@@ -1,0 +1,16 @@
+{#
+ * 
+ * 
+ * @package WordPress
+ * @subpackage 
+ * @category theme
+ * @category view
+ * @author Paul Gilzow, Mizzou Creative, University of Missouri
+ * @copyright 2016 Curators of the University of Missouri
+#}
+{% if Site["site-wide"].google_tag_manager_id is not empty %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ Site["site-wide"].google_tag_manager_id }}"
+                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+{% endif %}
