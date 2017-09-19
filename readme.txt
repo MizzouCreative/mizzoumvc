@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 4.8.1
-Stable tag: 3.6.0
+Stable tag: 3.6.1
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,9 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.6.1 =
+* People model wasn't compatible with the changes to WpBase
+
 = 3.6.0 =
 * Framework now supports framework plugins
 * Added a basic archive controller
