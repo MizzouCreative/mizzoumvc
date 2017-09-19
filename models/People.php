@@ -29,12 +29,12 @@ class People extends WpBase{
      * Sets up all the defaults needed when retrieving people post type
      * @param string|null $strPostPreFix meta data prefix for custom meta keys for this post type
      */
-    public function __construct($strPostPreFix = null)
+    public function __construct($strPostModel = 'MizzouPost',$objLoader = null,$strPostPreFix = null)
     {
         /**
          * People should always include meta
          */
         $this->aryDefaults['include_meta'] = true;
-        parent::__construct($strPostPreFix);
+        parent::__construct($strPostModel,$objLoader,$strPostPreFix);
     }
 }
