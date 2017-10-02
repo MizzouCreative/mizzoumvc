@@ -22,7 +22,7 @@ class RenderType extends Base
          * @see https://core.trac.wordpress.org/browser/tags/4.8.1/src/wp-includes/class-wp-query.php#L3694
          * It's always dynamically generated. We will store it as a property
          */
-        $aryActions['front_page'] = $objWPQuery->is_front_page();
+        $aryActions['is_front_page'] = $objWPQuery->is_front_page();
         $this->_setCurrentAction($aryActions);
         $this->aryData = array_merge($this->aryData,$aryActions);
     }
@@ -77,6 +77,9 @@ class RenderType extends Base
      */
     protected function _retrieveJustAction($strAction)
     {
-        return ltrim($strAction,'is_');
+        if(1 === preg_match('/^is_(?P<action>[a-z_]+)$/',$strAction,$aryMatches)){
+            $strAction = $aryMatches['action'];
+        }
+        return $strAction;
     }
 }
