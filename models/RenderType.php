@@ -17,6 +17,12 @@ class RenderType extends Base
     public function __construct(\WP_Query $objWPQuery)
     {
         $aryActions = $this->_retrieveIsActions($objWPQuery);
+        /**
+         * interestingly, is_front_page is not a property of WP_Query like most other is_* properties
+         * @see https://core.trac.wordpress.org/browser/tags/4.8.1/src/wp-includes/class-wp-query.php#L3694
+         * It's always dynamically generated. We will store it as a property
+         */
+        $aryActions['front_page'] = $objWPQuery->is_front_page();
         $this->_setCurrentAction($aryActions);
         $this->aryData = array_merge($this->aryData,$aryActions);
     }
