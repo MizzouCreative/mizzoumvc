@@ -212,6 +212,8 @@ abstract class Main {
      */
     public function render($strInnerViewFileName)
     {
+        //run any of our backwards Compatibility checks that might be needed.
+        $this->_backwardsCompatibility();
 
         if($this->boolLoadSurroundingViewData){
 		    /**
@@ -687,6 +689,25 @@ abstract class Main {
 
         return (is_readable($strSpecialViewFull)) ? $strViewToFind : $strMainView;
 
+    }
+
+    /**
+     * Perform backwards compatibility checks and functions
+     */
+    protected function _backwardsCompatibility()
+    {
+        /**
+         * Older versions referred to the Main Post object as objMainPost. Later, for the sake of using it in the views,
+         * we removed the variable type prefixed from variables since those working in views dont usually care what the
+         * type is. We need to make sure for older themes, if it is still using the old name, we create an alias
+         */
+        if(!isset($this->aryRenderData['MainPost']) && isset($this->aryRenderData['objMainPost'])){
+            //clone it to MainPost
+            $this->aryRenderData['MainPost'] = $this->aryRenderData['objMainPost'];
+            //remove the original
+            unset($this->aryRenderData['objMainPost']);
+            $this->aryRenderData['objMainPost'] =& $this->aryRenderData['MainPost'];
+        }
     }
 
 	/**
