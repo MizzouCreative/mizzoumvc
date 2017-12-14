@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 4.8.1
-Stable tag: 3.6.1
+Stable tag: 3.6.3
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,15 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.6.3 =
+* RenderType object now includes is_front_page (front_page in view)
+* Loader class now assures a trailing slash for plugin/theme paths before using
+* WpBase class now checks to see if it is passed a post type prefix (pre v3.6.0) and handles appropriately
+* VIEW_CACHE_LOCATION constant renamed to MIZZOUMVC_VIEW_CACHE_LOCATION to match constant naming convention
+* Added MIZZOUMVC_DISABLE_VIEW_CACHE to _completely_ disable cache generation in the Twig view engine
+    * Setting WP_DEBUG to true now instructs the Twig engine to recompile the requested view(s) but does not affect caching
+    * Setting MIZZOUMVC_DISABLE_VIEW_CACHE to true will completely disable Twig caching
+
 = 3.6.1 =
 * People model wasn't compatible with the changes to WpBase
 
