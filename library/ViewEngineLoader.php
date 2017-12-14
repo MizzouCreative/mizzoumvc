@@ -125,10 +125,16 @@ class ViewEngineLoader {
         $strViewCacheLocation = '';
 
         /**
-         * @todo I believe VIEW_CACHE_LOCATION constant is a left-over from an earlier version. Remove?
+         * This will disable caching altogether
          */
-        if(defined('VIEW_CACHE_LOCATION')){
-            $strViewCacheLocation = VIEW_CACHE_LOCATION;
+        if(defined('MIZZOUMVC_DISABLE_VIEW_CACHE') && MIZZOUMVC_DISABLE_VIEW_CACHE){
+            $strViewCacheLocation = false;
+        } elseif(defined('MIZZOUMVC_VIEW_CACHE_LOCATION')){
+            /**
+             * @todo re-evaluate the use of a global constant. We have access to the site object by the time this class is
+             * called so we _could_ move this into a theme setting area.
+             */
+            $strViewCacheLocation = MIZZOUMVC_VIEW_CACHE_LOCATION;
         } else {
             //let's see if we have a cache directory
             $strPossibleCacheLocation = $this->strThemeDir.'cache'.DIRECTORY_SEPARATOR;
