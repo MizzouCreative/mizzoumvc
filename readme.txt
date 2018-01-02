@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 4.8.1
-Stable tag: 3.6.3
+Stable tag: 3.6.4
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,8 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.6.4 =
+* Change regular expression pattern for meta data groups to not capture an ending _ if the group name (if applicable)
 = 3.6.3 =
 * RenderType object now includes is_front_page (front_page in view)
 * Loader class now assures a trailing slash for plugin/theme paths before using
