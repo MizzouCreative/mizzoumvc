@@ -76,9 +76,12 @@ class MizzouPost extends PostBase
     );
     /**
      * @var string regex pattern for locating post members that should be consolidated into an array
-     * ([a-zA-Z_]*)_?\d
+     * (\w+?[A-Za-z0-9]+)(?:_?\d{1,3})
+     * capture one or more word characters, as few as possible, followed by
+     * capture one or more characters A-Z, a-z, 0-9 (i.e. arent an underscore), followed by
+     * a possible underscore and a number between 0 - 999
      */
-    private $strMetaGroupPattern = '([a-zA-Z_]*)_?\d';
+    private $strMetaGroupPattern = '(\w+?[A-Za-z0-9]+)(?:_?\d{1,3})';
 
     /**
      * @var string should be the default date format, but i think this is now deprecated, due to AP Style
