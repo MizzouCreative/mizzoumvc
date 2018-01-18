@@ -181,7 +181,7 @@ class ViewEngineLoader {
 
         }
 
-        if(''==$strViewCacheLocation){
+        if('' === $strViewCacheLocation){
             /**
              * @todo we need a more elegant way of handling this
              */
