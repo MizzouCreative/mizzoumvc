@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 4.8.1
-Stable tag: 3.6.4
+Stable tag: 3.7.0
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,9 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.7.0 =
+* Now supports Twig namespaces. Namespaces must be defined in views/_data/namespaces.json in the theme (or child theme)
+* Bug fix: when disabling caching via MIZZOUMVC_DISABLE_VIEW_CACHE, in some cases ignored the constant.
 = 3.6.4 =
 * Change regular expression pattern for meta data groups to not capture an ending _ if the group name (if applicable)
 = 3.6.3 =

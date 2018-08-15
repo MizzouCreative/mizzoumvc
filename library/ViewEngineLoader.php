@@ -27,6 +27,11 @@ class ViewEngineLoader {
      * @var null|\Twig_Environment internal storage of the view engine
      */
     protected $objViewEngine = null;
+
+    /**
+     * @var null|\Twig_Loader_Filesystem internal storage of class that handles loading templates
+     */
+    protected $objViewEngineFileSystemLoader = null;
     /**
      * @var null|ViewEngineLoader static instance of our Loader
      */
@@ -43,6 +48,17 @@ class ViewEngineLoader {
      * @var null|string server path to the child theme
      */
     protected $strChildThemeDir = null;
+
+    /**
+     * Name of the directory where the namespace declarations file is contained
+     * @todo should be moved into the twig-specific class once that is done
+     */
+    const NAMESPACE_DIRECTORY = '_data';
+    /**
+     * name of the json file that contains the twig namespaces to be added
+     * @todo should be moved into the twig-specific class once that is done
+     */
+    const NAMESPACE_FILENAME = 'namespaces.json';
 
     /**
      * Sets viw directory locations, whether to enable caching, loads custom view filters/functions/tests
@@ -64,11 +80,16 @@ class ViewEngineLoader {
             'cache'         => $this->_determineViewCacheLocation(),
             'auto_reload'   => $boolAutoReload,
             'autoescape'    => false,
+            'debug'         => (defined('MIZZOUMVC_VIEW_DEBUG')) ? MIZZOUMVC_VIEW_DEBUG : false,
         );
 
         //initiate our view engine
+        $aryDirectories = $this->_determineViewDirectories();
+        $this->objViewEngineFileSystemLoader = new \Twig_Loader_Filesystem(($aryDirectories));
         //$this->objViewEngine = new Twig_Environment($this->objViewEngineEnvironmentLoader,$aryViewEngineOptions);
-        $this->objViewEngine = new \Twig_Environment(new \Twig_Loader_Filesystem($this->_determineViewDirectories()),$aryViewEngineOptions);
+        $this->_loadNameSpaces($aryDirectories);
+        //echo 'loadnamespaces called.';exit();
+        $this->objViewEngine = new \Twig_Environment($this->objViewEngineFileSystemLoader,$aryViewEngineOptions);
         //load up our custom view filters
         $this->_loadViewEngineFilters();
         //load up our custom view functions
@@ -160,7 +181,7 @@ class ViewEngineLoader {
 
         }
 
-        if(''==$strViewCacheLocation){
+        if('' === $strViewCacheLocation){
             /**
              * @todo we need a more elegant way of handling this
              */
@@ -296,6 +317,42 @@ class ViewEngineLoader {
         });
 
         $this->objViewEngine->addTest($objNumericTest);
+    }
+
+    /**
+     * Checks to see if a namespace.json file exists. if so, loads in and adds the namespace+path to the ViewEngine
+     * FileSystem Loader
+     * @param array $aryDirectories list of directories where our templates reside
+     * @param \Twig_Loader_Filesystem $objTwigFSLoader
+     * @todo this is *completely* coupled to Twig and should be moved into a Twig middleware controller
+     */
+    protected function _loadNameSpaces(array $aryDirectories = array())
+    {
+        foreach ($aryDirectories as $strDirectory){
+            $strFile = $strDirectory . $this::NAMESPACE_DIRECTORY . DIRECTORY_SEPARATOR . $this::NAMESPACE_FILENAME;
+            //does the file exist and can we get its contents?
+            if(file_exists($strFile) && false !== $strJSON = file_get_contents($strFile)){
+                //do we have a json object (converted to an array)
+                if(null !== $aryNameSpaces = json_decode($strJSON,true)){
+                    //letd grab the declared namespace
+                    foreach ($aryNameSpaces as $strNameSpace => $aryNameSpaceData){
+                        //grab the array of paths
+                        if(isset($aryNameSpaceData['paths']) && is_array($aryNameSpaceData['paths'])){
+                            //add each path as a namespace
+                            foreach ($aryNameSpaceData['paths'] as $strNameSpacePath){
+                                //@todo do we need to reverse the array before we loop?
+                                foreach ($aryDirectories as $strTemplateLocation){
+                                    $strNameSpaceFullPath = $strTemplateLocation . $strNameSpacePath;
+                                    if(is_dir($strNameSpaceFullPath)){
+                                        $this->objViewEngineFileSystemLoader->addPath($strNameSpaceFullPath,$strNameSpace);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 	/**
