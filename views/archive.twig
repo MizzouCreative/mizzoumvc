@@ -9,8 +9,12 @@
  * @copyright 2017 Curators of the University of Missouri
 #}
 {% extends 'baseView.twig' %}
+{# eventually, baseView will be restructured to include the header/h1, this is to build in future compatibility #}
+{% set _content_header = block("content_header") %}
 {% block content %}
+    {% if _content_header is empty %}
     <h1>{{ PageTitle }}</h1>
+    {% endif %}
     {% if Posts is not empty and Posts|length > 0 %}
         {% for Post in Posts %}
             {% include 'post-card.twig' %}
