@@ -9,9 +9,12 @@
  * @copyright 2015 Curators of the University of Missouri
 #}
 {% extends 'baseView.twig' %}
+{# eventually, baseView will be restructured to include the header/h1, this is to build in future compatibility #}
+{% set _content_header = block("content_header") %}
 {% block content %}
-    <div id="content">
+    {% if _content_header is empty %}
         <h1>{{ PageTitle }}</h1>
+    {% endif %}
         <div id="article">
             {% if MainPost is not empty %}
                 {{ MainPost.content }}
