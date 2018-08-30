@@ -1,0 +1,8 @@
+{
+  "3.7.1": {
+    "description": "Future compatibility update with changes to baseView. Currently experimenting with adding more content blocks into the baseView. This update allows for those upcoming change.",
+    "requires": "4.7.0",
+    "tested": "4.9.8",
+    "upgrade_notice": "This is a non-critical update. Update at your convenience."
+  }
+}
