@@ -161,7 +161,7 @@ class Breadcrumbs extends Base {
      */
     protected function _createNewMember($strName,$strURL)
     {
-        $objMember = new stdClass();
+        $objMember = new \stdClass();
         $objMember->name = $strName;
         $objMember->URL = $strURL;
 
