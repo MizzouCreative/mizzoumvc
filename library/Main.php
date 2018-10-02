@@ -80,7 +80,6 @@ abstract class Main {
         'include_pagination'=>false,
         'return'            =>false,
         'bypass_init'       =>false,
-        'include_breadcrumbs'=>false,
     );
 
     /**
