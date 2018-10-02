@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 4.8.1
-Stable tag: 3.7.1
+Stable tag: 3.7.2
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,8 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.7.2 =
+* Fixes #13 - Fixes Breadcrumbs not working properly when globally set.
 = 3.7.1 =
 * Future compatibility update with changes to baseView. Currently experimenting with adding more content blocks into the baseView. This update allows for those upcoming change.
 = 3.7.0 =
