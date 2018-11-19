@@ -24,11 +24,14 @@ class SingleMenu extends Base
         //no use trying to get the menu items if we already know the menu doesnt exist
         if('' !== $this->aryData['formatted']){
             $aryItems = $this->_getMenuItems($strMenuName);
+            $aryMenuItems = $this->_restructureMenuItems($aryItems);
         } else {
             $aryItems = array();
+            $aryMenuItems = array();
         }
 
         $this->add_data('items',$aryItems);
+        $this->add_data('menu_items', $aryMenuItems);
 
     }
 
@@ -75,5 +78,65 @@ class SingleMenu extends Base
             $strMenu = '';
         }
         return $strMenu;
+    }
+
+    /**
+     *
+     * Assumption: the array structure we're given is a flattened array where the items are in order of top to bottom
+     * regardless of nesting
+     *
+     * @param array $aryItems
+     */
+    protected function _restructureMenuItems(array $aryItems)
+    {
+        $aryStructuredMenuItems = [];
+        $aryChildren = [];
+        $aryReversedMenu = array_reverse($aryItems);
+
+        foreach ($aryReversedMenu as $objItem) {
+            if ($objItem instanceof \WP_Post) {
+                $objMenuItem = $this->_createMenuItemObject($objItem);
+
+                /**
+                 * Does this item have any children?
+                 */
+                if (isset($aryChildren[$objMenuItem->ID])) {
+                    //the children were stored in reverse order, so we need to flip back before storing
+                    $objMenuItem->children = array_reverse($aryChildren[$objMenuItem->ID]);
+                    unset($aryChildren[$objMenuItem->ID]);
+                }
+
+                /**
+                 * Is this item a child of another item?
+                 */
+                if (0 !== intval($objMenuItem->parent)) {
+                    if (!isset($aryChildren[$objMenuItem->parent])) {
+                        $aryChildren[$objMenuItem->parent] = array();
+                    }
+
+                    $aryChildren[$objMenuItem->parent][] = $objMenuItem;
+                } else {
+                    $aryStructuredMenuItems[$objMenuItem->ID] = $objMenuItem;
+                }
+            }
+        }
+
+        return array_reverse($aryStructuredMenuItems);
+    }
+
+    protected function _createMenuItemObject(\WP_Post $objItem )
+    {
+        /**
+         * @todo we need to make an interface, implement the interface and use it here
+         */
+        $objMenuItem = new \stdClass();
+        $objMenuItem->ID = $objItem->ID;
+        $objMenuItem->href = $objItem->url;
+        $objMenuItem->text = $objItem->title;
+        $objMenuItem->parent = $objItem->menu_item_parent;
+        $objMenuItem->children = array();
+        $objMenuItem->classes = $objItem->classes;
+
+        return $objMenuItem;
     }
 }
