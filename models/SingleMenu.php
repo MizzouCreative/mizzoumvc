@@ -17,20 +17,16 @@ class SingleMenu extends Base
      * @param string $strMenuName the menu we want to retrieve
      * @param array $aryMenuOptions options for retrieving the menu
      */
-    public function __construct($strMenuName,$aryMenuOptions=array())
+    public function __construct($strMenuName, $aryMenuOptions = array())
     {
-        $this->add_data('name',$strMenuName);
-        $this->add_data('formatted',$this->_getFormattedMenu($strMenuName,$aryMenuOptions));
-        //no use trying to get the menu items if we already know the menu doesnt exist
-        if('' !== $this->aryData['formatted']){
-            $aryItems = $this->_getMenuItems($strMenuName);
-            $aryMenuItems = $this->_restructureMenuItems($aryItems);
-        } else {
-            $aryItems = array();
-            $aryMenuItems = array();
-        }
+        $this->add_data('name', $strMenuName);
+        $aryItems = $this->_getMenuItems($strMenuName);
 
-        $this->add_data('items',$aryItems);
+        $aryMenuItems = (count($aryItems) > 0) ? $this->_restructureMenuItems($aryItems) : array();
+
+
+        $this->add_data('formatted', $this->_getFormattedMenu($strMenuName, $aryMenuOptions));
+        $this->add_data('items', $aryItems);
         $this->add_data('menu_items', $aryMenuItems);
 
     }
@@ -91,6 +87,11 @@ class SingleMenu extends Base
     {
         $aryStructuredMenuItems = [];
         $aryChildren = [];
+        /**
+         * This adds our contextual classes to each item
+         * @see https://core.trac.wordpress.org/browser/tags/4.9.8/src/wp-includes/nav-menu-template.php#L272
+         */
+        _wp_menu_item_classes_by_context($aryItems);
         $aryReversedMenu = array_reverse($aryItems);
 
         foreach ($aryReversedMenu as $objItem) {
@@ -126,6 +127,8 @@ class SingleMenu extends Base
 
     protected function _createMenuItemObject(\WP_Post $objItem )
     {
+
+        //$objItem = wp_setup_nav_menu_item($objItem);
         /**
          * @todo we need to make an interface, implement the interface and use it here
          */
@@ -135,7 +138,18 @@ class SingleMenu extends Base
         $objMenuItem->text = $objItem->title;
         $objMenuItem->parent = $objItem->menu_item_parent;
         $objMenuItem->children = array();
+
+        /**
+         * The rest of this is almost duplicated directly from
+         * https://core.trac.wordpress.org/browser/tags/4.9.8/src/wp-includes/class-walker-nav-menu.php#L115
+         */
+
         $objMenuItem->classes = $objItem->classes;
+        //for some reason, the first element in the classes is empty. if so we'll get rid of it
+        if ('' == reset($objMenuItem->classes)) {
+            array_shift($objMenuItem->classes);
+        }
+        $objMenuItem->class = implode(' ', $objMenuItem->classes);
 
         return $objMenuItem;
     }
