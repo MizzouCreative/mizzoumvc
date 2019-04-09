@@ -25,6 +25,7 @@ define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'TemplateInjector.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'IframeEmbed.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'MizzouMvcCLI.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'plugin_update_check.php';
 
