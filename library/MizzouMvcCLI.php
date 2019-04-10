@@ -15,28 +15,29 @@ if (defined('WP_CLI') && WP_CLI) {
         /**
          * Clears the Twig cache
          * @subcommand clear-cache
-         * @return null
+         * @alias cc
+         * @return void
          */
         public function clearcache()
         {
             if (!defined('MIZZOUMVC_VERSION')) {
                 \WP_CLI::error('This site does not have the MizzouMVC plugin installed and activated');
-                return null;
+                return;
             }
 
-            $objViewEngine = ViewEngineLoader::getViewEngine(MIZZOUMVC_ROOT_PATH, get_template_directory() . DIRECTORY_SEPARATOR, get_stylesheet_directory() . DIRECTORY_SEPARATOR);
+            $objViewEngine = ViewEngineLoader::getViewEngine();
 
             $strCacheLocation = $objViewEngine->getCache();
 
             if (!file_exists($strCacheLocation)) {
                 \WP_CLI::error('The location ' . $strCacheLocation . ' does not exist.');
-                return null;
+                return;
             }
 
             $objDirectory = new \FilesystemIterator($strCacheLocation);
             if (!$objDirectory->valid()) {
                 \WP_CLI::error('Looks like ' . $strCacheLocation . ' is already emtpy!');
-                return null;
+                return;
             }
 
             \WP_CLI::log('Deleting cache from ' . $strCacheLocation . '...');
