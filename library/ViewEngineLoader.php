@@ -69,7 +69,7 @@ class ViewEngineLoader
      */
     private function __construct($strFrameworkDir = null, $strThemeDir = null, $strChildThemeDir = null)
     {
-        $this->setThemeDirectory($strFrameworkDir);
+        $this->setFrameWorkDirectory($strFrameworkDir);
         $this->setThemeDirectory($strThemeDir);
         $this->setChildDirectory($strChildThemeDir);
 
