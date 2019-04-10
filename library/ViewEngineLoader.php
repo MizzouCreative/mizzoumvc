@@ -62,14 +62,14 @@ class ViewEngineLoader {
 
     /**
      * Sets viw directory locations, whether to enable caching, loads custom view filters/functions/tests
-     * @param string $strFrameworkDir Server path location of the framework
-     * @param string $strThemeDir Server path location of the (parent) theme
+     * @param null|string $strFrameworkDir Server path location of the framework
+     * @param null|string $strThemeDir Server path location of the (parent) theme
      * @param null|string $strChildThemeDir server path of the child theme, if applicable
      */
-    private function __construct($strFrameworkDir,$strThemeDir,$strChildThemeDir=null){
-        $this->strFrameworkDir = $strFrameworkDir;
-        $this->strThemeDir = $strThemeDir;
-        $this->strChildThemeDir = $strChildThemeDir;
+    private function __construct($strFrameworkDir=null,$strThemeDir=null,$strChildThemeDir=null){
+        $this->strFrameworkDir($strFrameworkDir);
+        $this->setThemeDirectory($strThemeDir);
+        $this->setChildDirectory($strChildThemeDir);
 
         //initiate our twig environment loader
         //$this->objViewEngineEnvironmentLoader = new Twig_Loader_Filesystem($this->_determineViewDirectories());
@@ -100,12 +100,12 @@ class ViewEngineLoader {
 
     /**
      * Creates instance and/or returns stored instance
-     * @param string $strFrameworkDir server path of framework
-     * @param string $strThemeDir server path of main/parent theme
-     * @param string $strChildThemeDir server path of child theme, if applicable
+     * @param null|string $strFrameworkDir server path of framework
+     * @param null|string $strThemeDir server path of main/parent theme
+     * @param null|string $strChildThemeDir server path of child theme, if applicable
      * @return null|Twig_Environment
      */
-    public static function getViewEngine($strFrameworkDir,$strThemeDir,$strChildThemeDir=null)
+    public static function getViewEngine($strFrameworkDir=null,$strThemeDir=null,$strChildThemeDir=null)
     {
         if(is_null(self::$objInstance) || is_null(self::$objInstance->objViewEngine)){
             self::$objInstance = new ViewEngineLoader($strFrameworkDir,$strThemeDir,$strChildThemeDir);
@@ -353,6 +353,63 @@ class ViewEngineLoader {
                 }
             }
         }
+    }
+
+    /**
+     * Ensures a path ends with a directory separator
+     * @param $strDirectory directory path to evaluate
+     * @return string directory with ending separator
+     */
+    protected function ensureEndSeparator($strDirectory)
+    {
+        $strPattern = sprintf('/\%s/',DIRECTORY_SEPARATOR);
+        if (1 !== preg_match($strPattern, $strDirectory)) {
+            $strDirectory .= DIRECTORY_SEPARATOR;
+        }
+
+        return $strDirectory;
+    }
+
+    /**
+     * Sets the path to the MizzouMVC Framework
+     * @param null $strFrameworkDirectory
+     * @return void
+     */
+    protected function setFrameWorkDirectory($strFrameworkDirectory=null)
+    {
+        if (is_null($strFrameworkDirectory)) {
+            $strFrameworkDirectory = MIZZOUMVC_ROOT_PATH;
+        }
+
+        $this->strFrameworkDir = $strFrameworkDirectory;
+    }
+
+    /**
+     * Sets the system path to our theme directory
+     * @param null|string $strDirectory path to theme/parent theme
+     * @return void
+     */
+    protected function setThemeDirectory($strDirectory=null)
+    {
+        if (is_null($strDirectory)) {
+            $strDirectory = get_template_directory();
+        }
+
+        $this->strThemeDir = $this->ensureEndSeparator($strDirectory);
+    }
+
+    /**
+     * Sets the path to the current theme, or child theme, if applicable
+     * @param null|string $strDirectory path to child theme
+     * @return void
+     */
+    protected function setChildDirectory($strDirectory=null)
+    {
+        if (is_null($strDirectory)) {
+            $strDirectory = get_stylesheet_directory();
+        }
+
+        $this->strChildThemeDir = $this->ensureEndSeparator($strDirectory);
     }
 
 	/**
