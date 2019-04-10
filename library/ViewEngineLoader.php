@@ -362,7 +362,7 @@ class ViewEngineLoader
      */
     protected function ensureEndSeparator($strDirectory)
     {
-        $strPattern = sprintf('/\%s/', DIRECTORY_SEPARATOR);
+        $strPattern = sprintf('/\%s$/', DIRECTORY_SEPARATOR);
         if (1 !== preg_match($strPattern, $strDirectory)) {
             $strDirectory .= DIRECTORY_SEPARATOR;
         }
