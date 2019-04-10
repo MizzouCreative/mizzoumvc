@@ -1,9 +1,17 @@
 {
-	"config": {
-		"vendor-dir":"helpers"
-	},
-	
+	"name": "mizzou-digital/mizzoumvc",
+	"description": "MVC-based WordPress framework for rapid theme development",
+	"type": "wordpress-plugin",
+	"authors": [
+		{
+			"name": "Paul Gilzow",
+			"email": "gilzowp@missouri.edu"
+		}
+	],
+
 	"require": {
+		"php": ">=7.0",
+		"composer/installers": "^1.6",
 		"twig/twig":"1.18.*"
 	}
 }
