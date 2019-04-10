@@ -1,8 +1,8 @@
 === MizzouMVC framework ===
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
-Tested up to: 4.8.1
-Stable tag: 3.7.2
+Tested up to: 5.1.1
+Stable tag: 3.8.0
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,10 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.8.0 =
+* Added
+    * Composer.json file - framework/plugin now installable via composer
+    * WPCLI command: `wp mizzoumvc clear-cache` to clear the Twig cache files
 = 3.7.2 =
 * Fixes #13 - Fixes Breadcrumbs not working properly when globally set.
 = 3.7.1 =

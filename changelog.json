@@ -1,4 +1,10 @@
 {
+  "3.8.0": {
+    "description": "Added composer.json description so plugin is now installable via composer. Added WPCLI command `wp mizzoumvc clear-cache` to manually clear Twig cache files.",
+    "requires": "4.7.0",
+    "tested": "5.1.1",
+    "upgrade_notice": "This is a non-critical update. Update at your convenience."
+  },
   "3.7.2": {
     "description": "Fixes Breadcrumbs not working correctly when enabled at a global level",
     "requires": "4.7.0",
