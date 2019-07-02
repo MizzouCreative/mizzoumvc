@@ -33,6 +33,9 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.8.1 =
+* Fixes
+    * Situation where certain files were formatted with Windows line endings, which broke the ability to find namespaces.
 = 3.8.0 =
 * Added
     * Composer.json file - framework/plugin now installable via composer

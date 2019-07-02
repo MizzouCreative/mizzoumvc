@@ -1,4 +1,10 @@
 {
+  "3.8.1": {
+    "description": "Fixes situation where certain files were formatted with Windows line endings, which broke the ability to find namespaces.",
+    "requires":"4.7.0",
+    "tested":"5.2.2",
+    "upgrade_notice": "This is a non-critical bug fix that only affects a limited number of users. Update at your convenience."
+  }
   "3.8.0": {
     "description": "Added composer.json description so plugin is now installable via composer. Added WPCLI command `wp mizzoumvc clear-cache` to manually clear Twig cache files.",
     "requires": "4.7.0",
