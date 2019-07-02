@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 5.1.1
-Stable tag: 3.8.0
+Stable tag: 3.8.1
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
