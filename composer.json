@@ -12,6 +12,6 @@
 	"require": {
 		"php": ">=7.0",
 		"composer/installers": "^1.6",
-		"twig/twig":"1.18.*"
+		"twig/twig":"^1.18.2"
 	}
 }
