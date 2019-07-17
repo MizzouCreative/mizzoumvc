@@ -1,4 +1,10 @@
 {
+  "3.8.3": {
+    "description": "Removes the composer constraint on Twig in composer.json that was preventing other packages from updating.",
+    "requires":"4.7.0",
+    "tested":"5.2.2",
+    "upgrade_notice": "This is a non-critical bug fix that only affects sites using a composer-based worfkflow. Update at your convenience."
+  },
   "3.8.2": {
     "description": "Fixes situation where certain files were formatted with Windows line endings, which broke the ability to find namespaces.",
     "requires":"4.7.0",
