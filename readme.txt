@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 5.1.1
-Stable tag: 3.8.3
+Stable tag: 3.9.0
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,8 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.9.0 =
+* Updates twig library to 4.42.2 - This should be a non-breaking upgrade, but test before updating production
 = 3.8.3 =
 * Removes the composer constraint on Twig in composer.json that was preventing other packages from updating.
 = 3.8.2 =
