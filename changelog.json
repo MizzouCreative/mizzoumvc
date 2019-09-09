@@ -1,4 +1,10 @@
 {
+  "3.9.0": {
+    "description": "Updates twig library to 1.42.2",
+    "requires": "4.7.0",
+    "tested": "5.2.3",
+    "upgrade_notice": "This should be a non-breaking change. However, *please* test before moving to production as the jump in Twig version was fairly substantial."
+  },
   "3.8.3": {
     "description": "Removes the composer constraint on Twig in composer.json that was preventing other packages from updating.",
     "requires":"4.7.0",
