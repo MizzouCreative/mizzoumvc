@@ -508,7 +508,7 @@ abstract class Main {
 
 			if(false != $rscHandle = fopen($strLocatedController,'r')){
 				while(false !== ($strLine = fgets($rscHandle)) && !$boolFound){
-					if(1 ==$boolMatched = preg_match('/^namespace\ ([\w\\\\]+);$/im',$strLine,$aryMatches)){
+					if(1 ==$boolMatched = preg_match('/^namespace\ ([\w\\\\]+);(?:\r|\r\n|\n)?$/im',$strLine,$aryMatches)){
 						$strNameSpacedController = $aryMatches[1] . "\\" . $strController;
 						$boolFound = true;
 					}

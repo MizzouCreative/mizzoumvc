@@ -3,7 +3,7 @@
  * Plugin Name: MizzouMVC
  * Plugin URI: https://marcom.missouri.edu/department/miz-creative/
  * Description: MVC Framework for rapid custom theme development
- * Version: 3.7.2
+ * Version: 3.9.1
  * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
  * Author URI: https://marcom.missouri.edu/department/miz-creative/
  * @package W
@@ -14,17 +14,18 @@
  * @uses
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
- * @version 3.7.2
+ * @version 3.9.1
  */
 /**
  * @todo let's check to see if the memory is low and then increase if needed
  */
-define('MIZZOUMVC_VERSION','3.7.2');
+define('MIZZOUMVC_VERSION','3.9.1');
 define('MIZZOUMVC_ROOT_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'TemplateInjector.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'IframeEmbed.php';
+require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'library'.DIRECTORY_SEPARATOR.'MizzouMvcCLI.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions.php';
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'plugin_update_check.php';
 

@@ -1,8 +1,8 @@
 === MizzouMVC framework ===
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
-Tested up to: 4.8.1
-Stable tag: 3.7.2
+Tested up to: 5.2.3
+Stable tag: 3.9.1
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,22 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.9.1 =
+* Fixes version number in plugin metadata which caused WordPress to think the plugin needed to be updated even after doing so.
+= 3.9.0 =
+* Updates twig library to 1.42.2 - This should be a non-breaking upgrade, but test before updating production
+= 3.8.3 =
+* Removes the composer constraint on Twig in composer.json that was preventing other packages from updating.
+= 3.8.2 =
+* Fixes
+    * incorrect json format in changelog.json
+= 3.8.1 =
+* Fixes
+    * Situation where certain files were formatted with Windows line endings, which broke the ability to find namespaces.
+= 3.8.0 =
+* Added
+    * Composer.json file - framework/plugin now installable via composer
+    * WPCLI command: `wp mizzoumvc clear-cache` to clear the Twig cache files
 = 3.7.2 =
 * Fixes #13 - Fixes Breadcrumbs not working properly when globally set.
 = 3.7.1 =
@@ -50,23 +66,18 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * Added MIZZOUMVC_DISABLE_VIEW_CACHE to _completely_ disable cache generation in the Twig view engine
     * Setting WP_DEBUG to true now instructs the Twig engine to recompile the requested view(s) but does not affect caching
     * Setting MIZZOUMVC_DISABLE_VIEW_CACHE to true will completely disable Twig caching
-
 = 3.6.1 =
 * People model wasn't compatible with the changes to WpBase
-
 = 3.6.0 =
 * Framework now supports framework plugins
 * Added a basic archive controller
 * Can now access members of Site via object notation (->) or as an array
 * WpBase (and Children) now accepts a FQ namespace class that it will use to return new posts instances via retrieveContent and convertPost(s).
 * WpBase (and children) now require an instance of the Loader class to be passed in to facilitiate the above
-
 = 3.5.3 =
 Bug fix related to incorrect permissions being set on cache directory
-
 = 3.5.2 =
 Bug fix related to Director role not working correctly in certain multisite situations
-
 = 3.5.1 =
 * Changed label for theme settings area from "All Settings" to "All Theme Settings"
 * Added ability to use internal search OR external search for both search and 404 since not everyone has a GSA.
@@ -74,7 +85,6 @@ Bug fix related to Director role not working correctly in certain multisite situ
 * new site-wide options (see config.ini for further explanation)
   * header_title_anchor - the final text piece included in the <title> element.  Previously, this was hard-coded to "University of Missouri"
   * use_framework_stylesheet - Should the framework fallback to using the include stylesheet in the framework instead of what is in the theme
-
 = 3.4.0 =
 * Add new object RenderType. Available to Main controller and views.  Contains boolean properties for each possible type of action (e.g. is_home, is_single, is_archive). Also contains property `current` which includes a string of the current render action (e.g. home, single, archive).  Menu object in view has been enhanced and now includes property `items` that is a nested array of all menu items for the given menu (e.g. Menu.Primary.items) that can be looped through in order to build a custom menu structure.  Individual items are identical to that as returned from `wp_get_nav_menu_items`. You can continue to access the formatted menu by either calling the menu directly (i.e. {{ Menu.Primary }} or by using the `formatted` property (e.g. {{ Menu.Primary.formatted }}
 

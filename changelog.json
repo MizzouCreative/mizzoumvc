@@ -1,4 +1,34 @@
 {
+  "3.9.1": {
+    "description": "Corrects version number in WordPress Plugin metadata",
+    "requires": "4.7.0",
+    "tested": "5.2.3",
+    "upgrade_notice": "This is a non-breaking update. HOWEVER, if you are updating from v3.8.3 or earlier, please see the changelog notes for 3.9.0 "
+  },
+  "3.9.0": {
+    "description": "Updates twig library to 1.42.2",
+    "requires": "4.7.0",
+    "tested": "5.2.3",
+    "upgrade_notice": "This should be a non-breaking change. However, *please* test before moving to production as the jump in Twig version was fairly substantial."
+  },
+  "3.8.3": {
+    "description": "Removes the composer constraint on Twig in composer.json that was preventing other packages from updating.",
+    "requires":"4.7.0",
+    "tested":"5.2.2",
+    "upgrade_notice": "This is a non-critical bug fix that only affects sites using a composer-based worfkflow. Update at your convenience."
+  },
+  "3.8.2": {
+    "description": "Fixes situation where certain files were formatted with Windows line endings, which broke the ability to find namespaces.",
+    "requires":"4.7.0",
+    "tested":"5.2.2",
+    "upgrade_notice": "This is a non-critical bug fix that only affects a limited number of users. Update at your convenience."
+  },
+  "3.8.0": {
+    "description": "Added composer.json description so plugin is now installable via composer. Added WPCLI command `wp mizzoumvc clear-cache` to manually clear Twig cache files.",
+    "requires": "4.7.0",
+    "tested": "5.1.1",
+    "upgrade_notice": "This is a non-critical update. Update at your convenience."
+  },
   "3.7.2": {
     "description": "Fixes Breadcrumbs not working correctly when enabled at a global level",
     "requires": "4.7.0",

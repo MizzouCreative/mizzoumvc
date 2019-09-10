@@ -16,7 +16,8 @@ namespace MizzouMVC\library;
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
  */
-class ViewEngineLoader {
+class ViewEngineLoader
+{
 
     /**
      * @var null no longer used
@@ -35,7 +36,7 @@ class ViewEngineLoader {
     /**
      * @var null|ViewEngineLoader static instance of our Loader
      */
-	protected static $objInstance = null;
+    protected static $objInstance = null;
     /**
      * @var string|null server path to the framework
      */
@@ -62,14 +63,15 @@ class ViewEngineLoader {
 
     /**
      * Sets viw directory locations, whether to enable caching, loads custom view filters/functions/tests
-     * @param string $strFrameworkDir Server path location of the framework
-     * @param string $strThemeDir Server path location of the (parent) theme
+     * @param null|string $strFrameworkDir Server path location of the framework
+     * @param null|string $strThemeDir Server path location of the (parent) theme
      * @param null|string $strChildThemeDir server path of the child theme, if applicable
      */
-    private function __construct($strFrameworkDir,$strThemeDir,$strChildThemeDir=null){
-        $this->strFrameworkDir = $strFrameworkDir;
-        $this->strThemeDir = $strThemeDir;
-        $this->strChildThemeDir = $strChildThemeDir;
+    private function __construct($strFrameworkDir = null, $strThemeDir = null, $strChildThemeDir = null)
+    {
+        $this->setFrameWorkDirectory($strFrameworkDir);
+        $this->setThemeDirectory($strThemeDir);
+        $this->setChildDirectory($strChildThemeDir);
 
         //initiate our twig environment loader
         //$this->objViewEngineEnvironmentLoader = new Twig_Loader_Filesystem($this->_determineViewDirectories());
@@ -89,7 +91,7 @@ class ViewEngineLoader {
         //$this->objViewEngine = new Twig_Environment($this->objViewEngineEnvironmentLoader,$aryViewEngineOptions);
         $this->_loadNameSpaces($aryDirectories);
         //echo 'loadnamespaces called.';exit();
-        $this->objViewEngine = new \Twig_Environment($this->objViewEngineFileSystemLoader,$aryViewEngineOptions);
+        $this->objViewEngine = new \Twig_Environment($this->objViewEngineFileSystemLoader, $aryViewEngineOptions);
         //load up our custom view filters
         $this->_loadViewEngineFilters();
         //load up our custom view functions
@@ -100,19 +102,18 @@ class ViewEngineLoader {
 
     /**
      * Creates instance and/or returns stored instance
-     * @param string $strFrameworkDir server path of framework
-     * @param string $strThemeDir server path of main/parent theme
-     * @param string $strChildThemeDir server path of child theme, if applicable
+     * @param null|string $strFrameworkDir server path of framework
+     * @param null|string $strThemeDir server path of main/parent theme
+     * @param null|string $strChildThemeDir server path of child theme, if applicable
      * @return null|Twig_Environment
      */
-    public static function getViewEngine($strFrameworkDir,$strThemeDir,$strChildThemeDir=null)
+    public static function getViewEngine($strFrameworkDir = null, $strThemeDir = null, $strChildThemeDir = null)
     {
-        if(is_null(self::$objInstance) || is_null(self::$objInstance->objViewEngine)){
-            self::$objInstance = new ViewEngineLoader($strFrameworkDir,$strThemeDir,$strChildThemeDir);
-	    }
+        if (is_null(self::$objInstance) || is_null(self::$objInstance->objViewEngine)) {
+            self::$objInstance = new ViewEngineLoader($strFrameworkDir, $strThemeDir, $strChildThemeDir);
+        }
 
-	    //return self::$objViewEngine;
-	    return self::$objInstance->objViewEngine;
+        return self::$objInstance->objViewEngine;
     }
 
     /**
@@ -122,7 +123,7 @@ class ViewEngineLoader {
     protected function _determineViewDirectories()
     {
         $aryDirectories = array();
-        if(!is_null($this->strChildThemeDir) && $this->strChildThemeDir != $this->strThemeDir){
+        if (!is_null($this->strChildThemeDir) && $this->strChildThemeDir != $this->strThemeDir) {
             $aryDirectories[] = $this->strChildThemeDir;
         }
 
@@ -148,9 +149,9 @@ class ViewEngineLoader {
         /**
          * This will disable caching altogether
          */
-        if(defined('MIZZOUMVC_DISABLE_VIEW_CACHE') && MIZZOUMVC_DISABLE_VIEW_CACHE){
+        if (defined('MIZZOUMVC_DISABLE_VIEW_CACHE') && MIZZOUMVC_DISABLE_VIEW_CACHE) {
             $strViewCacheLocation = false;
-        } elseif(defined('MIZZOUMVC_VIEW_CACHE_LOCATION')){
+        } elseif (defined('MIZZOUMVC_VIEW_CACHE_LOCATION')) {
             /**
              * @todo re-evaluate the use of a global constant. We have access to the site object by the time this class is
              * called so we _could_ move this into a theme setting area.
@@ -159,20 +160,20 @@ class ViewEngineLoader {
         } else {
             //let's see if we have a cache directory
             $strPossibleCacheLocation = $this->strThemeDir.'cache'.DIRECTORY_SEPARATOR;
-            if(!is_dir($strPossibleCacheLocation) && !file_exists($strPossibleCacheLocation)){
+            if (!is_dir($strPossibleCacheLocation) && !file_exists($strPossibleCacheLocation)) {
                 //we need to make a directory
-                if(mkdir($strPossibleCacheLocation,0700)){
+                if (mkdir($strPossibleCacheLocation, 0700)) {
                     $strViewCacheLocation = $strPossibleCacheLocation;
                 }
             /**
              * Add a check for file perms to make sure it is 0700
              */
-            } elseif(!is_writable($strPossibleCacheLocation) || (0700 !== (fileperms($strPossibleCacheLocation) & 0777))) {
+            } elseif (!is_writable($strPossibleCacheLocation) || (0700 !== (fileperms($strPossibleCacheLocation) & 0777))) {
                 //it exists but we cant write to it...
                 /**
                  * @todo change to INT perms, not string
                  */
-                if(chmod($strPossibleCacheLocation,0700)){
+                if (chmod($strPossibleCacheLocation, 0700)) {
                     $strViewCacheLocation = $strPossibleCacheLocation;
                 }
             } else {
@@ -181,7 +182,7 @@ class ViewEngineLoader {
 
         }
 
-        if('' === $strViewCacheLocation){
+        if ('' === $strViewCacheLocation) {
             /**
              * @todo we need a more elegant way of handling this
              */
@@ -198,57 +199,56 @@ class ViewEngineLoader {
      */
     protected function _loadViewEngineFilters()
     {
-        $objTwigDebug = new \Twig_SimpleFilter('var_export',function($string){
-            return PHP_EOL.'<pre>'.var_export($string,true).'</pre>'.PHP_EOL;
+        $objTwigDebug = new \Twig_SimpleFilter('var_export', function ($string) {
+            return PHP_EOL.'<pre>'.var_export($string, true).'</pre>'.PHP_EOL;
         });
 
-        $objTwigSanitize = new \Twig_SimpleFilter('sanitize',function($strString){
+        $objTwigSanitize = new \Twig_SimpleFilter('sanitize', function ($strString) {
             return sanitize_title_with_dashes($strString);
         });
 
         /**
          * Given a timestamp, a string formatted date, or a full month, we'll convert it to an AP-style month
          */
-        $objTwigAPMonth = new \Twig_SimpleFilter('apmonth',function($mxdDate){
+        $objTwigAPMonth = new \Twig_SimpleFilter('apmonth', function ($mxdDate) {
             $intTimeStamp = null;
             $strMonth = null;
             $strReturn = $mxdDate;
 
-            if(is_string($mxdDate)){
+            if (is_string($mxdDate)) {
                 //we have some time of string representation of a date
                 $aryCalendarInfo = cal_info(0);
                 //do we have a full month?
-                if(in_array($mxdDate,$aryCalendarInfo['months'])){
+                if (in_array($mxdDate, $aryCalendarInfo['months'])) {
                     //ok we have our month
                     $strMonth = $mxdDate;
                 } else {
                     $intTimeStamp = strtotime($mxdDate);
                 }
-            } elseif(is_numeric($mxdDate)) {
+            } elseif (is_numeric($mxdDate)) {
                 //we'll assume they gave us a timestamp
                 $intTimeStamp = $mxdDate;
             }
 
-            if(!is_null($intTimeStamp) && false !== $intTimeStamp){
-                $strMonth = date('F',$intTimeStamp);
+            if (!is_null($intTimeStamp) && false !== $intTimeStamp) {
+                $strMonth = date('F', $intTimeStamp);
             }
 
-            if(!is_null($strMonth)){
-                if(strlen($strMonth) > 5){ //stoopid september... grumble, grumble
-                    if($strMonth == 'September'){
+            if (!is_null($strMonth)) {
+                if (strlen($strMonth) > 5) { //stoopid september... grumble, grumble
+                    if ($strMonth == 'September') {
                         $intTruncLen = 4;
                     } else {
                         $intTruncLen = 3;
                     }
 
-                    $strReturn = substr($strMonth,0,$intTruncLen) . '.';
+                    $strReturn = substr($strMonth, 0, $intTruncLen) . '.';
                 } else {
                     $strReturn = $strMonth;
                 }
             }
 
             return $strReturn;
-
         });
 
 
@@ -265,15 +265,15 @@ class ViewEngineLoader {
      */
     protected function _loadViewEngineFunctions($strFrameWorkDir)
     {
-        $this->objViewEngine->addFunction('subview',new \Twig_SimpleFunction('subview',function($mxdControllerName,$aryContext,$aryData = array()) use ($strFrameWorkDir){
+        $this->objViewEngine->addFunction('subview', new \Twig_SimpleFunction('subview', function ($mxdControllerName, $aryContext, $aryData = array()) use ($strFrameWorkDir) {
             //_mizzou_log($mxdControllerName,'the controller we were asked to get',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             //_mizzou_log($aryContext,'the context data that was passed in',false,array('func'=>__FUNCTION__,'file'=>__FILE__));
             $strController = '';
 
-            if(is_array($mxdControllerName)){
+            if (is_array($mxdControllerName)) {
                 $aryControllerNameParts = $mxdControllerName;
-            } elseif(is_string($mxdControllerName)){
-                $aryControllerNameParts = explode(' ',trim($mxdControllerName));
+            } elseif (is_string($mxdControllerName)) {
+                $aryControllerNameParts = explode(' ', trim($mxdControllerName));
             } else {
                 /**
                  * @todo should this be changed to a try catch with an exception?
@@ -284,14 +284,14 @@ class ViewEngineLoader {
             }
             $strControllerName = implode('-',$aryControllerNameParts) . '.php';
             //_mizzou_log($strControllerName,'the controller name before we run locate template',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
-            if(count($aryData) != 0){
+            if (count($aryData) != 0) {
                 extract($aryData);
             }
 
             if(!is_null($strFrameWorkDir) && '' == $strController = locate_template($strControllerName)){
                 //_mizzou_log(null,'we didnt find a controller in a parent or child theme. gonna look in the plugin framework',false,array('line'=>__LINE__,'file'=>__FILE__));
                 //ok, we didnt find a controller in a parent or child theme, what about the plugin?
-                if(is_readable($strFrameWorkDir.$strControllerName)){
+                if (is_readable($strFrameWorkDir.$strControllerName)) {
                     $strController = $strFrameWorkDir.$strControllerName;
                 } else {
                     _mizzou_log($strFrameWorkDir.$strControllerName,'we couldnt find this controller in the framework either',false,array('line'=>__LINE__,'file'=>__FILE__));
@@ -299,7 +299,7 @@ class ViewEngineLoader {
             }
             //_mizzou_log($strController = locate_template($strControllerName),'direct return from locate_template',false,array('file'=>__FILE__,'line'=>__LINE__));
             //_mizzou_log($strController,'the controller name before we try to require it',false,array('func'=>__FUNCTION__,'file'=>__FILE__,'line'=>__LINE__));
-            if('' != $strController){
+            if ('' != $strController) {
                 require_once $strController;
             }
         }));
@@ -312,8 +312,8 @@ class ViewEngineLoader {
      */
     protected function _loadTests()
     {
-        $objNumericTest = new \Twig_SimpleTest('numeric',function($mxdVal){
-           return is_numeric($mxdVal);
+        $objNumericTest = new \Twig_SimpleTest('numeric', function ($mxdVal) {
+            return is_numeric($mxdVal);
         });
 
         $this->objViewEngine->addTest($objNumericTest);
@@ -328,23 +328,23 @@ class ViewEngineLoader {
      */
     protected function _loadNameSpaces(array $aryDirectories = array())
     {
-        foreach ($aryDirectories as $strDirectory){
+        foreach ($aryDirectories as $strDirectory) {
             $strFile = $strDirectory . $this::NAMESPACE_DIRECTORY . DIRECTORY_SEPARATOR . $this::NAMESPACE_FILENAME;
             //does the file exist and can we get its contents?
-            if(file_exists($strFile) && false !== $strJSON = file_get_contents($strFile)){
+            if (file_exists($strFile) && false !== $strJSON = file_get_contents($strFile)) {
                 //do we have a json object (converted to an array)
-                if(null !== $aryNameSpaces = json_decode($strJSON,true)){
+                if (null !== $aryNameSpaces = json_decode($strJSON, true)) {
                     //letd grab the declared namespace
-                    foreach ($aryNameSpaces as $strNameSpace => $aryNameSpaceData){
+                    foreach ($aryNameSpaces as $strNameSpace => $aryNameSpaceData) {
                         //grab the array of paths
-                        if(isset($aryNameSpaceData['paths']) && is_array($aryNameSpaceData['paths'])){
+                        if (isset($aryNameSpaceData['paths']) && is_array($aryNameSpaceData['paths'])) {
                             //add each path as a namespace
-                            foreach ($aryNameSpaceData['paths'] as $strNameSpacePath){
+                            foreach ($aryNameSpaceData['paths'] as $strNameSpacePath) {
                                 //@todo do we need to reverse the array before we loop?
-                                foreach ($aryDirectories as $strTemplateLocation){
+                                foreach ($aryDirectories as $strTemplateLocation) {
                                     $strNameSpaceFullPath = $strTemplateLocation . $strNameSpacePath;
-                                    if(is_dir($strNameSpaceFullPath)){
-                                        $this->objViewEngineFileSystemLoader->addPath($strNameSpaceFullPath,$strNameSpace);
+                                    if (is_dir($strNameSpaceFullPath)) {
+                                        $this->objViewEngineFileSystemLoader->addPath($strNameSpaceFullPath, $strNameSpace);
                                     }
                                 }
                             }
@@ -355,18 +355,75 @@ class ViewEngineLoader {
         }
     }
 
-	/**
-	 * Prevent unserializing of the instance
-	 *
-	 * @return void
-	 */
-	private function __wakeup(){}
+    /**
+     * Ensures a path ends with a directory separator
+     * @param $strDirectory directory path to evaluate
+     * @return string directory with ending separator
+     */
+    protected function ensureEndSeparator($strDirectory)
+    {
+        $strPattern = sprintf('/\%s$/', DIRECTORY_SEPARATOR);
+        if (1 !== preg_match($strPattern, $strDirectory)) {
+            $strDirectory .= DIRECTORY_SEPARATOR;
+        }
 
-	/**
-	 * Prevent cloning of the instance
-	 *
-	 * @return void
-	 */
-	private function __clone(){}
+        return $strDirectory;
+    }
+
+    /**
+     * Sets the path to the MizzouMVC Framework
+     * @param null $strFrameworkDirectory
+     * @return void
+     */
+    protected function setFrameWorkDirectory($strFrameworkDirectory = null)
+    {
+        if (is_null($strFrameworkDirectory)) {
+            $strFrameworkDirectory = MIZZOUMVC_ROOT_PATH;
+        }
+
+        $this->strFrameworkDir = $strFrameworkDirectory;
+    }
+
+    /**
+     * Sets the system path to our theme directory
+     * @param null|string $strDirectory path to theme/parent theme
+     * @return void
+     */
+    protected function setThemeDirectory($strDirectory = null)
+    {
+        if (is_null($strDirectory)) {
+            $strDirectory = get_template_directory();
+        }
+
+        $this->strThemeDir = $this->ensureEndSeparator($strDirectory);
+    }
+
+    /**
+     * Sets the path to the current theme, or child theme, if applicable
+     * @param null|string $strDirectory path to child theme
+     * @return void
+     */
+    protected function setChildDirectory($strDirectory = null)
+    {
+        if (is_null($strDirectory)) {
+            $strDirectory = get_stylesheet_directory();
+        }
+
+        $this->strChildThemeDir = $this->ensureEndSeparator($strDirectory);
+    }
+
+    /**
+     * Prevent unserializing of the instance
+     *
+     * @return void
+     */
+    private function __wakeup(){}
+
+    /**
+     * Prevent cloning of the instance
+     *
+     * @return void
+     */
+    private function __clone(){}
 
 }
