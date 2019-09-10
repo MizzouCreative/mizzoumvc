@@ -1,4 +1,10 @@
 {
+  "3.9.1": {
+    "description": "Corrects version number in WordPress Plugin metadata",
+    "requires": "4.7.0",
+    "tested": "5.2.3",
+    "upgrade_notice": "This is a non-breaking update. HOWEVER, if you are updating from v3.8.3 or earlier, please see the changelog notes for 3.9.0 "
+  },
   "3.9.0": {
     "description": "Updates twig library to 1.42.2",
     "requires": "4.7.0",
