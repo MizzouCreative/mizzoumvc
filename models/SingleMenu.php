@@ -22,12 +22,12 @@ class SingleMenu extends Base
         $this->add_data('name', $strMenuName);
         $aryItems = $this->_getMenuItems($strMenuName);
 
-        $aryMenuItems = (count($aryItems) > 0) ? $this->_restructureMenuItems($aryItems) : array();
+        $aryMenuItems = (count($aryItems) > 0) ? $this->buildStructuredMenu($aryItems) : array();
 
 
         $this->add_data('formatted', $this->_getFormattedMenu($strMenuName, $aryMenuOptions));
-        $this->add_data('items', $aryItems);
-        $this->add_data('menu_items', $aryMenuItems);
+        $this->add_data('menu_items', $aryItems);
+        $this->add_data('items', $aryMenuItems);
 
     }
 
@@ -83,7 +83,7 @@ class SingleMenu extends Base
      *
      * @param array $aryItems
      */
-    protected function _restructureMenuItems(array $aryItems)
+    protected function buildStructuredMenu(array $aryItems)
     {
         $aryStructuredMenuItems = [];
         $aryChildren = [];
@@ -96,26 +96,26 @@ class SingleMenu extends Base
 
         foreach ($aryReversedMenu as $objItem) {
             if ($objItem instanceof \WP_Post) {
-                $objMenuItem = $this->_createMenuItemObject($objItem);
+                $objMenuItem = $this->processMenuItem($objItem);
 
                 /**
                  * Does this item have any children?
                  */
                 if (isset($aryChildren[$objMenuItem->ID])) {
                     //the children were stored in reverse order, so we need to flip back before storing
-                    $objMenuItem->children = array_reverse($aryChildren[$objMenuItem->ID]);
+                    $objMenuItem->items = array_reverse($aryChildren[$objMenuItem->ID]);
                     unset($aryChildren[$objMenuItem->ID]);
                 }
 
                 /**
                  * Is this item a child of another item?
                  */
-                if (0 !== intval($objMenuItem->parent)) {
-                    if (!isset($aryChildren[$objMenuItem->parent])) {
-                        $aryChildren[$objMenuItem->parent] = array();
+                if (0 !== intval($objMenuItem->menu_item_parent)) {
+                    if (!isset($aryChildren[$objMenuItem->menu_item_parent])) {
+                        $aryChildren[$objMenuItem->menu_item_parent] = array();
                     }
 
-                    $aryChildren[$objMenuItem->parent][] = $objMenuItem;
+                    $aryChildren[$objMenuItem->menu_item_parent][] = $objMenuItem;
                 } else {
                     $aryStructuredMenuItems[$objMenuItem->ID] = $objMenuItem;
                 }
@@ -125,32 +125,22 @@ class SingleMenu extends Base
         return array_reverse($aryStructuredMenuItems);
     }
 
-    protected function _createMenuItemObject(\WP_Post $objItem )
+    /**
+     * Removes the inital blank entry in the classes array and creates the property `class` which is a flattened version
+     * of the classes array. Passes the Menu Item to the `mizzoumvc_menu_item` filter for downstream plugins/themes to
+     * alter
+     * @param \WP_Post $objMenuItem
+     * @return mixed \WP_Post $objMenuItem
+     */
+    protected function processMenuItem(\WP_Post $objMenuItem )
     {
 
-        //$objItem = wp_setup_nav_menu_item($objItem);
-        /**
-         * @todo we need to make an interface, implement the interface and use it here
-         */
-        $objMenuItem = new \stdClass();
-        $objMenuItem->ID = $objItem->ID;
-        $objMenuItem->href = $objItem->url;
-        $objMenuItem->text = $objItem->title;
-        $objMenuItem->parent = $objItem->menu_item_parent;
-        $objMenuItem->children = array();
-
-        /**
-         * The rest of this is almost duplicated directly from
-         * https://core.trac.wordpress.org/browser/tags/4.9.8/src/wp-includes/class-walker-nav-menu.php#L115
-         */
-
-        $objMenuItem->classes = $objItem->classes;
-        //for some reason, the first element in the classes is empty. if so we'll get rid of it
+       //for some reason, the first element in the classes is empty. if so we'll get rid of it
         if ('' == reset($objMenuItem->classes)) {
             array_shift($objMenuItem->classes);
         }
         $objMenuItem->class = implode(' ', $objMenuItem->classes);
 
-        return $objMenuItem;
+        return apply_filters('mizzoumvc_menu_item', $objMenuItem);
     }
 }
