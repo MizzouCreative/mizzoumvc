@@ -134,7 +134,7 @@ class ViewEngineLoader
             $aryDirectories[$intDirKey] = $strDirectory . 'views' . DIRECTORY_SEPARATOR;
         }
 
-        return apply_filters('mizzoumvc_view_paths');
+        return apply_filters('mizzoumvc_view_paths', $aryDirectories);
     }
 
     /**
