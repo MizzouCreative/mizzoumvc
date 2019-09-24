@@ -94,8 +94,8 @@ class SingleMenu extends Base
         _wp_menu_item_classes_by_context($aryItems);
         $aryReversedMenu = array_reverse($aryItems);
 
-        foreach ($aryReversedMenu as $objItem) {
-            if ($objItem instanceof \WP_Post) {
+        foreach ($aryReversedMenu as $objMenuItem) {
+            if ($objMenuItem instanceof \WP_Post) {
                  /**
                  * Does this item have any children?
                  */
@@ -109,7 +109,7 @@ class SingleMenu extends Base
                  * Before we store the MenuItem, we need to finish processing it, and allow downstream projects
                  * to further alter it
                  */
-                $objMenuItem = $this->processMenuItem($objItem);
+                $objMenuItem = $this->processMenuItem($objMenuItem);
 
                 /**
                  * Is this item a child of another item?
