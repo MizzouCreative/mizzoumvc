@@ -96,9 +96,7 @@ class SingleMenu extends Base
 
         foreach ($aryReversedMenu as $objItem) {
             if ($objItem instanceof \WP_Post) {
-                $objMenuItem = $this->processMenuItem($objItem);
-
-                /**
+                 /**
                  * Does this item have any children?
                  */
                 if (isset($aryChildren[$objMenuItem->ID])) {
@@ -106,6 +104,12 @@ class SingleMenu extends Base
                     $objMenuItem->items = array_reverse($aryChildren[$objMenuItem->ID]);
                     unset($aryChildren[$objMenuItem->ID]);
                 }
+
+                /**
+                 * Before we store the MenuItem, we need to finish processing it, and allow downstream projects
+                 * to further alter it
+                 */
+                $objMenuItem = $this->processMenuItem($objItem);
 
                 /**
                  * Is this item a child of another item?
