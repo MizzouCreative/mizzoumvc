@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 5.2.3
-Stable tag: 3.9.1
+Stable tag: 3.10.0
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,12 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.10.0 =
+* Changes `.items` property of SingleMenu model to be a nested array of Menu item objects to match the nested structure of the actual menu
+* The previous `.items` property that was a flattened list of menu items is now `.menu_items`
+* Adds filter `mizzoumvc_menu_item` that fires right before a menu item is saved in the `.items` list. Calling function is passed a WP_Post (Menu Item) object, and expects the same returned
+* Adds Twig namespaces to all template directory locations. Default namespaces are `@child` (if applicable), `@parent`, `@mizzoumvc`
+* Adds filter `mizzoumvc_view_paths` that allows for altering the list of template directory paths given to the View Engine. Calling function is passed an associative array of namespace=>path template locations, expects an associative array to be returned
 = 3.9.1 =
 * Fixes version number in plugin metadata which caused WordPress to think the plugin needed to be updated even after doing so.
 = 3.9.0 =
