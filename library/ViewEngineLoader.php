@@ -89,6 +89,7 @@ class ViewEngineLoader
         $aryDirectories = $this->_determineViewDirectories();
         $this->objViewEngineFileSystemLoader = new \Twig_Loader_Filesystem(($aryDirectories));
         //$this->objViewEngine = new Twig_Environment($this->objViewEngineEnvironmentLoader,$aryViewEngineOptions);
+        $this->loadTemplatePaths($aryDirectories);
         $this->_loadNameSpaces($aryDirectories);
         //echo 'loadnamespaces called.';exit();
         $this->objViewEngine = new \Twig_Environment($this->objViewEngineFileSystemLoader, $aryViewEngineOptions);
@@ -124,17 +125,17 @@ class ViewEngineLoader
     {
         $aryDirectories = array();
         if (!is_null($this->strChildThemeDir) && $this->strChildThemeDir != $this->strThemeDir) {
-            $aryDirectories[] = $this->strChildThemeDir;
+            $aryDirectories['child'] = $this->strChildThemeDir;
         }
 
-        $aryDirectories[] = $this->strThemeDir;
-        $aryDirectories[] = $this->strFrameworkDir;
+        $aryDirectories['parent'] = $this->strThemeDir;
+        $aryDirectories['mizzoumvc'] = $this->strFrameworkDir;
 
-        foreach ($aryDirectories as $intDirKey => $strDirectory) {
-            $aryDirectories[$intDirKey] = $strDirectory . 'views' . DIRECTORY_SEPARATOR;
+        foreach ($aryDirectories as $strNameSpace => $strDirectory) {
+            $aryDirectories[$strNameSpace] = $strDirectory . 'views' . DIRECTORY_SEPARATOR;
         }
 
-        return $aryDirectories;
+        return apply_filters('mizzoumvc_view_paths', $aryDirectories);
     }
 
     /**
@@ -189,6 +190,18 @@ class ViewEngineLoader
             echo 'view cache location is not available or is not writeable. I can\'t continue until you fix this. ';exit;
         } else {
             return $strViewCacheLocation;
+        }
+    }
+
+    /**
+     * Adds all of our paths (@see self::_determineViewDirectories()) as namespaced paths 
+     * @param array $aryDirectories list of namespace => paths that contain our twig files
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig_Error_Loader
+     */
+    protected function loadTemplatePaths(array $aryDirectories) {
+        foreach ($aryDirectories as $strNameSpace => $strPath) {
+            $this->objViewEngineFileSystemLoader->addPath($strPath, $strNameSpace);
         }
     }
 
