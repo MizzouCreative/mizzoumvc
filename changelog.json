@@ -1,4 +1,10 @@
 {
+  "3.10.1": {
+    "description": "<ul><li>Removes deprecated each() function from Loader.php</li><li>Checks view name passed to render() to ensure it isn't empty.</li></ul>",
+    "requires": "",
+    "tested": "5.3.2",
+    "upgrade_notice": ""
+  },
   "3.10.0": {
     "description": "<ul><li> Changes <code>.items</code> property of SingleMenu model to be a nested array of Menu item objects to match the nested structure of the actual menu</li><li>The previous <code>.items</code> property that was a flattened list of menu items is now <code>.menu_items</code></li><li>Adds filter <code>mizzoumvc_menu_item</code> that fires right before a menu item is saved in the <code>.items</code> list. Calling function is passed a WP_Post (Menu Item) object, and expects the same returned</li><li>Adds Twig namespaces to all template directory locations. Default namespaces are <code>@child</code> (if applicable), <code>@parent</code>, <code>@mizzoumvc</code></li><li>Adds filter <code>mizzoumvc_view_paths</code> that allows for altering the list of template directory paths given to the View Engine. Calling function is passed an associative array of namespace=>path template locations, expects an associative array to be returned</li></ul>",
     "requires": "4.7.0",

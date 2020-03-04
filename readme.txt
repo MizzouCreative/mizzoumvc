@@ -35,6 +35,7 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 == Changelog ==
 = 3.10.1 =
 * Removes deprecated each() function from Loader.php
+* Checks view name passed to render() to ensure it isn't empty.
 = 3.10.0 =
 * Changes `.items` property of SingleMenu model to be a nested array of Menu item objects to match the nested structure of the actual menu
 * The previous `.items` property that was a flattened list of menu items is now `.menu_items`
