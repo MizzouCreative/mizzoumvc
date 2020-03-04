@@ -129,6 +129,12 @@ class Content {
                 }
             }
         }
+        
+        if('' == $strInnerViewFileName) {
+            $strInnerViewFileName = 'framework-error';
+            $aryData['PageTitle'] = 'Error Encountered';
+            _mizzou_log(null,'the view filename was left blank so I dont know which view to output.',true,array('line'=>__LINE__,'file'=>__FILE__));
+        }
 
         /**
          * check the view name to see if we've been given the full name w/ extension, or just the file name
