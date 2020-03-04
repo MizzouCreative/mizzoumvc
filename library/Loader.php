@@ -174,10 +174,11 @@ class Loader {
         //$strNext = next($aryClassParts);
         if('controllers' != $strNext){
             //ok, add the strNext, then loop through the remainder of the pieces
-            while(list($intKey,$strNext) = each($aryClassParts)){
-                if($strEndPiece != $strNext){
+            while($strNext = current($aryClassParts)) {
+                if ($strEndPiece != $strNext) {
                     $strFullPath .= $strNext . DIRECTORY_SEPARATOR;
                 }
+                next($aryClassParts);
             }
         }
 
