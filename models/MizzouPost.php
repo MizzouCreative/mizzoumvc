@@ -336,6 +336,7 @@ class MizzouPost extends PostBase
         }
 
         $this->_setPermalink();
+        $this->_setCanonicalURL();
         $this->_setPostFormat();
         $this->_setContent();
         $this->_setTitle();
@@ -445,6 +446,16 @@ class MizzouPost extends PostBase
 	}
 
     /**
+     * Retrieves the canonical URL for a post or attachment. In WordPress this is referred to as the 'shortlink'
+     * @return string
+     */
+	protected function _retrieveCanonicalURL()
+    {
+        $strType = ('attachment' == $this->post_type) ? 'media' : 'post';
+        return wp_get_shortlink($this->ID,$strType,false);
+    }
+
+    /**
      * Stores the post's permalink
      * @return void
      */
@@ -452,6 +463,15 @@ class MizzouPost extends PostBase
 	{
 		$this->add_data('permalink',$this->_retrievePermalink());
 	}
+
+    /**
+     * Stores the post's canonical URL aka shortlink in WordPress
+     * @return void
+     */
+	protected function _setCanonicalURL()
+    {
+        $this->add_data('shortlink', $this->_retrieveCanonicalURL());
+    }
 
     /**
      * Retrieves/sets the post's format
