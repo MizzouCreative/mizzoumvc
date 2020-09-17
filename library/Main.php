@@ -247,6 +247,12 @@ abstract class Main {
             $this->_loadMenu();
         }
 
+        /**
+         * Allows for altering the array of render data right before the values are given to the View Engine to Render
+         *             
+         * @param array $this->aryRenderData
+         */
+        $this->aryRenderData = apply_filters('mizzoumvc_renderdata',$this->aryRenderData);
 
 	    $strReturn = Content::render($strInnerViewFileName,$this->aryRenderData,$this->objViewEngine,$this->objSite,$this->aryRenderOptions);
 
