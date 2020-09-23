@@ -111,6 +111,66 @@ function mizzouMVCRegisterSettingsCPT()
 }
 
 /**
+ * Loads in the config.ini files from the framework, parent/active theme, and/or child theme, where applicable
+ * @todo continue to refactor so that we can load a _specific_ file
+ */
+function mizzouLoadConfigFiles() {
+    //if we can get to our config file and parse it, add a settings page for each grouping
+    // @todo should config.ini be an option some where?
+    $strConfigFile = DIRECTORY_SEPARATOR . 'config.ini';
+    $strParent = get_template_directory();
+    $arySettingsFiles = array(
+        //plugin config.ini
+        dirname(__FILE__).$strConfigFile,
+        //theme config.ini
+        $strParent.DIRECTORY_SEPARATOR.$strConfigFile,
+    );
+
+    $strMaybeChild = get_stylesheet_directory();
+    if($strMaybeChild !== $strParent) {
+        $arySettingsFiles[] = $strMaybeChild.$strConfigFile;
+    }
+
+    foreach($arySettingsFiles as $strSettingsFile){
+        if(count($arySettings = mizzouMVCLoadOptionsFile($strSettingsFile)) > 0){
+            foreach($arySettings as $strGroupSettingsKey => $arySettingsVals){
+                //why page_by_path? because we're getting what should end up being the slug as the settings page key
+                if(is_null($objSettingsPost = get_page_by_path($strGroupSettingsKey,OBJECT,'mizzoumvc-settings'))){
+                    //we dont have a settings page, so let's create one for this group
+                    $intSettingsPost = wp_insert_post(array(
+                        'post_title' => ucwords(str_replace('-',' ',$strGroupSettingsKey)),
+                        'post_content'=>'',
+                        'post_status'=>'publish',
+                        'post_type' => 'mizzoumvc-settings',
+                    ),true);
+                } else {
+                    $intSettingsPost = $objSettingsPost->ID;
+                }
+
+                //let's make double sure we have a post id
+                if(!is_wp_error($intSettingsPost) && is_int($intSettingsPost)){
+                    //now get all of the custom meta data for this post
+                    $aryCustomMeta = get_post_custom($intSettingsPost);
+                    _mizzou_log($arySettingsVals,'setting options for group ' . $strGroupSettingsKey );
+                    _mizzou_log($aryCustomMeta,'custom meta data for post ' . $intSettingsPost,false,array('line'=>__LINE__,'file'=>__FILE__));
+                    //see if there are any keys in the config file that werent already in the settings page
+                    $aryDiffKeys = array_diff_key($arySettingsVals,$aryCustomMeta);
+                    _mizzou_log($aryDiffKeys,'result from aryDiffKeys',false,array('line'=>__LINE__,'file'=>__FILE__));
+                    //if so, lets add them
+                    foreach($aryDiffKeys as $strCustomSettingKey=>$mxdCustomSettingVal){
+                        if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$mxdCustomSettingVal,true))){
+                            _mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
+                            _mizzou_log($mxdCustomSettingVal,'we were trying to add the key ' . $strCustomSettingKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+/**
  * Adds the initial theme settings when activating the theme
  */
 function mizzouSetUpInitialOptions()
@@ -123,58 +183,10 @@ function mizzouSetUpInitialOptions()
      */
     //Is the theme dependent on our framework and have we already loaded base settings before?
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE &&  FALSE == get_option($strOptionsLoadedKeyName)){
-        //if we can get to our config file and parse it, add a settings page for each grouping
-        // @todo should config.ini be an option some where?
-        $strConfigFile = DIRECTORY_SEPARATOR . 'config.ini';
-        $strParent = get_template_directory();
-        $arySettingsFiles = array(
-            //plugin config.ini
-            dirname(__FILE__).$strConfigFile,
-            //theme config.ini
-            $strParent.DIRECTORY_SEPARATOR.$strConfigFile,
-        );
-
-        $strMaybeChild = get_stylesheet_directory();
-        if($strMaybeChild !== $strParent) {
-            $arySettingsFiles[] = $strMaybeChild.$strConfigFile;
-        }
-
-        foreach($arySettingsFiles as $strSettingsFile){
-            if(count($arySettings = mizzouMVCLoadOptionsFile($strSettingsFile)) > 0){
-                foreach($arySettings as $strGroupSettingsKey => $arySettingsVals){
-                    //why page_by_path? because we're getting what should end up being the slug as the settings page key
-                    if(is_null($objSettingsPost = get_page_by_path($strGroupSettingsKey,OBJECT,'mizzoumvc-settings'))){
-                        //we dont have a settings page, so let's create one for this group
-                        $intSettingsPost = wp_insert_post(array(
-                            'post_title' => ucwords(str_replace('-',' ',$strGroupSettingsKey)),
-                            'post_content'=>'',
-                            'post_status'=>'publish',
-                            'post_type' => 'mizzoumvc-settings',
-                        ),true);
-                    } else {
-                        $intSettingsPost = $objSettingsPost->ID;
-                    }
-
-                    //let's make double sure we have a post id
-                    if(!is_wp_error($intSettingsPost) && is_int($intSettingsPost)){
-                        //now get all of the custom meta data for this post
-                        $aryCustomMeta = get_post_custom($intSettingsPost);
-                        _mizzou_log($arySettingsVals,'setting options for group ' . $strGroupSettingsKey );
-                        _mizzou_log($aryCustomMeta,'custom meta data for post ' . $intSettingsPost,false,array('line'=>__LINE__,'file'=>__FILE__));
-                        //see if there are any keys in the config file that werent already in the settings page
-                        $aryDiffKeys = array_diff_key($arySettingsVals,$aryCustomMeta);
-                        _mizzou_log($aryDiffKeys,'result from aryDiffKeys',false,array('line'=>__LINE__,'file'=>__FILE__));
-                        //if so, lets add them
-                        foreach($aryDiffKeys as $strCustomSettingKey=>$mxdCustomSettingVal){
-                            if(!is_numeric($mxdMetaEntry = add_post_meta($intSettingsPost,$strCustomSettingKey,$mxdCustomSettingVal,true))){
-                                _mizzou_log($mxdMetaEntry,'looks like adding a post meta for '.$strGroupSettingsKey.', id '.$intSettingsPost.' failed.',false,array('line'=>__LINE__,'file'=>__FILE__));
-                                _mizzou_log($mxdCustomSettingVal,'we were trying to add the key ' . $strCustomSettingKey . ' and value',false,array('line'=>__LINE__,'file'=>__FILE__));
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        /**
+         * Load up the options from the config.ini files
+         */
+        mizzouLoadConfigFiles();
 
         /**
          * @todo we need some higher-order way of tracking optional "themes" that we might have access to. right now that list is
