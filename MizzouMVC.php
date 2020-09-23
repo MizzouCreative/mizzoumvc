@@ -125,12 +125,19 @@ function mizzouSetUpInitialOptions()
     if(defined('MIZZOUMVC_COMPATIBLE') && MIZZOUMVC_COMPATIBLE &&  FALSE == get_option($strOptionsLoadedKeyName)){
         //if we can get to our config file and parse it, add a settings page for each grouping
         // @todo should config.ini be an option some where?
+        $strConfigFile = DIRECTORY_SEPARATOR . 'config.ini';
+        $strParent = get_template_directory();
         $arySettingsFiles = array(
             //plugin config.ini
-            dirname(__FILE__).DIRECTORY_SEPARATOR.'config.ini',
+            dirname(__FILE__).$strConfigFile,
             //theme config.ini
-            get_stylesheet_directory().DIRECTORY_SEPARATOR.'config.ini',
+            $strParent.DIRECTORY_SEPARATOR.$strConfigFile,
         );
+
+        $strMaybeChild = get_stylesheet_directory();
+        if($strMaybeChild !== $strParent) {
+            $arySettingsFiles[] = $strMaybeChild.$strConfigFile;
+        }
 
         foreach($arySettingsFiles as $strSettingsFile){
             if(count($arySettings = mizzouMVCLoadOptionsFile($strSettingsFile)) > 0){
