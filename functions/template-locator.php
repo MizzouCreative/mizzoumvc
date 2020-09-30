@@ -97,15 +97,16 @@ function mzuMVCTemplateOverride($strTemplate)
                             //_mizzou_log($aryFiles,'here are the controllers we will look for in the framework',false, array('line'=>__LINE__,'file'=>__FILE__) );
                             $boolFound = false;
                             //$strNewTemplatePath = dirname(__FILE__).DIRECTORY_SEPARATOR;
-                            while ((list($intKey, $strFileName) = each($aryFiles)) && !$boolFound) {
-                                $strNewTemplate = MIZZOUMVC_ROOT_PATH . $strFileName . '.php';
-                                //_mizzou_log($strNewTemplate,'full path to the file im going to look for',false, array('line'=>__LINE__,'file'=>__FILE__) );
+                            $objFilesIterator = new ArrayIterator($aryFiles);
+                            while ($objFilesIterator->valid() && !$boolFound) {
+                                $strNewTemplate = MIZZOUMVC_ROOT_PATH . $objFilesIterator->current() . '.php';
                                 if (is_readable($strNewTemplate)) {
                                     $strTemplate = $strNewTemplate;
                                     $boolFound = true;
                                 }
-                            }
 
+                                $objFilesIterator->next();
+                            }
                         } else {
                             //strange, we didnt match...
                         }

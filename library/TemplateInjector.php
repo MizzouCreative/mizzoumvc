@@ -131,7 +131,7 @@ class TemplateInjector {
 	{
 		global $post;
 
-		if('page' == $post->post_type && !isset($this->aryTemplates[basename($strTemplate)])){
+		if($post instanceof WP_Post && 'page' == $post->post_type && !isset($this->aryTemplates[basename($strTemplate)])){
 			$strTemplateFile = get_post_meta($post->ID,'_wp_page_template',true);
 			if(isset($this->aryTemplates[$strTemplateFile])){
 				$strTemplate = MIZZOUMVC_ROOT_PATH.$strTemplateFile;
