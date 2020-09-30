@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 5.2.3
-Stable tag: 3.10.1
+Stable tag: 3.11.4
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,17 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.11.4 =
+* Removes call to deprecated function each from template-locator
+* Fixes issue null post TemplateInjector when viewing 404 request
+= 3.11.3 =
+* Refactor: Pulls the functionality of loading the config.ini files out of the mizzouSetUpInitialOptions() function into its own dedicated function.
+= 3.11.2 =
+* Fixes bug on theme settings import where if theme setting groups hadn't been imported previously, switching to a child theme would skip importing all the settings from the parent theme
+= 3.11.0 =
+* Adds filter mizzoumvc_renderdata to allow themes/plugins to alter the array of data right before it is given to the View Engine for rendering
+= 3.10.2 =
+* Adds missing canonical/shortlink property to MizzouPost object
 = 3.10.1 =
 * Removes deprecated each() function from Loader.php
 * Checks view name passed to render() to ensure it isn't empty.
