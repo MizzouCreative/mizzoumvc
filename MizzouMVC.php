@@ -3,7 +3,7 @@
  * Plugin Name: MizzouMVC
  * Plugin URI: https://marcom.missouri.edu/department/miz-creative/
  * Description: MVC Framework for rapid custom theme development
- * Version: 3.11.4
+ * Version: 3.11.5
  * Author: Paul F. Gilzow, Mizzou Creative, University of Missouri
  * Author URI: https://marcom.missouri.edu/department/miz-creative/
  * @package W
@@ -14,12 +14,12 @@
  * @uses
  * @author Paul F. Gilzow, Mizzou Creative, University of Missouri
  * @copyright 2016 Curators of the University of Missouri
- * @version 3.11.4
+ * @version 3.11.5
  */
 /**
  * @todo let's check to see if the memory is low and then increase if needed
  */
-define('MIZZOUMVC_VERSION','3.11.4');
+define('MIZZOUMVC_VERSION','3.11.5');
 define('MIZZOUMVC_ROOT_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR);
 define('MIZZOUMVC_ROOT_URL',plugins_url('',__FILE__));
 require_once dirname(__FILE__).DIRECTORY_SEPARATOR.'functions'.DIRECTORY_SEPARATOR.'template-locator.php';

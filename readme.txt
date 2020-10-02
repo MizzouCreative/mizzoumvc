@@ -2,7 +2,7 @@
 Contributors: gilzow, metzenj, nicholsjc
 Requires at least: 4.1
 Tested up to: 5.2.3
-Stable tag: 3.11.4
+Stable tag: 3.11.5
 License: GPLv2 or later
 Tags: Framework, MVC, theme development
 
@@ -33,6 +33,8 @@ In All Theme Settings --> Site Wide, add two new Custom Fields
 * use_framework_stylesheet - set to 'yes' if you want to use the stylesheet from the framework instead of your style.css file; framework assumes 'no'
 
 == Changelog ==
+= 3.11.5 =
+* Updates embedded Twig to v1.42.5 to address PHP7.4 compatibility issues and to match the version of Twig used by our Drupal sites
 = 3.11.4 =
 * Removes call to deprecated function each from template-locator
 * Fixes issue null post TemplateInjector when viewing 404 request
