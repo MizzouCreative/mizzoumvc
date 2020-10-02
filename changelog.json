@@ -1,4 +1,10 @@
 {
+  "3.11.5": {
+  "description": "<ul><li>Updates embedded Twig to v1.42.5 to address PHP7.4 compatibility issues and to match the version of Twig used by our Drupal sites</li></ul>",
+  "requires": "",
+  "tested": "5.3.2",
+  "upgrade_notice": ""
+},
   "3.11.4": {
     "description": "<ul><li>Removes call to deprecated function each from template-locator</li><li>Fixes issue null post TemplateInjector when viewing 404 request</li></ul>",
     "requires": "",
